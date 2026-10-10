@@ -1,0 +1,24 @@
+{
+  "name": "remnant",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Generateur du pack Minecraft Bedrock REMNANT : fusion d addons apocalypse zombie.",
+  "scripts": {
+    "dev": "bun run scripts/serve-pack.ts",
+    "typecheck": "tsc --noEmit",
+    "pack:harvest": "bun run scripts/harvest-armor.ts",
+    "pack:build": "bun run scripts/build-pack.ts dist-pack/Remnant_Apocalypse.mcaddon",
+    "pack:merge": "bun run scripts/merge-all.ts",
+    "merge:recon": "bun run scripts/merge-recon.ts",
+    "merge:verify": "bun run scripts/verify-merge.ts",
+    "merge:audit": "bun run scripts/audit-merge.ts"
+  },
+  "dependencies": {
+    "jszip": "^3.10.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~6.0.2"
+  }
+}
