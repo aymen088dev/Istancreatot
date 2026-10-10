@@ -118,6 +118,24 @@ function sha(bytes: Uint8Array): string {
 const raws: Raw[] = []
 const scriptEntries: { source: string; entry: string; version: string; minEngine: string }[] = []
 
+/**
+ * `min_engine_version` is the *maximum* the donors ask for, never a constant.
+ * Aplok declares 1.21.80 while several others declare 1.21.0/1.21.40; announcing
+ * 1.21.70 leaves Aplok's own JSON features below the version they were written
+ * for, which is how its content silently stops working.
+ */
+const minEngines: string[] = []
+
+/**
+ * Built-in module dependencies (`@minecraft/server`, `-ui`, `@minecraft/common`).
+ *
+ * This is where the scripting API version actually lives — `modules[].version` is
+ * only the version of the pack's own module. Omitting these entries is fatal: the
+ * script module loads but every `import { world } from "@minecraft/server"`
+ * throws, so **no** donor system works at all.
+ */
+const moduleDeps = new Map<string, string[]>()
+
 for (const source of SOURCES) {
   if (!readdirSync('.').includes(source.file)) {
     console.log(`!! archive absente : ${source.file}`)
@@ -131,22 +149,30 @@ for (const source of SOURCES) {
   for (const entry of flat) {
     if (!/(^|\/)manifest\.json$/i.test(entry.path)) continue
     const root = entry.path.slice(0, entry.path.length - 'manifest.json'.length)
-    const side = sideOfManifest(Buffer.from(entry.bytes).toString('utf8'), root)
+    const text = Buffer.from(entry.bytes).toString('utf8')
+    const side = sideOfManifest(text, root)
     roots.push({ root, side })
+    const doc = parseLooseJson<{
+      modules?: { type?: string; entry?: string; version?: unknown }[]
+      header?: { min_engine_version?: number[] }
+    }>(text)
+    const engine = doc?.header?.min_engine_version
+    if (Array.isArray(engine) && engine.length > 0) minEngines.push(engine.join('.'))
     if (side === 'bp') {
-      const doc = parseLooseJson<{
-        modules?: { type?: string; entry?: string; version?: unknown }[]
-        header?: { min_engine_version?: number[] }
-      }>(Buffer.from(entry.bytes).toString('utf8'))
+      for (const dep of (doc as { dependencies?: { module_name?: string; version?: unknown }[] } | null)
+        ?.dependencies ?? []) {
+        if (!dep?.module_name) continue
+        const list = moduleDeps.get(dep.module_name) ?? []
+        list.push(Array.isArray(dep.version) ? dep.version.join('.') : String(dep.version ?? '0.0.0'))
+        moduleDeps.set(dep.module_name, list)
+      }
       const script = (doc?.modules ?? []).find((m) => String(m.type ?? '').includes('script'))
       if (script?.entry) {
         scriptEntries.push({
           source: source.key,
           entry: script.entry,
           version: Array.isArray(script.version) ? script.version.join('.') : String(script.version ?? '—'),
-          minEngine: Array.isArray(doc?.header?.min_engine_version)
-            ? doc.header.min_engine_version.join('.')
-            : '—',
+          minEngine: Array.isArray(engine) ? engine.join('.') : '—',
         })
       }
     }
@@ -593,6 +619,37 @@ if (uiDefs.size > 0) {
   put('rp', 'ui/_ui_defs.json', encoder.encode(JSON.stringify({ ui_defs: [...uiDefs] }, null, 2)))
 }
 
+/**
+ * Picks the version that satisfies the most donors: the highest one sharing the
+ * major version most donors ask for. On `@minecraft/server` five donors want 1.x
+ * and one wants 2.x, so 2.x is dropped rather than breaking the other five — a
+ * major increment is where the documented breaking changes live.
+ */
+const chooseModuleVersion = (versions: string[]): string => {
+  const compare = (a: string, b: string): number => {
+    const left = a.split('.').map((n) => Number.parseInt(n, 10) || 0)
+    const right = b.split('.').map((n) => Number.parseInt(n, 10) || 0)
+    for (let i = 0; i < Math.max(left.length, right.length); i++) {
+      const delta = (left[i] ?? 0) - (right[i] ?? 0)
+      if (delta !== 0) return delta
+    }
+    return 0
+  }
+  const byMajor = new Map<number, string[]>()
+  for (const version of versions) {
+    const major = Number.parseInt(version.split('.')[0] ?? '0', 10) || 0
+    byMajor.set(major, [...(byMajor.get(major) ?? []), version])
+  }
+  const dominant = [...byMajor.values()].sort((a, b) => b.length - a.length)[0]
+  return dominant.sort(compare)[dominant.length - 1]
+}
+
+const chosenModules = (): { module_name: string; version: string }[] =>
+  [...moduleDeps.entries()].map(([module_name, versions]) => ({
+    module_name,
+    version: chooseModuleVersion(versions),
+  }))
+
 /* --------------------------------- scripts -------------------------------- */
 
 /**
@@ -622,7 +679,10 @@ const bootstrap = `/**
  * échoue seul et les autres continuent.
  *
  * Systèmes embarqués :
-${systems.map((s) => ` *   - ${s.source.padEnd(13)} scripts/${s.source}/${s.rel}  (module demandé ${s.version}, min_engine ${s.minEngine})`).join('\n')}
+${systems.map((s) => ` *   - ${s.source.padEnd(13)} scripts/${s.source}/${s.rel}  (module du pack ${s.version}, min_engine ${s.minEngine})`).join('\n')}
+ *
+ * API declaree dans les dependances du manifeste :
+${chosenModules().map((m) => ` *   - ${m.module_name} ${m.version}`).join('\n')}
  */
 const SYSTEMS = [
 ${systems.map((s) => `  ['${s.source}', './${s.source}/${s.rel}'],`).join('\n')}
@@ -677,6 +737,23 @@ for (const path of jsonPaths) {
 
 /* ------------------------------- manifests -------------------------------- */
 
+/** Highest engine version demanded by any donor, compared part by part. */
+const highestEngine = (): number[] => {
+  let best = [1, 21, 70]
+  for (const value of minEngines) {
+    const parts = value.split('.').map((n) => Number.parseInt(n, 10))
+    if (parts.some((n) => Number.isNaN(n))) continue
+    for (let i = 0; i < Math.max(parts.length, best.length); i++) {
+      const a = parts[i] ?? 0
+      const b = best[i] ?? 0
+      if (a === b) continue
+      if (a > b) best = parts
+      break
+    }
+  }
+  return best
+}
+
 const manifest = (side: 'bp' | 'rp', dir: string): string => {
   const header = {
     // literal text, not a `pack.name` key: the donors' lang files are merged into
@@ -685,7 +762,7 @@ const manifest = (side: 'bp' | 'rp', dir: string): string => {
     description: 'Fusion des 7 addons apocalypse zombie — usage personnel uniquement.',
     uuid: randomUUID(),
     version: [1, 0, 0],
-    min_engine_version: [1, 21, 70],
+    min_engine_version: highestEngine(),
   }
   const modules =
     side === 'bp'
@@ -705,7 +782,10 @@ const manifest = (side: 'bp' | 'rp', dir: string): string => {
 // the RP uuid must appear in the BP dependencies
 const rpUuid = randomUUID()
 const bpManifest = JSON.parse(manifest('bp', BP))
-bpManifest.dependencies = [{ uuid: rpUuid, version: [1, 0, 0] }]
+bpManifest.dependencies = [
+  { uuid: rpUuid, version: [1, 0, 0] },
+  ...chosenModules(),
+]
 const rpManifest = JSON.parse(manifest('rp', RP))
 rpManifest.header.uuid = rpUuid
 
@@ -723,6 +803,12 @@ writeFileSync(OUTPUT, blob)
 
 const mb = (n: number) => (n / 1048576).toFixed(1)
 console.log(`\n${OUTPUT}`)
+console.log(`  min_engine_version ${highestEngine().join('.')} (max des donneurs : ${[...new Set(minEngines)].sort().join(', ')})`)
+for (const module of chosenModules()) {
+  const asked = [...new Set(moduleDeps.get(module.module_name) ?? [])].sort()
+  const dropped = asked.filter((v) => v.split('.')[0] !== module.version.split('.')[0])
+  console.log(`  ${module.module_name} ${module.version}  (demande : ${asked.join(', ')})${dropped.length > 0 ? `  ATTENTION : les systemes en ${dropped.join('/')} ne chargeront pas` : ''}`)
+}
 console.log(`  ${out.size} fichiers · ${mb(blob.length)} Mo`)
 console.log(`  BP ${[...out.keys()].filter((p) => p.startsWith(BP)).length} · RP ${[...out.keys()].filter((p) => p.startsWith(RP)).length}`)
 console.log(`  systèmes de script embarqués : ${systems.length}`)
