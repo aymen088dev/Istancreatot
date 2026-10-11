@@ -14,11 +14,14 @@ aucune requête réseau, aucun fichier audio. Chaque animation tourne en boucle 
 
 ## Son et voix
 
-Aucun navigateur n'autorise l'audio avant une interaction : chaque fichier ouvre donc sur un
-**écran d'accueil** avec un bouton **« Démarrer »**. L'animation reste en pause derrière, et c'est
-ce clic — et lui seul — qui crée l'`AudioContext`. **Aucun son ne peut sortir avant.**
+Deux bascules **Son** et **Voix** sont visibles en haut à droite **dès l'ouverture** — elles sont
+affichées au-dessus de l'écran d'accueil et restent accessibles pendant toute la lecture.
+L'écran d'accueil propose **« Démarrer »** pour lancer l'animation, qui reste en pause derrière.
 
-Une fois lancé, deux bascules sont disponibles en haut de la scène :
+Aucun son ne sort tout seul : il faut soit activer **Son**, soit cliquer **Démarrer** — dans les
+deux cas c'est un geste explicite de ta part, ce que les navigateurs exigent pour autoriser l'audio.
+
+Le détail des bascules :
 
 - **Son** — effets 100 % synthétisés en Web Audio (whoosh, tick, impact, riser, blip, nappe
   d'ambiance), déclenchés sur les évènements de la timeline. Coupé, le contexte audio est

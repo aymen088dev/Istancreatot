@@ -120,7 +120,8 @@
   @keyframes pulse{70%{box-shadow:0 0 0 18px rgba(255,138,61,0)}100%{box-shadow:0 0 0 0 rgba(255,138,61,0)}}
   #hud .beatNum{color:var(--amber-light)}
 
-  #controls{display:flex;align-items:center;gap:14px}
+  /* au-dessus de l'écran d'accueil (#start, z-index 60) : visibles dès l'ouverture */
+  #controls{position:fixed;right:32px;top:28px;display:flex;align-items:center;gap:14px;z-index:80}
   #controls .btn{
     appearance:none;cursor:pointer;
     font:inherit;font-size:23px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
@@ -305,14 +306,17 @@
       <span>Horizon des évènements</span>
       <span class="beatNum" id="beatNum">01</span>
     </div>
-    <div id="controls">
-      <button type="button" class="btn" id="btnSound" aria-pressed="false">Son</button>
-      <button type="button" class="btn" id="btnVoice" aria-pressed="false">Voix</button>
-    </div>
   </div>
 
   <div id="progress"><i id="progressFill"></i></div>
   <div id="hint">Espace : pause · S : son · V : voix · R : recommencer</div>
+</div>
+
+<!-- bascules au niveau de la fenêtre (hors de #stage) : toujours visibles, y compris
+     au-dessus de l'écran d'accueil, sans dépendre du contexte d'empilement de la scène -->
+<div id="controls">
+  <button type="button" class="btn" id="btnSound" aria-pressed="false">Son</button>
+  <button type="button" class="btn" id="btnVoice" aria-pressed="false">Voix</button>
 </div>
 
 <div id="start">

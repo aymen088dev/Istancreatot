@@ -176,7 +176,9 @@
   .hint.hide{opacity:0}
 
   /* ---------- bascules son / voix ---------- */
-  .controls{position:absolute;right:34px;top:24px;z-index:30;display:flex;gap:12px}
+  /* au-dessus de l'écran d'accueil (#start, z-index 40) : les bascules doivent être visibles
+     et utilisables dès l'ouverture, pas seulement après avoir cliqué « Démarrer ». */
+  .controls{position:absolute;right:34px;top:24px;z-index:60;display:flex;gap:12px}
   .ctrl{
     appearance:none;cursor:pointer;font:inherit;
     display:inline-flex;align-items:center;gap:11px;
@@ -958,7 +960,8 @@
 
   /* ---------- bascules ---------- */
   function toggleSound() {
-    if (!started) return;
+    // Pas de garde « started » : la bascule doit répondre dès l'écran d'accueil.
+    // Le clic est un geste utilisateur valide, l'AudioContext peut donc être créé ici.
     var next = !Sound.isOn();
     Sound.setOn(next);
     els.btnSound.classList.toggle("on", next);
@@ -975,7 +978,7 @@
   }
 
   function toggleVoice() {
-    if (!started) return;
+    // Idem : la bascule voix répond dès l'écran d'accueil.
     var next = !Voice.isOn();
     Voice.setOn(next);
     els.btnVoice.classList.toggle("on", next);

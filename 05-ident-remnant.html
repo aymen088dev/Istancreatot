@@ -120,8 +120,10 @@
   }
   #progbar{display:block;height:100%;width:0;background:var(--red)}
 
+  /* hors de #stage, au-dessus de l'écran d'accueil (#overlay, z-index 50) : visibles
+     et utilisables dès l'ouverture, sans dépendre du contexte d'empilement de la scène */
   #controls{
-    top:36px;right:36px;
+    position:fixed;top:28px;right:28px;z-index:80;
     display:flex;gap:12px;
   }
   .ctl{
@@ -208,11 +210,14 @@
   </div>
 
   <div id="hint">Espace : pause · S : son · V : voix · R : recommencer</div>
-  <div id="controls">
-    <button id="btnSound" class="ctl" type="button" aria-pressed="false">Son</button>
-    <button id="btnVoice" class="ctl" type="button" aria-pressed="false">Voix</button>
-  </div>
   <div id="prog"><span id="progbar"></span></div>
+</div>
+
+<!-- bascules au niveau de la fenêtre (hors de #stage) : toujours visibles, y compris
+     au-dessus de l'écran d'accueil, sans dépendre du contexte d'empilement de la scène -->
+<div id="controls">
+  <button id="btnSound" class="ctl" type="button" aria-pressed="false">Son</button>
+  <button id="btnVoice" class="ctl" type="button" aria-pressed="false">Voix</button>
 </div>
 
 <div id="overlay">

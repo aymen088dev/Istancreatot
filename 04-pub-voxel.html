@@ -129,7 +129,8 @@
   #hint.hide{opacity:0}
 
   /* ---------------- bascules Son / Voix ---------------- */
-  #controls{right:64px;top:52px;z-index:8;display:flex;gap:14px}
+  /* au-dessus de l'écran d'accueil (#gate, z-index 20) : visibles dès l'ouverture */
+  #controls{right:64px;top:52px;z-index:30;display:flex;gap:14px}
   .tgl{
     appearance:none;cursor:pointer;font:inherit;
     display:flex;align-items:center;gap:12px;

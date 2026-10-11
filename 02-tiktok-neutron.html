@@ -166,7 +166,8 @@
 
   /* ---------------- bascules son / voix ---------------- */
   #audioBar{
-    right:56px;top:92px;z-index:40;
+    /* au-dessus de l'écran d'accueil (#gate, z-index 50) : visibles dès l'ouverture */
+    right:56px;top:92px;z-index:60;
     display:flex;gap:14px;align-items:center;
   }
   #audioBar button{
