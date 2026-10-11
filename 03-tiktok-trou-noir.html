@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TikTok — Trou noir</title>
+<style>
+  :root{
+    --amber:#ff8a3d;
+    --amber-light:#ffd6a0;
+    --blue:#8ec5ff;
+    --ink:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#000;overflow:hidden}
+  body{
+    font-family:"Inter","Helvetica Neue",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------------- scène 1080×1920 ---------------- */
+  #stage{
+    position:fixed;left:50%;top:50%;
+    width:1080px;height:1920px;
+    transform-origin:50% 50%;
+    background:radial-gradient(120% 72% at 50% 38%, #1c0e05 0%, #0b0705 44%, #040304 100%);
+    overflow:hidden;
+    color:var(--ink);
+  }
+  #stage > *{position:absolute}
+
+  #grid{inset:0;width:1080px;height:1920px;transform-origin:50% 37.5%;opacity:.9}
+  #stars{inset:0;width:1080px;height:1920px}
+
+  /* ---------------- le trou noir ---------------- */
+  #lens{inset:0;transform-origin:50% 37.5%;will-change:transform}
+
+  #disk{
+    left:540px;top:720px;width:1560px;height:1560px;margin:-780px 0 0 -780px;
+    border-radius:50%;
+    background:conic-gradient(from 0deg,
+      rgba(255,138,61,0) 0deg,
+      rgba(255,138,61,.55) 38deg,
+      rgba(255,224,160,.95) 92deg,
+      rgba(255,110,50,.72) 152deg,
+      rgba(255,138,61,.14) 212deg,
+      rgba(255,184,96,.62) 284deg,
+      rgba(255,138,61,0) 360deg);
+    filter:blur(30px) saturate(1.3);
+    -webkit-mask-image:radial-gradient(closest-side, transparent 40%, #000 53%, #000 86%, transparent 97%);
+    mask-image:radial-gradient(closest-side, transparent 40%, #000 53%, #000 86%, transparent 97%);
+    transform:scaleY(.30) rotate(var(--spin,0deg));
+    will-change:transform;
+  }
+
+  #arcs{inset:0}
+  #arcs i{
+    position:absolute;left:540px;top:720px;margin:-450px 0 0 -450px;
+    width:900px;height:900px;border-radius:50%;
+    border:3px solid rgba(255,190,120,.30);
+    transform:scaleY(.52);
+    animation:arcDrift 26s ease-in-out infinite;
+  }
+  #arcs i:nth-child(2){
+    width:1260px;height:1260px;margin:-630px 0 0 -630px;
+    border-color:rgba(142,197,255,.22);
+    animation-duration:38s;animation-direction:reverse;
+  }
+  @keyframes arcDrift{50%{transform:scaleY(.52) scale(1.05) rotate(2deg)}}
+
+  #photon{
+    left:540px;top:720px;width:520px;height:520px;margin:-260px 0 0 -260px;
+    border-radius:50%;
+    border:6px solid rgba(255,224,170,.92);
+    box-shadow:0 0 64px 14px rgba(255,150,70,.55), inset 0 0 44px rgba(255,200,130,.5);
+    transform:scaleY(.56);
+    filter:blur(1.2px);
+  }
+
+  #core{
+    left:540px;top:720px;width:316px;height:316px;margin:-158px 0 0 -158px;
+    border-radius:50%;background:#000;
+    box-shadow:0 0 0 5px rgba(0,0,0,.92), 0 0 90px 30px rgba(0,0,0,.96);
+  }
+
+  /* ---------------- couches d'ambiance ---------------- */
+  #warmth{
+    inset:0;pointer-events:none;opacity:0;mix-blend-mode:screen;
+    background:radial-gradient(46% 32% at 50% 37%, rgba(255,138,61,.45), transparent 72%);
+  }
+  #vignette{
+    inset:0;pointer-events:none;
+    background:radial-gradient(78% 62% at 50% 40%, transparent 40%, rgba(0,0,0,.78) 100%);
+  }
+  #grain{
+    inset:-40%;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+    animation:grain 1.2s steps(3) infinite;
+  }
+  @keyframes grain{33%{transform:translate(-1%,1%)}66%{transform:translate(1%,-1%)}}
+
+  /* ---------------- HUD ---------------- */
+  #progress{left:0;top:0;width:1080px;height:8px;background:rgba(255,255,255,.10)}
+  #progressFill{
+    display:block;height:100%;width:0;
+    background:linear-gradient(90deg,var(--amber),var(--amber-light),#fff);
+    box-shadow:0 0 18px rgba(255,138,61,.75);
+  }
+
+  #topbar{
+    left:56px;right:56px;top:290px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  #hud{
+    display:flex;align-items:center;gap:14px;
+    font-size:24px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:rgba(255,255,255,.6);white-space:nowrap;
+  }
+  #hud .rec{width:14px;height:14px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(255,138,61,.7);animation:pulse 2.1s ease-out infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 18px rgba(255,138,61,0)}100%{box-shadow:0 0 0 0 rgba(255,138,61,0)}}
+  #hud .beatNum{color:var(--amber-light)}
+
+  #controls{display:flex;align-items:center;gap:14px}
+  #controls .btn{
+    appearance:none;cursor:pointer;
+    font:inherit;font-size:23px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    padding:14px 26px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:rgba(255,255,255,.72);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    transition:background .22s ease,color .22s ease,border-color .22s ease,box-shadow .22s ease,transform .22s ease;
+  }
+  #controls .btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.5)}
+  #controls .btn.on{
+    background:linear-gradient(96deg,var(--amber),var(--amber-light));
+    color:#2a1206;border-color:transparent;
+    box-shadow:0 0 34px rgba(255,138,61,.5);
+  }
+
+  /* ---------------- sous-titres ---------------- */
+  #captions{
+    left:0;right:0;top:380px;height:900px;
+    --shake:0;
+    transform:translate(calc(var(--shake) * 8px), calc(var(--shake) * 6px));
+  }
+  .cap{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:16px;padding:0 76px;text-align:center;
+    opacity:0;will-change:transform,opacity,filter;
+  }
+  .cap .t-main{font-size:70px;font-weight:900;line-height:1.08;letter-spacing:-.02em;color:#fff;max-width:920px}
+  .cap .t-accent{
+    font-size:80px;font-weight:900;line-height:1.04;letter-spacing:-.025em;
+    color:var(--amber-light);max-width:920px;
+  }
+  .cap .t-sub{
+    margin-top:8px;font-size:34px;font-weight:600;line-height:1.35;letter-spacing:.02em;
+    color:rgba(255,255,255,.7);max-width:840px;
+  }
+  .cap .t-main,.cap .t-accent,.cap .t-sub{
+    text-shadow:
+      calc(var(--shake) * -5px) 0 rgba(255,138,61,.45),
+      calc(var(--shake) * 5px) 0 rgba(142,197,255,.45),
+      0 10px 34px rgba(0,0,0,.9);
+  }
+  .cap[data-kind="danger"] .t-accent{
+    color:#ff9d5f;
+    text-shadow:
+      0 0 56px rgba(255,120,40,.6),
+      calc(var(--shake) * -7px) 0 rgba(142,197,255,.45),
+      calc(var(--shake) * 7px) 0 rgba(255,90,40,.5),
+      0 10px 34px rgba(0,0,0,.9);
+  }
+  .cap[data-kind="end"] .t-main{font-size:62px}
+  .cap[data-kind="end"] .t-accent{
+    font-size:72px;
+    background:linear-gradient(96deg,var(--amber),var(--amber-light) 45%,#fff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .cta{
+    margin-top:24px;display:inline-flex;align-items:center;gap:18px;
+    padding:26px 46px;border-radius:999px;
+    background:linear-gradient(96deg,var(--amber),var(--amber-light));
+    color:#2a1206;font-size:38px;font-weight:900;letter-spacing:.02em;
+    box-shadow:0 20px 60px rgba(255,138,61,.4);
+    opacity:0;transform:translateY(26px) scale(.92);will-change:transform,opacity;
+  }
+  .cta::before{content:"";width:14px;height:14px;border-radius:50%;background:#2a1206}
+
+  #hint{
+    left:0;right:0;bottom:300px;text-align:center;
+    font-size:26px;font-weight:600;letter-spacing:.06em;color:rgba(255,255,255,.5);
+    pointer-events:none;
+  }
+
+  /* ---------------- écran d'accueil ---------------- */
+  #start{
+    position:fixed;inset:0;z-index:60;
+    display:flex;align-items:center;justify-content:center;
+    padding:28px;text-align:center;
+    background:rgba(5,3,2,.94);
+    transition:opacity .55s ease;
+  }
+  #start.hidden{opacity:0;pointer-events:none}
+  #start .card{max-width:760px}
+  #start .kicker{
+    display:inline-block;font-size:13px;letter-spacing:.26em;text-transform:uppercase;
+    color:rgba(255,214,160,.8);border:1px solid rgba(255,214,160,.28);
+    border-radius:999px;padding:9px 16px;
+  }
+  #start h1{
+    margin:22px 0 0;font-size:52px;line-height:1.02;letter-spacing:-.03em;font-weight:900;
+    background:linear-gradient(96deg,var(--amber),var(--amber-light) 50%,#fff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  #start p{margin:20px auto 0;max-width:56ch;color:rgba(255,255,255,.6);font-size:17px;line-height:1.65}
+  #start p b{color:#fff;font-weight:600}
+  #startBtn{
+    appearance:none;cursor:pointer;margin-top:30px;
+    font:inherit;font-size:20px;font-weight:800;letter-spacing:.06em;
+    padding:20px 52px;border-radius:999px;border:0;
+    background:linear-gradient(96deg,var(--amber),var(--amber-light));
+    color:#2a1206;box-shadow:0 18px 50px rgba(255,138,61,.35);
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  #startBtn:hover{transform:translateY(-2px);box-shadow:0 24px 60px rgba(255,138,61,.45)}
+  #start .small{margin-top:20px;font-size:13px;letter-spacing:.08em;color:rgba(255,255,255,.42)}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <canvas id="grid" width="1080" height="1920"></canvas>
+  <canvas id="stars" width="1080" height="1920"></canvas>
+
+  <div id="lens">
+    <div id="arcs"><i></i><i></i></div>
+    <div id="disk"></div>
+    <div id="photon"></div>
+    <div id="core"></div>
+  </div>
+
+  <div id="warmth"></div>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+
+  <div id="captions">
+    <div class="cap" data-kind="hook">
+      <div class="t-main">POV : tu franchis</div>
+      <div class="t-accent">l’horizon des évènements.</div>
+    </div>
+
+    <div class="cap" data-kind="info">
+      <div class="t-main">Un trou noir, c’est une région</div>
+      <div class="t-accent">dont même la lumière ne s’échappe pas.</div>
+      <div class="t-sub">sa gravité courbe l’espace-temps à l’extrême</div>
+    </div>
+
+    <div class="cap" data-kind="danger">
+      <div class="t-main">La frontière s’appelle</div>
+      <div class="t-accent">l’horizon des évènements.</div>
+      <div class="t-sub">une fois passé, aucun retour</div>
+    </div>
+
+    <div class="cap" data-kind="info">
+      <div class="t-main">Depuis l’extérieur, on te verrait</div>
+      <div class="t-accent">ralentir, rougir, te figer.</div>
+      <div class="t-sub">ton temps ralentit à l’infini</div>
+    </div>
+
+    <div class="cap" data-kind="info">
+      <div class="t-main">Pour toi, en revanche,</div>
+      <div class="t-accent">le temps s’écoule normalement.</div>
+      <div class="t-sub">… jusqu’à la fin</div>
+    </div>
+
+    <div class="cap" data-kind="danger">
+      <div class="t-main">La gravité t’étire</div>
+      <div class="t-accent">comme un spaghetti.</div>
+      <div class="t-sub">cap vers la singularité</div>
+    </div>
+
+    <div class="cap" data-kind="danger">
+      <div class="t-main">Puis vient</div>
+      <div class="t-accent">la singularité.</div>
+      <div class="t-sub">un point où les lois connues s’arrêtent</div>
+    </div>
+
+    <div class="cap" data-kind="info">
+      <div class="t-main">Bref : ce qui traverse l’horizon</div>
+      <div class="t-accent">n’en revient jamais.</div>
+      <div class="t-sub">pas même la lumière</div>
+    </div>
+
+    <div class="cap" data-kind="end">
+      <div class="t-main">Un trou noir, ça ne se visite pas.</div>
+      <div class="t-accent">Ça s’observe de très loin.</div>
+      <div class="cta" id="ctaEl">Abonne-toi pour plus de science</div>
+    </div>
+  </div>
+
+  <div id="topbar">
+    <div id="hud">
+      <span class="rec"></span>
+      <span>Horizon des évènements</span>
+      <span class="beatNum" id="beatNum">01</span>
+    </div>
+    <div id="controls">
+      <button type="button" class="btn" id="btnSound" aria-pressed="false">Son</button>
+      <button type="button" class="btn" id="btnVoice" aria-pressed="false">Voix</button>
+    </div>
+  </div>
+
+  <div id="progress"><i id="progressFill"></i></div>
+  <div id="hint">Espace : pause · S : son · V : voix · R : recommencer</div>
+</div>
+
+<div id="start">
+  <div class="card">
+    <span class="kicker">Trou noir · 9:16 · 30 s</span>
+    <h1>Horizon des évènements</h1>
+    <p>
+      Une animation en boucle sur ce qui arrive quand on tombe dans un trou noir.
+      Le <b>son</b> et la <b>voix</b> sont désactivés par défaut — active-les avec les boutons
+      « Son » et « Voix ».
+    </p>
+    <button type="button" id="startBtn">Démarrer</button>
+    <div class="small">Espace : pause · S : son · V : voix · R : recommencer</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var DUR = 30;
+  window.MOTION = {
+    id: "tiktok-trou-noir",
+    title: "TikTok — Trou noir",
+    duration: DUR,
+    aspect: "9:16",
+  };
+
+  /* ================================================================== *
+   * utilitaires
+   * ================================================================== */
+  function clamp(v, a, b) {
+    if (a === undefined) return Math.min(1, Math.max(0, v));
+    return Math.min(b, Math.max(a, v));
+  }
+  function smooth(u) { u = clamp(u); return u * u * (3 - 2 * u); }
+  function mod(a, b) { return ((a % b) + b) % b; }
+  function windowIn(t, a, b, soft) {
+    soft = soft === undefined ? 0.4 : soft;
+    if (t <= a - soft || t >= b + soft) return 0;
+    if (t < a) return smooth((t - (a - soft)) / soft);
+    if (t > b) return smooth(((b + soft) - t) / soft);
+    return 1;
+  }
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6d2b79f5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ================================================================== *
+   * éléments
+   * ================================================================== */
+  var stage = document.getElementById("stage");
+  var gridCv = document.getElementById("grid");
+  var gctx = gridCv.getContext("2d");
+  var starCv = document.getElementById("stars");
+  var sctx = starCv.getContext("2d");
+  var lens = document.getElementById("lens");
+  var disk = document.getElementById("disk");
+  var captionsEl = document.getElementById("captions");
+  var capEls = Array.prototype.slice.call(captionsEl.querySelectorAll(".cap"));
+  var ctaEl = document.getElementById("ctaEl");
+  var progressFill = document.getElementById("progressFill");
+  var beatNum = document.getElementById("beatNum");
+  var hintEl = document.getElementById("hint");
+  var warmthEl = document.getElementById("warmth");
+  var btnSound = document.getElementById("btnSound");
+  var btnVoice = document.getElementById("btnVoice");
+  var startEl = document.getElementById("start");
+  var startBtn = document.getElementById("startBtn");
+
+  /* ================================================================== *
+   * beats (le texte sert aussi de narration à la voix)
+   * ================================================================== */
+  var BEATS = [
+    { start: 0,    end: 3,    kind: "hook",   say: "POV : tu franchis l’horizon des évènements." },
+    { start: 3,    end: 6.5,  kind: "info",   say: "Un trou noir, c’est une région dont même la lumière ne peut pas s’échapper." },
+    { start: 6.5,  end: 10,   kind: "danger", say: "La frontière s’appelle l’horizon des évènements. Une fois passé, aucun retour." },
+    { start: 10,   end: 13.5, kind: "info",   say: "Depuis l’extérieur, on te verrait ralentir, rougir, puis te figer pour toujours." },
+    { start: 13.5, end: 17,   kind: "info",   say: "Pour toi, en revanche, le temps s’écoulerait normalement, jusqu’à la fin." },
+    { start: 17,   end: 20.5, kind: "danger", say: "La gravité t’étire : c’est la spaghettification." },
+    { start: 20.5, end: 24,   kind: "danger", say: "Puis vient la singularité : un point où les lois connues s’arrêtent." },
+    { start: 24,   end: 27,   kind: "info",   say: "Bref : ce qui traverse l’horizon n’en revient jamais pour le raconter." },
+    { start: 27,   end: 30,   kind: "end",    say: "Un trou noir, ça ne se visite pas. Abonne-toi pour plus de science." }
+  ];
+
+  /* ================================================================== *
+   * SON — Web Audio API, 100 % synthétisé, aucun fichier
+   * ================================================================== */
+  var Sound = (function () {
+    var ctx = null, master = null, drone = null, droneFilter = null, droneNodes = [];
+    var noiseBuf = null, ready = false, enabled = false, gate = false;
+
+    function Ctor() { return window.AudioContext || window.webkitAudioContext; }
+
+    function init() {
+      if (ctx) return ready;
+      var C = Ctor();
+      if (!C) return false;
+      try {
+        ctx = new C();
+        master = ctx.createGain();
+        master.gain.value = 0.55;
+        master.connect(ctx.destination);
+
+        var len = Math.floor(ctx.sampleRate * 2);
+        noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
+        var data = noiseBuf.getChannelData(0);
+        var s = 987654321;
+        for (var i = 0; i < len; i++) {
+          s = (s * 1103515245 + 12345) & 0x7fffffff;
+          data[i] = (s / 0x3fffffff) - 1;
+        }
+        ready = true;
+      } catch (e) {
+        ctx = null; master = null; ready = false;
+      }
+      return ready;
+    }
+
+    function live() { return ready && enabled && gate && ctx && master; }
+
+    function noise(dur, type, freq, q, peak, sweepTo) {
+      if (!live()) return;
+      try {
+        var t0 = ctx.currentTime;
+        var src = ctx.createBufferSource();
+        src.buffer = noiseBuf; src.loop = true;
+        var flt = ctx.createBiquadFilter();
+        flt.type = type;
+        flt.frequency.setValueAtTime(freq, t0);
+        if (sweepTo) flt.frequency.exponentialRampToValueAtTime(Math.max(60, sweepTo), t0 + dur);
+        flt.Q.value = q;
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(peak, t0 + dur * 0.2);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        src.connect(flt); flt.connect(g); g.connect(master);
+        src.start(t0); src.stop(t0 + dur + 0.06);
+      } catch (e) { /* silencieux */ }
+    }
+
+    function tone(dur, f0, f1, type, peak, delay) {
+      if (!live()) return;
+      try {
+        var t0 = ctx.currentTime + (delay || 0);
+        var osc = ctx.createOscillator();
+        osc.type = type;
+        osc.frequency.setValueAtTime(f0, t0);
+        if (f1 && f1 !== f0) osc.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t0 + dur);
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(peak, t0 + Math.min(0.06, dur * 0.3));
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        osc.connect(g); g.connect(master);
+        osc.start(t0); osc.stop(t0 + dur + 0.06);
+      } catch (e) { /* silencieux */ }
+    }
+
+    function ambience(on) {
+      if (!ready || !ctx || !master) return;
+      try {
+        if (on) {
+          if (drone) return;
+          drone = ctx.createGain();
+          drone.gain.value = 0.0001;
+          droneFilter = ctx.createBiquadFilter();
+          droneFilter.type = "lowpass";
+          droneFilter.frequency.value = 300;
+          droneFilter.Q.value = 0.9;
+
+          var o1 = ctx.createOscillator(); o1.type = "sine"; o1.frequency.value = 47;
+          var o2 = ctx.createOscillator(); o2.type = "triangle"; o2.frequency.value = 71.5;
+          var o3 = ctx.createOscillator(); o3.type = "sine"; o3.frequency.value = 94;
+
+          var lfo = ctx.createOscillator(); lfo.frequency.value = 0.055;
+          var lfoGain = ctx.createGain(); lfoGain.gain.value = 110;
+          lfo.connect(lfoGain); lfoGain.connect(droneFilter.frequency);
+
+          o1.connect(droneFilter); o2.connect(droneFilter); o3.connect(droneFilter);
+          droneFilter.connect(drone);
+          drone.connect(master);
+          o1.start(); o2.start(); o3.start(); lfo.start();
+          droneNodes = [o1, o2, o3, lfo];
+          drone.gain.setTargetAtTime(0.085, ctx.currentTime, 1.1);
+        } else if (drone) {
+          var d = drone, nodes = droneNodes;
+          drone = null; droneNodes = [];
+          d.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.25);
+          window.setTimeout(function () {
+            for (var i = 0; i < nodes.length; i++) { try { nodes[i].stop(); } catch (e) {} }
+            try { d.disconnect(); } catch (e) {}
+          }, 900);
+        }
+      } catch (e) { /* silencieux */ }
+    }
+
+    var api = {
+      init: init,
+      isReady: function () { return ready; },
+      isEnabled: function () { return enabled; },
+      start: function () {
+        gate = true;
+        init();
+        if (ctx && typeof ctx.resume === "function") { try { ctx.resume(); } catch (e) {} }
+        if (enabled) ambience(true);
+      },
+      set: function (v) {
+        enabled = !!v;
+        init();
+        if (!enabled) {
+          ambience(false);
+          if (ctx && typeof ctx.suspend === "function") { try { ctx.suspend(); } catch (e) {} }
+        } else {
+          if (ctx && typeof ctx.resume === "function") { try { ctx.resume(); } catch (e) {} }
+          if (gate) ambience(true);
+        }
+        return enabled;
+      },
+      pause: function () {
+        ambience(false);
+        if (ctx && typeof ctx.suspend === "function") { try { ctx.suspend(); } catch (e) {} }
+      },
+      resume: function () {
+        if (!enabled || !gate) return;
+        if (ctx && typeof ctx.resume === "function") { try { ctx.resume(); } catch (e) {} }
+        ambience(true);
+      },
+      whoosh: function (dur) { noise(dur || 0.9, "bandpass", 300, 1.1, 0.5, 2600); },
+      tick: function () { tone(0.05, 1500, 1000, "square", 0.05); },
+      impact: function () {
+        tone(0.9, 165, 32, "sine", 0.5);
+        tone(0.5, 90, 44, "triangle", 0.28, 0.02);
+        noise(0.55, "lowpass", 760, 0.7, 0.34, 120);
+      },
+      blip: function (f) { tone(0.2, f || 540, (f || 540) * 1.5, "triangle", 0.14); },
+      riser: function (dur) {
+        dur = dur || 1.6;
+        noise(dur, "highpass", 190, 0.8, 0.32, 3400);
+        tone(dur, 130, 880, "sawtooth", 0.1);
+      }
+    };
+    return api;
+  })();
+
+  /* ================================================================== *
+   * VOIX — speechSynthesis, une phrase par beat, jamais deux fois
+   * ================================================================== */
+  var Voice = (function () {
+    var synth = (typeof window !== "undefined" && "speechSynthesis" in window) ? window.speechSynthesis : null;
+    var Utt = (typeof window !== "undefined" && typeof window.SpeechSynthesisUtterance === "function")
+      ? window.SpeechSynthesisUtterance : null;
+    var enabled = false, frVoice = null, lastIndex = -1;
+
+    function refresh() {
+      if (!synth || typeof synth.getVoices !== "function") return;
+      try {
+        var list = synth.getVoices() || [];
+        frVoice = null;
+        var i, lang;
+        for (i = 0; i < list.length; i++) {
+          lang = String(list[i].lang || "").toLowerCase();
+          if (lang.indexOf("fr") === 0) { frVoice = list[i]; break; }
+        }
+        if (!frVoice) {
+          for (i = 0; i < list.length; i++) {
+            lang = String(list[i].lang || "").toLowerCase();
+            if (lang.indexOf("fr") >= 0) { frVoice = list[i]; break; }
+          }
+        }
+      } catch (e) { frVoice = null; }
+    }
+
+    if (synth && typeof synth.addEventListener === "function") {
+      try { synth.addEventListener("voiceschanged", refresh); } catch (e) {}
+    }
+    refresh();
+
+    function cancel() {
+      if (!synth || typeof synth.cancel !== "function") return;
+      try { synth.cancel(); } catch (e) {}
+    }
+
+    return {
+      isEnabled: function () { return enabled; },
+      supported: function () { return !!(synth && Utt); },
+      set: function (v) {
+        enabled = !!v;
+        cancel();
+        lastIndex = -1;
+        if (enabled) refresh();
+        return enabled;
+      },
+      cancel: cancel,
+      reset: function () { lastIndex = -1; },
+      say: function (index, text, force) {
+        if (!enabled || !synth || !Utt || !text) return;
+        if (!force && index === lastIndex) return;
+        lastIndex = index;
+        try {
+          cancel();
+          var u = new Utt(text);
+          u.lang = "fr-FR";
+          u.rate = 1.02;
+          u.pitch = 1;
+          u.volume = 1;
+          if (frVoice) u.voice = frVoice;
+          synth.speak(u);
+        } catch (e) { /* silencieux */ }
+      }
+    };
+  })();
+
+  /* ================================================================== *
+   * timeline — vitesse de chute et gravité
+   * ================================================================== */
+  function warpAt(t) {
+    var w = 0;
+    w = Math.max(w, windowIn(t, 0.0, 3.0, 1.0) * 0.14);
+    w = Math.max(w, windowIn(t, 3.0, 6.5, 1.0) * 0.28);
+    w = Math.max(w, windowIn(t, 6.5, 10.0, 0.9) * 0.44);
+    w = Math.max(w, windowIn(t, 10.0, 13.5, 0.9) * 0.62);
+    w = Math.max(w, windowIn(t, 13.5, 17.0, 0.8) * 0.78);
+    w = Math.max(w, windowIn(t, 17.0, 20.5, 0.7) * 0.95);
+    w = Math.max(w, windowIn(t, 20.5, 24.0, 0.7) * 1.00);
+    w = Math.max(w, windowIn(t, 24.0, 27.0, 0.8) * 0.42);
+    w = Math.max(w, windowIn(t, 27.0, 30.0, 0.8) * 0.22);
+    return clamp(w);
+  }
+
+  function stretchAt(t) {
+    var s = 0;
+    s = Math.max(s, windowIn(t, 16.4, 20.6, 0.8) * 0.55);
+    s = Math.max(s, windowIn(t, 20.6, 24.2, 0.7) * 1.00);
+    return clamp(s);
+  }
+
+  var FPS = 60;
+  var STEPS = Math.ceil(DUR * FPS);
+  var cumLUT = new Float64Array(STEPS + 1);
+  (function buildLUT() {
+    for (var i = 1; i <= STEPS; i++) {
+      var speed = 55 + 900 * warpAt((i - 0.5) / FPS);
+      cumLUT[i] = cumLUT[i - 1] + speed / FPS;
+    }
+  })();
+  function cumDist(t) {
+    var x = clamp(t, 0, DUR) * FPS;
+    var i = Math.min(STEPS - 1, Math.floor(x));
+    var f = x - i;
+    return cumLUT[i] + (cumLUT[i + 1] - cumLUT[i]) * f;
+  }
+
+  /* ================================================================== *
+   * champ d'étoiles aspiré vers le centre
+   * ================================================================== */
+  var CX = 540, CY = 720;
+  var R_IN = 104, R_OUT = 1560;
+  var starRand = mulberry32(20261012);
+  var stars = [];
+  (function buildStars() {
+    var palette = ["#ffffff", "#ffffff", "#dceaff", "#8ec5ff", "#ffd6a0", "#ffffff", "#ffb877"];
+    for (var i = 0; i < 300; i++) {
+      var plane = starRand() < 0.58;
+      stars.push({
+        a: starRand() * Math.PI * 2,
+        r0: starRand() * (R_OUT - R_IN),
+        z: 0.25 + starRand() * 0.75,
+        s: 0.8 + starRand() * 2.1,
+        plane: plane,
+        squash: plane ? 0.30 + starRand() * 0.08 : 0.78 + starRand() * 0.22,
+        tw: starRand() * Math.PI * 2,
+        c: palette[Math.floor(starRand() * palette.length)]
+      });
+    }
+  })();
+
+  function drawStars(t, warp) {
+    sctx.clearRect(0, 0, 1080, 1920);
+    var dist = cumDist(t);
+    var span = R_OUT - R_IN;
+    var streakMax = 8 + 190 * warp * warp;
+
+    sctx.globalCompositeOperation = "lighter";
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var r = R_IN + mod(s.r0 - dist * (0.28 + 0.72 * s.z), span);
+      var ca = Math.cos(s.a), sa = Math.sin(s.a);
+      var px = CX + ca * r;
+      var py = CY + sa * r * s.squash;
+
+      var near = 1 - (r - R_IN) / span;
+      var twinkle = 0.45 + 0.55 * Math.sin(t * 3.4 + s.tw);
+      sctx.globalAlpha = clamp((0.10 + 0.85 * (1 - near)) * twinkle * (0.35 + 0.65 * s.z), 0, 1);
+      sctx.fillStyle = s.c;
+
+      var len = streakMax * s.z * (0.35 + 0.65 * (1 - near));
+      if (len > 4) {
+        sctx.strokeStyle = s.c;
+        sctx.lineWidth = s.s;
+        sctx.beginPath();
+        sctx.moveTo(px - ca * len, py - sa * len * s.squash);
+        sctx.lineTo(px, py);
+        sctx.stroke();
+      } else {
+        sctx.beginPath();
+        sctx.arc(px, py, s.s * 0.9, 0, 6.2832);
+        sctx.fill();
+      }
+    }
+    sctx.globalAlpha = 1;
+    sctx.globalCompositeOperation = "source-over";
+  }
+
+  /* ================================================================== *
+   * distorsion de la grille d'espace-temps (lentille gravitationnelle)
+   * ================================================================== */
+  var GV = 12, GH = 16, GSTEP = 34;
+
+  function lensPoint(x, y, warp, spin) {
+    var dx = x - CX, dy = y - CY;
+    var d = Math.sqrt(dx * dx + dy * dy) + 1;
+    var pull = 1 / (1 + d / 430);
+    var disp = Math.min(0.9, pull * (0.22 + 0.86 * warp));
+    var ang = Math.atan2(dy, dx) + disp * (0.55 + 1.05 * spin);
+    var nd = d * (1 - disp);
+    return [CX + Math.cos(ang) * nd, CY + Math.sin(ang) * nd];
+  }
+
+  function drawGrid(t, warp) {
+    gctx.clearRect(0, 0, 1080, 1920);
+    var spin = warp * 0.9;
+    var alpha = 0.10 + 0.30 * warp;
+    var i, j, x, y;
+
+    gctx.lineWidth = 1.6;
+    gctx.strokeStyle = "rgba(142,197,255,1)";
+    gctx.globalAlpha = alpha;
+
+    for (i = 0; i <= GV; i++) {
+      x = -0.22 * 1080 + (i / GV) * 1.44 * 1080;
+      gctx.beginPath();
+      for (j = 0; j <= GSTEP; j++) {
+        y = (j / GSTEP) * 1920;
+        var a = lensPoint(x, y, warp, spin);
+        if (j === 0) gctx.moveTo(a[0], a[1]); else gctx.lineTo(a[0], a[1]);
+      }
+      gctx.stroke();
+    }
+    for (i = 0; i <= GH; i++) {
+      y = -0.16 * 1920 + (i / GH) * 1.32 * 1920;
+      gctx.beginPath();
+      for (j = 0; j <= GSTEP; j++) {
+        x = (j / GSTEP) * 1080;
+        var b = lensPoint(x, y, warp, spin);
+        if (j === 0) gctx.moveTo(b[0], b[1]); else gctx.lineTo(b[0], b[1]);
+      }
+      gctx.stroke();
+    }
+    gctx.globalAlpha = 1;
+  }
+
+  /* ================================================================== *
+   * lecture / contrôles
+   * ================================================================== */
+  var started = false;
+  var playing = false;
+  var soundOn = false;
+  var voiceOn = false;
+  var t = 0;
+  var last = 0;
+  var lastBeat = -1;
+
+  function activeBeatIndex(time) {
+    var idx = 0;
+    for (var i = 0; i < BEATS.length; i++) if (time >= BEATS[i].start) idx = i;
+    return idx;
+  }
+
+  function fireBeat(index, force) {
+    if (!Sound.isEnabled()) return;
+    var kind = BEATS[index].kind;
+    if (force) { Sound.whoosh(0.7); return; }
+    if (kind === "hook") { Sound.impact(); Sound.whoosh(1.0); }
+    else if (kind === "danger") {
+      if (index === 6) { Sound.riser(1.3); Sound.impact(); }
+      else Sound.impact();
+    } else if (kind === "end") { Sound.impact(); Sound.blip(720); }
+    else Sound.blip(520 + index * 60);
+  }
+
+  function setPlaying(v) {
+    playing = !!v;
+    if (!playing) {
+      Voice.cancel();
+      Sound.pause();
+    } else {
+      Sound.resume();
+      if (started) {
+        var idx = activeBeatIndex(t);
+        lastBeat = idx;
+        Voice.reset();
+        Voice.say(idx, BEATS[idx].say);
+      }
+    }
+  }
+
+  function togglePlay() { setPlaying(!playing); }
+
+  function restart() {
+    t = 0;
+    last = 0;
+    lastBeat = -1;
+    Voice.cancel();
+    Voice.reset();
+    Sound.pause();
+    setPlaying(true);
+    if (Sound.isEnabled()) Sound.whoosh(0.6);
+  }
+
+  /* ================================================================== *
+   * toggles Son / Voix
+   * ================================================================== */
+  function paintToggles() {
+    btnSound.classList.toggle("on", soundOn);
+    btnSound.setAttribute("aria-pressed", soundOn ? "true" : "false");
+    btnVoice.classList.toggle("on", voiceOn);
+    btnVoice.setAttribute("aria-pressed", voiceOn ? "true" : "false");
+  }
+
+  function toggleSound() {
+    soundOn = Sound.set(!soundOn) === true;
+    if (!soundOn) paintToggles();
+    else if (playing) { Sound.tick(); paintToggles(); }
+    else { Sound.pause(); paintToggles(); } // rien à entendre tant qu'on est en pause
+  }
+  function toggleVoice() {
+    voiceOn = Voice.set(!voiceOn) === true;
+    if (voiceOn && started) {
+      var idx = activeBeatIndex(t);
+      Voice.say(idx, BEATS[idx].say, true);
+    }
+    paintToggles();
+  }
+
+  // les boutons ne doivent pas déclencher la pause de la scène
+  [btnSound, btnVoice].forEach(function (btn) {
+    ["pointerdown", "mousedown", "touchstart"].forEach(function (type) {
+      btn.addEventListener(type, function (e) { e.stopPropagation(); });
+    });
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (btn === btnSound) toggleSound(); else toggleVoice();
+      btn.blur();
+    });
+  });
+
+  /* ================================================================== *
+   * clavier
+   * ================================================================== */
+  window.addEventListener("keydown", function (event) {
+    if (event.code === "Space") { event.preventDefault(); togglePlay(); return; }
+    var k = event.key;
+    if (k === "r" || k === "R") { event.preventDefault(); restart(); return; }
+    if (k === "s" || k === "S") { event.preventDefault(); toggleSound(); return; }
+    if (k === "v" || k === "V") { event.preventDefault(); toggleVoice(); return; }
+  });
+
+  stage.addEventListener("pointerdown", function (event) {
+    if (event.target && event.target.closest && event.target.closest("#controls")) return;
+    event.preventDefault();
+    togglePlay();
+  });
+
+  /* ================================================================== *
+   * démarrage (obligatoire pour l'audio)
+   * ================================================================== */
+  function begin() {
+    if (started) return;
+    started = true;
+    startEl.classList.add("hidden");
+    last = 0;
+    Sound.start();
+    if (soundOn) { Sound.tick(); Sound.whoosh(1.0); }
+    Voice.reset();
+    voiceOn = Voice.isEnabled();
+    paintToggles();
+    setPlaying(true);
+  }
+  startBtn.addEventListener("click", function (e) { e.stopPropagation(); begin(); });
+
+  /* ================================================================== *
+   * dimensionnement
+   * ================================================================== */
+  function fit() {
+    var k = Math.min(window.innerWidth / 1080, window.innerHeight / 1920);
+    stage.style.transform = "translate(-50%,-50%) scale(" + k + ")";
+  }
+  window.addEventListener("resize", fit);
+  fit();
+
+  /* ================================================================== *
+   * rendu
+   * ================================================================== */
+  function render(time) {
+    var warp = warpAt(time);
+    var stretch = stretchAt(time);
+
+    progressFill.style.width = ((time / DUR) * 100).toFixed(3) + "%";
+
+    var active = activeBeatIndex(time);
+    beatNum.textContent = ("0" + (active + 1)).slice(-2);
+
+    if (started && playing) {
+      if (active !== lastBeat) {
+        lastBeat = active;
+        fireBeat(active, false);
+      }
+      // Voice.say ne prononce qu'une fois par beat (garde interne sur l'index)
+      Voice.say(active, BEATS[active].say);
+    }
+
+    // tremblement pendant les beats dangereux
+    var shake = 0;
+    for (var i = 0; i < BEATS.length; i++) {
+      if (BEATS[i].kind !== "danger") continue;
+      shake = Math.max(shake, windowIn(time, BEATS[i].start, BEATS[i].end, 0.45));
+    }
+    shake = shake * (0.5 + 0.5 * Math.abs(Math.sin(time * 5.5)));
+    captionsEl.style.setProperty("--shake", shake.toFixed(3));
+
+    // lentille gravitationnelle : étirement vertical (spaghettification)
+    var sy = 1 + 0.55 * stretch;
+    var sx = 1 - 0.16 * stretch;
+    var lensTransform = "scale(" + sx.toFixed(4) + "," + sy.toFixed(4) + ")";
+    lens.style.transform = lensTransform;
+    gridCv.style.transform = lensTransform;
+    lens.style.opacity = (1 - 0.25 * stretch).toFixed(3);
+    gridCv.style.opacity = (0.35 + 0.55 * warp).toFixed(3);
+
+    // disque d'accrétion
+    disk.style.setProperty("--spin", (time * 26).toFixed(2) + "deg");
+    disk.style.opacity = (0.55 + 0.45 * warp).toFixed(3);
+
+    // étoiles + grille
+    drawStars(time, warp);
+    drawGrid(time, warp);
+
+    // lueur chaude à l'approche
+    warmthEl.style.opacity = (0.10 + 0.55 * warp * warp).toFixed(3);
+
+    // sous-titres
+    for (var b = 0; b < BEATS.length; b++) {
+      var beat = BEATS[b];
+      var el = capEls[b];
+      if (!el) continue;
+      var len = beat.end - beat.start;
+      var local = time - beat.start;
+      if (local < 0 || local >= len) {
+        el.style.opacity = "0";
+        el.style.filter = "none";
+        continue;
+      }
+      var inDur = Math.min(0.38, len * 0.24);
+      var outDur = Math.min(0.30, len * 0.18);
+      var e;
+      if (local < inDur) e = smooth(local / inDur);
+      else if (local > len - outDur) e = 1 - smooth((local - (len - outDur)) / outDur);
+      else e = 1;
+      var shift = local < inDur
+        ? (1 - smooth(local / inDur)) * 44
+        : (local > len - outDur ? -smooth((local - (len - outDur)) / outDur) * 34 : 0);
+
+      el.style.opacity = e.toFixed(3);
+      el.style.transform = "translateY(" + shift.toFixed(2) + "px) scale(" + (0.93 + 0.07 * e).toFixed(4) + ")";
+      el.style.filter = e < 0.985 ? "blur(" + ((1 - e) * 9).toFixed(2) + "px)" : "none";
+
+      var accent = el.querySelector(".t-accent");
+      if (accent) {
+        var pop = beat.kind === "danger" ? 0.22 : 0.13;
+        accent.style.transform = "scale(" + (1 + pop * Math.max(0, 1 - local / 0.6)).toFixed(4) + ")";
+      }
+    }
+
+    // appel à l'action
+    var ctaStart = 28.4;
+    if (time >= ctaStart && time < DUR) {
+      var q = smooth((time - ctaStart) / 0.45);
+      ctaEl.style.opacity = q.toFixed(3);
+      ctaEl.style.transform = "translateY(" + ((1 - q) * 26).toFixed(2) + "px) scale(" + (0.92 + 0.08 * q).toFixed(4) + ")";
+    } else {
+      ctaEl.style.opacity = "0";
+    }
+
+    // indice (s'estompe après 3 s de lecture)
+    hintEl.style.opacity = time < 3 ? (1 - clamp((time - 2.1) / 0.9)).toFixed(3) : "0";
+  }
+
+  /* ================================================================== *
+   * boucle
+   * ================================================================== */
+  function frame(now) {
+    var stamp = now / 1000;
+    if (!last) last = stamp; // première frame après init / démarrage / relance : dt = 0
+    var dt = stamp - last;
+    last = stamp;
+    if (dt < 0) dt = 0;
+    if (dt > 0.25) dt = 0.25; // onglet en arrière-plan : pas de saut
+    if (playing) {
+      t += dt;
+      if (t >= DUR) t -= DUR;
+    }
+    render(t);
+    window.requestAnimationFrame(frame);
+  }
+
+  paintToggles();
+  render(0);
+  window.requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

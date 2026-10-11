@@ -5,16 +5,4 @@ dist-ssr
 .env
 .env.*
 .DS_Store
-
-# Assets extraits des addons tiers : usage local uniquement, jamais publishes
-public/harvest/
-analysis/
-
-# Packs generes : artefacts de build. Le .mcaddon de fusion depasse a lui seul
-# la limite de 100 Mo par fichier de GitHub, qui refuse alors tout le push.
-# Reproductibles : bun run pack:build / bun run pack:merge
-dist-pack/
-
-# Artefact local du mode --build de tsc
-tsconfig.tsbuildinfo
 *.tsbuildinfo
