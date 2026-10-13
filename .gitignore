@@ -6,3 +6,10 @@ dist-ssr
 .env.*
 .DS_Store
 *.tsbuildinfo
+
+# Captures de contrôle générées par tools/shoot.mjs
+tools/shots/
+
+# Les modèles de voix du studio (63 Mo pièce) : téléchargés au premier usage
+tools/assets/models/
+tools/assets/**/__pycache__/

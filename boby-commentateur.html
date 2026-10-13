@@ -1,0 +1,2153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Boby — commentateur · motion design</title>
+<meta name="description" content="Motion design vertical : Boby, commentateur de football ultra maladroit, rate son premier direct — noms estropiés, score inventé, micro lâché." />
+<style>
+  :root{
+    --ink:#eef2f8; --gold:#d9a63a; --gold2:#f4d68a; --blue:#2f6bd8; --blue2:#6ea6ff; --red:#c8102e;
+    --wall:#0d1526; --pitch:#0b2317;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --vh:100vh;
+    /* Le cadre 9:16 est la seule source d'échelle : 1080 px de large valent 100cqw,
+       1920 px de haut valent 100cqh. L'image garde le même cadrage partout. */
+    --fw:min(100vw, calc(var(--vh) * .5625));
+    --fh:min(calc(100vw * 1.777778), var(--vh));
+  }
+  @supports (height:100dvh){ :root{ --vh:100dvh } }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#04060c;color:var(--ink);overflow:hidden;
+    font-family:"Helvetica Neue",Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+  #stage{position:fixed;inset:0;background:var(--wall);overflow:hidden}
+  #frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:1}
+  #scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 88% at 50% 44%,rgba(0,0,0,0) 42%,rgba(0,0,0,.6) 100%)}
+  .layer{position:absolute;inset:0;pointer-events:none}
+
+  /* ---------- typographie (1 px de la maquette = .0926cqw = .0521cqh) ---------- */
+  .card{position:absolute;will-change:opacity,transform}
+  .kicker{font-family:var(--mono);font-weight:600;font-size:2.407cqw;letter-spacing:.34em;text-transform:uppercase;color:rgba(238,242,248,.62)}
+  .title{font-size:9.63cqw;font-weight:800;letter-spacing:.06em;line-height:1;text-transform:uppercase;
+    background:linear-gradient(180deg,#fff8e4,#d9a63a 58%,#8d6216);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 1.296cqw 3.704cqw rgba(217,166,58,.25))}
+  .stat{font-family:var(--mono);font-size:3.148cqw;letter-spacing:.14em;color:#eaf0e9}
+  .stat b{color:var(--gold2)}
+  .credit{font-family:var(--mono);font-size:2.222cqw;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,242,248,.5)}
+  .credit b{color:var(--gold)}
+  .chip{display:inline-flex;align-items:center;gap:1.111cqw;padding:1.111cqw 2.037cqw;border-radius:999px;
+    font-family:var(--mono);font-size:2.222cqw;letter-spacing:.16em;text-transform:uppercase;color:#e6eefb;
+    background:rgba(9,16,28,.88);border:1px solid rgba(110,166,255,.3)}
+  .chip i{width:.926cqw;height:.926cqw;border-radius:50%;background:var(--red);box-shadow:0 0 1.111cqw var(--red);display:inline-block}
+  /* une pastille se mesure à son contenu et se centre : sinon sa boîte occupe toute
+     la largeur du cadre et le téléphone qui l'agrandit la pousse hors de l'écran */
+  .card.chip{width:fit-content;margin-inline:auto;justify-content:center}
+  .tc{left:0;right:0;top:9.375cqh;text-align:center;transform-origin:center top}
+  .bc{left:0;right:0;bottom:29.167cqh;text-align:center;transform-origin:center bottom}
+  .cc{left:0;right:0;top:36.458cqh;text-align:center;transform-origin:center top}
+
+  /* ---------- sous-titres ---------- */
+  #subs{position:absolute;left:0;right:0;bottom:7.813cqh;pointer-events:none;z-index:2}
+  .subline{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:88.889cqw;padding:1.296cqw 2.407cqw 1.481cqw;border-radius:1.481cqw;text-align:center;
+    background:rgba(4,10,17,.78);border:1px solid rgba(217,166,58,.22);
+    box-shadow:0 1.667cqw 5.556cqw rgba(0,0,0,.6);backdrop-filter:blur(3px);
+    font-size:3.704cqw;line-height:1.26;font-weight:600;letter-spacing:-.003em;
+    opacity:0;transform:translateY(12px);transition:opacity .22s ease,transform .22s ease}
+  .subline.show{opacity:1;transform:none}
+  .subline .w{color:rgba(238,242,248,.5);transition:color .1s linear}
+  .subline .w.done{color:rgba(238,242,248,.9)}
+  .subline .w.on{color:#f4d68a;text-shadow:0 0 26px rgba(217,166,58,.6)}
+
+  /* ---------- l'habillage de diffusion (dans le cadre : il fait partie du film) ---------- */
+  #bcast{z-index:1}
+  .bug{position:absolute;left:3.704cqw;top:3.333cqh;display:flex;align-items:stretch;
+    font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;
+    background:linear-gradient(180deg,rgba(9,16,28,.95),rgba(6,12,22,.9));
+    border:1px solid rgba(217,166,58,.45);border-radius:1.111cqw;overflow:hidden;
+    box-shadow:0 1.481cqw 4.444cqw rgba(0,0,0,.55)}
+  .bug>*{display:flex;align-items:center;gap:.926cqw;padding:.926cqw 1.481cqw;font-size:1.852cqw;color:#e7eefb}
+  .bug .live{background:var(--red);color:#fff;font-weight:700;letter-spacing:.22em;font-size:1.667cqw}
+  .bug .live i{width:.833cqw;height:.833cqw;border-radius:50%;background:#fff;animation:live 1.6s ease-in-out infinite}
+  @keyframes live{0%,100%{opacity:1}50%{opacity:.12}}
+  .bug .tag{font-weight:600;color:#fff}
+  .bug .job,.bug .clk{border-left:1px solid rgba(238,242,248,.16)}
+  .bug .job{color:var(--gold2)}
+  .bug .clk{color:rgba(238,242,248,.72);font-variant-numeric:tabular-nums}
+  .chan{position:absolute;right:3.704cqw;top:3.333cqh;display:flex;align-items:center;gap:1.111cqw;
+    font-family:var(--mono);font-size:1.759cqw;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,242,248,.55)}
+  .chan b{color:var(--gold)}
+  .third{position:absolute;left:3.704cqw;bottom:15.625cqh;display:flex;align-items:center;gap:1.296cqw;
+    padding:1.111cqw 2.037cqw;border-left:.648cqw solid var(--gold);border-radius:.741cqw;
+    background:rgba(6,12,22,.88);font-family:var(--mono);font-size:2.315cqw;letter-spacing:.1em;
+    text-transform:uppercase;color:#eaf0e9;box-shadow:0 1.296cqw 3.704cqw rgba(0,0,0,.5);
+    transition:border-color .25s,box-shadow .25s}
+  .third em{font-style:normal;font-size:1.759cqw;letter-spacing:.2em;color:rgba(238,242,248,.6)}
+  .third .air{width:1.111cqw;height:1.111cqw;border-radius:50%;background:rgba(238,242,248,.3);transition:background .2s,box-shadow .2s}
+  .third.on{border-color:var(--red);box-shadow:0 1.296cqw 3.704cqw rgba(0,0,0,.5),0 0 2.963cqw rgba(200,16,46,.35)}
+  .third.on .air{background:#ff5a5a;box-shadow:0 0 1.481cqw rgba(255,90,90,.95)}
+  .err{position:absolute;right:3.704cqw;bottom:22.917cqh;display:flex;align-items:center;gap:1.111cqw;
+    padding:1.111cqw 1.852cqw;border-radius:.556cqw;background:rgba(200,16,46,.92);
+    font-family:var(--mono);font-size:2.037cqw;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff;
+    transform:rotate(-4deg) scale(.6);opacity:0;transition:opacity .18s ease,transform .18s cubic-bezier(.2,1.7,.4,1);
+    box-shadow:0 1.296cqw 3.704cqw rgba(0,0,0,.55)}
+  .err.on{opacity:1;transform:rotate(-4deg) scale(1)}
+  .err span{font-size:2.407cqw;color:#ffd9dd}
+
+  /* ---------- interface de lecture (posée sur le cadre) ---------- */
+  #hud{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:3;pointer-events:none}
+  /* L'image d'abord : trois secondes sans geste pendant la lecture et l'habillage
+     s'efface ; le premier mouvement le ramène. Les boîtes gardent leur place — seule
+     l'opacité change — donc rien ne se déplace et rien ne reste posé sur le film. */
+  #hud{transition:opacity .4s ease}
+  #stage.clean #hud{opacity:0}
+  #stage.clean #mix{pointer-events:none}
+  #prog{position:absolute;left:6.481cqw;right:6.481cqw;top:3.333cqh;display:flex;gap:.648cqw}
+  .pseg{flex:1;height:.365cqh;border-radius:.370cqw;background:rgba(238,242,248,.13);overflow:hidden}
+  .pseg i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6bd8,#f4d68a);box-shadow:0 0 1.296cqw rgba(217,166,58,.45)}
+  #hudScene,#hudTc{position:absolute;bottom:3.333cqh;font-family:var(--mono);font-size:2.037cqw;
+    letter-spacing:.22em;text-transform:uppercase;color:rgba(238,242,248,.45)}
+  #hudScene{left:6.667cqw} #hudTc{right:6.667cqw}
+  #hudScene b{color:var(--gold);font-weight:500}
+  #mix{position:absolute;right:6.481cqw;top:6.771cqh;display:flex;gap:.926cqw;pointer-events:auto}
+  .tog{display:inline-flex;align-items:center;gap:.926cqw;padding:1.019cqw 1.667cqw;border-radius:999px;cursor:pointer;
+    font-family:var(--mono);font-size:1.759cqw;letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(238,242,248,.62);background:rgba(8,12,22,.7);border:1px solid rgba(238,242,248,.16);
+    transition:color .2s,border-color .2s}
+  .tog:hover{color:var(--ink);border-color:rgba(238,242,248,.32)}
+  .tog .dot{width:.833cqw;height:.833cqw;border-radius:50%;background:rgba(238,242,248,.28);transition:background .2s,box-shadow .2s}
+  .tog.on{color:var(--gold2);border-color:rgba(217,166,58,.5)}
+  .tog.on .dot{background:var(--gold);box-shadow:0 0 1.296cqw var(--gold)}
+  .tog.off-audio{opacity:.45}
+
+  /* ---------- accueil et fin ---------- */
+  #veil{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:24px;background:radial-gradient(80% 65% at 50% 42%,rgba(13,21,38,.86),rgba(4,6,12,.97));
+    opacity:0;pointer-events:none;transition:opacity .45s ease}
+  #veil.show{opacity:1;pointer-events:auto}
+  .veilbox{display:flex;flex-direction:column;align-items:center;gap:calc(var(--fw) * .0241);
+    max-width:calc(var(--fw) * .8333);padding:0 calc(var(--fw) * .037)}
+  .veilbrand{font-family:var(--mono);font-size:calc(var(--fw) * .0222);letter-spacing:.42em;text-transform:uppercase;color:rgba(238,242,248,.6)}
+  .veiltitle{font-size:calc(var(--fw) * .0852);font-weight:800;letter-spacing:.08em;line-height:1;
+    background:linear-gradient(180deg,#fff8e4,#d9a63a 58%,#8d6216);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .veilsub{font-size:calc(var(--fw) * .0315);color:rgba(238,242,248,.74);line-height:1.4}
+  .veilsub b{color:var(--gold2)}
+  #go{position:relative;width:calc(var(--fw) * .1593);height:calc(var(--fw) * .1593);border-radius:50%;
+    border:2px solid rgba(217,166,58,.6);
+    background:radial-gradient(60% 60% at 40% 34%,rgba(47,107,216,.4),rgba(12,18,30,.75));
+    cursor:pointer;display:grid;place-items:center;transition:transform .25s,border-color .25s,box-shadow .25s;
+    box-shadow:0 0 0 12px rgba(217,166,58,.07),0 calc(var(--fw) * .0222) calc(var(--fw) * .0556) rgba(0,0,0,.6)}
+  #go:hover{transform:scale(1.06);border-color:var(--gold);box-shadow:0 0 0 16px rgba(217,166,58,.1),0 calc(var(--fw) * .024) calc(var(--fw) * .065) rgba(0,0,0,.65)}
+  #go svg{width:38%;height:38%;margin-left:5%;fill:var(--gold2)}
+  #go::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(217,166,58,.3);animation:pulse 2.6s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.92);opacity:.85}70%{transform:scale(1.22);opacity:0}100%{opacity:0}}
+  .hint{font-family:var(--mono);font-size:calc(var(--fw) * .0194);letter-spacing:.1em;color:rgba(238,242,248,.5);line-height:2}
+  kbd{font-family:var(--mono);font-size:calc(var(--fw) * .0176);padding:3px 10px;border-radius:6px;color:rgba(238,242,248,.82);
+    border:1px solid rgba(238,242,248,.2);background:rgba(238,242,248,.05)}
+  .lede{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  #veilEnd{display:none}
+  #veil.end .veilStart{display:none}
+  #veil.end #veilEnd{display:flex}
+  #veilEnd .veiltitle{font-size:calc(var(--fw) * .0648)}
+  #veilEnd .credit{font-size:calc(var(--fw) * .0222)}
+
+  /* ---------- téléphone : le film garde son cadre, l'habillage passe au pouce ---------- */
+  /* ---------- la passe « allégée » : l'image d'abord, le texte se pose dessus ----------
+     Tout le texte était posé dans des boîtes opaques — pastilles, plaques, cartons
+     de sous-titres, bandeau de diffusion — et ces fonds pleins mangeaient le cadre.
+     Il n'y a plus un seul aplat : la typographie se lit par son ombre portée et par
+     un filet d'accent, et un voile en dégradé au bas du cadre suffit à détacher les
+     sous-titres de n'importe quelle image. Rien n'est supprimé : l'information est
+     la même, elle ne cache simplement plus le film. */
+  #vig{background:radial-gradient(118% 88% at 50% 45%,rgba(0,0,0,0) 46%,rgba(0,0,0,.44) 100%),
+    linear-gradient(to top,rgba(2,5,9,.6) 0%,rgba(2,5,9,.24) 11%,rgba(0,0,0,0) 24%)}
+  .kicker,.stat,.credit,.spec,.sub,.legal,.formation,.chan{text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.9)}
+  .head{font-weight:700;letter-spacing:.004em;text-shadow:0 .556cqw 2.407cqw rgba(0,0,0,.85),0 .185cqw .648cqw rgba(0,0,0,.65)}
+  /* on ne touche pas aux marges intérieures : la boîte garde sa place, seul le
+     fond disparaît — la géométrie du montage reste exactement la même */
+  .plate{background:none;border-radius:0;color:var(--ink);text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .card.chip{background:none;border-color:transparent;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .chip i{box-shadow:none}
+  .subline{max-width:92cqw;padding:0 2cqw;background:none;border:0;border-radius:0;
+    box-shadow:none;backdrop-filter:none;font-weight:700;line-height:1.3;
+    text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 1.296cqw 3.704cqw rgba(0,0,0,.7)}
+  .subline .w.on{color:var(--gold2);text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 0 1.481cqw var(--gold)}
+  .bug{background:rgba(5,10,18,.38);border:0;border-radius:.556cqw;box-shadow:none;
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .bug .live{opacity:.86}
+  .bug .form,.bug .clk{border-left:1px solid rgba(255,255,255,.12)}
+  .third{background:none;border:0;border-left:.37cqw solid var(--gold);border-radius:0;
+    padding:.278cqw 0 .278cqw 1.296cqw;box-shadow:none;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .third.on{box-shadow:none}
+  #bugNames span{background:none;border:0;border-radius:0;padding:.278cqw 0;
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  #bugNames span.on{opacity:.94}
+  #prog{opacity:.85}
+  .pseg{height:.26cqh;background:rgba(255,255,255,.14)}
+  .pseg i{box-shadow:none}
+  #hudScene,#hudTc{font-size:max(2.037cqw,12.5px);color:rgba(255,255,255,.5);
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  #mix{gap:2.2cqw}
+  .tog{font-size:max(1.759cqw,12.5px);background:none;border:0;border-radius:0;padding:1.019cqw 0;
+    color:rgba(255,255,255,.55);text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .tog.on{color:var(--gold2)}
+  .tog .dot{box-shadow:none}
+  .tog.on .dot{background:var(--gold);box-shadow:none}
+
+  @media (max-width:760px){
+    .card.opt{display:none}
+    .subline{font-size:max(17px,4.4vw);line-height:1.3;max-width:94vw;padding:10px 14px 11px;border-radius:14px}
+    .lede{gap:10px}
+    .lede .chip{font-size:14px;padding:13px 16px;gap:8px}
+    #hud{width:100vw;height:var(--vh)}
+    #prog{left:12px;right:12px;top:10px;gap:4px}
+    .pseg{height:4px;border-radius:2px}
+    #mix{right:12px;top:24px;gap:6px}
+    .tog{font-size:13px;padding:12px 15px;gap:8px;letter-spacing:.1em}
+    .tog .dot{width:8px;height:8px;box-shadow:none}
+    #hudScene,#hudTc{font-size:11.5px;letter-spacing:.16em;bottom:14px}
+    #hudScene{left:12px} #hudTc{right:12px}
+    /* l'habillage aux dimensions du pouce : le bandeau LIVE reste, le cartouche et le
+       tampon se font compacts et remontent au-dessus des sous-titres agrandis */
+    .bug{left:10px;top:10px;border-radius:10px}
+    .bug>*{font-size:11px;padding:6px 8px;gap:6px}
+    .bug .live{font-size:10px;letter-spacing:.18em}
+    .bug .live i{width:6px;height:6px}
+    .chan{right:10px;top:12px;font-size:10px;letter-spacing:.2em}
+    .third{left:10px;bottom:22cqh;font-size:12px;padding:6px 10px;gap:7px;border-left-width:4px;border-radius:6px}
+    .third em{font-size:10px;letter-spacing:.14em}
+    .third .air{width:7px;height:7px}
+    .err{right:10px;bottom:30cqh;font-size:11px;padding:6px 9px;gap:7px;border-radius:5px}
+    .err span{font-size:12px}
+    .veilbox{gap:16px;max-width:92vw;padding:0 16px}
+    .veilbrand{font-size:11px;letter-spacing:.28em}
+    .veiltitle{font-size:46px;letter-spacing:.06em}
+    #veilEnd .veiltitle{font-size:34px}
+    .veilsub{font-size:16px}
+    #go{width:112px;height:112px;box-shadow:0 0 0 10px rgba(217,166,58,.07),0 18px 44px rgba(0,0,0,.6)}
+    .hint{font-size:12.5px;line-height:1.75}
+    kbd{font-size:11px}
+    #veilEnd .credit{font-size:11px}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- le film vit dans son cadre 9:16 ; l'interface est posée par-dessus -->
+  <div id="frame">
+    <canvas id="scene" width="1080" height="1920"></canvas>
+    <div id="vig"></div>
+    <div class="layer" id="cards"></div>
+    <div class="layer" id="bcast">
+      <div class="bug">
+        <span class="live"><i></i>LIVE</span>
+        <span class="tag">Boby</span>
+        <span class="job">micro 2</span>
+        <span class="clk" id="bugClock">00:00</span>
+      </div>
+      <div class="chan"><b>★</b>Istan Sport</div>
+      <div class="err" id="err">Erratum<span id="errCount">1</span></div>
+      <div class="third" id="third"><i class="air"></i><b id="thirdName">Boby</b><em id="thirdRole">commentateur (débutant)</em></div>
+    </div>
+    <div id="subs"></div>
+  </div>
+  <div id="hud">
+    <div id="prog"></div>
+    <div id="hudScene"></div>
+    <div id="hudTc"></div>
+    <div id="mix">
+      <button class="tog" id="togSound" type="button" aria-pressed="false"><span class="dot"></span>Son</button>
+      <button class="tog" id="togVoice" type="button" aria-pressed="false"><span class="dot"></span>Voix</button>
+    </div>
+  </div>
+
+  <div id="veil" class="show">
+    <div class="veilbox veilStart">
+      <div class="veilbrand">★ Istan Sport ★</div>
+      <div class="veiltitle">BOBY</div>
+      <div class="veilsub">Commentateur <b>ultra maladroit</b><br />Direct de la cabine 2 · noms de joueurs et score garantis approximatifs</div>
+      <button id="go" type="button" aria-label="Lancer le film"><svg viewBox="0 0 100 100"><path d="M32 22 82 50 32 78Z" /></svg></button>
+      <div class="hint">
+        Un seul clic : image, musique, voix et sous-titres &nbsp;·&nbsp; <b>34 s</b><br />
+        <kbd>Espace</kbd> lecture / pause &nbsp;·&nbsp; <kbd>S</kbd> coupe le son &nbsp;·&nbsp; <kbd>V</kbd> coupe la voix &nbsp;·&nbsp; <kbd>R</kbd> recommencer
+      </div>
+    </div>
+    <div class="veilbox" id="veilEnd">
+      <div class="veilbrand">★ Istan Sport ★</div>
+      <div class="veiltitle">BOBY</div>
+      <div class="veilsub">Premier direct : <b>0</b> nom correct, <b>3</b> erratums, <b>1</b> micro cassé.<br />Il revient après la pub. Normalement.</div>
+      <div class="lede">
+        <button id="replay" class="chip" type="button"><i></i>Revoir le direct</button>
+        <button id="closeEnd" class="chip" type="button"><i></i>Voir l'affiche</button>
+      </div>
+      <div class="credit">Personnage d'après l'app <b>Istan Creator</b> · toute ressemblance avec un vrai commentateur serait un erratum</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   BOBY — COMMENTATEUR. Film vertical autonome.
+   La cabine, le stade, le personnage, les cartons et l'habillage de
+   diffusion sont dessinés par code (canvas 2D + DOM dans le cadre). Le son
+   est synthétisé (Web Audio), la voix passe par speechSynthesis, les
+   sous-titres défilent mot à mot. Aucune ressource externe.
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const W = 1080, H = 1920, TAU = Math.PI * 2;
+  // Boby parle lentement — c'est un débutant. Le montage est calé sur le débit
+  // réel du moteur vocal du navigateur (≈ 1,9 mot/s), pas l'inverse.
+  const TOTAL = 34000;
+
+  /* ------------------------------------------------ 1. le personnage */
+  const BOBY = { name: "Boby", job: "commentateur (débutant)" };
+  const PAL = {
+    wall: "#0d1526", wall2: "#08101f", desk: "#1b2436", deskD: "#0a0f1b",
+    skin: "#f2c9a6", skinD: "#d59f76", hair: "#2b241f",
+    jacket: "#22406e", jacketD: "#16304f", shirt: "#f4f7fb", tie: "#c8102e",
+    red: "#c8102e", gold: "#d9a63a", gold2: "#f4d68a", ink: "#eef2f8",
+  };
+
+  // Les bévues de Boby : chaque entrée déclenche un tampon ERRATUM à l'image.
+  const ERRATA = [
+    { t: 16400, label: "Comistani" },
+    { t: 20400, label: "Mikkelsen" },
+    { t: 24600, label: "Le score" },
+    { t: 28200, label: "Le micro" },
+  ];
+
+  const SCENES = [
+    { from: 0,     to: 7000,  name: "La cabine",      num: "01", draw: drawBooth },
+    { from: 7000,  to: 13500, name: "Le visage",      num: "02", draw: drawFace },
+    { from: 13500, to: 21500, name: "Les noms",       num: "03", draw: drawNames },
+    { from: 21500, to: 27000, name: "Le score",       num: "04", draw: drawScore },
+    { from: 27000, to: TOTAL, name: "La chute",       num: "05", draw: drawFall },
+  ];
+
+  // Chaque fenêtre laisse à la voix le temps de dire sa phrase (≈ 1,9 mot/s),
+  // plus une respiration avant la suivante. Le sous-titre suit exactement ce
+  // découpage : la voix ne court jamais après l'image.
+  // Les fenêtres (`d`) sont celles de la voix **mesurée** : le studio prononce la
+  // réplique, la chronomètre, et écrit le plan dans `assets/voice/`. `bun run assets`
+  // remesure ; une fenêtre plus courte que la phrase prononcée ferait couper le sous-titre.
+  const LINES = [
+    { t: 600,   d: 4168, txt: "Bonsoir, bonsoir. Ici Boby, en direct." },
+    { t: 5200,  d: 3489, txt: "Bienvenue sur, euh, sur notre antenne." },
+    { t: 10300, d: 2924, txt: "Donc ce soir, on commente... quel match." },
+    { t: 14800, d: 4080, txt: "Comistani. Enfin, Comistini... non, comestible." },
+    { t: 19000, d: 3443, txt: "Mikkelsen. Mik... Mike-les-sons, voilà." },
+    { t: 23200, d: 3397, txt: "Zéro partout, euh non, trois à zéro." },
+    { t: 27400, d: 3280, txt: "Aïe. J'ai lâché le micro, pardon." },
+    { t: 30800, d: 2232, txt: "Ce n'est pas moi, c'est le vent." },
+  ];
+
+  const CARDS = [
+    { t: [300, 6200],   cls: "tc kicker", html: "Cabine de commentaire", ui: 2 },
+    // au téléphone, le titre s'agrandit : il remonte (pcss) pour ne pas coller au carton du dessous
+    { t: [900, 6200],   cls: "bc title",  html: "Boby", css: { bottom: "430px" }, pcss: { bottom: "490px" } },
+    { t: [1700, 6200],  cls: "bc kicker", html: "Premier match en direct", css: { bottom: "360px" }, ui: 1.7 },
+
+    { t: [7300, 13000], cls: "tc kicker", html: "En direct de la cabine 2", ui: 1.8 },
+    { t: [10600, 13000],cls: "tc chip",   html: "<i></i>Micro ouvert", css: { top: "230px" }, ui: 2 },
+
+    { t: [13700, 21000],cls: "tc kicker", html: "Les compositions", ui: 2 },
+    { t: [19900, 21000],cls: "bc chip",   html: "<i></i>Orthographe : approximative", css: { bottom: "360px" }, ui: 2 },
+
+    { t: [21700, 26400],cls: "tc kicker", html: "Le score", ui: 2 },
+    { t: [24300, 26400],cls: "bc chip",   html: "<i></i>Version officielle : 0-0", css: { bottom: "360px" }, ui: 2 },
+
+    { t: [27500, 33800],cls: "tc kicker", html: "La chute", ui: 2 },
+    { t: [28800, 33800],cls: "cc title",  html: "Boby", css: { top: "700px", fontSize: "96px" } },
+    { t: [29900, 33800],cls: "cc stat",   html: "1 match · <b>0</b> nom correct · <b>1</b> micro cassé", css: { top: "1080px" }, ui: 1.7 },
+    { t: [31400, 33800],cls: "cc credit", html: "★ &nbsp;Istan Sport&nbsp; ★", css: { top: "1560px" }, opt: true },
+    { t: [32200, 33800],cls: "cc credit", html: "Micro fourni par la chaîne, jamais rendu", css: { top: "1620px" }, opt: true },
+  ];
+
+  /* ------------------------------------------------ 2. outils de dessin */
+  const clamp = (v, a = 0, b = 1) => (v < a ? a : v > b ? b : v);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = (t) => { t = clamp(t); return t * t * (3 - 2 * t); };
+  const eio = (t) => { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  const easeOut = (t) => 1 - Math.pow(1 - clamp(t), 3);
+  const bounce = (t) => { t = clamp(t); const s = Math.sin(t * Math.PI); return s * Math.pow(1 - t, .4); };
+  const rnd = (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+
+  const cv = document.getElementById("scene");
+  const g = cv.getContext("2d");
+
+  function roundRect(gc, x, y, w, h, r) {
+    gc.beginPath();
+    gc.moveTo(x + r, y);
+    gc.lineTo(x + w - r, y); gc.quadraticCurveTo(x + w, y, x + w, y + r);
+    gc.lineTo(x + w, y + h - r); gc.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    gc.lineTo(x + r, y + h); gc.quadraticCurveTo(x, y + h, x, y + h - r);
+    gc.lineTo(x, y + r); gc.quadraticCurveTo(x, y, x + r, y);
+    gc.closePath();
+  }
+
+  function ellipse(gc, x, y, rx, ry, a) {
+    gc.save(); gc.globalAlpha = a; gc.beginPath(); gc.ellipse(x, y, rx, ry, 0, 0, TAU); gc.fill(); gc.restore();
+  }
+
+  /* ------------------------------------------------ 3. le stade, vu de la cabine */
+  function stadiumWindow(gc, x, y, w, h, t, a = 1, detail = 1) {
+    gc.save();
+    gc.globalAlpha = a;
+    const rr = 24 * detail;
+    roundRect(gc, x, y, w, h, rr);
+    gc.save(); gc.clip();
+    // ciel de nuit
+    const sky = gc.createLinearGradient(0, y, 0, y + h);
+    sky.addColorStop(0, "#0a1024"); sky.addColorStop(.5, "#15233c"); sky.addColorStop(1, "#1e3252");
+    gc.fillStyle = sky; gc.fillRect(x, y, w, h);
+    // tribunes et foule
+    gc.fillStyle = "#080e1c"; gc.fillRect(x, y + h * .28, w, h * .38);
+    const crowd = Math.round(420 * detail);
+    for (let i = 0; i < crowd; i++) {
+      const s = i * 5.13;
+      const px = x + rnd(s) * w, py = y + h * .28 + rnd(s + 1.7) * h * .38;
+      gc.globalAlpha = a * (.16 + rnd(s + 2.3) * .5);
+      gc.fillStyle = rnd(s + 3.1) > .5 ? "#4b5f86" : "#93a9ce";
+      gc.beginPath(); gc.arc(px, py, (2 + rnd(s + 4.4) * 2.4) * detail, 0, TAU); gc.fill();
+    }
+    gc.globalAlpha = a;
+    // pelouse
+    const top = y + h * .62;
+    const grass = gc.createLinearGradient(0, top, 0, y + h);
+    grass.addColorStop(0, "#1d6b41"); grass.addColorStop(1, "#0c3c24");
+    gc.fillStyle = grass; gc.fillRect(x, top, w, y + h - top);
+    for (let i = 0; i < 9; i++) {
+      gc.fillStyle = i % 2 ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.08)";
+      gc.fillRect(x + i * (w / 9), top, w / 9 + 1, y + h - top);
+    }
+    gc.strokeStyle = "rgba(233,244,236,.32)"; gc.lineWidth = 2.4 * detail;
+    gc.beginPath(); gc.moveTo(x + w * .10, top + 8); gc.lineTo(x + w * .90, top + 8); gc.stroke();
+    gc.beginPath(); gc.ellipse(x + w / 2, top + (y + h - top) * .42, w * .15, 15 * detail, 0, 0, TAU); gc.stroke();
+    // projecteurs + halos
+    for (const side of [-1, 1]) {
+      const px = x + w / 2 + side * w * .34;
+      gc.fillStyle = "#080e1c";
+      gc.fillRect(px - 5 * detail, y + h * .1, 10 * detail, h * .2);
+      gc.fillRect(px - 34 * detail, y + h * .07, 68 * detail, 14 * detail);
+      for (let i = 0; i < 4; i++) {
+        gc.fillStyle = "rgba(236,246,255,.92)";
+        gc.fillRect(px - 28 * detail + i * 15 * detail, y + h * .073, 10 * detail, 9 * detail);
+      }
+      const cone = gc.createLinearGradient(px, y + h * .12, px, top);
+      cone.addColorStop(0, "rgba(226,240,255,.20)"); cone.addColorStop(1, "rgba(226,240,255,0)");
+      gc.fillStyle = cone;
+      gc.beginPath();
+      gc.moveTo(px - 30 * detail, y + h * .1); gc.lineTo(px + 30 * detail, y + h * .1);
+      gc.lineTo(px + side * 90 * detail, top + 40 * detail); gc.lineTo(px - side * 30 * detail, top + 40 * detail);
+      gc.closePath(); gc.fill();
+    }
+    // éclairs d'appareils photo
+    for (let i = 0; i < Math.round(26 * detail); i++) {
+      const s = 900 + i;
+      if (Math.sin(t * (2 + rnd(s) * 5) + s) < .94) continue;
+      gc.globalAlpha = a * .9; gc.fillStyle = "#eaf2ff";
+      gc.beginPath(); gc.arc(x + rnd(s + 1) * w, y + h * .3 + rnd(s + 2) * h * .32, 2.6 * detail, 0, TAU); gc.fill();
+    }
+    gc.globalAlpha = a;
+    // bandeau publicitaire de la chaîne
+    gc.fillStyle = "rgba(7,13,24,.92)"; gc.fillRect(x, top - 26 * detail, w, 26 * detail);
+    gc.fillStyle = "rgba(217,166,58,.8)"; gc.fillRect(x, top - 26 * detail, w, 2.5 * detail);
+    gc.font = "600 " + Math.round(18 * detail) + "px ui-monospace, monospace";
+    gc.textAlign = "center"; gc.textBaseline = "middle";
+    gc.fillStyle = "rgba(244,214,138,.78)";
+    gc.fillText("I S T A N   S P O R T", x + w / 2, top - 13 * detail);
+    gc.restore();
+    // menuiserie de la fenêtre
+    gc.lineWidth = 10 * detail; gc.strokeStyle = "rgba(9,15,27,.96)";
+    roundRect(gc, x, y, w, h, rr); gc.stroke();
+    gc.lineWidth = 5 * detail; gc.strokeStyle = "rgba(120,150,200,.16)";
+    gc.beginPath(); gc.moveTo(x + w / 2, y + 12); gc.lineTo(x + w / 2, y + h - 12); gc.stroke();
+    // reflet de la vitre
+    gc.globalAlpha = a * .1; gc.fillStyle = "#cfe2ff";
+    gc.beginPath();
+    gc.moveTo(x + 18, y + h); gc.lineTo(x + w * .4, y); gc.lineTo(x + w * .56, y); gc.lineTo(x + w * .28, y + h);
+    gc.closePath(); gc.fill();
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 4. le personnage */
+  /**
+   * Boby. `o` règle le jeu : bouche ouverte (mouth 0-1), clignement (blink 0-1),
+   * sueur, stupeur (shock), tête penchée (tilt), casque à l'envers (back),
+   * mains levées (hands), bras sur la table (desk).
+   */
+  function boby(gc, x, y, s, o = {}) {
+    const mouth = clamp(o.mouth ?? 0), blink = clamp(o.blink ?? 0);
+    const shock = clamp(o.shock ?? 0), sweat = clamp(o.sweat ?? 0);
+    const tilt = o.tilt ?? 0, back = !!o.back, hands = clamp(o.hands ?? 0);
+    const look = o.look ?? 0;
+
+    gc.save();
+    gc.translate(x, y);
+    gc.scale(s, s);
+    gc.rotate(tilt);
+
+    // --- buste : veste, chemise, cravate de travers
+    gc.fillStyle = PAL.jacket;
+    gc.beginPath();
+    gc.moveTo(-158, 320); gc.lineTo(-146, 74);
+    gc.quadraticCurveTo(-124, 8, -46, -10);
+    gc.lineTo(46, -10);
+    gc.quadraticCurveTo(124, 8, 146, 74);
+    gc.lineTo(158, 320);
+    gc.closePath(); gc.fill();
+    gc.save();
+    gc.beginPath();
+    gc.moveTo(-158, 320); gc.lineTo(-146, 74);
+    gc.quadraticCurveTo(-124, 8, -46, -10);
+    gc.lineTo(46, -10);
+    gc.quadraticCurveTo(124, 8, 146, 74);
+    gc.lineTo(158, 320); gc.closePath(); gc.clip();
+    const sh = gc.createLinearGradient(-160, 0, 160, 0);
+    sh.addColorStop(0, "rgba(0,0,0,.3)"); sh.addColorStop(.45, "rgba(255,255,255,.06)"); sh.addColorStop(1, "rgba(0,0,0,.34)");
+    gc.fillStyle = sh; gc.fillRect(-170, -20, 340, 350);
+    gc.restore();
+    // chemise
+    gc.fillStyle = PAL.shirt;
+    gc.beginPath(); gc.moveTo(-50, -8); gc.lineTo(50, -8); gc.lineTo(34, 200); gc.lineTo(-34, 200); gc.closePath(); gc.fill();
+    // revers
+    gc.fillStyle = "#e5eaf1";
+    gc.beginPath(); gc.moveTo(-50, -8); gc.lineTo(-12, 128); gc.lineTo(-50, 168); gc.closePath(); gc.fill();
+    gc.beginPath(); gc.moveTo(50, -8); gc.lineTo(12, 128); gc.lineTo(50, 168); gc.closePath(); gc.fill();
+    // cravate mal mise
+    gc.save();
+    gc.translate(4, 24); gc.rotate(.24);
+    gc.fillStyle = PAL.tie;
+    gc.beginPath(); gc.moveTo(-16, 0); gc.lineTo(16, 0); gc.lineTo(22, 124); gc.lineTo(0, 152); gc.lineTo(-22, 124); gc.closePath(); gc.fill();
+    gc.fillStyle = "rgba(0,0,0,.18)"; gc.beginPath(); gc.moveTo(0, 0); gc.lineTo(22, 124); gc.lineTo(0, 152); gc.closePath(); gc.fill();
+    gc.restore();
+
+    // --- bras
+    const armUp = hands > 0;
+    gc.fillStyle = PAL.jacketD;
+    for (const side of [-1, 1]) {
+      gc.save();
+      gc.translate(side * 132, 96);
+      gc.rotate(side * lerp(.18, -1.5, armUp * hands));
+      roundRect(gc, -34, -12, 68, 210, 30); gc.fill();
+      gc.restore();
+    }
+    // mains
+    gc.fillStyle = PAL.skin;
+    for (const side of [-1, 1]) {
+      gc.save();
+      gc.translate(side * 132, 96);
+      gc.rotate(side * lerp(.18, -1.5, armUp * hands));
+      gc.beginPath(); gc.arc(0, 214, 34, 0, TAU); gc.fill();
+      gc.strokeStyle = "rgba(120,80,60,.35)"; gc.lineWidth = 3;
+      gc.beginPath(); gc.arc(0, 214, 34, 0, TAU); gc.stroke();
+      gc.restore();
+    }
+
+    // --- cou
+    gc.fillStyle = PAL.skinD;
+    roundRect(gc, -32, -66, 64, 90, 26); gc.fill();
+
+    // --- tête
+    gc.save();
+    gc.translate(0, -170);
+    gc.rotate(-look * .05);
+    const head = gc.createLinearGradient(-90, -110, 80, 110);
+    head.addColorStop(0, "#f8d7b8"); head.addColorStop(1, PAL.skinD);
+    gc.fillStyle = head;
+    gc.beginPath(); gc.ellipse(0, 0, 92, 108, 0, 0, TAU); gc.fill();
+    // oreilles
+    for (const side of [-1, 1]) { gc.beginPath(); gc.ellipse(side * 92, 12, 15, 24, 0, 0, TAU); gc.fill(); }
+    // mâchoire mal rasée
+    gc.save();
+    gc.beginPath(); gc.ellipse(0, 0, 92, 108, 0, 0, TAU); gc.clip();
+    gc.fillStyle = "rgba(60,44,38,.16)"; gc.fillRect(-92, 34, 184, 80);
+    gc.restore();
+    // cheveux : une mèche qui se rebelle
+    gc.fillStyle = PAL.hair;
+    gc.beginPath();
+    gc.moveTo(-92, -22);
+    gc.quadraticCurveTo(-72, -104, 4, -104);
+    gc.quadraticCurveTo(78, -104, 92, -26);
+    gc.quadraticCurveTo(66, -60, 22, -58);
+    gc.quadraticCurveTo(-16, -96, -50, -56);
+    gc.quadraticCurveTo(-76, -46, -92, -22);
+    gc.closePath(); gc.fill();
+    gc.beginPath(); gc.moveTo(-6, -100); gc.quadraticCurveTo(-46, -140, -76, -104);
+    gc.quadraticCurveTo(-40, -112, -6, -100); gc.closePath(); gc.fill();
+    // sourcils
+    gc.strokeStyle = PAL.hair; gc.lineWidth = 9; gc.lineCap = "round";
+    gc.beginPath(); gc.moveTo(-56, lerp(-30, -48, shock)); gc.lineTo(-16, lerp(-36, -56, shock)); gc.stroke();
+    gc.beginPath(); gc.moveTo(16, lerp(-36, -56, shock)); gc.lineTo(56, lerp(-30, -48, shock)); gc.stroke();
+    // yeux
+    const open = lerp(1, .12, blink);
+    gc.fillStyle = "#fbfdff";
+    for (const side of [-1, 1]) {
+      gc.beginPath(); gc.ellipse(side * 36, -8, 24, 22 * open, 0, 0, TAU); gc.fill();
+      if (open > .35) {
+        gc.fillStyle = "#20262f";
+        gc.beginPath(); gc.arc(side * 36 + look * 8, -8 + shock * 2, lerp(11, 7, shock), 0, TAU); gc.fill();
+        gc.fillStyle = "rgba(255,255,255,.9)";
+        gc.beginPath(); gc.arc(side * 36 + look * 8 - 4, -12, 3.6, 0, TAU); gc.fill();
+        gc.fillStyle = "#fbfdff";
+      }
+    }
+    // nez
+    gc.fillStyle = PAL.skinD;
+    gc.beginPath();
+    gc.moveTo(-8, 6); gc.quadraticCurveTo(-22, 42, 2, 46); gc.quadraticCurveTo(20, 44, 12, 22);
+    gc.closePath(); gc.fill();
+    // bouche : elle s'ouvre quand il parle, elle tremble quand il doute
+    const wobble = shock * Math.sin(performance.now() / 90) * 2.5;
+    gc.fillStyle = "#7d2a2a";
+    gc.beginPath();
+    gc.ellipse(0, 66 + wobble, lerp(34, 30, mouth), lerp(5, 26, mouth), 0, 0, TAU);
+    gc.fill();
+    if (mouth > .25) {
+      gc.fillStyle = "rgba(255,255,255,.85)";
+      gc.fillRect(-24, 60 + wobble - lerp(0, 6, mouth), 48, 7);
+    }
+    // sueur : deux gouttes qui glissent
+    if (sweat > 0) {
+      gc.fillStyle = "rgba(190,230,255,.85)";
+      const dy = (performance.now() / 1000 % 1.6) / 1.6;
+      for (const [sx, ph] of [[-78, 0], [72, .5]]) {
+        const d = (dy + ph) % 1;
+        gc.globalAlpha = sweat * (1 - d);
+        gc.beginPath(); gc.ellipse(sx, -40 + d * 120, 7, 11, 0, 0, TAU); gc.fill();
+      }
+      gc.globalAlpha = 1;
+    }
+    // casque : bandeau et oreillettes — à l'envers, c'est plus drôle
+    gc.save();
+    gc.strokeStyle = "#1d2836"; gc.lineWidth = 20; gc.lineCap = "round";
+    gc.beginPath();
+    if (back) gc.arc(0, 96, 116, Math.PI * .12, Math.PI * .88);
+    else gc.arc(0, -14, 116, Math.PI * 1.08, Math.PI * 1.92);
+    gc.stroke();
+    for (const side of [-1, 1]) {
+      gc.save();
+      gc.translate(side * 92, back ? 40 : 4);
+      gc.fillStyle = "#26313f";
+      roundRect(gc, -30, -42, 60, 84, 22); gc.fill();
+      gc.fillStyle = side < 0 ? PAL.red : "#7ea7ff";
+      gc.beginPath(); gc.arc(side * 8, 0, 8, 0, TAU); gc.fill();
+      gc.restore();
+    }
+    gc.restore();
+    gc.restore();   // fin de la tête
+
+    gc.restore();   // fin du personnage
+  }
+
+  /** Le micro sur sa perche : il arrive par la droite. */
+  function boomMic(gc, x, y, s, o = {}) {
+    const a = o.a ?? 1, on = o.on !== false;
+    gc.save();
+    gc.globalAlpha = a;
+    gc.translate(x, y);
+    gc.scale(s, s);
+    gc.rotate(o.tilt ?? -.25);
+    // perche
+    gc.strokeStyle = "#1a2331"; gc.lineWidth = 16; gc.lineCap = "round";
+    gc.beginPath(); gc.moveTo(60, -60); gc.lineTo(520, -250); gc.stroke();
+    gc.strokeStyle = "#2b3a4d"; gc.lineWidth = 6;
+    gc.beginPath(); gc.moveTo(60, -60); gc.lineTo(520, -250); gc.stroke();
+    // corps du micro
+    const body = gc.createLinearGradient(-70, -40, 70, 40);
+    body.addColorStop(0, "#39465c"); body.addColorStop(.5, "#1d2734"); body.addColorStop(1, "#0f1621");
+    gc.fillStyle = body;
+    roundRect(gc, -80, -44, 160, 88, 40); gc.fill();
+    gc.save();
+    roundRect(gc, -80, -44, 160, 88, 40); gc.clip();
+    gc.fillStyle = "rgba(255,255,255,.07)";
+    for (let i = -70; i < 72; i += 10) gc.fillRect(i, -44, 4, 88);
+    gc.restore();
+    gc.fillStyle = on ? PAL.red : "#4c5a6e";
+    gc.beginPath(); gc.arc(-58, 0, 9, 0, TAU); gc.fill();
+    if (on) { gc.shadowColor = PAL.red; gc.shadowBlur = 22; gc.beginPath(); gc.arc(-58, 0, 9, 0, TAU); gc.fill(); gc.shadowBlur = 0; }
+    // bonnette
+    gc.fillStyle = "#465668";
+    gc.beginPath(); gc.arc(80, 0, 46, -Math.PI / 2, Math.PI / 2); gc.fill();
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 5. la cabine */
+  function booth(gc, t, o = {}) {
+    const deskY = o.deskY ?? 1290;
+    // mur
+    const wall = gc.createLinearGradient(0, 0, 0, deskY);
+    wall.addColorStop(0, PAL.wall); wall.addColorStop(1, PAL.wall2);
+    gc.fillStyle = wall; gc.fillRect(0, 0, W, deskY + 40);
+    // trame discrète du mur
+    gc.fillStyle = "rgba(255,255,255,.02)";
+    for (let i = 0; i < 26; i++) gc.fillRect(0, 40 + i * 46, W, 1.6);
+    // la fenêtre sur le stade
+    stadiumWindow(gc, 96, 250, W - 192, 780, t, o.window ?? 1, o.detail ?? 1);
+    // tableau de service accroché au mur
+    gc.save();
+    gc.translate(o.board?.x ?? 860, o.board?.y ?? 1080);
+    gc.rotate(-.03);
+    gc.fillStyle = "#f0f3f7"; gc.fillRect(-150, -96, 300, 192);
+    gc.fillStyle = PAL.red; gc.fillRect(-150, -96, 300, 34);
+    gc.fillStyle = "#fff"; gc.font = "700 20px ui-monospace, monospace";
+    gc.textAlign = "center"; gc.textBaseline = "middle";
+    gc.fillText("NE PAS OUBLIER", 0, -79);
+    gc.fillStyle = "rgba(24,34,52,.72)"; gc.font = "600 17px ui-monospace, monospace";
+    ["- respirer", "- regarder la caméra", "- vérifier le score", "- ne pas lâcher le micro"].forEach((l, i) => {
+      gc.textAlign = "left"; gc.fillText(l, -124, -42 + i * 32);
+    });
+    gc.restore();
+    // voyant LIVE mural
+    const live = clamp((t - 1.2) / .8);
+    gc.save();
+    gc.globalAlpha = live;
+    gc.fillStyle = "#141c2b"; roundRect(gc, 150, 1080, 170, 66, 14); gc.fill();
+    gc.fillStyle = PAL.red; gc.shadowColor = PAL.red; gc.shadowBlur = 26;
+    gc.beginPath(); gc.arc(184, 1113, 12, 0, TAU); gc.fill(); gc.shadowBlur = 0;
+    gc.fillStyle = "rgba(255,255,255,.9)"; gc.font = "700 20px ui-monospace, monospace";
+    gc.textAlign = "left"; gc.textBaseline = "middle"; gc.fillText("ON AIR", 208, 1114);
+    gc.restore();
+    // plan de travail
+    gc.fillStyle = PAL.deskD; gc.fillRect(0, deskY, W, H - deskY);
+    const top = gc.createLinearGradient(0, deskY - 26, 0, deskY + 56);
+    top.addColorStop(0, "#26324a"); top.addColorStop(1, "#151d2e");
+    gc.fillStyle = top;
+    gc.beginPath();
+    gc.moveTo(-40, deskY + 24); gc.quadraticCurveTo(W / 2, deskY - 34, W + 40, deskY + 24);
+    gc.lineTo(W + 40, H); gc.lineTo(-40, H); gc.closePath(); gc.fill();
+    gc.strokeStyle = "rgba(217,166,58,.32)"; gc.lineWidth = 3;
+    gc.beginPath(); gc.moveTo(-40, deskY + 26); gc.quadraticCurveTo(W / 2, deskY - 32, W + 40, deskY + 26); gc.stroke();
+    // feuille de match ratée
+    gc.save(); gc.translate(258, deskY + 250); gc.rotate(-.1);
+    gc.fillStyle = "#eef2f6"; gc.fillRect(-168, -216, 336, 432);
+    gc.fillStyle = PAL.red; gc.fillRect(-168, -216, 336, 40);
+    gc.fillStyle = "#fff"; gc.font = "700 19px ui-monospace, monospace"; gc.textAlign = "center"; gc.textBaseline = "middle";
+    gc.fillText("FEUILLE DE MATCH", 0, -196);
+    gc.fillStyle = "rgba(24,34,52,.6)";
+    for (let i = 0; i < 8; i++) gc.fillRect(-136, -150 + i * 44, 272 - (i % 3) * 74, 10);
+    gc.fillStyle = PAL.red; gc.font = "700 26px ui-monospace, monospace"; gc.textAlign = "left";
+    gc.fillText("???", 84, 150);
+    gc.restore();
+    // tasse et téléphone
+    gc.save(); gc.translate(820, deskY + 190);
+    gc.fillStyle = "#d9dee6"; gc.beginPath(); gc.ellipse(0, 0, 62, 20, 0, 0, TAU); gc.fill();
+    gc.fillStyle = "#f2f5f9"; roundRect(gc, -56, -88, 112, 92, 12); gc.fill();
+    gc.fillStyle = "#3a2a22"; gc.beginPath(); gc.ellipse(0, -88, 50, 16, 0, 0, TAU); gc.fill();
+    gc.strokeStyle = "#f2f5f9"; gc.lineWidth = 12; gc.beginPath(); gc.arc(74, -44, 26, -1.1, 1.1); gc.stroke();
+    gc.globalAlpha = .3; gc.strokeStyle = "#cfd8e6"; gc.lineWidth = 4;
+    for (let i = 0; i < 3; i++) {
+      gc.beginPath();
+      gc.moveTo(-16 + i * 16, -108 - i * 6);
+      gc.quadraticCurveTo(-24 + i * 20, -140 - i * 6, -6 + i * 16, -168 - i * 6);
+      gc.stroke();
+    }
+    gc.restore();
+    const buzz = o.buzz ?? 0;
+    gc.save(); gc.translate(700, deskY + 340); gc.rotate(-.16 + buzz * Math.sin(t * 60) * .012);
+    gc.fillStyle = "#0f1626"; roundRect(gc, -70, -120, 140, 240, 18); gc.fill();
+    gc.fillStyle = buzz > 0 ? "rgba(110,166,255,.75)" : "#1b2740";
+    roundRect(gc, -58, -108, 116, 216, 12); gc.fill();
+    gc.fillStyle = "rgba(255,255,255,.5)"; gc.font = "600 15px ui-monospace, monospace";
+    gc.textAlign = "center"; gc.fillText("12 APPELS", 0, -60);
+    gc.fillText("MANQUÉS", 0, -34);
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 6. scènes */
+  function backlight(gc, t, a = .5) {
+    const halo = gc.createRadialGradient(W * .5, 620, 60, W * .5, 700, 900);
+    halo.addColorStop(0, "rgba(226,240,255," + (.16 * a) + ")"); halo.addColorStop(1, "rgba(226,240,255,0)");
+    gc.fillStyle = halo; gc.fillRect(0, 0, W, H);
+  }
+
+  function flashlights(gc, t, n, a) {
+    for (let i = 0; i < n; i++) {
+      const s = 500 + i;
+      if (Math.sin(t * (2 + rnd(s) * 6) + s) < .95) continue;
+      gc.save(); gc.globalAlpha = a * (.4 + rnd(s + 1) * .6);
+      gc.fillStyle = "#eaf2ff"; gc.shadowColor = "#cfe2ff"; gc.shadowBlur = 16;
+      gc.beginPath(); gc.arc(rnd(s + 2) * W, 300 + rnd(s + 3) * 900, 2.6, 0, TAU); gc.fill();
+      gc.restore();
+    }
+  }
+
+  /** 01 · la cabine : Boby s'installe, le casque à l'envers. */
+  function drawBooth(t, p) {
+    g.fillStyle = "#060a13"; g.fillRect(0, 0, W, H);
+    booth(g, t, { buzz: t > 1.9 && t < 3.4 ? 1 : 0, window: clamp((p - .05) / .5), detail: 1 });
+    backlight(g, t, .7);
+    flashlights(g, t, 90, clamp((p - .15) / .4));
+
+    // il se lève dans le cadre, puis se pose sur sa chaise
+    const rise = easyRise(t);
+    boby(g, 540, 1180 + (1 - rise) * 520, 1.05, {
+      mouth: t > 1.1 ? .35 + Math.sin(t * 7.5) * .3 : 0,
+      blink: blinkAt(t),
+      tilt: -0.03 + Math.sin(t * .8) * .015,
+      back: true,                       // le casque est à l'envers : il ne s'en aperçoit pas
+      sweat: t > 3.6 ? clamp((t - 3.6) / 2.4) * .8 : 0,
+    });
+    boomMic(g, 300, 1560, .78, { a: clamp((t - 1.4) / 1), tilt: -.3, on: t > 1.2 });
+    // la pancarte du pupitre, posée de travers
+    const plate = clamp((t - 2.6) / .7);
+    if (plate > 0) {
+      g.save();
+      g.globalAlpha = plate;
+      g.translate(540, 1470);
+      g.rotate(-.06 + Math.sin(plate * Math.PI) * .05);
+      roundRect(g, -190, -40, 380, 80, 10);
+      g.fillStyle = "rgba(9,15,27,.94)"; g.fill();
+      g.fillStyle = PAL.gold; g.fillRect(-190, -40, 8, 80);
+      g.font = "700 34px ui-monospace, monospace";
+      g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = "rgba(244,214,138,.95)";
+      g.fillText("BOBY", 4, 2);
+      g.restore();
+    }
+    vignette(.5);
+    const out = clamp((TOTAL / 1000 - t) / .8);
+    if (out < 1) { g.fillStyle = "rgba(3,6,12," + (1 - out) + ")"; g.fillRect(0, 0, W, H); }
+  }
+  const easyRise = (t) => easeOut(clamp((t - .25) / 1.5));
+  const blinkAt = (t) => (Math.sin(t * 1.7) > .93 ? 1 : 0);
+
+  /** 02 · le visage : gros plan, la caméra tourne, il ne la regarde pas. */
+  function drawFace(t, p) {
+    g.fillStyle = "#080d18"; g.fillRect(0, 0, W, H);
+    // bokeh de la cabine derrière lui
+    const bokeh = g.createRadialGradient(W * .7, 520, 40, W * .7, 620, 980);
+    bokeh.addColorStop(0, "rgba(60,110,190,.35)"); bokeh.addColorStop(1, "rgba(8,13,24,0)");
+    g.fillStyle = bokeh; g.fillRect(0, 0, W, H);
+    stadiumWindow(g, -80, 120, W + 160, 700, t, .28, .8);
+    for (let i = 0; i < 14; i++) {
+      const s = 700 + i;
+      g.globalAlpha = .12 + rnd(s) * .1;
+      g.fillStyle = i % 2 ? "#7ea7ff" : "#f4d68a";
+      g.beginPath(); g.arc(rnd(s) * W, 160 + rnd(s + 1) * 720, 8 + rnd(s + 2) * 22, 0, TAU); g.fill();
+    }
+    g.globalAlpha = 1;
+    // la caméra s'approche doucement, puis recule
+    const zoom = lerp(1.06, 1.0, eio(p));
+    g.save();
+    g.translate(W / 2, 980); g.scale(zoom * 1.9, zoom * 1.9); g.translate(-W / 2, -980);
+    booth(g, t, { deskY: 1520, window: 0, detail: 1, buzz: 0 });
+    boby(g, 540, 1010, 1, {
+      mouth: t > 7.4 ? .3 + Math.sin(t * 8.4) * .34 : .1,
+      blink: t > 8.1 && t < 8.3 ? 1 : blinkAt(t),
+      tilt: .04 * Math.sin(t * .9),
+      shock: clamp((t - 11.6) / 1.2) * .5,
+      sweat: clamp((t - 10.4) / 2) * .9,
+      look: .6,                       // il regarde à côté de la caméra
+    });
+    g.restore();
+    boomMic(g, 210, 1760, 1.5, { a: 1, tilt: -.18, on: true });
+    // prompteur : « SOURIRE »
+    const promp = clamp((t - 8.4) / .6);
+    if (promp > 0) {
+      g.save();
+      g.globalAlpha = promp * .95;
+      g.translate(150, 300); g.rotate(-.04);
+      roundRect(g, -190, -60, 380, 120, 12);
+      g.fillStyle = "rgba(6,11,20,.9)"; g.fill();
+      g.strokeStyle = "rgba(217,166,58,.5)"; g.lineWidth = 2; g.stroke();
+      g.font = "700 44px ui-monospace, monospace";
+      g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = "rgba(244,214,138,.95)"; g.fillText("SOURIRE", 0, 0);
+      g.font = "600 18px ui-monospace, monospace";
+      g.fillStyle = "rgba(238,242,248,.6)"; g.fillText("(et regardez la caméra)", 0, 40);
+      g.restore();
+    }
+    // VU-mètre : il ne bouge que quand Boby parle
+    const db = talking(t) ? .55 + Math.abs(Math.sin(t * 9)) * .45 : .12;
+    g.save();
+    g.translate(880, 620);
+    for (let i = 0; i < 12; i++) {
+      const on = db > i / 12;
+      g.fillStyle = on ? (i > 8 ? PAL.red : i > 6 ? PAL.gold : "#5ee08a") : "rgba(238,242,248,.14)";
+      g.fillRect(0, -i * 26, 26 + on * (6 + rnd(i + t) * 10), 16);
+    }
+    g.font = "600 16px ui-monospace, monospace"; g.textAlign = "center";
+    g.fillStyle = "rgba(238,242,248,.5)"; g.fillText("NIVEAU", 22, 30);
+    g.restore();
+    vignette(.55);
+    const out = clamp((TOTAL / 1000 - t) / .8);
+    if (out < 1) { g.fillStyle = "rgba(3,6,12," + (1 - out) + ")"; g.fillRect(0, 0, W, H); }
+  }
+
+  /** 03 · les noms : le vrai nom, celui qu'il dit, et le tampon. */
+  function drawNames(t, p) {
+    g.fillStyle = "#070c16"; g.fillRect(0, 0, W, H);
+    g.save();
+    g.globalAlpha = .22;
+    stadiumWindow(g, 0, 0, W, H, t, .18, 1.6);
+    g.restore();
+    // bandeau de l'émission
+    g.fillStyle = "rgba(9,15,27,.92)"; g.fillRect(0, 150, W, 130);
+    g.fillStyle = PAL.gold; g.fillRect(0, 150, W, 4);
+    g.fillStyle = PAL.gold; g.fillRect(0, 276, W, 4);
+    g.font = "700 46px ui-monospace, monospace";
+    g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "rgba(244,214,138,.95)";
+    g.fillText("LES COMPOSITIONS", W / 2, 216);
+
+    const rows = [
+      { at: 14200, real: "O. COMISTANI", said: "COMISTINI", note: "presque" },
+      { at: 18400, real: "J. MIKKELSEN", said: "MIKE-LES-SONS", note: "pas du tout" },
+      { at: 20200, real: "Y. SAKO", said: "...", note: "il a renoncé" },
+    ];
+    rows.forEach((r, i) => {
+      const a = clamp((t * 1000 - r.at) / 520);
+      if (a <= 0) return;
+      const y = 520 + i * 300;
+      const slide = (1 - easeOut(a)) * 90;
+      g.save();
+      g.globalAlpha = clamp(a * 1.4);
+      g.translate(0, slide);
+      // vrai nom
+      roundRect(g, 70, y - 62, 430, 124, 14);
+      g.fillStyle = "rgba(12,25,46,.92)"; g.fill();
+      g.strokeStyle = "rgba(110,166,255,.5)"; g.lineWidth = 2; g.stroke();
+      g.fillStyle = "rgba(110,166,255,.85)"; g.fillRect(70, y - 62, 7, 124);
+      g.font = "700 34px ui-monospace, monospace"; g.textAlign = "left"; g.textBaseline = "middle";
+      g.fillStyle = "#dce8ff"; g.fillText(r.real, 98, y - 14);
+      g.font = "600 17px ui-monospace, monospace";
+      g.fillStyle = "rgba(220,232,255,.55)"; g.fillText("SUR LA FEUILLE", 98, y + 28);
+      // ce qu'il dit
+      const wrong = clamp((t * 1000 - r.at - 900) / 420);
+      roundRect(g, 560, y - 62, 450, 124, 14);
+      g.fillStyle = "rgba(46,8,14,.92)"; g.fill();
+      g.strokeStyle = "rgba(200,16,46,.6)"; g.lineWidth = 2; g.stroke();
+      g.fillStyle = PAL.red; g.fillRect(560, y - 62, 7, 124);
+      if (wrong > 0) {
+        g.save();
+        g.translate(560 + Math.sin(t * 26) * (1 - wrong) * 6, 0);
+        g.font = "700 34px ui-monospace, monospace"; g.textAlign = "left";
+        g.fillStyle = "#ffd9dd"; g.fillText(r.said, 588, y - 14);
+        g.font = "600 17px ui-monospace, monospace";
+        g.fillStyle = "rgba(255,217,221,.6)"; g.fillText("CE QU'IL DIT", 588, y + 28);
+        g.restore();
+      }
+      // trait de correction
+      if (wrong > .5) {
+        g.strokeStyle = "rgba(200,16,46,.75)"; g.lineWidth = 5; g.lineCap = "round";
+        g.beginPath(); g.moveTo(520, y - 30); g.lineTo(544, y + 30); g.stroke();
+        g.font = "600 20px ui-monospace, monospace"; g.textAlign = "center";
+        g.fillStyle = "rgba(255,217,221,.7)"; g.fillText(r.note, 532, y + 78);
+      }
+      g.restore();
+    });
+
+    // le compteur d'erreurs
+    const n = errataAt(t);
+    g.save();
+    g.translate(W / 2, 1450);
+    g.font = "600 24px ui-monospace, monospace"; g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "rgba(238,242,248,.6)"; g.fillText("ERREURS AU COMPTEUR", 0, -46);
+    g.font = "800 92px ui-monospace, monospace";
+    g.fillStyle = n ? "#ff5a5a" : "rgba(238,242,248,.7)";
+    g.shadowColor = n ? "rgba(200,16,46,.8)" : "transparent"; g.shadowBlur = n ? 30 : 0;
+    g.fillText(String(n), 0, 22);
+    g.shadowBlur = 0;
+    g.font = "600 20px ui-monospace, monospace";
+    g.fillStyle = "rgba(238,242,248,.45)";
+    g.fillText(n < 3 ? "il reste des noms à massacrer" : "le stade commence à rire", 0, 88);
+    g.restore();
+
+    // Boby, au coin, la main sur le visage
+    g.save();
+    g.translate(180, 1760);
+    boby(g, 0, 0, .62, {
+      mouth: talking(t) ? .5 : .2, blink: blinkAt(t), sweat: .8, tilt: .16,
+      look: -.4, hands: .25,
+    });
+    g.restore();
+    vignette(.5);
+    const out = clamp((TOTAL / 1000 - t) / .8);
+    if (out < 1) { g.fillStyle = "rgba(3,6,12," + (1 - out) + ")"; g.fillRect(0, 0, W, H); }
+  }
+
+  /** 04 · le score : trois versions, un seul tableau d'affichage. */
+  function drawScore(t, p) {
+    g.fillStyle = "#070c16"; g.fillRect(0, 0, W, H);
+    g.save();
+    g.globalAlpha = .2;
+    stadiumWindow(g, 0, 0, W, H, t, .16, 1.6);
+    g.restore();
+    // le grand tableau d'affichage
+    const wob = errataAt(t) >= 3 ? Math.sin(t * 30) * 3 : 0;
+    g.save();
+    g.translate(W / 2, 700 + wob);
+    roundRect(g, -430, -220, 860, 440, 24);
+    g.fillStyle = "rgba(6,11,20,.95)"; g.fill();
+    g.strokeStyle = "rgba(238,242,248,.18)"; g.lineWidth = 3; g.stroke();
+    g.font = "600 24px ui-monospace, monospace";
+    g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "rgba(238,242,248,.55)";
+    g.fillText("TABLEAU D'AFFICHAGE OFFICIEL", 0, -178);
+    g.font = "700 64px ui-monospace, monospace";
+    g.fillStyle = "#dce8ff"; g.fillText("AST", -250, -60);
+    g.fillText("IST", 250, -60);
+    g.font = "800 150px ui-monospace, monospace";
+    g.fillStyle = PAL.gold2;
+    g.shadowColor = "rgba(217,166,58,.6)"; g.shadowBlur = 30;
+    g.fillText("0 - 0", 0, 20);
+    g.shadowBlur = 0;
+    g.font = "600 22px ui-monospace, monospace";
+    g.fillStyle = "rgba(238,242,248,.5)"; g.fillText("45' · mi-temps", 0, 140);
+    g.restore();
+
+    // les trois versions de Boby
+    const versions = [
+      { at: 22000, txt: "« ZÉRO À ZÉRO »", ok: true },
+      { at: 23000, txt: "« UN À RIEN »", ok: false },
+      { at: 24200, txt: "« TROIS À ZÉRO »", ok: false },
+    ];
+    versions.forEach((v, i) => {
+      const a = clamp((t * 1000 - v.at) / 420);
+      if (a <= 0) return;
+      const x = 150 + i * 30, y = 1150 + i * 150;
+      g.save();
+      g.globalAlpha = easeOut(a);
+      g.translate(x, y);
+      g.rotate((-.03 + i * .02) + (1 - a) * .1);
+      const wdt = 620;
+      roundRect(g, 0, -52, wdt, 104, 18);
+      g.fillStyle = v.ok ? "rgba(12,34,24,.92)" : "rgba(40,8,14,.92)"; g.fill();
+      g.strokeStyle = v.ok ? "rgba(94,224,138,.55)" : "rgba(200,16,46,.6)"; g.lineWidth = 2; g.stroke();
+      g.fillStyle = v.ok ? "#5ee08a" : "#ff5a5a"; g.fillRect(0, -52, 7, 104);
+      g.font = "700 34px ui-monospace, monospace"; g.textAlign = "left"; g.textBaseline = "middle";
+      g.fillStyle = v.ok ? "#d6ffe4" : "#ffd9dd";
+      g.fillText(v.txt, 34, -4);
+      g.font = "600 18px ui-monospace, monospace";
+      g.fillStyle = "rgba(238,242,248,.5)";
+      g.fillText(v.ok ? "1ʳᵉ version" : (i === 1 ? "2ᵉ version, 1 seconde plus tard" : "3ᵉ version, décidément"), 34, 30);
+      g.restore();
+    });
+    // le tampon
+    const er = clamp((t * 1000 - 24600) / 380);
+    if (er > 0) {
+      g.save();
+      g.translate(W / 2, 990);
+      g.rotate(-.18 + (1 - er) * .3);
+      const sc = lerp(1.9, 1, easeOut(er));
+      g.scale(sc, sc);
+      g.globalAlpha = clamp(er * 1.6);
+      roundRect(g, -260, -70, 520, 140, 12);
+      g.fillStyle = "rgba(200,16,46,.92)"; g.fill();
+      g.strokeStyle = "#fff"; g.lineWidth = 4; g.setLineDash([12, 9]); g.stroke();
+      g.setLineDash([]);
+      g.font = "800 62px ui-monospace, monospace"; g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = "#fff"; g.fillText("ERRATUM", 0, 4);
+      g.restore();
+    }
+    g.save();
+    g.translate(880, 1760);
+    boby(g, 0, 0, .8, { mouth: .55, blink: blinkAt(t), shock: .8, sweat: .9, tilt: -.12, hands: .5 });
+    g.restore();
+    vignette(.5);
+    const out = clamp((TOTAL / 1000 - t) / .8);
+    if (out < 1) { g.fillStyle = "rgba(3,6,12," + (1 - out) + ")"; g.fillRect(0, 0, W, H); }
+  }
+
+  /** 05 · la chute : le micro part, la tasse suit, le stade souffle. */
+  function drawFall(t, p) {
+    g.fillStyle = "#070c16"; g.fillRect(0, 0, W, H);
+    booth(g, t, { deskY: 1240, window: .85, detail: 1, buzz: 0 });
+    backlight(g, t, .5);
+    flashlights(g, t, 120, .8);
+
+    const drop = clamp((t * 1000 - 27400) / 900);
+    const bong = clamp((t * 1000 - 28100) / 500);
+    // le micro tombe, en tournant
+    g.save();
+    g.translate(lerp(430, 470, drop), lerp(1160, 1500, eio(drop)));
+    g.rotate(drop * 2.6);
+    g.fillStyle = "#1d2734";
+    roundRect(g, -70, -34, 140, 68, 30);
+    g.fill();
+    g.fillStyle = drop > .9 ? "#3a4658" : PAL.red;
+    g.beginPath(); g.arc(-52, 0, 8, 0, TAU); g.fill();
+    g.restore();
+    if (drop < 1) {
+      g.save(); g.globalAlpha = (1 - drop) * .5;
+      g.strokeStyle = "rgba(238,242,248,.5)"; g.lineWidth = 3;
+      for (let i = 0; i < 3; i++) {
+        g.beginPath();
+        g.moveTo(400 + i * 40, 1120 + i * 30);
+        g.quadraticCurveTo(370 + i * 44, 1240 + i * 40, 420 + i * 46, 1360 + i * 46);
+        g.stroke();
+      }
+      g.restore();
+    }
+    // l'onde de choc et le « BONG »
+    if (bong > 0 && bong < 1) {
+      g.save();
+      g.globalAlpha = (1 - bong) * .8;
+      g.strokeStyle = "rgba(244,214,138,.8)"; g.lineWidth = 5;
+      g.beginPath(); g.ellipse(470, 1500, lerp(40, 340, easeOut(bong)), lerp(14, 120, easeOut(bong)), 0, 0, TAU); g.stroke();
+      g.restore();
+    }
+    if (drop > .75) {
+      const a = clamp((drop - .75) / .25);
+      g.save();
+      g.translate(470, 1230);
+      g.rotate(-.08);
+      g.globalAlpha = a;
+      g.font = "800 96px ui-monospace, monospace";
+      g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = PAL.gold2; g.shadowColor = "rgba(217,166,58,.85)"; g.shadowBlur = 34;
+      g.fillText("BONG", 0, 0);
+      g.restore();
+    }
+    // la tasse se renverse
+    const spill = clamp((t * 1000 - 27700) / 700);
+    if (spill > 0) {
+      g.save();
+      g.translate(770, 1430);
+      g.rotate(spill * 1.5);
+      g.fillStyle = "#f2f5f9"; roundRect(g, -50, -80, 100, 84, 12); g.fill();
+      g.restore();
+      g.fillStyle = "rgba(58,42,34,.75)";
+      g.beginPath();
+      g.ellipse(790, 1470, 40 + spill * 70, 12 + spill * 20, 0, 0, TAU);
+      g.fill();
+    }
+    // Boby, sidéré, les mains en l'air
+    boby(g, 540, 1120, 1.02, {
+      mouth: .8, blink: 0, shock: 1, sweat: 1, tilt: .05,
+      hands: clamp((t * 1000 - 27400) / 500),
+      back: true,
+    });
+    vignette(.52);
+    const out = clamp((TOTAL / 1000 - t) / .9);
+    if (out < 1) { g.fillStyle = "rgba(3,6,12," + (1 - out) + ")"; g.fillRect(0, 0, W, H); }
+  }
+  const errataAt = (t) => ERRATA.filter((e) => t * 1000 >= e.t).length;
+  const talking = (t) => LINES.some((L) => t * 1000 >= L.t - 120 && t * 1000 <= L.t + L.d + 260);
+
+  function transition(ms) {
+    const sc = sceneAt(ms);
+    if (sc.i === 0) return;
+    const dt = ms - sc.from;
+    if (dt > 700) return;
+    g.save();
+    const k = dt / 500;
+    if (k <= 1) {
+      g.globalAlpha = (1 - k) * .12;
+      g.fillStyle = "#eef2f8"; g.fillRect(0, 0, W, H);
+      const y = lerp(-400, H + 400, eio(k));
+      g.globalAlpha = (1 - k) * .26;
+      const sg = g.createLinearGradient(0, y - 300, 0, y + 300);
+      sg.addColorStop(0, "rgba(244,214,138,0)"); sg.addColorStop(.5, "rgba(244,214,138,.7)"); sg.addColorStop(1, "rgba(244,214,138,0)");
+      g.fillStyle = sg; g.fillRect(0, y - 320, W, 640);
+    }
+    // le bandeau de la chaîne, à chaque changement de plan
+    const bx = lerp(-W * .45, W * 1.45, eio(dt / 700));
+    const bh = 120, by = H * .5 - bh / 2;
+    g.globalAlpha = Math.sin(clamp(dt / 700) * Math.PI) * .94;
+    g.fillStyle = "rgba(6,10,20,.94)"; g.fillRect(bx - W, by, W * 2, bh);
+    g.fillStyle = PAL.gold; g.fillRect(bx - W, by, W * 2, 5); g.fillRect(bx - W, by + bh - 5, W * 2, 5);
+    g.font = "600 36px ui-monospace, monospace";
+    g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "rgba(247,244,236,.94)";
+    g.fillText("ISTAN SPORT", bx, by + bh / 2);
+    g.restore(); g.globalAlpha = 1;
+  }
+
+  const GRAIN = (() => {
+    const c = document.createElement("canvas"); c.width = c.height = 300;
+    const gg = c.getContext("2d");
+    const img = gg.createImageData(300, 300);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = 118 + rnd(i) * 130;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 22;
+    }
+    gg.putImageData(img, 0, 0);
+    return c;
+  })();
+
+  function grainFrame(t) {
+    g.save();
+    g.globalAlpha = .04;
+    g.translate(-((t * 70) % 300), -((t * 110) % 300));
+    for (let x = -300; x < W + 300; x += 300) for (let y = -300; y < H + 300; y += 300) g.drawImage(GRAIN, x, y);
+    g.restore();
+  }
+
+  function vignette(a) {
+    const v = g.createRadialGradient(W / 2, H * .45, 220, W / 2, H * .5, 1160);
+    v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0," + a + ")");
+    g.fillStyle = v; g.fillRect(0, 0, W, H);
+  }
+
+  function sceneAt(ms) {
+    for (let i = SCENES.length - 1; i >= 0; i--) if (ms >= SCENES[i].from) return { i, ...SCENES[i] };
+    return { i: 0, ...SCENES[0] };
+  }
+
+  /* ------------------------------------------------ 7. son */
+  // La nappe part sur un accord et se trompe de fin : c'est la bande d'un
+  // commentateur qui doute (ré mineur qui s'égare).
+  const CHORDS = [
+    [73.42, 110.00, 130.81, 174.61],   // Dm7
+    [58.27, 87.31, 116.54, 174.61],    // Bb
+    [49.00, 73.42, 116.54, 146.83],    // Gm
+    [55.00, 82.41, 110.00, 164.81],    // A (le doute)
+    [73.42, 110.00, 146.83, 220.00],   // D (on assume)
+  ];
+
+  function noiseBuffer(ctx) {
+    if (!ctx.__nb) {
+      const len = Math.floor(ctx.sampleRate * 1.2), b = ctx.createBuffer(1, len, ctx.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      ctx.__nb = b;
+    }
+    return ctx.__nb;
+  }
+
+  const SYN = {
+    tone(ctx, dest, at, freq, dur, type, peak, glide) {
+      const o = ctx.createOscillator(), a = ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, at);
+      if (glide) o.frequency.exponentialRampToValueAtTime(Math.max(18, glide), at + dur);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + Math.min(.2, dur * .2));
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      o.connect(a); a.connect(dest); o.start(at); o.stop(at + dur + .05);
+    },
+    noise(ctx, dest, at, dur, peak, f0, f1, q) {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx);
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = q ?? 1;
+      bp.frequency.setValueAtTime(f0, at);
+      bp.frequency.exponentialRampToValueAtTime(Math.max(40, f1), at + dur * .85);
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + dur * .35);
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      s.connect(bp); bp.connect(a); a.connect(dest); s.start(at); s.stop(at + dur + .05);
+    },
+  };
+
+  const VOICES = {
+    /** Nappe tenue : idx = accord, dur = durée. */
+    pad: (ctx, d, at, idx = 0, dur = 9.5) => {
+      const notes = CHORDS[idx % CHORDS.length];
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = .7;
+      lp.frequency.setValueAtTime(420, at);
+      lp.frequency.linearRampToValueAtTime(1500, at + dur * .4);
+      lp.frequency.linearRampToValueAtTime(620, at + dur);
+      const vg = ctx.createGain();
+      vg.gain.setValueAtTime(.0001, at);
+      vg.gain.exponentialRampToValueAtTime(.085, at + Math.min(2.2, dur * .3));
+      vg.gain.setValueAtTime(.085, at + dur * .62);
+      vg.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      lp.connect(vg); vg.connect(d);
+      notes.forEach((f, i) => {
+        const o = ctx.createOscillator(), og = ctx.createGain();
+        o.type = i === 0 ? "sine" : "triangle";
+        o.frequency.value = f * (i % 2 ? 1.0016 : .9994);
+        og.gain.value = i === 0 ? .5 : .26;
+        o.connect(og); og.connect(lp); o.start(at); o.stop(at + dur + .1);
+      });
+    },
+    /** Rumeur du stade : des creux, une montée, et le souffle qui retombe. */
+    crowd: (ctx, d, at) => {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx); s.loop = true;
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 520; lp.Q.value = .5;
+      const a = ctx.createGain();
+      const env = [[0, .02], [2.4, .05], [5, .025], [6.6, .04], [10, .055], [13.6, .03], [16.4, .06], [21, .04], [23, .065], [26, .045], [28.4, .12], [31, .05], [33.4, .02]];
+      a.gain.setValueAtTime(.0001, at);
+      for (const [tt, v] of env) a.gain.linearRampToValueAtTime(v, at + tt);
+      s.connect(lp); lp.connect(a); a.connect(d);
+      s.start(at); s.stop(at + TOTAL / 1000 + .1);
+    },
+    /** Souffle très doux : rien n'est jamais sec. */
+    air: (ctx, d, at) => {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx); s.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 600; bp.Q.value = .6;
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.linearRampToValueAtTime(.013, at + 2.5);
+      a.gain.setValueAtTime(.013, at + TOTAL / 1000 - 3);
+      a.gain.linearRampToValueAtTime(.0001, at + TOTAL / 1000);
+      s.connect(bp); bp.connect(a); a.connect(d);
+      s.start(at); s.stop(at + TOTAL / 1000 + .1);
+    },
+    /** Le sifflet de l'arbitre — ici, il règle surtout les bêtises du micro. */
+    whistle: (ctx, d, at) => {
+      const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), a = ctx.createGain();
+      car.type = "sine"; car.frequency.value = 2350; mod.type = "sine"; mod.frequency.value = 62;
+      mg.gain.setValueAtTime(240, at);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(.05, at + .03);
+      a.gain.setValueAtTime(.05, at + .36);
+      a.gain.exponentialRampToValueAtTime(.0001, at + .5);
+      mod.connect(mg); mg.connect(car.frequency); car.connect(a); a.connect(d);
+      car.start(at); mod.start(at); car.stop(at + .55); mod.stop(at + .55);
+      SYN.noise(ctx, d, at, .4, .03, 2600, 3200, 2);
+    },
+    tom: (ctx, d, at) => { SYN.tone(ctx, d, at, 130, .6, "sine", .14, 74); SYN.noise(ctx, d, at, .18, .03, 320, 120, .8); },
+    kick: (ctx, d, at) => { SYN.tone(ctx, d, at, 72, .5, "sine", .18, 34); SYN.noise(ctx, d, at, .12, .03, 900, 220, .8); },
+    sub: (ctx, d, at) => SYN.tone(ctx, d, at, 48, 3.2, "sine", .15, 32),
+    riser: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.6, .05, 300, 3400, .8); SYN.tone(ctx, d, at, 160, 1.6, "triangle", .03, 520); },
+    whoosh: (ctx, d, at) => SYN.noise(ctx, d, at, 1.1, .075, 220, 2600, .9),
+    whooshSoft: (ctx, d, at) => SYN.noise(ctx, d, at, 1.4, .045, 280, 1500, 1.3),
+    hush: (ctx, d, at) => SYN.noise(ctx, d, at, .6, .025, 500, 260, 1.1),
+    stamp: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 92, 1.1, "sine", .2, 40);
+      SYN.noise(ctx, d, at, .8, .06, 600, 140, .7);
+      [110, 164.81, 220, 293.66].forEach(f => SYN.tone(ctx, d, at, f, 2.6, "triangle", .022));
+    },
+    /** Un choc sec : le tampon, la portée, la bévue. */
+    impact: (ctx, d, at) => { SYN.tone(ctx, d, at, 112, .5, "sine", .2, 44); SYN.noise(ctx, d, at, .34, .1, 1400, 200, .8); },
+    blip: (ctx, d, at) => SYN.tone(ctx, d, at, 1320, .12, "sine", .035, 1600),
+    chip: (ctx, d, at) => { SYN.tone(ctx, d, at, 2400, .05, "square", .018); SYN.noise(ctx, d, at, .05, .012, 3000, 1800, 1.5); },
+    /** Le petit ding des corrections — celui qui dit « raté ». */
+    coinLand: (ctx, d, at) => { SYN.tone(ctx, d, at, 988, .16, "square", .016); SYN.tone(ctx, d, at + .09, 1319, .3, "square", .014); },
+    pluck: (ctx, d, at) => {
+      const f = [587.33, 739.99, 880, 1108.73][Math.round(at * 1000 / 100) % 4];
+      SYN.tone(ctx, d, at, f, .7, "triangle", .026);
+      SYN.tone(ctx, d, at, f * 2, .4, "sine", .01);
+    },
+    chime: (ctx, d, at) => {
+      const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), a = ctx.createGain();
+      car.type = "sine"; car.frequency.value = 1174.66; mod.type = "sine"; mod.frequency.value = 2900;
+      mg.gain.setValueAtTime(780, at); mg.gain.exponentialRampToValueAtTime(1, at + 1.2);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(.05, at + .02);
+      a.gain.exponentialRampToValueAtTime(.0001, at + 1.5);
+      mod.connect(mg); mg.connect(car.frequency); car.connect(a); a.connect(d);
+      car.start(at); mod.start(at); car.stop(at + 1.6); mod.stop(at + 1.6);
+    },
+    sparkle: (ctx, d, at) => { [1568, 1975, 2637].forEach((f, i) => SYN.tone(ctx, d, at + i * .08, f, .8, "sine", .018)); },
+    swell: (ctx, d, at) => { SYN.noise(ctx, d, at, 2.2, .04, 400, 2600, .7); SYN.tone(ctx, d, at, 73.42, 2.4, "sine", .07); },
+    /** La clameur du stade — celle qui salue une bourde. */
+    crowdOhh: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.9, .8, 260, 950, 1); SYN.tone(ctx, d, at, 190, 1.7, "triangle", .045); },
+    /** Le « ahh » de stupeur, plus bref et plus haut. */
+    crowdGasp: (ctx, d, at) => SYN.noise(ctx, d, at, 1.1, .3, 520, 1300, 1.2),
+    /** Larsen du micro : il s'allume mal. */
+    squeak: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 2200, .55, "sine", .16, 3400);
+      SYN.tone(ctx, d, at, 2240, .5, "sine", .13, 3450);
+      SYN.noise(ctx, d, at, .5, .1, 3000, 4200, 1.4);
+    },
+    /** Le micro lâché : un choc grave, avec un rebond. */
+    micThud: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 130, .32, "sine", .3, 48);
+      SYN.noise(ctx, d, at, .22, .16, 1400, 300, .9);
+      SYN.tone(ctx, d, at + .16, 90, .2, "sine", .12, 44);
+    },
+    /** Le téléphone qui vibre sur le pupitre. */
+    phoneBuzz: (ctx, d, at) => {
+      for (let k = 0; k < 4; k++) SYN.tone(ctx, d, at + k * .12, 118, .07, "square", .02);
+    },
+    /** La petite fanfare — ironique, ici. */
+    tada: (ctx, d, at) => [523.25, 659.25, 783.99].forEach((f, i) => SYN.tone(ctx, d, at + i * .18, f, i === 2 ? 1.4 : .5, "triangle", .19)),
+  };
+
+  // [milliseconde, son, …arguments] — trié chronologiquement.
+  // Chaque bévue de Boby a sa grappe : la partition raconte la même histoire
+  // que l'image, et le tampon ERRATUM tombe sur son coup.
+  const SCORE = [
+    [0, "pad", 0, 9000], [0, "crowd"], [0, "air"],
+    [300, "sub"], [500, "squeak"], [900, "blip"], [1400, "tom"], [1900, "phoneBuzz"],
+    [2600, "kick"], [3100, "chip"], [3700, "hush"],
+    [4800, "riser"], [5200, "whoosh"], [5600, "pad", 1, 8000],
+    [6100, "blip"], [6400, "pluck"],
+    [7000, "stamp"], [7000, "whoosh"], [7300, "blip"], [7900, "chime"],
+    [8400, "pluck"], [9200, "sparkle"],
+    [10300, "whooshSoft"], [10600, "chip"], [11200, "tom"], [11800, "pluck"],
+    [12400, "hush"], [13100, "riser"],
+    [13500, "kick"], [13700, "stamp"], [13700, "whoosh"], [14000, "blip"], [14200, "pad", 2, 7000],
+    [14500, "coinLand"], [14800, "chip"], [15600, "pluck"],
+    [16400, "impact"], [16700, "coinLand"], [17200, "hush"],
+    [18400, "coinLand"], [18700, "chip"], [19000, "pluck"],
+    [20200, "impact"], [20500, "coinLand"], [21000, "whooshSoft"],
+    [21500, "riser"], [21700, "stamp"], [21700, "whoosh"], [21900, "pad", 3, 6000],
+    [22600, "blip"], [23200, "pluck"], [23800, "chip"],
+    [24600, "impact"], [24900, "crowdOhh"], [25600, "pluck"],
+    [26400, "riser"], [26800, "whoosh"],
+    [27400, "micThud"], [27700, "impact"], [27900, "crowdGasp"], [28200, "crowdOhh"],
+    [28800, "tada"], [29200, "chime"], [29800, "pad", 4, 5000],
+    [30200, "sparkle"], [30800, "pluck"], [31400, "swell"],
+    [32000, "sparkle"], [32600, "chime"], [33100, "whistle"], [33400, "sub"],
+  ];
+
+  function scheduleScore(ctx, dest, base) {
+    for (const [ms, name, ...rest] of SCORE) {
+      const fn = VOICES[name];
+      if (!fn) continue;
+      try { fn(ctx, dest, base + ms / 1000, ...rest); }
+      catch (e) { /* un cue raté ne doit jamais casser le film */ }
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     MOTEUR AUDIO — une seule horloge, celle de la bande.
+
+     La partition est rendue en mémoire — la bande préparée par le générateur
+     Python si elle est servie, sinon le même score rendu hors ligne — puis
+     jouée par une seule source. Le temps du film EST la position de cette
+     source. Une horloge, jamais deux : la voix, les sous-titres et les cartons
+     ne peuvent pas se désynchroniser.
+     --------------------------------------------------------------------- */
+  const ASSET = "assets/audio/boby-commentateur.wav";   // bande-son préparée par tools/assets
+  const VOICE_ASSET = "assets/voice/boby-commentateur.wav";   // la voix du studio, même horloge
+  const VOICE_PLAN = "assets/voice/boby-commentateur.json";    // ce que le studio a mesuré en la prononçant
+  const VOICE_GAIN = .95;                                      // niveau de la voix sous la musique
+  const LEAD = .06;                                 // avance de pose de la source, en secondes
+  const MASTER = .85;                               // gain de la musique
+  const DUCK = .45;                                 // la musique s'efface sous la voix
+  const PEAK = .9;                                  // crête visée par le master
+  const TAIL = 800;                                 // la queue du dernier accord, en ms
+
+  const Audio = {
+    ctx: null, bus: null, duck: null, master: null,
+    buffer: null, src: null, origin: 0, wall: 0, voiceBuffer: null, vsrc: null,
+    ok: false, ready: false, booting: null, source: "aucune", trim: 1, retry: 0,
+
+    /** Crée le contexte une seule fois, puis prépare la partition en mémoire. */
+    init() {
+      if (this.ready) return Promise.resolve(this.ok);
+      if (this.booting) return this.booting;
+      this.booting = (async () => {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) {
+          this.ctx = new AC({ latencyHint: "playback" });
+          this.bus = this.ctx.createGain();    this.bus.gain.value = 1;
+          this.duck = this.ctx.createGain();   this.duck.gain.value = 1;
+          this.master = this.ctx.createGain(); this.master.gain.value = 0;
+          this.bus.connect(this.duck); this.duck.connect(this.master);
+          this.voiceGain = this.ctx.createGain();   // la voix du studio passe par ici
+          this.voiceGain.gain.value = Voice.on ? VOICE_GAIN : 0;
+          this.voiceGain.connect(this.master);
+          this.master.connect(this.ctx.destination);
+        }
+        this.buffer = await this.load();
+        this.voiceBuffer = await this.loadVoice();   // même préparation, même horloge
+        if (this.buffer) {
+          this.trim = this.trimTo(this.buffer, PEAK);
+          this.bus.gain.value = this.trim;
+        }
+        this.ok = !!this.buffer;
+        // Le plan du studio : durée réelle de chaque réplique et de chaque mot.
+        // Les sous-titres s'y calent, au lieu d'estimer la voix au nombre de mots.
+        await Voice.loadPlan();
+        this.ready = this.ok;
+        return this.ok;
+      })();
+      return this.booting;
+    },
+
+    /** 1) la bande du générateur, 2) sinon le même score rendu ici. */
+    async load() {
+      const baked = await this.baked();
+      if (baked) { this.source = "bande"; return baked; }
+      if (!this.ctx) return null;
+      this.source = "rendu ici";
+      return this.renderScore();
+    },
+
+    /** Ramène la crête de la bande à la cible (un échantillon sur sept suffit). */
+    trimTo(buf, peak) {
+      let top = 0;
+      for (let c = 0; c < buf.numberOfChannels; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < d.length; i += 7) {
+          const a = d[i] < 0 ? -d[i] : d[i];
+          if (a > top) top = a;
+        }
+      }
+      return top > 0 ? peak / top : 1;
+    },
+
+    /** Récupère la bande ; absente ou trop courte → null, sans bruit. */
+    async baked() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Rend la partition hors ligne — sert aussi à l'écouter sans haut-parleur. */
+    async renderScore(seconds = (TOTAL + TAIL) / 1000, sr = 32000) {
+      const OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!OC) return null;
+      const oc = new OC(2, Math.ceil(seconds * sr), sr);
+      const out = oc.createGain(); out.gain.value = .9; out.connect(oc.destination);
+      scheduleScore(oc, out, 0);
+      return oc.startRendering();
+    },
+
+    /** La voix du studio : même préparation que la bande, même horloge.
+        Absente en `file://` ou si le studio n'a pas encore parlé : le film
+        retombe alors sur la voix du navigateur, sans changer d'horloge non plus. */
+    async loadVoice() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Pose la voix à l'instant exact où la bande commence : deux sources, une horloge. */
+    startVoice(when, off) {
+      if (!this.voiceBuffer || !this.ctx) return;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.voiceBuffer;
+      s.connect(this.voiceGain);
+      s.start(when, Math.max(0, Math.min(off, this.voiceBuffer.duration - .05)));
+      this.vsrc = s;
+    },
+
+    stopVoiceSource() {
+      if (!this.vsrc) return;
+      try { this.vsrc.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.vsrc.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.vsrc = null;
+    },
+
+    /** La bascule Voix : un fondu court, pour ne pas claquer. */
+    setVoice(on) {
+      if (!this.voiceGain || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      const g = this.voiceGain.gain;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(g.value, t);
+      g.linearRampToValueAtTime(on ? VOICE_GAIN : 0, t + .18);
+    },
+
+    /** Temps du film, en millisecondes : la position de lecture de la bande. */
+    time() {
+      if (this.ok && this.ctx) return clamp((this.ctx.currentTime - this.origin) * 1000, 0, TOTAL);
+      return clamp(this.wall, 0, TOTAL);
+    },
+
+    /** Sans Web Audio l'image avance au temps mural : le film reste utilisable. */
+    advance(dt) { if (!this.ok) this.wall = clamp(this.wall + dt, 0, TOTAL); },
+
+    /** Pose la bande au temps voulu, en compensant la latence de sortie. */
+    seek(ms) {
+      if (!this.ok || !this.ctx) { this.wall = clamp(ms, 0, TOTAL); return false; }
+      this.stopSource();
+      const off = Math.max(0, Math.min(clamp(ms, 0, TOTAL) / 1000, this.buffer.duration - .05));
+      const when = this.ctx.currentTime + LEAD;
+      const lat = this.ctx.outputLatency || this.ctx.baseLatency || 0;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.buffer;
+      s.connect(this.bus);
+      s.start(when, off);
+      this.src = s;
+      if (Voice.on) this.startVoice(when, off);   // deux sources, un seul instant
+      this.origin = when + lat - off;
+      this.scheduleDucks();
+      return true;
+    },
+
+    stopSource() {
+      if (!this.src) return;
+      try { this.src.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.src.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.src = null;
+      this.stopVoiceSource();
+    },
+
+    /** Reprise : le contexte repart, la bande n'a jamais quitté sa position. */
+    resume() { if (this.ctx && this.ctx.state === "suspended") this.ctx.resume(); },
+
+    /** Pause : le contexte se fige — le son et son horloge s'arrêtent ensemble. */
+    pause() { if (this.ctx && this.ctx.state === "running") this.ctx.suspend(); },
+
+    /** La musique s'efface sous la voix, en temps du film. */
+    scheduleDucks() {
+      if (!this.ctx || !this.duck) return;
+      const gg = this.duck.gain;
+      const t = this.ctx.currentTime;
+      gg.cancelScheduledValues(t);
+      gg.setValueAtTime(gg.value, t);
+      if (!Voice.on) { gg.linearRampToValueAtTime(1, t + .3); return; }
+      for (const L of LINES) {
+        const a = Math.max(t, this.origin + L.t / 1000);
+        const b = this.origin + (L.t + L.d) / 1000;
+        if (b < t) continue;
+        gg.setValueAtTime(1, a);
+        gg.linearRampToValueAtTime(DUCK, a + .3);
+        gg.linearRampToValueAtTime(1, b + .5);
+      }
+    },
+
+    setSound(on) {
+      if (!this.master || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      this.master.gain.cancelScheduledValues(t);
+      this.master.gain.setValueAtTime(this.master.gain.value, t);
+      this.master.gain.linearRampToValueAtTime(on ? MASTER : 0, t + .25);
+    },
+  };
+
+  /* La voix est écoutée : elle annonce au film quand elle commence et quand elle
+     finit vraiment. Le sous-titre ne disparaît donc jamais sous une phrase encore
+     en cours, et un moteur vocal plus lent ne peut plus prendre l'image de vitesse. */
+  /* La voix du studio d'abord : une bande prononcée une fois, chronométrée, et
+     posée sur la même horloge que la musique (`assets/voice/`). Si elle n'est pas
+     là — fichier ouvert en `file://`, studio pas encore passé — le film se rabat
+     sur le moteur vocal du navigateur, exactement comme avant. */
+  const Voice = {
+    on: false, voices: [], line: null, token: 0,
+    pick() { this.voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; },
+    /** Y a-t-il une voix, d'une façon ou d'une autre (studio, ou navigateur) ? */
+    available() {
+      if (this.has()) return true;
+      return !!(window.speechSynthesis && this.voices.some(v => /^fr/i.test(v.lang)));
+    },
+    /** La bande vocale du studio est-elle là (avec son plan) ? */
+    has() { return !!(this.plan && Audio.voiceBuffer); },
+    /** D'où vient la voix qu'on entend : du studio, du plan seul, ou du navigateur. */
+    source() { return this.has() ? "studio" : (this.plan ? "plan" : (this.available() ? "navigateur" : "aucune")); },
+    /** Le plan du studio : durée réelle de chaque phrase, et ses mots mesurés. */
+    async loadPlan() {
+      if (typeof fetch !== "function" || !/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_PLAN, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const plan = await r.json();
+        if (!plan || !plan.lines || Math.abs(plan.filmMs - TOTAL) > 500) return null;
+        this.plan = plan;
+        for (const l of plan.lines) if (LINES[l.i]) LINES[l.i].plan = l;
+        return plan;
+      } catch (e) { return null; }
+    },
+    speaking(L) {
+      // avec la bande du studio, « en train de parler » est une mesure et non un
+      // état du moteur : la fenêtre du plan, plus 150 ms de réverbération
+      if (this.has()) {
+        const at = Audio.time();
+        return !!(this.on && at >= L.plan.t - 60 && at <= L.plan.t + L.plan.d + 150);
+      }
+      return !!(this.on && this.line === L && window.speechSynthesis &&
+        speechSynthesis.speaking && !speechSynthesis.paused);
+    },
+    say(L) {
+      if (this.has()) return false;      // la bande du studio joue déjà la phrase
+      if (!this.on || !window.speechSynthesis) return false;
+      try {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(L.txt.replace(/\s+/g, " "));
+        const fr = this.voices.find(v => /fr[-_]FR/i.test(v.lang)) || this.voices.find(v => /^fr/i.test(v.lang));
+        if (fr) u.voice = fr;
+        // un peu plus haut et plus lent : c'est un débutant, il cherche ses mots
+        u.lang = "fr-FR"; u.rate = .9; u.pitch = 1.08; u.volume = .95;
+        const token = ++this.token;
+        u.onstart = () => {
+          if (token !== this.token) return;
+          const at = Audio.time();
+          if (Math.abs(at - L.t) > 1500) return;
+          L.real = { t: at, d: 0 }; this.line = L;
+        };
+        u.onend = () => {
+          if (token !== this.token) return;
+          if (L.real) L.real.d = Math.max(L.real.d, Audio.time() - L.real.t);
+          if (this.line === L) this.line = null;
+        };
+        speechSynthesis.speak(u);
+        return true;
+      } catch (e) { return false; }
+    },
+  };
+
+  /* ------------------------------------------------ 8. DOM */
+  const PHONE = window.matchMedia("(max-width: 760px)");
+  const cw = (n) => (n / 10.8).toFixed(3) + "cqw";
+  const ch = (n) => (n / 19.2).toFixed(3) + "cqh";
+  const cardsHost = document.getElementById("cards");
+  const subsHost = document.getElementById("subs");
+  const progEl = document.getElementById("prog");
+  const hudScene = document.getElementById("hudScene");
+  const hudTc = document.getElementById("hudTc");
+  const veil = document.getElementById("veil");
+  const frameEl = document.getElementById("frame");
+  const togSound = document.getElementById("togSound");
+  const togVoice = document.getElementById("togVoice");
+  const bugClock = document.getElementById("bugClock");
+  const errEl = document.getElementById("err");
+  const errCount = document.getElementById("errCount");
+  const thirdEl = document.getElementById("third");
+  const thirdName = document.getElementById("thirdName");
+  const thirdRole = document.getElementById("thirdRole");
+  thirdName.textContent = BOBY.name;
+  thirdRole.textContent = BOBY.job;
+
+  const cardNodes = CARDS.map(c => {
+    const el = document.createElement("div");
+    el.className = "card " + c.cls + (c.opt ? " opt" : "");
+    el.innerHTML = c.html;
+    // les positions de la maquette (px) deviennent des unités du cadre
+    let placed = [];
+    const place = (spec) => {
+      // une clé du placement téléphone sans équivalent dans la maquette (pcss sans la
+      // même clé dans css) n'existe pas sur grand écran : si on ne la retire pas, elle
+      // reste posée après un changement de taille et le carton garde la place du téléphone
+      spec = spec || {};
+      for (const k of placed) if (!(k in spec)) el.style.removeProperty(k.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase()));
+      placed = Object.keys(spec);
+      for (const [k, v] of Object.entries(spec)) {
+        const n = parseFloat(v);
+        if (!/px$/.test(v) || !isFinite(n)) { el.style[k] = v; continue; }
+        if (k === "fontSize" || k === "left" || k === "right" || k === "width" || k === "maxWidth") el.style[k] = cw(n);
+        else el.style[k] = ch(n);
+      }
+    };
+    place(c.css);
+    el.style.opacity = "0";
+    cardsHost.appendChild(el);
+    return { ...c, el, place };
+  });
+
+  function measureFits() {
+    for (const c of cardNodes) c.place(PHONE.matches && c.pcss ? { ...c.css, ...c.pcss } : c.css);
+    const maxW = frameEl.clientWidth * .94;
+    for (const c of cardNodes) {
+      const ui = PHONE.matches ? (c.ui ?? 1) : 1;
+      const prev = c.el.style.transform;
+      c.el.style.transform = "none";
+      const r = document.createRange();
+      r.selectNodeContents(c.el);
+      const w = r.getBoundingClientRect().width;
+      c.el.style.transform = prev;
+      c.fit = w > 4 ? Math.min(1, maxW / (ui * w)) : 1;
+    }
+  }
+
+  const lineNodes = LINES.map((L) => {
+    const el = document.createElement("div");
+    el.className = "subline";
+    const words = L.txt.split(" ");
+    L.words = words.map((w, k) => {
+      const s = document.createElement("span");
+      s.className = "w"; s.textContent = w;
+      el.appendChild(s);
+      if (k < words.length - 1) el.appendChild(document.createTextNode(" "));
+      return s;
+    });
+    subsHost.appendChild(el);
+    return el;
+  });
+
+  SCENES.forEach(() => {
+    const s = document.createElement("div");
+    s.className = "pseg"; s.innerHTML = "<i></i>";
+    progEl.appendChild(s);
+  });
+  const segs = [...progEl.querySelectorAll(".pseg i")];
+
+  function updateCards(ms) {
+    for (const c of cardNodes) {
+      const tin = c.t[0], tout = c.t[1];
+      const ui = PHONE.matches ? (c.ui ?? 1) : 1;
+      let o = 0, y = 0, sc = 1;
+      if (ms > tin - 520 && ms < tout + 460) {
+        const a = smooth(clamp((ms - tin) / 620));
+        const b = ms > tout ? 1 - smooth(clamp((ms - tout) / 420)) : 1;
+        o = a * b;
+        const e = eio(clamp((ms - tin) / 620));
+        y = (1 - e) * 26 * ui;
+        sc = ui * (c.fit ?? 1) * (1 - (1 - e) * .04);
+      }
+      c.el.style.opacity = o.toFixed(3);
+      c.el.style.transform = "translateY(" + ch(y) + ") scale(" + sc.toFixed(4) + ")";
+    }
+  }
+
+  function updateSubs(ms) {
+    LINES.forEach((L, i) => {
+      const el = lineNodes[i];
+      // la fenêtre : celle du studio quand sa bande vocale est là (la durée
+      // réellement prononcée), sinon celle du film, prolongée tant que la voix parle
+      const t0 = L.plan ? L.plan.t : (L.real ? L.real.t : L.t);
+      const d = L.plan ? L.plan.d : L.d;
+      const active = ms >= t0 - 80 && (ms <= t0 + d + 260 || Voice.speaking(L));
+      el.classList.toggle("show", active);
+      if (!active) return;
+      const n = L.words.length;
+      // le mot surligné suit les instants mesurés sur la voix ; à défaut, on
+      // répartit la phrase sur sa fenêtre, faute de mieux
+      let cur = Math.max(0, Math.min(n - 1, Math.floor(((ms - t0) / d) * n)));
+      if (L.plan) {
+        cur = 0;
+        for (let k = 0; k < L.plan.words.length && k < n; k++) if (ms - t0 >= L.plan.words[k].t0) cur = k;
+      }
+      L.words.forEach((w, k) => {
+        w.classList.toggle("on", k === cur);
+        w.classList.toggle("done", k < cur);
+      });
+    });
+  }
+
+  function speakingAt(ms) {
+    return LINES.some((L) => {
+      const t0 = L.plan ? L.plan.t : (L.real ? L.real.t : L.t);
+      const d = L.plan ? L.plan.d : L.d;
+      return ms >= t0 - 120 && (ms <= t0 + d + 260 || Voice.speaking(L));
+    });
+  }
+
+  function updateHud(ms) {
+    const sc = sceneAt(ms);
+    hudScene.innerHTML = "<b>" + sc.num + "</b> &nbsp;" + sc.name;
+    const s = Math.floor(ms / 1000);
+    hudTc.textContent = "00:" + String(s).padStart(2, "0") + ":" + String(Math.floor((ms % 1000) / 41.6)).padStart(2, "0");
+    SCENES.forEach((S, i) => segs[i].style.width = (clamp((ms - S.from) / (S.to - S.from)) * 100).toFixed(2) + "%");
+
+    // l'habillage : l'horloge du direct, le témoin du micro, le tampon ERRATUM
+    const mm = Math.floor(ms / 60000), ss = Math.floor((ms % 60000) / 1000);
+    bugClock.textContent = String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+    thirdEl.classList.toggle("on", speakingAt(ms));
+    const n = ERRATA.filter(e => ms >= e.t).length;
+    errCount.textContent = String(Math.max(1, n));
+    errEl.classList.toggle("on", n > 0);
+  }
+
+  function setToggle(btn, on, offClass) {
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", String(on));
+    if (offClass !== undefined) btn.classList.toggle("off-audio", !!offClass);
+  }
+
+  /* ------------------------------------------------ 9. lecteur */
+  let elapsed = 0, state = "idle", lastTs = 0, stall = 0;
+  const sound = { on: false };
+  const spoken = LINES.map(() => false);
+
+  function render(ms) {
+    g.clearRect(0, 0, W, H);
+    const sc = sceneAt(ms);
+    sc.draw(ms / 1000, clamp((ms - sc.from) / (sc.to - sc.from)));
+    transition(ms);
+    grainFrame(ms / 1000);
+    updateCards(ms);
+    updateSubs(ms);
+    updateHud(ms);
+  }
+
+  function play() {
+    if (state === "playing") return;
+    if (state === "ended" || elapsed >= TOTAL) { elapsed = 0; spoken.fill(false); }
+    // le clic sur play est le geste explicite : il ouvre l'image, la musique et la voix
+    sound.on = true;
+    setToggle(togSound, true);
+    Voice.on = true;
+    setToggle(togVoice, true);
+    if (!Voice.available()) togVoice.classList.add("off-audio");
+    Audio.setVoice(Voice.on);            // la voix du studio se pose avec la bande
+    state = "playing";
+    veil.classList.remove("show");
+    if (Audio.ok) {
+      if (Audio.src) { Audio.resume(); Audio.scheduleDucks(); }
+      else Audio.seek(elapsed);
+    } else if (!Audio.ready) {
+      Audio.init().then((ok) => { if (!ok) setToggle(togSound, false, true); });
+    } else {
+      setToggle(togSound, false, true);   // pas de Web Audio : le film reste utilisable, sans son
+    }
+    Audio.resume();
+    render(elapsed);
+  }
+
+  function stopVoice() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    Voice.line = null;
+  }
+
+  function resetVoice() {
+    stopVoice();
+    Voice.token++;
+    for (const L of LINES) delete L.real;
+  }
+
+  function pause() {
+    if (state !== "playing") return;
+    state = "paused";
+    Audio.pause();
+    stopVoice();
+  }
+
+  function togglePlay() { state === "playing" ? pause() : play(); }
+
+  function restart() {
+    resetVoice();
+    elapsed = 0; spoken.fill(false);
+    veil.classList.remove("show", "end");
+    state = "playing";
+    if (Audio.ok) { Audio.seek(0); Audio.resume(); }
+    render(0);
+  }
+
+  function finish() {
+    state = "ended";
+    stopVoice();
+    veil.classList.add("show", "end");
+  }
+
+  function tick(ts) {
+    const dt = lastTs ? Math.min(ts - lastTs, 100) : 0;
+    lastTs = ts;
+    if (state === "playing") {
+      if (Audio.ok) {
+        if (!Audio.src) Audio.seek(elapsed);
+        // garde-fou : si le contexte audio ne tourne pas, le film poursuit sans son
+        if (Audio.time() <= elapsed + .5) stall += dt; else { stall = 0; Audio.retry = 0; }
+        if (stall > 600) {
+          stall = 0;
+          // Le contexte a pu être gelé sans nous : on retente la reprise et on
+          // repose la bande au temps courant avant de renoncer au son — sinon un
+          // simple hoquet laissait le film muet jusqu'au rechargement de la page.
+          if (Audio.retry < 3) {
+            Audio.retry++;
+            Audio.resume();
+            Audio.seek(elapsed);
+          } else {
+            Audio.wall = elapsed;
+            Audio.ok = false;
+            setToggle(togSound, false, true);
+          }
+        }
+      } else {
+        Audio.advance(dt);
+      }
+      const before = elapsed;
+      elapsed = Audio.time();                       // l'horloge du film est celle du son
+      LINES.forEach((L, i) => {
+        if (!spoken[i] && elapsed >= L.t) {
+          spoken[i] = true;
+          if (elapsed - L.t < 700 && Voice.on) Voice.say(L);
+        }
+      });
+      if (elapsed >= TOTAL && before < TOTAL) finish();
+    } else if (!Audio.ok) {
+      Audio.wall = clamp(elapsed, 0, TOTAL);
+    }
+    render(elapsed);
+    requestAnimationFrame(tick);
+  }
+
+  measureFits();
+  window.addEventListener("resize", measureFits);
+  if (PHONE.addEventListener) PHONE.addEventListener("change", measureFits);
+
+  document.getElementById("go").addEventListener("click", play);
+  document.getElementById("replay").addEventListener("click", restart);
+  document.getElementById("closeEnd").addEventListener("click", () => veil.classList.remove("show"));
+  cv.addEventListener("click", () => { if (state !== "idle" && !veil.classList.contains("show")) togglePlay(); });
+
+  togSound.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sound.on = !sound.on;
+    setToggle(togSound, sound.on);
+    if (!Audio.ok && !Audio.ready) Audio.init();
+    if (Audio.ok && Audio.src) Audio.resume();
+    Audio.setSound(sound.on);
+  });
+  togVoice.addEventListener("click", (e) => {
+    e.stopPropagation();
+    Voice.on = !Voice.on;
+    setToggle(togVoice, Voice.on);
+    if (!Voice.on && window.speechSynthesis) speechSynthesis.cancel();
+    Audio.setVoice(Voice.on);                       // la bande vocale suit la bascule
+    Audio.scheduleDucks();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") { e.preventDefault(); if (state === "idle") play(); else togglePlay(); }
+    else if (e.key === "s" || e.key === "S") togSound.click();
+    else if (e.key === "v" || e.key === "V") togVoice.click();
+    else if (e.key === "r" || e.key === "R") restart();
+  });
+
+  document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
+
+  /* L'image d'abord : la lecture se regarde sans habillage. Trois secondes sans geste et
+     la barre, les bascules et les mentions s'effacent ; le premier mouvement les ramène.
+     En pause l'habillage reste — il n'y a plus rien à cacher. */
+  const stageEl = document.getElementById("stage");
+  let chromeIdle = 0;
+  const showChrome = () => {
+    stageEl.classList.remove("clean");
+    clearTimeout(chromeIdle);
+    if (state === "playing") chromeIdle = setTimeout(() => stageEl.classList.add("clean"), 3000);
+  };
+  // « click » vient après le gestionnaire du bouton : l'horloge du minuteur est donc armée
+  // avec la lecture déjà lancée, que le film démarre au clic, au doigt ou au clavier
+  for (const ev of ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "click", "visibilitychange"])
+    document.addEventListener(ev, showChrome, { passive: true });
+
+  // Un contexte audio peut être gelé par le navigateur (politique de lecture
+  // automatique, onglet revenu au premier plan, sortie sonore rebranchée) : le
+  // premier geste de l'utilisateur le relance, au lieu de laisser le film muet.
+  const rearm = () => { if (state === "playing" && sound.on) Audio.resume(); };
+  document.addEventListener("pointerdown", rearm, true);
+  window.addEventListener("keydown", rearm, true);
+
+  if (window.speechSynthesis) {
+    Voice.pick();
+    speechSynthesis.addEventListener("voiceschanged", () => Voice.pick());
+  }
+
+  /* ------------------------------------------------ 10. surface de vérification */
+  const API = {
+    id: "boby-commentateur",
+    duration: TOTAL,
+    frame: "9:16",
+    phone: () => PHONE.matches,
+    clock: () => +elapsed.toFixed(1),
+    audio: () => ({
+      ok: Audio.ok, ready: Audio.ready, source: Audio.source, trim: +(Audio.trim ?? 0).toFixed(3),
+      state: Audio.ctx ? Audio.ctx.state : "aucun",
+      buffer: Audio.buffer ? +Audio.buffer.duration.toFixed(3) : 0,
+      voice: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      voiceGain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      time: +Audio.time().toFixed(1),
+    }),
+    startAt: (ms) => { Audio.seek(ms); Audio.resume(); return Audio.time(); },
+    // l'habillage de diffusion, tel qu'il est affiché à l'instant mesuré
+    overlay: () => ({
+      clock: bugClock.textContent,
+      onAir: thirdEl.classList.contains("on"),
+      third: thirdName.textContent + " · " + thirdRole.textContent,
+      errata: ERRATA.filter(e => elapsed >= e.t).length,
+      stamp: errEl.classList.contains("on"),
+      chips: 0,
+    }),
+    // la bévue attendue à cet instant — et celle affichée
+    errata: () => ERRATA.map(e => ({ t: e.t, label: e.label })),
+    /** Couleur d'un pixel du film : de quoi vérifier sans yeux que le sujet est là. */
+    sample: (x, y) => {
+      const d = g.getImageData(Math.round(x), Math.round(y), 1, 1).data;
+      return { r: d[0], g: d[1], b: d[2], luma: +((d[0] * .2126 + d[1] * .7152 + d[2] * .0722) / 255).toFixed(3) };
+    },
+    layout: () => {
+      const box = (e) => { const r = e.getBoundingClientRect(); return { x: +r.x.toFixed(1), y: +r.y.toFixed(1), w: +r.width.toFixed(1), h: +r.height.toFixed(1), right: +r.right.toFixed(1), bottom: +r.bottom.toFixed(1) }; };
+      const ink = (e) => { const r = document.createRange(); r.selectNodeContents(e); const b = r.getBoundingClientRect(); return { x: +b.x.toFixed(1), y: +b.y.toFixed(1), w: +b.width.toFixed(1), h: +b.height.toFixed(1), right: +b.right.toFixed(1), bottom: +b.bottom.toFixed(1) }; };
+      const visible = (c) => parseFloat(window.getComputedStyle(c.el).opacity) > .2 && c.el.getBoundingClientRect().width > 1;
+      return {
+        frame: box(frameEl),
+        stage: box(document.getElementById("stage")),
+        hud: box(document.getElementById("hud")),
+        go: box(document.getElementById("go")),
+        cards: cardNodes.map((c, i) => ({ c, i })).filter(({ c }) => visible(c))
+          .map(({ c, i }) => ({ i, cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3), text: c.el.textContent.trim().slice(0, 40), ...ink(c.el) })),
+        fits: cardNodes.map(c => ({ cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3) })),
+        subs: [...subsHost.querySelectorAll(".subline.show")].map(ink),
+        togs: [togSound, togVoice].map(box),
+        prog: box(progEl),
+        hudTexts: [hudScene, hudTc].map(box),
+      };
+    },
+    scenes: SCENES.map(s => ({ from: s.from, to: s.to, name: s.name, num: s.num })),
+    lines: LINES.map(l => ({ t: l.t, d: l.d, txt: l.txt, plan: l.plan || null })),
+    // la voix : d'où elle vient, ce que le studio a mesuré, et son niveau réel
+    voice: () => ({
+      source: Voice.source(), on: Voice.on, plan: !!Voice.plan,
+      lines: Voice.plan ? Voice.plan.lines.length : 0,
+      engine: Voice.plan ? Voice.plan.engine.label : null,
+      gain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      buffer: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      speaking: LINES.filter((L) => Voice.speaking(L)).length,
+    }),
+    cues: SCORE.map(c => ({ t: c[0], name: c[1] })),
+    beats: [
+      { t: 1600,  label: "01·la cabine" },
+      { t: 4400,  label: "02·le casque à l'envers" },
+      { t: 6400,  label: "03·avant-transition" },
+      { t: 8600,  label: "04·le visage" },
+      { t: 11000, label: "05·le prompteur" },
+      { t: 12800, label: "06·fin du gros plan" },
+      { t: 14400, label: "07·les compositions" },
+      { t: 16600, label: "08·premier erratum" },
+      { t: 19200, label: "09·le deuxième nom" },
+      { t: 21200, label: "10·fin des noms" },
+      { t: 22200, label: "11·le tableau d'affichage" },
+      { t: 24800, label: "12·le tampon" },
+      { t: 26600, label: "13·avant la chute" },
+      { t: 28000, label: "14·le micro tombe" },
+      { t: 29600, label: "15·Boby sidéré" },
+      { t: 32200, label: "16·carton final" },
+    ],
+    seek(ms) { resetVoice(); elapsed = clamp(ms, 0, TOTAL); state = "paused"; render(elapsed); },
+    play, pause,
+    audioStats: async (sec) => {
+      const buf = await Audio.renderScore(sec);
+      if (!buf) return null;
+      const n = buf.length, sr = buf.sampleRate;
+      const L = buf.getChannelData(0), R = buf.getChannelData(Math.min(1, buf.numberOfChannels - 1));
+      const k = Audio.trimTo(buf, PEAK);
+      let peak = 0, sum = 0, clipped = 0;
+      const perSec = [];
+      for (let s = 0; s < Math.ceil(n / sr); s++) perSec.push({ rms: 0, peak: 0, n: 0 });
+      for (let i = 0; i < n; i++) {
+        const v = ((L[i] + R[i]) / 2) * k, a = Math.abs(v);
+        if (a > peak) peak = a;
+        if (a >= .999) clipped++;
+        sum += v * v;
+        const s = Math.min(perSec.length - 1, Math.floor(i / sr));
+        perSec[s].rms += v * v; perSec[s].n++;
+        if (a > perSec[s].peak) perSec[s].peak = a;
+      }
+      perSec.forEach(s => { s.rms = Math.sqrt(s.rms / Math.max(1, s.n)); });
+      return {
+        seconds: n / sr, peak: +peak.toFixed(4), rms: +Math.sqrt(sum / n).toFixed(4), clipped,
+        silentSeconds: perSec.filter(s => s.rms < .0005).length,
+        perSec: perSec.map(s => ({ rms: +s.rms.toFixed(4), peak: +s.peak.toFixed(4) })),
+      };
+    },
+    frameStats() {
+      const d = g.getImageData(0, 0, W, H).data;
+      let lum = 0, n = 0, lit = 0;
+      const colors = new Set();
+      for (let y = 0; y < H; y += 12) for (let x = 0; x < W; x += 12) {
+        const i = (y * W + x) * 4, v = (d[i] * .2126 + d[i + 1] * .7152 + d[i + 2] * .0722) / 255;
+        lum += v; n++;
+        if (v > .045) lit++;
+        colors.add((d[i] >> 5) * 64 + (d[i + 1] >> 5) * 8 + (d[i + 2] >> 5));
+      }
+      const subs = [...subsHost.querySelectorAll(".subline")].find(e => e.classList.contains("show"));
+      const cards = [...cardsHost.children].filter(e => parseFloat(e.style.opacity || "0") > .12);
+      return {
+        meanLuma: +(lum / n).toFixed(4), litRatio: +(lit / n).toFixed(4), colors: colors.size,
+        activeCards: cards.length,
+        subtitle: subs ? { text: subs.textContent.trim(), words: subs.querySelectorAll(".w").length, onWord: subs.querySelector(".w.on")?.textContent ?? null } : null,
+      };
+    },
+  };
+  window.MOTION = API;
+  window.N3 = API;   // alias : même surface pour les outils
+
+  setToggle(togSound, false);
+  // la bande se prépare pendant que l'écran d'accueil s'affiche
+  Audio.init()                                   // la bande et la voix se préparent
+    .then(() => Voice.loadPlan())                // pendant que l'écran d'accueil s'affiche
+    .then(() => { if (!Voice.available()) togVoice.classList.add("off-audio"); else togVoice.classList.remove("off-audio"); });
+  setToggle(togVoice, false);
+  if (!Voice.available()) togVoice.classList.add("off-audio");
+  render(0);
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

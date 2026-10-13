@@ -1,0 +1,418 @@
+{
+  "kind": "voice",
+  "id": "nyxar-n3",
+  "film": "/home/daytona/codebase/nyxar-n3.html",
+  "title": "Nyxar N3",
+  "asset": "assets/voice/nyxar-n3.wav",
+  "engine": {
+    "name": "piper",
+    "voice": "fr_FR-tom-medium",
+    "label": "français · Tom (medium)",
+    "sr": 32000,
+    "scale": 1.08,
+    "peak": 0.9,
+    "gap": 0.2,
+    "pad": 0.25
+  },
+  "seconds": 37.6,
+  "filmMs": 37000,
+  "tail": 0.6,
+  "speechMs": 25572,
+  "meanRate": 2.154,
+  "retimed": [
+    5
+  ],
+  "overflow": [],
+  "lines": [
+    {
+      "i": 0,
+      "t": 700,
+      "d": 3886,
+      "window": 4708,
+      "ms": 3886,
+      "endsAt": 4586,
+      "nextAt": 7000,
+      "budget": 6100,
+      "slack": 2214,
+      "txt": "Istanbul s'éveille. Et la Nyxar N3 arrive.",
+      "rate": 1.801,
+      "words": [
+        {
+          "w": "Istanbul",
+          "t0": 0,
+          "t1": 833
+        },
+        {
+          "w": "s'éveille.",
+          "t0": 833,
+          "t1": 1665
+        },
+        {
+          "w": "Et",
+          "t0": 1665,
+          "t1": 1943
+        },
+        {
+          "w": "la",
+          "t0": 1943,
+          "t1": 2221
+        },
+        {
+          "w": "Nyxar",
+          "t0": 2221,
+          "t1": 2776
+        },
+        {
+          "w": "N3",
+          "t0": 2776,
+          "t1": 3053
+        },
+        {
+          "w": "arrive.",
+          "t0": 3053,
+          "t1": 3886
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 1,
+      "t": 7000,
+      "d": 4918,
+      "window": 5175,
+      "ms": 4918,
+      "endsAt": 11918,
+      "nextAt": 15000,
+      "budget": 7800,
+      "slack": 2882,
+      "txt": "Voici la Nyxar N3, une berline familiale dessinée ici.",
+      "rate": 1.83,
+      "words": [
+        {
+          "w": "Voici",
+          "t0": 0,
+          "t1": 483
+        },
+        {
+          "w": "la",
+          "t0": 483,
+          "t1": 725
+        },
+        {
+          "w": "Nyxar",
+          "t0": 725,
+          "t1": 1208
+        },
+        {
+          "w": "N3,",
+          "t0": 1208,
+          "t1": 1535
+        },
+        {
+          "w": "une",
+          "t0": 1535,
+          "t1": 2018
+        },
+        {
+          "w": "berline",
+          "t0": 2018,
+          "t1": 2743
+        },
+        {
+          "w": "familiale",
+          "t0": 2743,
+          "t1": 3710
+        },
+        {
+          "w": "dessinée",
+          "t0": 3710,
+          "t1": 4435
+        },
+        {
+          "w": "ici.",
+          "t0": 4435,
+          "t1": 4918
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 2,
+      "t": 15000,
+      "d": 5001,
+      "window": 5609,
+      "ms": 5001,
+      "endsAt": 20001,
+      "nextAt": 22800,
+      "budget": 7600,
+      "slack": 2599,
+      "txt": "Cinq places, un grand coffre, et quatre virgule huit litres aux cent kilomètres.",
+      "rate": 2.6,
+      "words": [
+        {
+          "w": "Cinq",
+          "t0": 0,
+          "t1": 220
+        },
+        {
+          "w": "places,",
+          "t0": 220,
+          "t1": 738
+        },
+        {
+          "w": "un",
+          "t0": 738,
+          "t1": 958
+        },
+        {
+          "w": "grand",
+          "t0": 958,
+          "t1": 1179
+        },
+        {
+          "w": "coffre,",
+          "t0": 1179,
+          "t1": 1696
+        },
+        {
+          "w": "et",
+          "t0": 1696,
+          "t1": 1917
+        },
+        {
+          "w": "quatre",
+          "t0": 1917,
+          "t1": 2357
+        },
+        {
+          "w": "virgule",
+          "t0": 2357,
+          "t1": 3018
+        },
+        {
+          "w": "huit",
+          "t0": 3018,
+          "t1": 3239
+        },
+        {
+          "w": "litres",
+          "t0": 3239,
+          "t1": 3679
+        },
+        {
+          "w": "aux",
+          "t0": 3679,
+          "t1": 3899
+        },
+        {
+          "w": "cent",
+          "t0": 3899,
+          "t1": 4120
+        },
+        {
+          "w": "kilomètres.",
+          "t0": 4120,
+          "t1": 5001
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 3,
+      "t": 22800,
+      "d": 3673,
+      "window": 3814,
+      "ms": 3673,
+      "endsAt": 26473,
+      "nextAt": 27900,
+      "budget": 4900,
+      "slack": 1227,
+      "txt": "Douze mille istancoins : c'est le prix de la N3.",
+      "rate": 2.723,
+      "words": [
+        {
+          "w": "Douze",
+          "t0": 0,
+          "t1": 512
+        },
+        {
+          "w": "mille",
+          "t0": 512,
+          "t1": 1024
+        },
+        {
+          "w": "istancoins",
+          "t0": 1024,
+          "t1": 1792
+        },
+        {
+          "w": ":",
+          "t0": 1792,
+          "t1": 2137
+        },
+        {
+          "w": "c'est",
+          "t0": 2137,
+          "t1": 2393
+        },
+        {
+          "w": "le",
+          "t0": 2393,
+          "t1": 2649
+        },
+        {
+          "w": "prix",
+          "t0": 2649,
+          "t1": 2905
+        },
+        {
+          "w": "de",
+          "t0": 2905,
+          "t1": 3161
+        },
+        {
+          "w": "la",
+          "t0": 3161,
+          "t1": 3417
+        },
+        {
+          "w": "N3.",
+          "t0": 3417,
+          "t1": 3673
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 4,
+      "t": 27900,
+      "d": 3792,
+      "window": 4243,
+      "ms": 3792,
+      "endsAt": 31692,
+      "nextAt": 32400,
+      "budget": 4300,
+      "slack": 508,
+      "txt": "Disponible à Istanbul, en Espagne et au Portugal.",
+      "rate": 2.11,
+      "words": [
+        {
+          "w": "Disponible",
+          "t0": 0,
+          "t1": 874
+        },
+        {
+          "w": "à",
+          "t0": 874,
+          "t1": 1093
+        },
+        {
+          "w": "Istanbul,",
+          "t0": 1093,
+          "t1": 1825
+        },
+        {
+          "w": "en",
+          "t0": 1825,
+          "t1": 2044
+        },
+        {
+          "w": "Espagne",
+          "t0": 2044,
+          "t1": 2699
+        },
+        {
+          "w": "et",
+          "t0": 2699,
+          "t1": 2918
+        },
+        {
+          "w": "au",
+          "t0": 2918,
+          "t1": 3136
+        },
+        {
+          "w": "Portugal.",
+          "t0": 3136,
+          "t1": 3792
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 5,
+      "t": 32400,
+      "d": 4302,
+      "window": 4480,
+      "ms": 4302,
+      "endsAt": 36702,
+      "nextAt": 37000,
+      "budget": 4400,
+      "slack": 98,
+      "txt": "Nyxar N3. La famille d'abord, la route ensuite.",
+      "rate": 1.86,
+      "words": [
+        {
+          "w": "Nyxar",
+          "t0": 0,
+          "t1": 561
+        },
+        {
+          "w": "N3.",
+          "t0": 561,
+          "t1": 841
+        },
+        {
+          "w": "La",
+          "t0": 841,
+          "t1": 1121
+        },
+        {
+          "w": "famille",
+          "t0": 1121,
+          "t1": 1962
+        },
+        {
+          "w": "d'abord,",
+          "t0": 1962,
+          "t1": 2620
+        },
+        {
+          "w": "la",
+          "t0": 2620,
+          "t1": 2901
+        },
+        {
+          "w": "route",
+          "t0": 2901,
+          "t1": 3461
+        },
+        {
+          "w": "ensuite.",
+          "t0": 3461,
+          "t1": 4302
+        }
+      ],
+      "scale": 0.945,
+      "retimed": true,
+      "overflow": false
+    }
+  ],
+  "bytes": 2406444,
+  "peak": 0.9,
+  "rms": 0.0738,
+  "clipped": 0,
+  "silentSeconds": 0,
+  "generated": "2026-10-13T08:55:26",
+  "secondsToBuild": 4.4
+}

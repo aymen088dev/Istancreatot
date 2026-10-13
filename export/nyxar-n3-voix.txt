@@ -1,0 +1,13 @@
+NYXAR N3 — SCRIPT VOCAL
+Film : nyxar-n3.html · 37 s · 6 répliques
+Bande-son : assets/audio/nyxar-n3.wav (60 sons)
+Voix à importer : assets/voice/nyxar-n3.wav (voix « français · Tom (medium) »)
+Durées : voix mesurée par le studio, phrase par phrase (plan vocal)
+  début    fin   durée   voix    réplique
+  ------  ------  -----  ------  --------------------------------------------------------
+  00:00.70  00:04.59   3.89     oui  Istanbul s'éveille. Et la Nyxar N3 arrive.
+  00:07.00  00:11.92   4.92     oui  Voici la Nyxar N3, une berline familiale dessinée ici.
+  00:15.00  00:20.00   5.00     oui  Cinq places, un grand coffre, et quatre virgule huit litres aux cent kilomètres.
+  00:22.80  00:26.47   3.67     oui  Douze mille istancoins : c'est le prix de la N3.
+  00:27.90  00:31.69   3.79     oui  Disponible à Istanbul, en Espagne et au Portugal.
+  00:32.40  00:36.70   4.30     oui  Nyxar N3. La famille d'abord, la route ensuite.

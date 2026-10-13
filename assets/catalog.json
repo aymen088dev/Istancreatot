@@ -1,0 +1,7313 @@
+{
+  "generated": "2026-10-13T11:51:42",
+  "films": [
+    {
+      "id": "astan-city-xi",
+      "title": "Astan City",
+      "file": "astan-city-xi.html",
+      "total": 43400,
+      "seconds": 43.4,
+      "cues": 119,
+      "voices": [
+        "air",
+        "benchPop",
+        "benchTick",
+        "blip",
+        "chime",
+        "choir",
+        "crowd",
+        "crowdOhh",
+        "flagPop",
+        "hush",
+        "jerseyDrop",
+        "jerseyLand",
+        "kick",
+        "pad",
+        "plateWipe",
+        "pluck",
+        "rateDing",
+        "rateTick",
+        "riser",
+        "sparkle",
+        "squeak",
+        "stamp",
+        "sub",
+        "swell",
+        "tada",
+        "tom",
+        "whistle",
+        "whoosh",
+        "whooshSoft"
+      ],
+      "band": {
+        "kind": "audio",
+        "id": "astan-city-xi",
+        "film": "/home/daytona/codebase/astan-city-xi.html",
+        "title": "Astan City",
+        "asset": "assets/audio/astan-city-xi.wav",
+        "sr": 32000,
+        "seconds": 44.2,
+        "filmMs": 43400,
+        "tail": 0.8,
+        "cues": [
+          [
+            0,
+            "pad"
+          ],
+          [
+            0,
+            "crowd"
+          ],
+          [
+            0,
+            "air"
+          ],
+          [
+            300,
+            "whistle"
+          ],
+          [
+            400,
+            "sub"
+          ],
+          [
+            500,
+            "squeak"
+          ],
+          [
+            1200,
+            "tom"
+          ],
+          [
+            1900,
+            "blip"
+          ],
+          [
+            2600,
+            "kick"
+          ],
+          [
+            4400,
+            "kick"
+          ],
+          [
+            5200,
+            "hush"
+          ],
+          [
+            5300,
+            "riser"
+          ],
+          [
+            6000,
+            "stamp"
+          ],
+          [
+            6000,
+            "whoosh"
+          ],
+          [
+            6400,
+            "blip"
+          ],
+          [
+            6800,
+            "rateTick"
+          ],
+          [
+            7000,
+            "pad"
+          ],
+          [
+            7200,
+            "rateTick"
+          ],
+          [
+            7600,
+            "rateTick"
+          ],
+          [
+            8000,
+            "rateTick"
+          ],
+          [
+            8400,
+            "rateTick"
+          ],
+          [
+            8800,
+            "rateTick"
+          ],
+          [
+            9200,
+            "tom"
+          ],
+          [
+            9700,
+            "riser"
+          ],
+          [
+            10300,
+            "stamp"
+          ],
+          [
+            10300,
+            "choir"
+          ],
+          [
+            10400,
+            "whoosh"
+          ],
+          [
+            11400,
+            "swell"
+          ],
+          [
+            11900,
+            "whoosh"
+          ],
+          [
+            12300,
+            "pad"
+          ],
+          [
+            12400,
+            "blip"
+          ],
+          [
+            12400,
+            "whoosh"
+          ],
+          [
+            12400,
+            "whistle"
+          ],
+          [
+            14000,
+            "jerseyDrop"
+          ],
+          [
+            14300,
+            "jerseyLand"
+          ],
+          [
+            14500,
+            "plateWipe"
+          ],
+          [
+            14700,
+            "flagPop"
+          ],
+          [
+            14900,
+            "rateDing"
+          ],
+          [
+            18500,
+            "jerseyDrop"
+          ],
+          [
+            18800,
+            "jerseyLand"
+          ],
+          [
+            18900,
+            "plateWipe"
+          ],
+          [
+            19300,
+            "jerseyDrop"
+          ],
+          [
+            19550,
+            "jerseyLand"
+          ],
+          [
+            19650,
+            "plateWipe"
+          ],
+          [
+            20050,
+            "jerseyDrop"
+          ],
+          [
+            20300,
+            "jerseyLand"
+          ],
+          [
+            20400,
+            "plateWipe"
+          ],
+          [
+            20800,
+            "jerseyDrop"
+          ],
+          [
+            21050,
+            "jerseyLand"
+          ],
+          [
+            21150,
+            "plateWipe"
+          ],
+          [
+            21300,
+            "flagPop"
+          ],
+          [
+            21500,
+            "rateDing"
+          ],
+          [
+            21700,
+            "jerseyDrop"
+          ],
+          [
+            22000,
+            "jerseyLand"
+          ],
+          [
+            22100,
+            "plateWipe"
+          ],
+          [
+            22750,
+            "jerseyDrop"
+          ],
+          [
+            23050,
+            "jerseyLand"
+          ],
+          [
+            23150,
+            "plateWipe"
+          ],
+          [
+            23400,
+            "blip"
+          ],
+          [
+            23700,
+            "rateDing"
+          ],
+          [
+            24450,
+            "jerseyDrop"
+          ],
+          [
+            24750,
+            "jerseyLand"
+          ],
+          [
+            24850,
+            "plateWipe"
+          ],
+          [
+            25450,
+            "jerseyDrop"
+          ],
+          [
+            25750,
+            "jerseyLand"
+          ],
+          [
+            25850,
+            "plateWipe"
+          ],
+          [
+            26450,
+            "jerseyDrop"
+          ],
+          [
+            26750,
+            "jerseyLand"
+          ],
+          [
+            26850,
+            "plateWipe"
+          ],
+          [
+            27000,
+            "flagPop"
+          ],
+          [
+            27200,
+            "rateDing"
+          ],
+          [
+            27800,
+            "blip"
+          ],
+          [
+            27900,
+            "crowdOhh"
+          ],
+          [
+            28500,
+            "jerseyDrop"
+          ],
+          [
+            28800,
+            "jerseyLand"
+          ],
+          [
+            28900,
+            "plateWipe"
+          ],
+          [
+            29100,
+            "choir"
+          ],
+          [
+            29400,
+            "rateDing"
+          ],
+          [
+            30400,
+            "stamp"
+          ],
+          [
+            30500,
+            "whoosh"
+          ],
+          [
+            30600,
+            "tada"
+          ],
+          [
+            30800,
+            "swell"
+          ],
+          [
+            31200,
+            "choir"
+          ],
+          [
+            31800,
+            "blip"
+          ],
+          [
+            31900,
+            "pad"
+          ],
+          [
+            32000,
+            "whooshSoft"
+          ],
+          [
+            32500,
+            "benchPop"
+          ],
+          [
+            32680,
+            "benchTick"
+          ],
+          [
+            32950,
+            "benchPop"
+          ],
+          [
+            33130,
+            "benchTick"
+          ],
+          [
+            33400,
+            "benchPop"
+          ],
+          [
+            33580,
+            "benchTick"
+          ],
+          [
+            33850,
+            "benchPop"
+          ],
+          [
+            34030,
+            "benchTick"
+          ],
+          [
+            34300,
+            "benchPop"
+          ],
+          [
+            34480,
+            "benchTick"
+          ],
+          [
+            34750,
+            "benchPop"
+          ],
+          [
+            34930,
+            "benchTick"
+          ],
+          [
+            35200,
+            "benchPop"
+          ],
+          [
+            35380,
+            "benchTick"
+          ],
+          [
+            35650,
+            "benchPop"
+          ],
+          [
+            35830,
+            "benchTick"
+          ],
+          [
+            36100,
+            "benchPop"
+          ],
+          [
+            36200,
+            "pluck"
+          ],
+          [
+            36280,
+            "benchTick"
+          ],
+          [
+            36550,
+            "benchPop"
+          ],
+          [
+            36730,
+            "benchTick"
+          ],
+          [
+            37200,
+            "whooshSoft"
+          ],
+          [
+            37400,
+            "stamp"
+          ],
+          [
+            37500,
+            "choir"
+          ],
+          [
+            37600,
+            "crowdOhh"
+          ],
+          [
+            37900,
+            "swell"
+          ],
+          [
+            38000,
+            "pad"
+          ],
+          [
+            38300,
+            "chime"
+          ],
+          [
+            39100,
+            "sparkle"
+          ],
+          [
+            40000,
+            "pluck"
+          ],
+          [
+            40900,
+            "pluck"
+          ],
+          [
+            41800,
+            "sparkle"
+          ],
+          [
+            42600,
+            "whistle"
+          ]
+        ],
+        "voices": [
+          "air",
+          "benchPop",
+          "benchTick",
+          "blip",
+          "chime",
+          "choir",
+          "crowd",
+          "crowdOhh",
+          "flagPop",
+          "hush",
+          "jerseyDrop",
+          "jerseyLand",
+          "kick",
+          "pad",
+          "plateWipe",
+          "pluck",
+          "rateDing",
+          "rateTick",
+          "riser",
+          "sparkle",
+          "squeak",
+          "stamp",
+          "sub",
+          "swell",
+          "tada",
+          "tom",
+          "whistle",
+          "whoosh",
+          "whooshSoft"
+        ],
+        "bytes": 5657640,
+        "peak": 0.9,
+        "rms": 0.1603,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "trim": 0.6644,
+        "rawPeak": 1.3546,
+        "unknownVoices": [],
+        "generated": "2026-10-13T06:47:48",
+        "secondsToBuild": 3.9
+      },
+      "voice": {
+        "kind": "voice",
+        "id": "astan-city-xi",
+        "film": "/home/daytona/codebase/astan-city-xi.html",
+        "title": "Astan City",
+        "asset": "assets/voice/astan-city-xi.wav",
+        "engine": {
+          "name": "piper",
+          "voice": "fr_FR-tom-medium",
+          "label": "français · Tom (medium)",
+          "sr": 32000,
+          "scale": 1.08,
+          "peak": 0.9,
+          "gap": 0.2,
+          "pad": 0.25
+        },
+        "seconds": 44.0,
+        "filmMs": 43400,
+        "tail": 0.6,
+        "speechMs": 27247,
+        "meanRate": 2.405,
+        "retimed": [],
+        "overflow": [],
+        "lines": [
+          {
+            "i": 0,
+            "t": 600,
+            "d": 2920,
+            "window": 3333,
+            "ms": 2920,
+            "endsAt": 3520,
+            "nextAt": 6300,
+            "budget": 5500,
+            "slack": 2580,
+            "txt": "Bonsoir à tous, Léonard Chose au micro.",
+            "rate": 2.397,
+            "words": [
+              {
+                "w": "Bonsoir",
+                "t0": 0,
+                "t1": 515
+              },
+              {
+                "w": "à",
+                "t0": 515,
+                "t1": 772
+              },
+              {
+                "w": "tous,",
+                "t0": 772,
+                "t1": 1119
+              },
+              {
+                "w": "Léonard",
+                "t0": 1119,
+                "t1": 1634
+              },
+              {
+                "w": "Chose",
+                "t0": 1634,
+                "t1": 2148
+              },
+              {
+                "w": "au",
+                "t0": 2148,
+                "t1": 2405
+              },
+              {
+                "w": "micro.",
+                "t0": 2405,
+                "t1": 2920
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 1,
+            "t": 6300,
+            "d": 3518,
+            "window": 4047,
+            "ms": 3518,
+            "endsAt": 9818,
+            "nextAt": 12400,
+            "budget": 5900,
+            "slack": 2382,
+            "txt": "Astan City dévoile son onze de départ, ce soir.",
+            "rate": 2.558,
+            "words": [
+              {
+                "w": "Astan",
+                "t0": 0,
+                "t1": 458
+              },
+              {
+                "w": "City",
+                "t0": 458,
+                "t1": 917
+              },
+              {
+                "w": "dévoile",
+                "t0": 917,
+                "t1": 1604
+              },
+              {
+                "w": "son",
+                "t0": 1604,
+                "t1": 1833
+              },
+              {
+                "w": "onze",
+                "t0": 1833,
+                "t1": 2292
+              },
+              {
+                "w": "de",
+                "t0": 2292,
+                "t1": 2521
+              },
+              {
+                "w": "départ,",
+                "t0": 2521,
+                "t1": 3060
+              },
+              {
+                "w": "ce",
+                "t0": 3060,
+                "t1": 3289
+              },
+              {
+                "w": "soir.",
+                "t0": 3289,
+                "t1": 3518
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 2,
+            "t": 12400,
+            "d": 1721,
+            "window": 2272,
+            "ms": 1721,
+            "endsAt": 14121,
+            "nextAt": 15800,
+            "budget": 3200,
+            "slack": 1479,
+            "txt": "Et dans les buts, Sako!",
+            "rate": 2.905,
+            "words": [
+              {
+                "w": "Et",
+                "t0": 0,
+                "t1": 248
+              },
+              {
+                "w": "dans",
+                "t0": 248,
+                "t1": 495
+              },
+              {
+                "w": "les",
+                "t0": 495,
+                "t1": 743
+              },
+              {
+                "w": "buts,",
+                "t0": 743,
+                "t1": 1077
+              },
+              {
+                "w": "Sako!",
+                "t0": 1077,
+                "t1": 1721
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 3,
+            "t": 15800,
+            "d": 4994,
+            "window": 5428,
+            "ms": 4994,
+            "endsAt": 20794,
+            "nextAt": 21600,
+            "budget": 5600,
+            "slack": 606,
+            "txt": "La défense à quatre : Fouhez, Rolberg, Elhussin, Comistani.",
+            "rate": 1.802,
+            "words": [
+              {
+                "w": "La",
+                "t0": 0,
+                "t1": 245
+              },
+              {
+                "w": "défense",
+                "t0": 245,
+                "t1": 979
+              },
+              {
+                "w": "à",
+                "t0": 979,
+                "t1": 1224
+              },
+              {
+                "w": "quatre",
+                "t0": 1224,
+                "t1": 1714
+              },
+              {
+                "w": ":",
+                "t0": 1714,
+                "t1": 2044
+              },
+              {
+                "w": "Fouhez,",
+                "t0": 2044,
+                "t1": 2619
+              },
+              {
+                "w": "Rolberg,",
+                "t0": 2619,
+                "t1": 3195
+              },
+              {
+                "w": "Elhussin,",
+                "t0": 3195,
+                "t1": 4015
+              },
+              {
+                "w": "Comistani.",
+                "t0": 4015,
+                "t1": 4994
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 4,
+            "t": 21600,
+            "d": 5927,
+            "window": 6360,
+            "ms": 5927,
+            "endsAt": 27527,
+            "nextAt": 28100,
+            "budget": 6300,
+            "slack": 373,
+            "txt": "Au milieu, Mikkelsen et Belmadi. Devant, Elke, Sholke et Dempsey!",
+            "rate": 1.687,
+            "words": [
+              {
+                "w": "Au",
+                "t0": 0,
+                "t1": 287
+              },
+              {
+                "w": "milieu,",
+                "t0": 287,
+                "t1": 962
+              },
+              {
+                "w": "Mikkelsen",
+                "t0": 962,
+                "t1": 1823
+              },
+              {
+                "w": "et",
+                "t0": 1823,
+                "t1": 2110
+              },
+              {
+                "w": "Belmadi.",
+                "t0": 2110,
+                "t1": 2971
+              },
+              {
+                "w": "Devant,",
+                "t0": 2971,
+                "t1": 3645
+              },
+              {
+                "w": "Elke,",
+                "t0": 3645,
+                "t1": 4320
+              },
+              {
+                "w": "Sholke",
+                "t0": 4320,
+                "t1": 4894
+              },
+              {
+                "w": "et",
+                "t0": 4894,
+                "t1": 5181
+              },
+              {
+                "w": "Dempsey!",
+                "t0": 5181,
+                "t1": 5927
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 5,
+            "t": 28100,
+            "d": 1794,
+            "window": 2166,
+            "ms": 1794,
+            "endsAt": 29894,
+            "nextAt": 31800,
+            "budget": 3500,
+            "slack": 1706,
+            "txt": "Et Keytez en pointe!",
+            "rate": 2.23,
+            "words": [
+              {
+                "w": "Et",
+                "t0": 0,
+                "t1": 272
+              },
+              {
+                "w": "Keytez",
+                "t0": 272,
+                "t1": 815
+              },
+              {
+                "w": "en",
+                "t0": 815,
+                "t1": 1087
+              },
+              {
+                "w": "pointe!",
+                "t0": 1087,
+                "t1": 1794
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 6,
+            "t": 31800,
+            "d": 2788,
+            "window": 3109,
+            "ms": 2788,
+            "endsAt": 34588,
+            "nextAt": 37800,
+            "budget": 5800,
+            "slack": 3012,
+            "txt": "Sur le banc, dix remplaçants prêts à entrer.",
+            "rate": 2.869,
+            "words": [
+              {
+                "w": "Sur",
+                "t0": 0,
+                "t1": 246
+              },
+              {
+                "w": "le",
+                "t0": 246,
+                "t1": 491
+              },
+              {
+                "w": "banc,",
+                "t0": 491,
+                "t1": 823
+              },
+              {
+                "w": "dix",
+                "t0": 823,
+                "t1": 1069
+              },
+              {
+                "w": "remplaçants",
+                "t0": 1069,
+                "t1": 1805
+              },
+              {
+                "w": "prêts",
+                "t0": 1805,
+                "t1": 2051
+              },
+              {
+                "w": "à",
+                "t0": 2051,
+                "t1": 2297
+              },
+              {
+                "w": "entrer.",
+                "t0": 2297,
+                "t1": 2788
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 7,
+            "t": 37800,
+            "d": 3585,
+            "window": 4156,
+            "ms": 3585,
+            "endsAt": 41385,
+            "nextAt": 43400,
+            "budget": 5400,
+            "slack": 1815,
+            "txt": "Astan City, onze de départ : quatre deux trois un.",
+            "rate": 2.789,
+            "words": [
+              {
+                "w": "Astan",
+                "t0": 0,
+                "t1": 457
+              },
+              {
+                "w": "City,",
+                "t0": 457,
+                "t1": 993
+              },
+              {
+                "w": "onze",
+                "t0": 993,
+                "t1": 1450
+              },
+              {
+                "w": "de",
+                "t0": 1450,
+                "t1": 1678
+              },
+              {
+                "w": "départ",
+                "t0": 1678,
+                "t1": 2135
+              },
+              {
+                "w": ":",
+                "t0": 2135,
+                "t1": 2443
+              },
+              {
+                "w": "quatre",
+                "t0": 2443,
+                "t1": 2900
+              },
+              {
+                "w": "deux",
+                "t0": 2900,
+                "t1": 3128
+              },
+              {
+                "w": "trois",
+                "t0": 3128,
+                "t1": 3357
+              },
+              {
+                "w": "un.",
+                "t0": 3357,
+                "t1": 3585
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          }
+        ],
+        "bytes": 2816044,
+        "peak": 0.9,
+        "rms": 0.0681,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "generated": "2026-10-13T08:55:26",
+        "secondsToBuild": 3.7
+      }
+    },
+    {
+      "id": "boby-commentateur",
+      "title": "Boby",
+      "file": "boby-commentateur.html",
+      "total": 34000,
+      "seconds": 34.0,
+      "cues": 71,
+      "voices": [
+        "air",
+        "blip",
+        "chime",
+        "chip",
+        "coinLand",
+        "crowd",
+        "crowdGasp",
+        "crowdOhh",
+        "hush",
+        "impact",
+        "kick",
+        "micThud",
+        "pad",
+        "phoneBuzz",
+        "pluck",
+        "riser",
+        "sparkle",
+        "squeak",
+        "stamp",
+        "sub",
+        "swell",
+        "tada",
+        "tom",
+        "whistle",
+        "whoosh",
+        "whooshSoft"
+      ],
+      "band": {
+        "kind": "audio",
+        "id": "boby-commentateur",
+        "film": "/home/daytona/codebase/boby-commentateur.html",
+        "title": "Boby",
+        "asset": "assets/audio/boby-commentateur.wav",
+        "sr": 32000,
+        "seconds": 34.8,
+        "filmMs": 34000,
+        "tail": 0.8,
+        "cues": [
+          [
+            0,
+            "pad"
+          ],
+          [
+            0,
+            "crowd"
+          ],
+          [
+            0,
+            "air"
+          ],
+          [
+            300,
+            "sub"
+          ],
+          [
+            500,
+            "squeak"
+          ],
+          [
+            900,
+            "blip"
+          ],
+          [
+            1400,
+            "tom"
+          ],
+          [
+            1900,
+            "phoneBuzz"
+          ],
+          [
+            2600,
+            "kick"
+          ],
+          [
+            3100,
+            "chip"
+          ],
+          [
+            3700,
+            "hush"
+          ],
+          [
+            4800,
+            "riser"
+          ],
+          [
+            5200,
+            "whoosh"
+          ],
+          [
+            5600,
+            "pad"
+          ],
+          [
+            6100,
+            "blip"
+          ],
+          [
+            6400,
+            "pluck"
+          ],
+          [
+            7000,
+            "stamp"
+          ],
+          [
+            7000,
+            "whoosh"
+          ],
+          [
+            7300,
+            "blip"
+          ],
+          [
+            7900,
+            "chime"
+          ],
+          [
+            8400,
+            "pluck"
+          ],
+          [
+            9200,
+            "sparkle"
+          ],
+          [
+            10300,
+            "whooshSoft"
+          ],
+          [
+            10600,
+            "chip"
+          ],
+          [
+            11200,
+            "tom"
+          ],
+          [
+            11800,
+            "pluck"
+          ],
+          [
+            12400,
+            "hush"
+          ],
+          [
+            13100,
+            "riser"
+          ],
+          [
+            13500,
+            "kick"
+          ],
+          [
+            13700,
+            "stamp"
+          ],
+          [
+            13700,
+            "whoosh"
+          ],
+          [
+            14000,
+            "blip"
+          ],
+          [
+            14200,
+            "pad"
+          ],
+          [
+            14500,
+            "coinLand"
+          ],
+          [
+            14800,
+            "chip"
+          ],
+          [
+            15600,
+            "pluck"
+          ],
+          [
+            16400,
+            "impact"
+          ],
+          [
+            16700,
+            "coinLand"
+          ],
+          [
+            17200,
+            "hush"
+          ],
+          [
+            18400,
+            "coinLand"
+          ],
+          [
+            18700,
+            "chip"
+          ],
+          [
+            19000,
+            "pluck"
+          ],
+          [
+            20200,
+            "impact"
+          ],
+          [
+            20500,
+            "coinLand"
+          ],
+          [
+            21000,
+            "whooshSoft"
+          ],
+          [
+            21500,
+            "riser"
+          ],
+          [
+            21700,
+            "stamp"
+          ],
+          [
+            21700,
+            "whoosh"
+          ],
+          [
+            21900,
+            "pad"
+          ],
+          [
+            22600,
+            "blip"
+          ],
+          [
+            23200,
+            "pluck"
+          ],
+          [
+            23800,
+            "chip"
+          ],
+          [
+            24600,
+            "impact"
+          ],
+          [
+            24900,
+            "crowdOhh"
+          ],
+          [
+            25600,
+            "pluck"
+          ],
+          [
+            26400,
+            "riser"
+          ],
+          [
+            26800,
+            "whoosh"
+          ],
+          [
+            27400,
+            "micThud"
+          ],
+          [
+            27700,
+            "impact"
+          ],
+          [
+            27900,
+            "crowdGasp"
+          ],
+          [
+            28200,
+            "crowdOhh"
+          ],
+          [
+            28800,
+            "tada"
+          ],
+          [
+            29200,
+            "chime"
+          ],
+          [
+            29800,
+            "pad"
+          ],
+          [
+            30200,
+            "sparkle"
+          ],
+          [
+            30800,
+            "pluck"
+          ],
+          [
+            31400,
+            "swell"
+          ],
+          [
+            32000,
+            "sparkle"
+          ],
+          [
+            32600,
+            "chime"
+          ],
+          [
+            33100,
+            "whistle"
+          ],
+          [
+            33400,
+            "sub"
+          ]
+        ],
+        "voices": [
+          "air",
+          "blip",
+          "chime",
+          "chip",
+          "coinLand",
+          "crowd",
+          "crowdGasp",
+          "crowdOhh",
+          "hush",
+          "impact",
+          "kick",
+          "micThud",
+          "pad",
+          "phoneBuzz",
+          "pluck",
+          "riser",
+          "sparkle",
+          "squeak",
+          "stamp",
+          "sub",
+          "swell",
+          "tada",
+          "tom",
+          "whistle",
+          "whoosh",
+          "whooshSoft"
+        ],
+        "bytes": 4454444,
+        "peak": 0.9,
+        "rms": 0.1704,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "trim": 0.5934,
+        "rawPeak": 1.5166,
+        "unknownVoices": [],
+        "generated": "2026-10-13T06:47:48",
+        "secondsToBuild": 1.4
+      },
+      "voice": {
+        "kind": "voice",
+        "id": "boby-commentateur",
+        "film": "/home/daytona/codebase/boby-commentateur.html",
+        "title": "Boby",
+        "asset": "assets/voice/boby-commentateur.wav",
+        "engine": {
+          "name": "piper",
+          "voice": "fr_FR-tom-medium",
+          "label": "français · Tom (medium)",
+          "sr": 32000,
+          "scale": 1.08,
+          "peak": 0.9,
+          "gap": 0.2,
+          "pad": 0.25
+        },
+        "seconds": 34.6,
+        "filmMs": 34000,
+        "tail": 0.6,
+        "speechMs": 24124,
+        "meanRate": 2.173,
+        "retimed": [
+          3
+        ],
+        "overflow": [],
+        "lines": [
+          {
+            "i": 0,
+            "t": 600,
+            "d": 3767,
+            "window": 4168,
+            "ms": 3767,
+            "endsAt": 4367,
+            "nextAt": 5200,
+            "budget": 4400,
+            "slack": 633,
+            "txt": "Bonsoir, bonsoir. Ici Boby, en direct.",
+            "rate": 1.593,
+            "words": [
+              {
+                "w": "Bonsoir,",
+                "t0": 0,
+                "t1": 757
+              },
+              {
+                "w": "bonsoir.",
+                "t0": 757,
+                "t1": 1401
+              },
+              {
+                "w": "Ici",
+                "t0": 1401,
+                "t1": 2044
+              },
+              {
+                "w": "Boby,",
+                "t0": 2044,
+                "t1": 2801
+              },
+              {
+                "w": "en",
+                "t0": 2801,
+                "t1": 3123
+              },
+              {
+                "w": "direct.",
+                "t0": 3123,
+                "t1": 3767
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 1,
+            "t": 5200,
+            "d": 3152,
+            "window": 3489,
+            "ms": 3152,
+            "endsAt": 8352,
+            "nextAt": 10300,
+            "budget": 4900,
+            "slack": 1748,
+            "txt": "Bienvenue sur, euh, sur notre antenne.",
+            "rate": 1.904,
+            "words": [
+              {
+                "w": "Bienvenue",
+                "t0": 0,
+                "t1": 808
+              },
+              {
+                "w": "sur,",
+                "t0": 808,
+                "t1": 1172
+              },
+              {
+                "w": "euh,",
+                "t0": 1172,
+                "t1": 1536
+              },
+              {
+                "w": "sur",
+                "t0": 1536,
+                "t1": 1805
+              },
+              {
+                "w": "notre",
+                "t0": 1805,
+                "t1": 2344
+              },
+              {
+                "w": "antenne.",
+                "t0": 2344,
+                "t1": 3152
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 2,
+            "t": 10300,
+            "d": 2483,
+            "window": 2924,
+            "ms": 2483,
+            "endsAt": 12783,
+            "nextAt": 14800,
+            "budget": 4300,
+            "slack": 1817,
+            "txt": "Donc ce soir, on commente... quel match.",
+            "rate": 2.819,
+            "words": [
+              {
+                "w": "Donc",
+                "t0": 0,
+                "t1": 266
+              },
+              {
+                "w": "ce",
+                "t0": 266,
+                "t1": 531
+              },
+              {
+                "w": "soir,",
+                "t0": 531,
+                "t1": 890
+              },
+              {
+                "w": "on",
+                "t0": 890,
+                "t1": 1155
+              },
+              {
+                "w": "commente...",
+                "t0": 1155,
+                "t1": 1952
+              },
+              {
+                "w": "quel",
+                "t0": 1952,
+                "t1": 2217
+              },
+              {
+                "w": "match.",
+                "t0": 2217,
+                "t1": 2483
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 3,
+            "t": 14800,
+            "d": 3871,
+            "window": 4080,
+            "ms": 3871,
+            "endsAt": 18671,
+            "nextAt": 19000,
+            "budget": 4000,
+            "slack": 129,
+            "txt": "Comistani. Enfin, Comistini... non, comestible.",
+            "rate": 1.292,
+            "words": [
+              {
+                "w": "Comistani.",
+                "t0": 0,
+                "t1": 986
+              },
+              {
+                "w": "Enfin,",
+                "t0": 986,
+                "t1": 1566
+              },
+              {
+                "w": "Comistini...",
+                "t0": 1566,
+                "t1": 2552
+              },
+              {
+                "w": "non,",
+                "t0": 2552,
+                "t1": 2885
+              },
+              {
+                "w": "comestible.",
+                "t0": 2885,
+                "t1": 3871
+              }
+            ],
+            "scale": 1.025,
+            "retimed": true,
+            "overflow": false
+          },
+          {
+            "i": 4,
+            "t": 19000,
+            "d": 3183,
+            "window": 3443,
+            "ms": 3183,
+            "endsAt": 22183,
+            "nextAt": 23200,
+            "budget": 4000,
+            "slack": 817,
+            "txt": "Mikkelsen. Mik... Mike-les-sons, voilà.",
+            "rate": 1.257,
+            "words": [
+              {
+                "w": "Mikkelsen.",
+                "t0": 0,
+                "t1": 923
+              },
+              {
+                "w": "Mik...",
+                "t0": 923,
+                "t1": 1230
+              },
+              {
+                "w": "Mike-les-sons,",
+                "t0": 1230,
+                "t1": 2568
+              },
+              {
+                "w": "voilà.",
+                "t0": 2568,
+                "t1": 3183
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 5,
+            "t": 23200,
+            "d": 2925,
+            "window": 3397,
+            "ms": 2925,
+            "endsAt": 26125,
+            "nextAt": 27400,
+            "budget": 4000,
+            "slack": 1075,
+            "txt": "Zéro partout, euh non, trois à zéro.",
+            "rate": 2.393,
+            "words": [
+              {
+                "w": "Zéro",
+                "t0": 0,
+                "t1": 547
+              },
+              {
+                "w": "partout,",
+                "t0": 547,
+                "t1": 1189
+              },
+              {
+                "w": "euh",
+                "t0": 1189,
+                "t1": 1462
+              },
+              {
+                "w": "non,",
+                "t0": 1462,
+                "t1": 1832
+              },
+              {
+                "w": "trois",
+                "t0": 1832,
+                "t1": 2105
+              },
+              {
+                "w": "à",
+                "t0": 2105,
+                "t1": 2378
+              },
+              {
+                "w": "zéro.",
+                "t0": 2378,
+                "t1": 2925
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 6,
+            "t": 27400,
+            "d": 3063,
+            "window": 3280,
+            "ms": 3063,
+            "endsAt": 30463,
+            "nextAt": 30800,
+            "budget": 3200,
+            "slack": 137,
+            "txt": "Aïe. J'ai lâché le micro, pardon.",
+            "rate": 1.959,
+            "words": [
+              {
+                "w": "Aïe.",
+                "t0": 0,
+                "t1": 328
+              },
+              {
+                "w": "J'ai",
+                "t0": 328,
+                "t1": 655
+              },
+              {
+                "w": "lâché",
+                "t0": 655,
+                "t1": 1310
+              },
+              {
+                "w": "le",
+                "t0": 1310,
+                "t1": 1638
+              },
+              {
+                "w": "micro,",
+                "t0": 1638,
+                "t1": 2408
+              },
+              {
+                "w": "pardon.",
+                "t0": 2408,
+                "t1": 3063
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 7,
+            "t": 30800,
+            "d": 1680,
+            "window": 2232,
+            "ms": 1680,
+            "endsAt": 32480,
+            "nextAt": 34000,
+            "budget": 3000,
+            "slack": 1320,
+            "txt": "Ce n'est pas moi, c'est le vent.",
+            "rate": 4.166,
+            "words": [
+              {
+                "w": "Ce",
+                "t0": 0,
+                "t1": 229
+              },
+              {
+                "w": "n'est",
+                "t0": 229,
+                "t1": 457
+              },
+              {
+                "w": "pas",
+                "t0": 457,
+                "t1": 686
+              },
+              {
+                "w": "moi,",
+                "t0": 686,
+                "t1": 994
+              },
+              {
+                "w": "c'est",
+                "t0": 994,
+                "t1": 1223
+              },
+              {
+                "w": "le",
+                "t0": 1223,
+                "t1": 1451
+              },
+              {
+                "w": "vent.",
+                "t0": 1451,
+                "t1": 1680
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          }
+        ],
+        "bytes": 2214444,
+        "peak": 0.9,
+        "rms": 0.076,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "generated": "2026-10-13T08:55:26",
+        "secondsToBuild": 3.7
+      }
+    },
+    {
+      "id": "cs-axium-xi",
+      "title": "CS AXIUM",
+      "file": "cs-axium-xi.html",
+      "total": 46200,
+      "seconds": 46.2,
+      "cues": 118,
+      "voices": [
+        "air",
+        "benchPop",
+        "benchTick",
+        "blip",
+        "chime",
+        "choir",
+        "crowd",
+        "crowdOhh",
+        "flagPop",
+        "hush",
+        "jerseyDrop",
+        "jerseyLand",
+        "kick",
+        "pad",
+        "plateWipe",
+        "pluck",
+        "rateDing",
+        "rateTick",
+        "riser",
+        "sparkle",
+        "squeak",
+        "stamp",
+        "sub",
+        "swell",
+        "tada",
+        "tom",
+        "whistle",
+        "whoosh",
+        "whooshSoft"
+      ],
+      "band": {
+        "kind": "audio",
+        "id": "cs-axium-xi",
+        "film": "/home/daytona/codebase/cs-axium-xi.html",
+        "title": "CS AXIUM",
+        "asset": "assets/audio/cs-axium-xi.wav",
+        "sr": 32000,
+        "seconds": 47.0,
+        "filmMs": 46200,
+        "tail": 0.8,
+        "cues": [
+          [
+            0,
+            "pad"
+          ],
+          [
+            0,
+            "crowd"
+          ],
+          [
+            0,
+            "air"
+          ],
+          [
+            300,
+            "whistle"
+          ],
+          [
+            400,
+            "sub"
+          ],
+          [
+            500,
+            "squeak"
+          ],
+          [
+            1200,
+            "tom"
+          ],
+          [
+            1900,
+            "blip"
+          ],
+          [
+            2600,
+            "kick"
+          ],
+          [
+            4600,
+            "kick"
+          ],
+          [
+            5600,
+            "hush"
+          ],
+          [
+            5700,
+            "riser"
+          ],
+          [
+            6400,
+            "stamp"
+          ],
+          [
+            6400,
+            "whoosh"
+          ],
+          [
+            6800,
+            "blip"
+          ],
+          [
+            7200,
+            "pad"
+          ],
+          [
+            7400,
+            "rateTick"
+          ],
+          [
+            7800,
+            "rateTick"
+          ],
+          [
+            8200,
+            "rateTick"
+          ],
+          [
+            8600,
+            "rateTick"
+          ],
+          [
+            9000,
+            "rateTick"
+          ],
+          [
+            9200,
+            "tom"
+          ],
+          [
+            9700,
+            "riser"
+          ],
+          [
+            10600,
+            "stamp"
+          ],
+          [
+            10600,
+            "choir"
+          ],
+          [
+            10700,
+            "whoosh"
+          ],
+          [
+            11800,
+            "swell"
+          ],
+          [
+            12300,
+            "whoosh"
+          ],
+          [
+            12900,
+            "pad"
+          ],
+          [
+            13000,
+            "blip"
+          ],
+          [
+            13000,
+            "whoosh"
+          ],
+          [
+            13000,
+            "whistle"
+          ],
+          [
+            14600,
+            "jerseyDrop"
+          ],
+          [
+            14900,
+            "jerseyLand"
+          ],
+          [
+            15100,
+            "plateWipe"
+          ],
+          [
+            15300,
+            "flagPop"
+          ],
+          [
+            15500,
+            "rateDing"
+          ],
+          [
+            18000,
+            "jerseyDrop"
+          ],
+          [
+            18300,
+            "jerseyLand"
+          ],
+          [
+            18400,
+            "plateWipe"
+          ],
+          [
+            18900,
+            "jerseyDrop"
+          ],
+          [
+            19200,
+            "jerseyLand"
+          ],
+          [
+            19300,
+            "plateWipe"
+          ],
+          [
+            19800,
+            "jerseyDrop"
+          ],
+          [
+            20100,
+            "jerseyLand"
+          ],
+          [
+            20200,
+            "plateWipe"
+          ],
+          [
+            20700,
+            "jerseyDrop"
+          ],
+          [
+            21000,
+            "jerseyLand"
+          ],
+          [
+            21100,
+            "plateWipe"
+          ],
+          [
+            21300,
+            "flagPop"
+          ],
+          [
+            21500,
+            "rateDing"
+          ],
+          [
+            21600,
+            "pad"
+          ],
+          [
+            21800,
+            "jerseyDrop"
+          ],
+          [
+            22100,
+            "jerseyLand"
+          ],
+          [
+            22200,
+            "plateWipe"
+          ],
+          [
+            22400,
+            "flagPop"
+          ],
+          [
+            22600,
+            "rateDing"
+          ],
+          [
+            25800,
+            "jerseyDrop"
+          ],
+          [
+            26100,
+            "jerseyLand"
+          ],
+          [
+            26200,
+            "plateWipe"
+          ],
+          [
+            26750,
+            "jerseyDrop"
+          ],
+          [
+            27050,
+            "jerseyLand"
+          ],
+          [
+            27150,
+            "plateWipe"
+          ],
+          [
+            27700,
+            "jerseyDrop"
+          ],
+          [
+            28000,
+            "jerseyLand"
+          ],
+          [
+            28100,
+            "plateWipe"
+          ],
+          [
+            28400,
+            "pad"
+          ],
+          [
+            28650,
+            "jerseyDrop"
+          ],
+          [
+            28950,
+            "jerseyLand"
+          ],
+          [
+            29050,
+            "plateWipe"
+          ],
+          [
+            29300,
+            "flagPop"
+          ],
+          [
+            29500,
+            "rateDing"
+          ],
+          [
+            29700,
+            "crowdOhh"
+          ],
+          [
+            32900,
+            "jerseyDrop"
+          ],
+          [
+            33200,
+            "jerseyLand"
+          ],
+          [
+            33300,
+            "plateWipe"
+          ],
+          [
+            33500,
+            "flagPop"
+          ],
+          [
+            33700,
+            "rateDing"
+          ],
+          [
+            34000,
+            "blip"
+          ],
+          [
+            34100,
+            "crowdOhh"
+          ],
+          [
+            34300,
+            "tada"
+          ],
+          [
+            34700,
+            "choir"
+          ],
+          [
+            35600,
+            "blip"
+          ],
+          [
+            35700,
+            "pad"
+          ],
+          [
+            35800,
+            "whooshSoft"
+          ],
+          [
+            36700,
+            "benchPop"
+          ],
+          [
+            36880,
+            "benchTick"
+          ],
+          [
+            37130,
+            "benchPop"
+          ],
+          [
+            37310,
+            "benchTick"
+          ],
+          [
+            37560,
+            "benchPop"
+          ],
+          [
+            37740,
+            "benchTick"
+          ],
+          [
+            37990,
+            "benchPop"
+          ],
+          [
+            38170,
+            "benchTick"
+          ],
+          [
+            38420,
+            "benchPop"
+          ],
+          [
+            38600,
+            "benchTick"
+          ],
+          [
+            38850,
+            "benchPop"
+          ],
+          [
+            39030,
+            "benchTick"
+          ],
+          [
+            39280,
+            "benchPop"
+          ],
+          [
+            39460,
+            "benchTick"
+          ],
+          [
+            39710,
+            "benchPop"
+          ],
+          [
+            39890,
+            "benchTick"
+          ],
+          [
+            40140,
+            "benchPop"
+          ],
+          [
+            40240,
+            "pluck"
+          ],
+          [
+            40320,
+            "benchTick"
+          ],
+          [
+            40500,
+            "stamp"
+          ],
+          [
+            40600,
+            "whoosh"
+          ],
+          [
+            41100,
+            "whooshSoft"
+          ],
+          [
+            41300,
+            "stamp"
+          ],
+          [
+            41400,
+            "choir"
+          ],
+          [
+            41500,
+            "crowdOhh"
+          ],
+          [
+            41800,
+            "swell"
+          ],
+          [
+            42000,
+            "pad"
+          ],
+          [
+            42300,
+            "chime"
+          ],
+          [
+            43100,
+            "sparkle"
+          ],
+          [
+            44000,
+            "pluck"
+          ],
+          [
+            44900,
+            "pluck"
+          ],
+          [
+            45800,
+            "sparkle"
+          ],
+          [
+            46000,
+            "whistle"
+          ]
+        ],
+        "voices": [
+          "air",
+          "benchPop",
+          "benchTick",
+          "blip",
+          "chime",
+          "choir",
+          "crowd",
+          "crowdOhh",
+          "flagPop",
+          "hush",
+          "jerseyDrop",
+          "jerseyLand",
+          "kick",
+          "pad",
+          "plateWipe",
+          "pluck",
+          "rateDing",
+          "rateTick",
+          "riser",
+          "sparkle",
+          "squeak",
+          "stamp",
+          "sub",
+          "swell",
+          "tada",
+          "tom",
+          "whistle",
+          "whoosh",
+          "whooshSoft"
+        ],
+        "bytes": 6016044,
+        "peak": 0.9,
+        "rms": 0.1702,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "trim": 0.6703,
+        "rawPeak": 1.3426,
+        "unknownVoices": [],
+        "generated": "2026-10-13T06:52:25",
+        "secondsToBuild": 1.8
+      },
+      "voice": {
+        "kind": "voice",
+        "id": "cs-axium-xi",
+        "film": "/home/daytona/codebase/cs-axium-xi.html",
+        "title": "CS AXIUM",
+        "asset": "assets/voice/cs-axium-xi.wav",
+        "engine": {
+          "name": "piper",
+          "voice": "fr_FR-tom-medium",
+          "label": "français · Tom (medium)",
+          "sr": 32000,
+          "scale": 1.08,
+          "peak": 0.9,
+          "gap": 0.2,
+          "pad": 0.25
+        },
+        "seconds": 46.8,
+        "filmMs": 46200,
+        "tail": 0.6,
+        "speechMs": 30705,
+        "meanRate": 2.195,
+        "retimed": [],
+        "overflow": [],
+        "lines": [
+          {
+            "i": 0,
+            "t": 600,
+            "d": 2813,
+            "window": 3297,
+            "ms": 2813,
+            "endsAt": 3413,
+            "nextAt": 6800,
+            "budget": 6000,
+            "slack": 3187,
+            "txt": "Bonsoir à tous, Léonard Chose au micro.",
+            "rate": 2.489,
+            "words": [
+              {
+                "w": "Bonsoir",
+                "t0": 0,
+                "t1": 496
+              },
+              {
+                "w": "à",
+                "t0": 496,
+                "t1": 744
+              },
+              {
+                "w": "tous,",
+                "t0": 744,
+                "t1": 1078
+              },
+              {
+                "w": "Léonard",
+                "t0": 1078,
+                "t1": 1574
+              },
+              {
+                "w": "Chose",
+                "t0": 1574,
+                "t1": 2069
+              },
+              {
+                "w": "au",
+                "t0": 2069,
+                "t1": 2317
+              },
+              {
+                "w": "micro.",
+                "t0": 2317,
+                "t1": 2813
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 1,
+            "t": 6800,
+            "d": 4022,
+            "window": 4379,
+            "ms": 4022,
+            "endsAt": 10822,
+            "nextAt": 13000,
+            "budget": 6000,
+            "slack": 1978,
+            "txt": "CS Axiom dévoile sa composition, ce soir.",
+            "rate": 1.741,
+            "words": [
+              {
+                "w": "CS",
+                "t0": 0,
+                "t1": 301
+              },
+              {
+                "w": "Axiom",
+                "t0": 301,
+                "t1": 904
+              },
+              {
+                "w": "dévoile",
+                "t0": 904,
+                "t1": 1808
+              },
+              {
+                "w": "sa",
+                "t0": 1808,
+                "t1": 2109
+              },
+              {
+                "w": "composition,",
+                "t0": 2109,
+                "t1": 3419
+              },
+              {
+                "w": "ce",
+                "t0": 3419,
+                "t1": 3721
+              },
+              {
+                "w": "soir.",
+                "t0": 3721,
+                "t1": 4022
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 2,
+            "t": 13000,
+            "d": 1821,
+            "window": 2118,
+            "ms": 1821,
+            "endsAt": 14821,
+            "nextAt": 16400,
+            "budget": 3200,
+            "slack": 1379,
+            "txt": "Et dans les buts, Haddad!",
+            "rate": 2.746,
+            "words": [
+              {
+                "w": "Et",
+                "t0": 0,
+                "t1": 262
+              },
+              {
+                "w": "dans",
+                "t0": 262,
+                "t1": 524
+              },
+              {
+                "w": "les",
+                "t0": 524,
+                "t1": 786
+              },
+              {
+                "w": "buts,",
+                "t0": 786,
+                "t1": 1140
+              },
+              {
+                "w": "Haddad!",
+                "t0": 1140,
+                "t1": 1821
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 3,
+            "t": 16400,
+            "d": 4559,
+            "window": 5079,
+            "ms": 4559,
+            "endsAt": 20959,
+            "nextAt": 22600,
+            "budget": 6000,
+            "slack": 1441,
+            "txt": "La défense : Lot Istanois, Benali, Hernancio, Sanchez.",
+            "rate": 1.755,
+            "words": [
+              {
+                "w": "La",
+                "t0": 0,
+                "t1": 248
+              },
+              {
+                "w": "défense",
+                "t0": 248,
+                "t1": 991
+              },
+              {
+                "w": ":",
+                "t0": 991,
+                "t1": 1326
+              },
+              {
+                "w": "Lot",
+                "t0": 1326,
+                "t1": 1573
+              },
+              {
+                "w": "Istanois,",
+                "t0": 1573,
+                "t1": 2403
+              },
+              {
+                "w": "Benali,",
+                "t0": 2403,
+                "t1": 3233
+              },
+              {
+                "w": "Hernancio,",
+                "t0": 3233,
+                "t1": 4063
+              },
+              {
+                "w": "Sanchez.",
+                "t0": 4063,
+                "t1": 4559
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 4,
+            "t": 22600,
+            "d": 2989,
+            "window": 3280,
+            "ms": 2989,
+            "endsAt": 25589,
+            "nextAt": 26000,
+            "budget": 3200,
+            "slack": 211,
+            "txt": "Mansouri en sentinelle, devant la défense.",
+            "rate": 2.007,
+            "words": [
+              {
+                "w": "Mansouri",
+                "t0": 0,
+                "t1": 625
+              },
+              {
+                "w": "en",
+                "t0": 625,
+                "t1": 833
+              },
+              {
+                "w": "sentinelle,",
+                "t0": 833,
+                "t1": 1739
+              },
+              {
+                "w": "devant",
+                "t0": 1739,
+                "t1": 2156
+              },
+              {
+                "w": "la",
+                "t0": 2156,
+                "t1": 2364
+              },
+              {
+                "w": "défense.",
+                "t0": 2364,
+                "t1": 2989
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 5,
+            "t": 26000,
+            "d": 5763,
+            "window": 6680,
+            "ms": 5763,
+            "endsAt": 31763,
+            "nextAt": 32800,
+            "budget": 6600,
+            "slack": 837,
+            "txt": "Le Boucher, Gelarza, Von Istanoix, Caruso : ils alimentent l'attaque !",
+            "rate": 1.909,
+            "words": [
+              {
+                "w": "Le",
+                "t0": 0,
+                "t1": 231
+              },
+              {
+                "w": "Boucher,",
+                "t0": 231,
+                "t1": 772
+              },
+              {
+                "w": "Gelarza,",
+                "t0": 772,
+                "t1": 1544
+              },
+              {
+                "w": "Von",
+                "t0": 1544,
+                "t1": 1775
+              },
+              {
+                "w": "Istanoix,",
+                "t0": 1775,
+                "t1": 2547
+              },
+              {
+                "w": "Caruso",
+                "t0": 2547,
+                "t1": 3239
+              },
+              {
+                "w": ":",
+                "t0": 3239,
+                "t1": 3550
+              },
+              {
+                "w": "ils",
+                "t0": 3550,
+                "t1": 3781
+              },
+              {
+                "w": "alimentent",
+                "t0": 3781,
+                "t1": 4703
+              },
+              {
+                "w": "l'attaque",
+                "t0": 4703,
+                "t1": 5394
+              },
+              {
+                "w": "!",
+                "t0": 5394,
+                "t1": 5763
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 6,
+            "t": 32800,
+            "d": 1955,
+            "window": 2112,
+            "ms": 1955,
+            "endsAt": 34755,
+            "nextAt": 35600,
+            "budget": 2600,
+            "slack": 645,
+            "txt": "Et Saidi, en pointe!",
+            "rate": 2.046,
+            "words": [
+              {
+                "w": "Et",
+                "t0": 0,
+                "t1": 281
+              },
+              {
+                "w": "Saidi,",
+                "t0": 281,
+                "t1": 942
+              },
+              {
+                "w": "en",
+                "t0": 942,
+                "t1": 1224
+              },
+              {
+                "w": "pointe!",
+                "t0": 1224,
+                "t1": 1955
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 7,
+            "t": 35600,
+            "d": 2945,
+            "window": 3256,
+            "ms": 2945,
+            "endsAt": 38545,
+            "nextAt": 40800,
+            "budget": 5000,
+            "slack": 2055,
+            "txt": "Sur le banc, neuf remplaçants prêts à entrer.",
+            "rate": 2.717,
+            "words": [
+              {
+                "w": "Sur",
+                "t0": 0,
+                "t1": 259
+              },
+              {
+                "w": "le",
+                "t0": 259,
+                "t1": 519
+              },
+              {
+                "w": "banc,",
+                "t0": 519,
+                "t1": 869
+              },
+              {
+                "w": "neuf",
+                "t0": 869,
+                "t1": 1129
+              },
+              {
+                "w": "remplaçants",
+                "t0": 1129,
+                "t1": 1907
+              },
+              {
+                "w": "prêts",
+                "t0": 1907,
+                "t1": 2167
+              },
+              {
+                "w": "à",
+                "t0": 2167,
+                "t1": 2426
+              },
+              {
+                "w": "entrer.",
+                "t0": 2426,
+                "t1": 2945
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 8,
+            "t": 40800,
+            "d": 3838,
+            "window": 4182,
+            "ms": 3838,
+            "endsAt": 44638,
+            "nextAt": 46200,
+            "budget": 5200,
+            "slack": 1362,
+            "txt": "CS Axiom, la composition : quatre un quatre un.",
+            "rate": 2.345,
+            "words": [
+              {
+                "w": "CS",
+                "t0": 0,
+                "t1": 244
+              },
+              {
+                "w": "Axiom,",
+                "t0": 244,
+                "t1": 819
+              },
+              {
+                "w": "la",
+                "t0": 819,
+                "t1": 1063
+              },
+              {
+                "w": "composition",
+                "t0": 1063,
+                "t1": 2041
+              },
+              {
+                "w": ":",
+                "t0": 2041,
+                "t1": 2371
+              },
+              {
+                "w": "quatre",
+                "t0": 2371,
+                "t1": 2860
+              },
+              {
+                "w": "un",
+                "t0": 2860,
+                "t1": 3105
+              },
+              {
+                "w": "quatre",
+                "t0": 3105,
+                "t1": 3594
+              },
+              {
+                "w": "un.",
+                "t0": 3594,
+                "t1": 3838
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          }
+        ],
+        "bytes": 2995244,
+        "peak": 0.9,
+        "rms": 0.073,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "generated": "2026-10-13T08:55:26",
+        "secondsToBuild": 4.1
+      }
+    },
+    {
+      "id": "herobrine",
+      "title": "HEROBRINE",
+      "file": "herobrine.html",
+      "total": 42000,
+      "seconds": 42.0,
+      "cues": 126,
+      "voices": [
+        "air",
+        "benchTick",
+        "blip",
+        "chime",
+        "chip",
+        "choir",
+        "coinLand",
+        "coinTick",
+        "crowd",
+        "crowdGasp",
+        "crowdOhh",
+        "door",
+        "engine",
+        "flagPop",
+        "hush",
+        "ignite",
+        "impact",
+        "impactSoft",
+        "jerseyDrop",
+        "jerseyLand",
+        "kick",
+        "micThud",
+        "pad",
+        "phoneBuzz",
+        "plateWipe",
+        "pluck",
+        "rateTick",
+        "resolve",
+        "riser",
+        "shimmer",
+        "sparkle",
+        "squeak",
+        "stamp",
+        "sub",
+        "sweep",
+        "tada",
+        "tom",
+        "trace",
+        "whistle",
+        "whoosh",
+        "whooshDeep",
+        "whooshSoft"
+      ],
+      "band": {
+        "kind": "audio",
+        "id": "herobrine",
+        "film": "/home/daytona/codebase/herobrine.html",
+        "title": "HEROBRINE",
+        "asset": "assets/audio/herobrine.wav",
+        "sr": 32000,
+        "seconds": 42.8,
+        "filmMs": 42000,
+        "tail": 0.8,
+        "cues": [
+          [
+            0,
+            "air"
+          ],
+          [
+            0,
+            "crowd"
+          ],
+          [
+            0,
+            "pad"
+          ],
+          [
+            260,
+            "door"
+          ],
+          [
+            700,
+            "blip"
+          ],
+          [
+            1100,
+            "jerseyDrop"
+          ],
+          [
+            1600,
+            "coinTick"
+          ],
+          [
+            2050,
+            "coinTick"
+          ],
+          [
+            2400,
+            "coinLand"
+          ],
+          [
+            2750,
+            "flagPop"
+          ],
+          [
+            3100,
+            "ignite"
+          ],
+          [
+            3400,
+            "sweep"
+          ],
+          [
+            3900,
+            "pluck"
+          ],
+          [
+            4300,
+            "rateTick"
+          ],
+          [
+            4600,
+            "rateTick"
+          ],
+          [
+            4900,
+            "jerseyLand"
+          ],
+          [
+            5100,
+            "shimmer"
+          ],
+          [
+            5400,
+            "blip"
+          ],
+          [
+            5650,
+            "chip"
+          ],
+          [
+            5900,
+            "jerseyLand"
+          ],
+          [
+            6300,
+            "pluck"
+          ],
+          [
+            6600,
+            "whooshSoft"
+          ],
+          [
+            7200,
+            "hush"
+          ],
+          [
+            7350,
+            "sub"
+          ],
+          [
+            7600,
+            "phoneBuzz"
+          ],
+          [
+            7900,
+            "jerseyLand"
+          ],
+          [
+            8300,
+            "whooshSoft"
+          ],
+          [
+            8500,
+            "tom"
+          ],
+          [
+            8750,
+            "rateTick"
+          ],
+          [
+            9100,
+            "trace"
+          ],
+          [
+            9600,
+            "crowdOhh"
+          ],
+          [
+            10100,
+            "riser"
+          ],
+          [
+            10500,
+            "ignite"
+          ],
+          [
+            10800,
+            "sparkle"
+          ],
+          [
+            11100,
+            "squeak"
+          ],
+          [
+            11500,
+            "kick"
+          ],
+          [
+            11900,
+            "whooshDeep"
+          ],
+          [
+            12300,
+            "chip"
+          ],
+          [
+            12600,
+            "chip"
+          ],
+          [
+            12900,
+            "benchTick"
+          ],
+          [
+            13200,
+            "whistle"
+          ],
+          [
+            13600,
+            "hush"
+          ],
+          [
+            14050,
+            "sub"
+          ],
+          [
+            14200,
+            "whooshDeep"
+          ],
+          [
+            14500,
+            "jerseyLand"
+          ],
+          [
+            14900,
+            "jerseyLand"
+          ],
+          [
+            15300,
+            "rateTick"
+          ],
+          [
+            15700,
+            "impactSoft"
+          ],
+          [
+            16100,
+            "trace"
+          ],
+          [
+            16500,
+            "door"
+          ],
+          [
+            16900,
+            "blip"
+          ],
+          [
+            17300,
+            "hush"
+          ],
+          [
+            17600,
+            "phoneBuzz"
+          ],
+          [
+            17900,
+            "squeak"
+          ],
+          [
+            18300,
+            "impactSoft"
+          ],
+          [
+            18600,
+            "chime"
+          ],
+          [
+            19000,
+            "choir"
+          ],
+          [
+            19400,
+            "plateWipe"
+          ],
+          [
+            19800,
+            "riser"
+          ],
+          [
+            20400,
+            "whoosh"
+          ],
+          [
+            21100,
+            "sub"
+          ],
+          [
+            21200,
+            "pad"
+          ],
+          [
+            21600,
+            "hush"
+          ],
+          [
+            21900,
+            "whistle"
+          ],
+          [
+            22400,
+            "coinTick"
+          ],
+          [
+            22800,
+            "tom"
+          ],
+          [
+            23200,
+            "crowdGasp"
+          ],
+          [
+            23600,
+            "pluck"
+          ],
+          [
+            24100,
+            "riser"
+          ],
+          [
+            24500,
+            "whooshDeep"
+          ],
+          [
+            24900,
+            "choir"
+          ],
+          [
+            25400,
+            "stamp"
+          ],
+          [
+            25700,
+            "sparkle"
+          ],
+          [
+            26000,
+            "hush"
+          ],
+          [
+            26300,
+            "riser"
+          ],
+          [
+            26600,
+            "micThud"
+          ],
+          [
+            26600,
+            "impact"
+          ],
+          [
+            26900,
+            "sweep"
+          ],
+          [
+            27200,
+            "tada"
+          ],
+          [
+            27600,
+            "whooshSoft"
+          ],
+          [
+            28100,
+            "engine"
+          ],
+          [
+            28400,
+            "kick"
+          ],
+          [
+            28700,
+            "jerseyLand"
+          ],
+          [
+            29100,
+            "jerseyLand"
+          ],
+          [
+            29400,
+            "rateTick"
+          ],
+          [
+            29500,
+            "jerseyLand"
+          ],
+          [
+            29900,
+            "jerseyLand"
+          ],
+          [
+            30300,
+            "jerseyLand"
+          ],
+          [
+            30400,
+            "crowdOhh"
+          ],
+          [
+            30700,
+            "jerseyLand"
+          ],
+          [
+            31100,
+            "jerseyLand"
+          ],
+          [
+            31300,
+            "riser"
+          ],
+          [
+            31500,
+            "jerseyLand"
+          ],
+          [
+            31900,
+            "jerseyLand"
+          ],
+          [
+            32100,
+            "whistle"
+          ],
+          [
+            32300,
+            "jerseyLand"
+          ],
+          [
+            32500,
+            "whoosh"
+          ],
+          [
+            32700,
+            "jerseyLand"
+          ],
+          [
+            33100,
+            "jerseyLand"
+          ],
+          [
+            33200,
+            "crowdGasp"
+          ],
+          [
+            33500,
+            "jerseyLand"
+          ],
+          [
+            33800,
+            "phoneBuzz"
+          ],
+          [
+            33900,
+            "jerseyLand"
+          ],
+          [
+            34200,
+            "riser"
+          ],
+          [
+            34500,
+            "whooshDeep"
+          ],
+          [
+            34800,
+            "sweep"
+          ],
+          [
+            35100,
+            "whoosh"
+          ],
+          [
+            35400,
+            "resolve"
+          ],
+          [
+            35700,
+            "choir"
+          ],
+          [
+            36000,
+            "pad"
+          ],
+          [
+            36300,
+            "chip"
+          ],
+          [
+            36600,
+            "chip"
+          ],
+          [
+            36900,
+            "chip"
+          ],
+          [
+            37200,
+            "blip"
+          ],
+          [
+            37500,
+            "sparkle"
+          ],
+          [
+            37900,
+            "pad"
+          ],
+          [
+            38200,
+            "chime"
+          ],
+          [
+            38600,
+            "shimmer"
+          ],
+          [
+            39000,
+            "coinLand"
+          ],
+          [
+            39300,
+            "rateTick"
+          ],
+          [
+            39700,
+            "rateTick"
+          ],
+          [
+            40100,
+            "rateTick"
+          ],
+          [
+            40600,
+            "chime"
+          ],
+          [
+            41000,
+            "sparkle"
+          ],
+          [
+            41400,
+            "whistle"
+          ],
+          [
+            41800,
+            "jerseyDrop"
+          ]
+        ],
+        "voices": [
+          "air",
+          "benchTick",
+          "blip",
+          "chime",
+          "chip",
+          "choir",
+          "coinLand",
+          "coinTick",
+          "crowd",
+          "crowdGasp",
+          "crowdOhh",
+          "door",
+          "engine",
+          "flagPop",
+          "hush",
+          "ignite",
+          "impact",
+          "impactSoft",
+          "jerseyDrop",
+          "jerseyLand",
+          "kick",
+          "micThud",
+          "pad",
+          "phoneBuzz",
+          "plateWipe",
+          "pluck",
+          "rateTick",
+          "resolve",
+          "riser",
+          "shimmer",
+          "sparkle",
+          "squeak",
+          "stamp",
+          "sub",
+          "sweep",
+          "tada",
+          "tom",
+          "trace",
+          "whistle",
+          "whoosh",
+          "whooshDeep",
+          "whooshSoft"
+        ],
+        "bytes": 5478444,
+        "peak": 0.9,
+        "rms": 0.1799,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "trim": 0.5261,
+        "rawPeak": 1.7108,
+        "unknownVoices": [],
+        "generated": "2026-10-13T11:51:25",
+        "secondsToBuild": 2.1
+      },
+      "voice": {
+        "kind": "voice",
+        "id": "herobrine",
+        "film": "/home/daytona/codebase/herobrine.html",
+        "title": "HEROBRINE",
+        "asset": "assets/voice/herobrine.wav",
+        "engine": {
+          "name": "piper",
+          "voice": "fr_FR-tom-medium",
+          "label": "français · Tom (medium)",
+          "sr": 32000,
+          "scale": 1.08,
+          "peak": 0.9,
+          "gap": 0.2,
+          "pad": 0.25
+        },
+        "seconds": 42.6,
+        "filmMs": 42000,
+        "tail": 0.6,
+        "speechMs": 26580,
+        "meanRate": 2.544,
+        "retimed": [],
+        "overflow": [],
+        "lines": [
+          {
+            "i": 0,
+            "t": 700,
+            "d": 3853,
+            "window": 4600,
+            "ms": 3853,
+            "endsAt": 4553,
+            "nextAt": 5900,
+            "budget": 5000,
+            "slack": 1147,
+            "txt": "Nouveau monde. Survie. Seul, et sans personne.",
+            "rate": 1.817,
+            "words": [
+              {
+                "w": "Nouveau",
+                "t0": 0,
+                "t1": 624
+              },
+              {
+                "w": "monde.",
+                "t0": 624,
+                "t1": 1248
+              },
+              {
+                "w": "Survie.",
+                "t0": 1248,
+                "t1": 1872
+              },
+              {
+                "w": "Seul,",
+                "t0": 1872,
+                "t1": 2293
+              },
+              {
+                "w": "et",
+                "t0": 2293,
+                "t1": 2605
+              },
+              {
+                "w": "sans",
+                "t0": 2605,
+                "t1": 2917
+              },
+              {
+                "w": "personne.",
+                "t0": 2917,
+                "t1": 3853
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 1,
+            "t": 5900,
+            "d": 3287,
+            "window": 4600,
+            "ms": 3287,
+            "endsAt": 9187,
+            "nextAt": 11300,
+            "budget": 5200,
+            "slack": 1913,
+            "txt": "La nuit tombe, et quelque chose me suit dans le noir.",
+            "rate": 3.347,
+            "words": [
+              {
+                "w": "La",
+                "t0": 0,
+                "t1": 229
+              },
+              {
+                "w": "nuit",
+                "t0": 229,
+                "t1": 458
+              },
+              {
+                "w": "tombe,",
+                "t0": 458,
+                "t1": 996
+              },
+              {
+                "w": "et",
+                "t0": 996,
+                "t1": 1225
+              },
+              {
+                "w": "quelque",
+                "t0": 1225,
+                "t1": 1684
+              },
+              {
+                "w": "chose",
+                "t0": 1684,
+                "t1": 2142
+              },
+              {
+                "w": "me",
+                "t0": 2142,
+                "t1": 2371
+              },
+              {
+                "w": "suit",
+                "t0": 2371,
+                "t1": 2600
+              },
+              {
+                "w": "dans",
+                "t0": 2600,
+                "t1": 2829
+              },
+              {
+                "w": "le",
+                "t0": 2829,
+                "t1": 3058
+              },
+              {
+                "w": "noir.",
+                "t0": 3058,
+                "t1": 3287
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 2,
+            "t": 11300,
+            "d": 3325,
+            "window": 4600,
+            "ms": 3325,
+            "endsAt": 14625,
+            "nextAt": 16700,
+            "budget": 5200,
+            "slack": 1875,
+            "txt": "Mes torches s'éteignent. Mes coffres sont vidés.",
+            "rate": 2.105,
+            "words": [
+              {
+                "w": "Mes",
+                "t0": 0,
+                "t1": 277
+              },
+              {
+                "w": "torches",
+                "t0": 277,
+                "t1": 831
+              },
+              {
+                "w": "s'éteignent.",
+                "t0": 831,
+                "t1": 1662
+              },
+              {
+                "w": "Mes",
+                "t0": 1662,
+                "t1": 1940
+              },
+              {
+                "w": "coffres",
+                "t0": 1940,
+                "t1": 2494
+              },
+              {
+                "w": "sont",
+                "t0": 2494,
+                "t1": 2771
+              },
+              {
+                "w": "vidés.",
+                "t0": 2771,
+                "t1": 3325
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 3,
+            "t": 16700,
+            "d": 3626,
+            "window": 4600,
+            "ms": 3626,
+            "endsAt": 20326,
+            "nextAt": 22100,
+            "budget": 5200,
+            "slack": 1574,
+            "txt": "Un tunnel droit, creusé dans la pierre, sans porte.",
+            "rate": 2.482,
+            "words": [
+              {
+                "w": "Un",
+                "t0": 0,
+                "t1": 265
+              },
+              {
+                "w": "tunnel",
+                "t0": 265,
+                "t1": 794
+              },
+              {
+                "w": "droit,",
+                "t0": 794,
+                "t1": 1151
+              },
+              {
+                "w": "creusé",
+                "t0": 1151,
+                "t1": 1681
+              },
+              {
+                "w": "dans",
+                "t0": 1681,
+                "t1": 1945
+              },
+              {
+                "w": "la",
+                "t0": 1945,
+                "t1": 2210
+              },
+              {
+                "w": "pierre,",
+                "t0": 2210,
+                "t1": 2832
+              },
+              {
+                "w": "sans",
+                "t0": 2832,
+                "t1": 3097
+              },
+              {
+                "w": "porte.",
+                "t0": 3097,
+                "t1": 3626
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 4,
+            "t": 22100,
+            "d": 3649,
+            "window": 4600,
+            "ms": 3649,
+            "endsAt": 25749,
+            "nextAt": 27500,
+            "budget": 5200,
+            "slack": 1551,
+            "txt": "En haut de la colline, une silhouette me regarde.",
+            "rate": 2.466,
+            "words": [
+              {
+                "w": "En",
+                "t0": 0,
+                "t1": 223
+              },
+              {
+                "w": "haut",
+                "t0": 223,
+                "t1": 446
+              },
+              {
+                "w": "de",
+                "t0": 446,
+                "t1": 670
+              },
+              {
+                "w": "la",
+                "t0": 670,
+                "t1": 893
+              },
+              {
+                "w": "colline,",
+                "t0": 893,
+                "t1": 1640
+              },
+              {
+                "w": "une",
+                "t0": 1640,
+                "t1": 2087
+              },
+              {
+                "w": "silhouette",
+                "t0": 2087,
+                "t1": 2756
+              },
+              {
+                "w": "me",
+                "t0": 2756,
+                "t1": 2979
+              },
+              {
+                "w": "regarde.",
+                "t0": 2979,
+                "t1": 3649
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 5,
+            "t": 27500,
+            "d": 2988,
+            "window": 4600,
+            "ms": 2988,
+            "endsAt": 30488,
+            "nextAt": 32900,
+            "budget": 5200,
+            "slack": 2212,
+            "txt": "Deux yeux blancs. Il ne faut jamais le fixer.",
+            "rate": 3.012,
+            "words": [
+              {
+                "w": "Deux",
+                "t0": 0,
+                "t1": 272
+              },
+              {
+                "w": "yeux",
+                "t0": 272,
+                "t1": 543
+              },
+              {
+                "w": "blancs.",
+                "t0": 543,
+                "t1": 815
+              },
+              {
+                "w": "Il",
+                "t0": 815,
+                "t1": 1087
+              },
+              {
+                "w": "ne",
+                "t0": 1087,
+                "t1": 1358
+              },
+              {
+                "w": "faut",
+                "t0": 1358,
+                "t1": 1630
+              },
+              {
+                "w": "jamais",
+                "t0": 1630,
+                "t1": 2173
+              },
+              {
+                "w": "le",
+                "t0": 2173,
+                "t1": 2445
+              },
+              {
+                "w": "fixer.",
+                "t0": 2445,
+                "t1": 2988
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 6,
+            "t": 32900,
+            "d": 3072,
+            "window": 3400,
+            "ms": 3072,
+            "endsAt": 35972,
+            "nextAt": 37200,
+            "budget": 4100,
+            "slack": 1028,
+            "txt": "Il vient d'entrer dans ma partie. J'ai peur.",
+            "rate": 2.604,
+            "words": [
+              {
+                "w": "Il",
+                "t0": 0,
+                "t1": 307
+              },
+              {
+                "w": "vient",
+                "t0": 307,
+                "t1": 614
+              },
+              {
+                "w": "d'entrer",
+                "t0": 614,
+                "t1": 1229
+              },
+              {
+                "w": "dans",
+                "t0": 1229,
+                "t1": 1536
+              },
+              {
+                "w": "ma",
+                "t0": 1536,
+                "t1": 1843
+              },
+              {
+                "w": "partie.",
+                "t0": 1843,
+                "t1": 2458
+              },
+              {
+                "w": "J'ai",
+                "t0": 2458,
+                "t1": 2765
+              },
+              {
+                "w": "peur.",
+                "t0": 2765,
+                "t1": 3072
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 7,
+            "t": 37200,
+            "d": 2780,
+            "window": 3200,
+            "ms": 2780,
+            "endsAt": 39980,
+            "nextAt": 42000,
+            "budget": 4600,
+            "slack": 1820,
+            "txt": "Herobrine. Ce monde n'est plus à moi.",
+            "rate": 2.518,
+            "words": [
+              {
+                "w": "Herobrine.",
+                "t0": 0,
+                "t1": 1011
+              },
+              {
+                "w": "Ce",
+                "t0": 1011,
+                "t1": 1264
+              },
+              {
+                "w": "monde",
+                "t0": 1264,
+                "t1": 1769
+              },
+              {
+                "w": "n'est",
+                "t0": 1769,
+                "t1": 2022
+              },
+              {
+                "w": "plus",
+                "t0": 2022,
+                "t1": 2275
+              },
+              {
+                "w": "à",
+                "t0": 2275,
+                "t1": 2527
+              },
+              {
+                "w": "moi.",
+                "t0": 2527,
+                "t1": 2780
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          }
+        ],
+        "bytes": 2726444,
+        "peak": 0.9,
+        "rms": 0.075,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "generated": "2026-10-13T11:51:33",
+        "secondsToBuild": 3.8
+      }
+    },
+    {
+      "id": "litel",
+      "title": "Litel",
+      "file": "litel.html",
+      "total": 40000,
+      "seconds": 40.0,
+      "cues": 71,
+      "voices": [
+        "air",
+        "blip",
+        "chime",
+        "chip",
+        "chordUp",
+        "coinLand",
+        "coinTick",
+        "door",
+        "engine",
+        "hush",
+        "impact",
+        "impactSoft",
+        "kick",
+        "pad",
+        "pluck",
+        "resolve",
+        "riser",
+        "shimmer",
+        "sparkle",
+        "stamp",
+        "sub",
+        "sweep",
+        "swell",
+        "tada",
+        "trace",
+        "whoosh",
+        "whooshDeep",
+        "whooshSoft"
+      ],
+      "band": {
+        "kind": "audio",
+        "id": "litel",
+        "film": "/home/daytona/codebase/litel.html",
+        "title": "Litel",
+        "asset": "assets/audio/litel.wav",
+        "sr": 32000,
+        "seconds": 40.8,
+        "filmMs": 40000,
+        "tail": 0.8,
+        "cues": [
+          [
+            0,
+            "pad"
+          ],
+          [
+            0,
+            "air"
+          ],
+          [
+            300,
+            "sub"
+          ],
+          [
+            1400,
+            "chip"
+          ],
+          [
+            2600,
+            "kick"
+          ],
+          [
+            4200,
+            "riser"
+          ],
+          [
+            5600,
+            "whooshSoft"
+          ],
+          [
+            5900,
+            "tada"
+          ],
+          [
+            6500,
+            "impact"
+          ],
+          [
+            6600,
+            "pad"
+          ],
+          [
+            6850,
+            "door"
+          ],
+          [
+            7300,
+            "chime"
+          ],
+          [
+            7700,
+            "coinTick"
+          ],
+          [
+            8100,
+            "chip"
+          ],
+          [
+            8600,
+            "pluck"
+          ],
+          [
+            9200,
+            "coinTick"
+          ],
+          [
+            9700,
+            "chip"
+          ],
+          [
+            10300,
+            "pluck"
+          ],
+          [
+            10900,
+            "sparkle"
+          ],
+          [
+            11600,
+            "shimmer"
+          ],
+          [
+            12300,
+            "pluck"
+          ],
+          [
+            12900,
+            "chip"
+          ],
+          [
+            14000,
+            "whoosh"
+          ],
+          [
+            14200,
+            "pad"
+          ],
+          [
+            14400,
+            "coinTick"
+          ],
+          [
+            14800,
+            "coinTick"
+          ],
+          [
+            15100,
+            "coinTick"
+          ],
+          [
+            15350,
+            "coinTick"
+          ],
+          [
+            15550,
+            "coinTick"
+          ],
+          [
+            15750,
+            "stamp"
+          ],
+          [
+            16200,
+            "coinLand"
+          ],
+          [
+            16600,
+            "chime"
+          ],
+          [
+            17400,
+            "blip"
+          ],
+          [
+            18100,
+            "pluck"
+          ],
+          [
+            18900,
+            "coinTick"
+          ],
+          [
+            19500,
+            "coinLand"
+          ],
+          [
+            20200,
+            "sparkle"
+          ],
+          [
+            20800,
+            "shimmer"
+          ],
+          [
+            21500,
+            "whooshDeep"
+          ],
+          [
+            21700,
+            "pad"
+          ],
+          [
+            22200,
+            "door"
+          ],
+          [
+            23000,
+            "chip"
+          ],
+          [
+            24000,
+            "trace"
+          ],
+          [
+            24400,
+            "trace"
+          ],
+          [
+            24550,
+            "impactSoft"
+          ],
+          [
+            24800,
+            "trace"
+          ],
+          [
+            25200,
+            "stamp"
+          ],
+          [
+            25800,
+            "chime"
+          ],
+          [
+            26600,
+            "sparkle"
+          ],
+          [
+            27400,
+            "resolve"
+          ],
+          [
+            28100,
+            "shimmer"
+          ],
+          [
+            28300,
+            "sweep"
+          ],
+          [
+            28500,
+            "whoosh"
+          ],
+          [
+            28700,
+            "pad"
+          ],
+          [
+            29100,
+            "engine"
+          ],
+          [
+            29800,
+            "chip"
+          ],
+          [
+            30500,
+            "coinLand"
+          ],
+          [
+            31200,
+            "blip"
+          ],
+          [
+            31800,
+            "pluck"
+          ],
+          [
+            32500,
+            "whooshSoft"
+          ],
+          [
+            33200,
+            "chip"
+          ],
+          [
+            33900,
+            "pluck"
+          ],
+          [
+            34500,
+            "swell"
+          ],
+          [
+            35000,
+            "whooshSoft"
+          ],
+          [
+            35200,
+            "pad"
+          ],
+          [
+            35400,
+            "chordUp"
+          ],
+          [
+            35800,
+            "resolve"
+          ],
+          [
+            37000,
+            "sparkle"
+          ],
+          [
+            38400,
+            "sparkle"
+          ],
+          [
+            39100,
+            "chime"
+          ],
+          [
+            39600,
+            "hush"
+          ]
+        ],
+        "voices": [
+          "air",
+          "blip",
+          "chime",
+          "chip",
+          "chordUp",
+          "coinLand",
+          "coinTick",
+          "door",
+          "engine",
+          "hush",
+          "impact",
+          "impactSoft",
+          "kick",
+          "pad",
+          "pluck",
+          "resolve",
+          "riser",
+          "shimmer",
+          "sparkle",
+          "stamp",
+          "sub",
+          "sweep",
+          "swell",
+          "tada",
+          "trace",
+          "whoosh",
+          "whooshDeep",
+          "whooshSoft"
+        ],
+        "bytes": 5222444,
+        "peak": 0.9,
+        "rms": 0.168,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "trim": 0.5418,
+        "rawPeak": 1.6611,
+        "unknownVoices": [],
+        "generated": "2026-10-13T11:28:59",
+        "secondsToBuild": 1.3
+      },
+      "voice": {
+        "kind": "voice",
+        "id": "litel",
+        "film": "/home/daytona/codebase/litel.html",
+        "title": "Litel",
+        "asset": "assets/voice/litel.wav",
+        "engine": {
+          "name": "piper",
+          "voice": "fr_FR-tom-medium",
+          "label": "français · Tom (medium)",
+          "sr": 32000,
+          "scale": 1.08,
+          "peak": 0.9,
+          "gap": 0.2,
+          "pad": 0.25
+        },
+        "seconds": 40.6,
+        "filmMs": 40000,
+        "tail": 0.6,
+        "speechMs": 19533,
+        "meanRate": 2.524,
+        "retimed": [],
+        "overflow": [],
+        "lines": [
+          {
+            "i": 0,
+            "t": 900,
+            "d": 3458,
+            "window": 5400,
+            "ms": 3458,
+            "endsAt": 4358,
+            "nextAt": 7200,
+            "budget": 6100,
+            "slack": 2642,
+            "txt": "Litel ouvre ses portes : bienvenue dans le magasin.",
+            "rate": 2.603,
+            "words": [
+              {
+                "w": "Litel",
+                "t0": 0,
+                "t1": 423
+              },
+              {
+                "w": "ouvre",
+                "t0": 423,
+                "t1": 846
+              },
+              {
+                "w": "ses",
+                "t0": 846,
+                "t1": 1057
+              },
+              {
+                "w": "portes",
+                "t0": 1057,
+                "t1": 1480
+              },
+              {
+                "w": ":",
+                "t0": 1480,
+                "t1": 1766
+              },
+              {
+                "w": "bienvenue",
+                "t0": 1766,
+                "t1": 2401
+              },
+              {
+                "w": "dans",
+                "t0": 2401,
+                "t1": 2612
+              },
+              {
+                "w": "le",
+                "t0": 2612,
+                "t1": 2824
+              },
+              {
+                "w": "magasin.",
+                "t0": 2824,
+                "t1": 3458
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 1,
+            "t": 7200,
+            "d": 3399,
+            "window": 6200,
+            "ms": 3399,
+            "endsAt": 10599,
+            "nextAt": 14300,
+            "budget": 6900,
+            "slack": 3501,
+            "txt": "Des petits prix dans tous les rayons, sans exception.",
+            "rate": 2.648,
+            "words": [
+              {
+                "w": "Des",
+                "t0": 0,
+                "t1": 275
+              },
+              {
+                "w": "petits",
+                "t0": 275,
+                "t1": 826
+              },
+              {
+                "w": "prix",
+                "t0": 826,
+                "t1": 1101
+              },
+              {
+                "w": "dans",
+                "t0": 1101,
+                "t1": 1376
+              },
+              {
+                "w": "tous",
+                "t0": 1376,
+                "t1": 1651
+              },
+              {
+                "w": "les",
+                "t0": 1651,
+                "t1": 1927
+              },
+              {
+                "w": "rayons,",
+                "t0": 1927,
+                "t1": 2298
+              },
+              {
+                "w": "sans",
+                "t0": 2298,
+                "t1": 2573
+              },
+              {
+                "w": "exception.",
+                "t0": 2573,
+                "t1": 3399
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 2,
+            "t": 14300,
+            "d": 3474,
+            "window": 6500,
+            "ms": 3474,
+            "endsAt": 17774,
+            "nextAt": 21800,
+            "budget": 7300,
+            "slack": 3826,
+            "txt": "Cinq istancoins la boîte, et huit pour la deuxième.",
+            "rate": 2.59,
+            "words": [
+              {
+                "w": "Cinq",
+                "t0": 0,
+                "t1": 242
+              },
+              {
+                "w": "istancoins",
+                "t0": 242,
+                "t1": 968
+              },
+              {
+                "w": "la",
+                "t0": 968,
+                "t1": 1210
+              },
+              {
+                "w": "boîte,",
+                "t0": 1210,
+                "t1": 1779
+              },
+              {
+                "w": "et",
+                "t0": 1779,
+                "t1": 2021
+              },
+              {
+                "w": "huit",
+                "t0": 2021,
+                "t1": 2264
+              },
+              {
+                "w": "pour",
+                "t0": 2264,
+                "t1": 2506
+              },
+              {
+                "w": "la",
+                "t0": 2506,
+                "t1": 2748
+              },
+              {
+                "w": "deuxième.",
+                "t0": 2748,
+                "t1": 3474
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 3,
+            "t": 21800,
+            "d": 2645,
+            "window": 5900,
+            "ms": 2645,
+            "endsAt": 24445,
+            "nextAt": 28700,
+            "budget": 6700,
+            "slack": 4055,
+            "txt": "Chaque lot est vérifié avant de partir d'ici.",
+            "rate": 3.024,
+            "words": [
+              {
+                "w": "Chaque",
+                "t0": 0,
+                "t1": 378
+              },
+              {
+                "w": "lot",
+                "t0": 378,
+                "t1": 567
+              },
+              {
+                "w": "est",
+                "t0": 567,
+                "t1": 756
+              },
+              {
+                "w": "vérifié",
+                "t0": 756,
+                "t1": 1323
+              },
+              {
+                "w": "avant",
+                "t0": 1323,
+                "t1": 1700
+              },
+              {
+                "w": "de",
+                "t0": 1700,
+                "t1": 1889
+              },
+              {
+                "w": "partir",
+                "t0": 1889,
+                "t1": 2267
+              },
+              {
+                "w": "d'ici.",
+                "t0": 2267,
+                "t1": 2645
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 4,
+            "t": 28700,
+            "d": 3434,
+            "window": 5300,
+            "ms": 3434,
+            "endsAt": 32134,
+            "nextAt": 34700,
+            "budget": 5800,
+            "slack": 2366,
+            "txt": "Livraison en vingt-quatre heures, partout dans Istan.",
+            "rate": 2.038,
+            "words": [
+              {
+                "w": "Livraison",
+                "t0": 0,
+                "t1": 718
+              },
+              {
+                "w": "en",
+                "t0": 718,
+                "t1": 957
+              },
+              {
+                "w": "vingt-quatre",
+                "t0": 957,
+                "t1": 1675
+              },
+              {
+                "w": "heures,",
+                "t0": 1675,
+                "t1": 2237
+              },
+              {
+                "w": "partout",
+                "t0": 2237,
+                "t1": 2716
+              },
+              {
+                "w": "dans",
+                "t0": 2716,
+                "t1": 2955
+              },
+              {
+                "w": "Istan.",
+                "t0": 2955,
+                "t1": 3434
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 5,
+            "t": 34700,
+            "d": 3123,
+            "window": 4600,
+            "ms": 3123,
+            "endsAt": 37823,
+            "nextAt": 40000,
+            "budget": 5100,
+            "slack": 1977,
+            "txt": "Litel : des petits prix, grande qualité.",
+            "rate": 2.241,
+            "words": [
+              {
+                "w": "Litel",
+                "t0": 0,
+                "t1": 492
+              },
+              {
+                "w": ":",
+                "t0": 492,
+                "t1": 824
+              },
+              {
+                "w": "des",
+                "t0": 824,
+                "t1": 1070
+              },
+              {
+                "w": "petits",
+                "t0": 1070,
+                "t1": 1561
+              },
+              {
+                "w": "prix,",
+                "t0": 1561,
+                "t1": 1893
+              },
+              {
+                "w": "grande",
+                "t0": 1893,
+                "t1": 2385
+              },
+              {
+                "w": "qualité.",
+                "t0": 2385,
+                "t1": 3123
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          }
+        ],
+        "bytes": 2598444,
+        "peak": 0.9,
+        "rms": 0.0579,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "generated": "2026-10-13T11:28:37",
+        "secondsToBuild": 3.2
+      }
+    },
+    {
+      "id": "nyxar-n3",
+      "title": "Nyxar N3",
+      "file": "nyxar-n3.html",
+      "total": 37000,
+      "seconds": 37.0,
+      "cues": 60,
+      "voices": [
+        "air",
+        "blip",
+        "chime",
+        "chip",
+        "chordUp",
+        "coinLand",
+        "coinTick",
+        "door",
+        "engine",
+        "ignite",
+        "impact",
+        "impactSoft",
+        "kick",
+        "pad",
+        "pluck",
+        "resolve",
+        "riser",
+        "shimmer",
+        "sparkle",
+        "sub",
+        "sweep",
+        "trace",
+        "whoosh",
+        "whooshDeep",
+        "whooshSoft"
+      ],
+      "band": {
+        "kind": "audio",
+        "id": "nyxar-n3",
+        "film": "/home/daytona/codebase/nyxar-n3.html",
+        "title": "Nyxar N3",
+        "asset": "assets/audio/nyxar-n3.wav",
+        "sr": 32000,
+        "seconds": 37.8,
+        "filmMs": 37000,
+        "tail": 0.8,
+        "cues": [
+          [
+            0,
+            "pad"
+          ],
+          [
+            0,
+            "air"
+          ],
+          [
+            300,
+            "sub"
+          ],
+          [
+            2200,
+            "kick"
+          ],
+          [
+            4400,
+            "kick"
+          ],
+          [
+            4900,
+            "riser"
+          ],
+          [
+            6500,
+            "impact"
+          ],
+          [
+            6500,
+            "whoosh"
+          ],
+          [
+            6850,
+            "trace"
+          ],
+          [
+            7150,
+            "trace"
+          ],
+          [
+            7450,
+            "trace"
+          ],
+          [
+            7750,
+            "trace"
+          ],
+          [
+            8050,
+            "trace"
+          ],
+          [
+            8350,
+            "trace"
+          ],
+          [
+            8650,
+            "trace"
+          ],
+          [
+            8950,
+            "trace"
+          ],
+          [
+            9000,
+            "pad"
+          ],
+          [
+            9200,
+            "chordUp"
+          ],
+          [
+            10400,
+            "sweep"
+          ],
+          [
+            11800,
+            "engine"
+          ],
+          [
+            12300,
+            "ignite"
+          ],
+          [
+            14500,
+            "whoosh"
+          ],
+          [
+            14600,
+            "impactSoft"
+          ],
+          [
+            14600,
+            "pad"
+          ],
+          [
+            15300,
+            "chip"
+          ],
+          [
+            16500,
+            "chip"
+          ],
+          [
+            16700,
+            "door"
+          ],
+          [
+            17700,
+            "chip"
+          ],
+          [
+            18900,
+            "chip"
+          ],
+          [
+            20100,
+            "chip"
+          ],
+          [
+            22500,
+            "whooshDeep"
+          ],
+          [
+            22600,
+            "pad"
+          ],
+          [
+            22750,
+            "coinTick"
+          ],
+          [
+            23100,
+            "coinTick"
+          ],
+          [
+            23400,
+            "coinTick"
+          ],
+          [
+            23650,
+            "coinTick"
+          ],
+          [
+            23850,
+            "coinTick"
+          ],
+          [
+            24000,
+            "coinTick"
+          ],
+          [
+            24150,
+            "coinTick"
+          ],
+          [
+            24280,
+            "coinTick"
+          ],
+          [
+            24380,
+            "coinTick"
+          ],
+          [
+            24460,
+            "coinTick"
+          ],
+          [
+            24720,
+            "coinLand"
+          ],
+          [
+            24760,
+            "chime"
+          ],
+          [
+            28000,
+            "whoosh"
+          ],
+          [
+            28200,
+            "pad"
+          ],
+          [
+            28300,
+            "shimmer"
+          ],
+          [
+            28800,
+            "pluck"
+          ],
+          [
+            29400,
+            "pluck"
+          ],
+          [
+            30000,
+            "pluck"
+          ],
+          [
+            30350,
+            "blip"
+          ],
+          [
+            30600,
+            "pluck"
+          ],
+          [
+            31200,
+            "pluck"
+          ],
+          [
+            31200,
+            "blip"
+          ],
+          [
+            31800,
+            "pluck"
+          ],
+          [
+            33000,
+            "whooshSoft"
+          ],
+          [
+            33200,
+            "pad"
+          ],
+          [
+            33300,
+            "resolve"
+          ],
+          [
+            34800,
+            "sparkle"
+          ],
+          [
+            36100,
+            "sparkle"
+          ]
+        ],
+        "voices": [
+          "air",
+          "blip",
+          "chime",
+          "chip",
+          "chordUp",
+          "coinLand",
+          "coinTick",
+          "door",
+          "engine",
+          "ignite",
+          "impact",
+          "impactSoft",
+          "kick",
+          "pad",
+          "pluck",
+          "resolve",
+          "riser",
+          "shimmer",
+          "sparkle",
+          "sub",
+          "sweep",
+          "trace",
+          "whoosh",
+          "whooshDeep",
+          "whooshSoft"
+        ],
+        "bytes": 4838444,
+        "peak": 0.9,
+        "rms": 0.1829,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "trim": 0.6062,
+        "rawPeak": 1.4847,
+        "unknownVoices": [],
+        "generated": "2026-10-13T06:47:48",
+        "secondsToBuild": 0.9
+      },
+      "voice": {
+        "kind": "voice",
+        "id": "nyxar-n3",
+        "film": "/home/daytona/codebase/nyxar-n3.html",
+        "title": "Nyxar N3",
+        "asset": "assets/voice/nyxar-n3.wav",
+        "engine": {
+          "name": "piper",
+          "voice": "fr_FR-tom-medium",
+          "label": "français · Tom (medium)",
+          "sr": 32000,
+          "scale": 1.08,
+          "peak": 0.9,
+          "gap": 0.2,
+          "pad": 0.25
+        },
+        "seconds": 37.6,
+        "filmMs": 37000,
+        "tail": 0.6,
+        "speechMs": 25572,
+        "meanRate": 2.154,
+        "retimed": [
+          5
+        ],
+        "overflow": [],
+        "lines": [
+          {
+            "i": 0,
+            "t": 700,
+            "d": 3886,
+            "window": 4708,
+            "ms": 3886,
+            "endsAt": 4586,
+            "nextAt": 7000,
+            "budget": 6100,
+            "slack": 2214,
+            "txt": "Istanbul s'éveille. Et la Nyxar N3 arrive.",
+            "rate": 1.801,
+            "words": [
+              {
+                "w": "Istanbul",
+                "t0": 0,
+                "t1": 833
+              },
+              {
+                "w": "s'éveille.",
+                "t0": 833,
+                "t1": 1665
+              },
+              {
+                "w": "Et",
+                "t0": 1665,
+                "t1": 1943
+              },
+              {
+                "w": "la",
+                "t0": 1943,
+                "t1": 2221
+              },
+              {
+                "w": "Nyxar",
+                "t0": 2221,
+                "t1": 2776
+              },
+              {
+                "w": "N3",
+                "t0": 2776,
+                "t1": 3053
+              },
+              {
+                "w": "arrive.",
+                "t0": 3053,
+                "t1": 3886
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 1,
+            "t": 7000,
+            "d": 4918,
+            "window": 5175,
+            "ms": 4918,
+            "endsAt": 11918,
+            "nextAt": 15000,
+            "budget": 7800,
+            "slack": 2882,
+            "txt": "Voici la Nyxar N3, une berline familiale dessinée ici.",
+            "rate": 1.83,
+            "words": [
+              {
+                "w": "Voici",
+                "t0": 0,
+                "t1": 483
+              },
+              {
+                "w": "la",
+                "t0": 483,
+                "t1": 725
+              },
+              {
+                "w": "Nyxar",
+                "t0": 725,
+                "t1": 1208
+              },
+              {
+                "w": "N3,",
+                "t0": 1208,
+                "t1": 1535
+              },
+              {
+                "w": "une",
+                "t0": 1535,
+                "t1": 2018
+              },
+              {
+                "w": "berline",
+                "t0": 2018,
+                "t1": 2743
+              },
+              {
+                "w": "familiale",
+                "t0": 2743,
+                "t1": 3710
+              },
+              {
+                "w": "dessinée",
+                "t0": 3710,
+                "t1": 4435
+              },
+              {
+                "w": "ici.",
+                "t0": 4435,
+                "t1": 4918
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 2,
+            "t": 15000,
+            "d": 5001,
+            "window": 5609,
+            "ms": 5001,
+            "endsAt": 20001,
+            "nextAt": 22800,
+            "budget": 7600,
+            "slack": 2599,
+            "txt": "Cinq places, un grand coffre, et quatre virgule huit litres aux cent kilomètres.",
+            "rate": 2.6,
+            "words": [
+              {
+                "w": "Cinq",
+                "t0": 0,
+                "t1": 220
+              },
+              {
+                "w": "places,",
+                "t0": 220,
+                "t1": 738
+              },
+              {
+                "w": "un",
+                "t0": 738,
+                "t1": 958
+              },
+              {
+                "w": "grand",
+                "t0": 958,
+                "t1": 1179
+              },
+              {
+                "w": "coffre,",
+                "t0": 1179,
+                "t1": 1696
+              },
+              {
+                "w": "et",
+                "t0": 1696,
+                "t1": 1917
+              },
+              {
+                "w": "quatre",
+                "t0": 1917,
+                "t1": 2357
+              },
+              {
+                "w": "virgule",
+                "t0": 2357,
+                "t1": 3018
+              },
+              {
+                "w": "huit",
+                "t0": 3018,
+                "t1": 3239
+              },
+              {
+                "w": "litres",
+                "t0": 3239,
+                "t1": 3679
+              },
+              {
+                "w": "aux",
+                "t0": 3679,
+                "t1": 3899
+              },
+              {
+                "w": "cent",
+                "t0": 3899,
+                "t1": 4120
+              },
+              {
+                "w": "kilomètres.",
+                "t0": 4120,
+                "t1": 5001
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 3,
+            "t": 22800,
+            "d": 3673,
+            "window": 3814,
+            "ms": 3673,
+            "endsAt": 26473,
+            "nextAt": 27900,
+            "budget": 4900,
+            "slack": 1227,
+            "txt": "Douze mille istancoins : c'est le prix de la N3.",
+            "rate": 2.723,
+            "words": [
+              {
+                "w": "Douze",
+                "t0": 0,
+                "t1": 512
+              },
+              {
+                "w": "mille",
+                "t0": 512,
+                "t1": 1024
+              },
+              {
+                "w": "istancoins",
+                "t0": 1024,
+                "t1": 1792
+              },
+              {
+                "w": ":",
+                "t0": 1792,
+                "t1": 2137
+              },
+              {
+                "w": "c'est",
+                "t0": 2137,
+                "t1": 2393
+              },
+              {
+                "w": "le",
+                "t0": 2393,
+                "t1": 2649
+              },
+              {
+                "w": "prix",
+                "t0": 2649,
+                "t1": 2905
+              },
+              {
+                "w": "de",
+                "t0": 2905,
+                "t1": 3161
+              },
+              {
+                "w": "la",
+                "t0": 3161,
+                "t1": 3417
+              },
+              {
+                "w": "N3.",
+                "t0": 3417,
+                "t1": 3673
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 4,
+            "t": 27900,
+            "d": 3792,
+            "window": 4243,
+            "ms": 3792,
+            "endsAt": 31692,
+            "nextAt": 32400,
+            "budget": 4300,
+            "slack": 508,
+            "txt": "Disponible à Istanbul, en Espagne et au Portugal.",
+            "rate": 2.11,
+            "words": [
+              {
+                "w": "Disponible",
+                "t0": 0,
+                "t1": 874
+              },
+              {
+                "w": "à",
+                "t0": 874,
+                "t1": 1093
+              },
+              {
+                "w": "Istanbul,",
+                "t0": 1093,
+                "t1": 1825
+              },
+              {
+                "w": "en",
+                "t0": 1825,
+                "t1": 2044
+              },
+              {
+                "w": "Espagne",
+                "t0": 2044,
+                "t1": 2699
+              },
+              {
+                "w": "et",
+                "t0": 2699,
+                "t1": 2918
+              },
+              {
+                "w": "au",
+                "t0": 2918,
+                "t1": 3136
+              },
+              {
+                "w": "Portugal.",
+                "t0": 3136,
+                "t1": 3792
+              }
+            ],
+            "scale": 1.08,
+            "retimed": false,
+            "overflow": false
+          },
+          {
+            "i": 5,
+            "t": 32400,
+            "d": 4302,
+            "window": 4480,
+            "ms": 4302,
+            "endsAt": 36702,
+            "nextAt": 37000,
+            "budget": 4400,
+            "slack": 98,
+            "txt": "Nyxar N3. La famille d'abord, la route ensuite.",
+            "rate": 1.86,
+            "words": [
+              {
+                "w": "Nyxar",
+                "t0": 0,
+                "t1": 561
+              },
+              {
+                "w": "N3.",
+                "t0": 561,
+                "t1": 841
+              },
+              {
+                "w": "La",
+                "t0": 841,
+                "t1": 1121
+              },
+              {
+                "w": "famille",
+                "t0": 1121,
+                "t1": 1962
+              },
+              {
+                "w": "d'abord,",
+                "t0": 1962,
+                "t1": 2620
+              },
+              {
+                "w": "la",
+                "t0": 2620,
+                "t1": 2901
+              },
+              {
+                "w": "route",
+                "t0": 2901,
+                "t1": 3461
+              },
+              {
+                "w": "ensuite.",
+                "t0": 3461,
+                "t1": 4302
+              }
+            ],
+            "scale": 0.945,
+            "retimed": true,
+            "overflow": false
+          }
+        ],
+        "bytes": 2406444,
+        "peak": 0.9,
+        "rms": 0.0738,
+        "clipped": 0,
+        "silentSeconds": 0,
+        "generated": "2026-10-13T08:55:26",
+        "secondsToBuild": 4.4
+      }
+    }
+  ],
+  "sfx": [
+    {
+      "name": "air",
+      "variant": 1,
+      "family": "nappes & graves",
+      "file": "assets/sfx/air.wav",
+      "seconds": 9.0,
+      "bytes": 576044,
+      "peak": 0.9,
+      "rms": 0.1833,
+      "pan": 0.0
+    },
+    {
+      "name": "benchPop",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/benchPop.wav",
+      "seconds": 0.4,
+      "bytes": 25644,
+      "peak": 0.8977,
+      "rms": 0.2105,
+      "pan": 0.45
+    },
+    {
+      "name": "benchPop",
+      "variant": 2,
+      "family": "interface",
+      "file": "assets/sfx/benchPop-2.wav",
+      "seconds": 0.4,
+      "bytes": 25644,
+      "peak": 0.8987,
+      "rms": 0.2099,
+      "pan": 0.45
+    },
+    {
+      "name": "benchPop",
+      "variant": 3,
+      "family": "interface",
+      "file": "assets/sfx/benchPop-3.wav",
+      "seconds": 0.4,
+      "bytes": 25644,
+      "peak": 0.9,
+      "rms": 0.2094,
+      "pan": 0.45
+    },
+    {
+      "name": "benchPop",
+      "variant": 4,
+      "family": "interface",
+      "file": "assets/sfx/benchPop-4.wav",
+      "seconds": 0.4,
+      "bytes": 25644,
+      "peak": 0.9,
+      "rms": 0.2087,
+      "pan": 0.45
+    },
+    {
+      "name": "benchPop",
+      "variant": 5,
+      "family": "interface",
+      "file": "assets/sfx/benchPop-5.wav",
+      "seconds": 0.4,
+      "bytes": 25644,
+      "peak": 0.9,
+      "rms": 0.2077,
+      "pan": 0.45
+    },
+    {
+      "name": "benchTick",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/benchTick.wav",
+      "seconds": 0.07,
+      "bytes": 4524,
+      "peak": 0.9,
+      "rms": 0.599,
+      "pan": -0.5
+    },
+    {
+      "name": "benchTick",
+      "variant": 2,
+      "family": "interface",
+      "file": "assets/sfx/benchTick-2.wav",
+      "seconds": 0.07,
+      "bytes": 4524,
+      "peak": 0.9,
+      "rms": 0.599,
+      "pan": -0.5
+    },
+    {
+      "name": "benchTick",
+      "variant": 3,
+      "family": "interface",
+      "file": "assets/sfx/benchTick-3.wav",
+      "seconds": 0.07,
+      "bytes": 4524,
+      "peak": 0.9,
+      "rms": 0.599,
+      "pan": -0.5
+    },
+    {
+      "name": "blip",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/blip.wav",
+      "seconds": 0.12,
+      "bytes": 7724,
+      "peak": 0.9,
+      "rms": 0.6148,
+      "pan": 0.5
+    },
+    {
+      "name": "blip",
+      "variant": 2,
+      "family": "interface",
+      "file": "assets/sfx/blip-2.wav",
+      "seconds": 0.12,
+      "bytes": 7724,
+      "peak": 0.9,
+      "rms": 0.6148,
+      "pan": 0.5
+    },
+    {
+      "name": "blip",
+      "variant": 3,
+      "family": "interface",
+      "file": "assets/sfx/blip-3.wav",
+      "seconds": 0.12,
+      "bytes": 7724,
+      "peak": 0.9,
+      "rms": 0.6148,
+      "pan": 0.5
+    },
+    {
+      "name": "chime",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/chime.wav",
+      "seconds": 1.5,
+      "bytes": 96044,
+      "peak": 0.8962,
+      "rms": 0.2383,
+      "pan": 0.0
+    },
+    {
+      "name": "chip",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/chip.wav",
+      "seconds": 0.16,
+      "bytes": 10284,
+      "peak": 0.9,
+      "rms": 0.4071,
+      "pan": 0.3
+    },
+    {
+      "name": "choir",
+      "variant": 1,
+      "family": "nappes & graves",
+      "file": "assets/sfx/choir.wav",
+      "seconds": 5.0,
+      "bytes": 320044,
+      "peak": 0.9,
+      "rms": 0.2584,
+      "pan": 0.0
+    },
+    {
+      "name": "choir",
+      "variant": 2,
+      "family": "nappes & graves",
+      "file": "assets/sfx/choir-2.wav",
+      "seconds": 5.0,
+      "bytes": 320044,
+      "peak": 0.9,
+      "rms": 0.3273,
+      "pan": 0.0
+    },
+    {
+      "name": "choir",
+      "variant": 3,
+      "family": "nappes & graves",
+      "file": "assets/sfx/choir-3.wav",
+      "seconds": 5.0,
+      "bytes": 320044,
+      "peak": 0.9,
+      "rms": 0.2979,
+      "pan": 0.0
+    },
+    {
+      "name": "choir",
+      "variant": 4,
+      "family": "nappes & graves",
+      "file": "assets/sfx/choir-4.wav",
+      "seconds": 5.0,
+      "bytes": 320044,
+      "peak": 0.9,
+      "rms": 0.2798,
+      "pan": 0.0
+    },
+    {
+      "name": "choir",
+      "variant": 5,
+      "family": "nappes & graves",
+      "file": "assets/sfx/choir-5.wav",
+      "seconds": 5.0,
+      "bytes": 320044,
+      "peak": 0.9,
+      "rms": 0.2971,
+      "pan": 0.0
+    },
+    {
+      "name": "chordUp",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/chordUp.wav",
+      "seconds": 2.78,
+      "bytes": 177964,
+      "peak": 0.9,
+      "rms": 0.3764,
+      "pan": 0.0
+    },
+    {
+      "name": "coinLand",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/coinLand.wav",
+      "seconds": 0.5,
+      "bytes": 32044,
+      "peak": 0.9,
+      "rms": 0.3916,
+      "pan": 0.0
+    },
+    {
+      "name": "coinTick",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/coinTick.wav",
+      "seconds": 0.1,
+      "bytes": 6444,
+      "peak": 0.9,
+      "rms": 0.4985,
+      "pan": -0.35
+    },
+    {
+      "name": "coinTick",
+      "variant": 2,
+      "family": "interface",
+      "file": "assets/sfx/coinTick-2.wav",
+      "seconds": 0.1,
+      "bytes": 6444,
+      "peak": 0.9,
+      "rms": 0.4989,
+      "pan": -0.35
+    },
+    {
+      "name": "coinTick",
+      "variant": 3,
+      "family": "interface",
+      "file": "assets/sfx/coinTick-3.wav",
+      "seconds": 0.1,
+      "bytes": 6444,
+      "peak": 0.9,
+      "rms": 0.4984,
+      "pan": -0.35
+    },
+    {
+      "name": "coinTick",
+      "variant": 4,
+      "family": "interface",
+      "file": "assets/sfx/coinTick-4.wav",
+      "seconds": 0.1,
+      "bytes": 6444,
+      "peak": 0.8994,
+      "rms": 0.4988,
+      "pan": -0.35
+    },
+    {
+      "name": "coinTick",
+      "variant": 5,
+      "family": "interface",
+      "file": "assets/sfx/coinTick-5.wav",
+      "seconds": 0.1,
+      "bytes": 6444,
+      "peak": 0.9,
+      "rms": 0.499,
+      "pan": -0.35
+    },
+    {
+      "name": "crowd",
+      "variant": 1,
+      "family": "stade & foule",
+      "file": "assets/sfx/crowd.wav",
+      "seconds": 9.0,
+      "bytes": 576044,
+      "peak": 0.9,
+      "rms": 0.0724,
+      "pan": 0.0
+    },
+    {
+      "name": "crowdGasp",
+      "variant": 1,
+      "family": "stade & foule",
+      "file": "assets/sfx/crowdGasp.wav",
+      "seconds": 1.1,
+      "bytes": 70444,
+      "peak": 0.9,
+      "rms": 0.1942,
+      "pan": 0.0
+    },
+    {
+      "name": "crowdOhh",
+      "variant": 1,
+      "family": "stade & foule",
+      "file": "assets/sfx/crowdOhh.wav",
+      "seconds": 1.9,
+      "bytes": 121644,
+      "peak": 0.9,
+      "rms": 0.1844,
+      "pan": 0.0
+    },
+    {
+      "name": "door",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/door.wav",
+      "seconds": 0.34,
+      "bytes": 21804,
+      "peak": 0.9,
+      "rms": 0.4655,
+      "pan": 0.0
+    },
+    {
+      "name": "engine",
+      "variant": 1,
+      "family": "mécanique",
+      "file": "assets/sfx/engine.wav",
+      "seconds": 10.4,
+      "bytes": 665644,
+      "peak": 0.9,
+      "rms": 0.3713,
+      "pan": 0.0
+    },
+    {
+      "name": "flagPop",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/flagPop.wav",
+      "seconds": 0.12,
+      "bytes": 7724,
+      "peak": 0.8805,
+      "rms": 0.3357,
+      "pan": 0.0
+    },
+    {
+      "name": "hush",
+      "variant": 1,
+      "family": "stade & foule",
+      "file": "assets/sfx/hush.wav",
+      "seconds": 1.2,
+      "bytes": 76844,
+      "peak": 0.9,
+      "rms": 0.1854,
+      "pan": 0.0
+    },
+    {
+      "name": "ignite",
+      "variant": 1,
+      "family": "mécanique",
+      "file": "assets/sfx/ignite.wav",
+      "seconds": 0.5,
+      "bytes": 32044,
+      "peak": 0.8533,
+      "rms": 0.3653,
+      "pan": 0.0
+    },
+    {
+      "name": "impact",
+      "variant": 1,
+      "family": "percussions & impacts",
+      "file": "assets/sfx/impact.wav",
+      "seconds": 0.9,
+      "bytes": 57644,
+      "peak": 0.9,
+      "rms": 0.3921,
+      "pan": 0.0
+    },
+    {
+      "name": "impactSoft",
+      "variant": 1,
+      "family": "percussions & impacts",
+      "file": "assets/sfx/impactSoft.wav",
+      "seconds": 0.5,
+      "bytes": 32044,
+      "peak": 0.9,
+      "rms": 0.4615,
+      "pan": 0.0
+    },
+    {
+      "name": "jerseyDrop",
+      "variant": 1,
+      "family": "transitions & mouvements",
+      "file": "assets/sfx/jerseyDrop.wav",
+      "seconds": 0.18,
+      "bytes": 11564,
+      "peak": 0.9,
+      "rms": 0.237,
+      "pan": 0.0
+    },
+    {
+      "name": "jerseyLand",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/jerseyLand.wav",
+      "seconds": 0.28,
+      "bytes": 17964,
+      "peak": 0.8695,
+      "rms": 0.4034,
+      "pan": 0.0
+    },
+    {
+      "name": "kick",
+      "variant": 1,
+      "family": "percussions & impacts",
+      "file": "assets/sfx/kick.wav",
+      "seconds": 0.5,
+      "bytes": 32044,
+      "peak": 0.9,
+      "rms": 0.5032,
+      "pan": 0.0
+    },
+    {
+      "name": "micThud",
+      "variant": 1,
+      "family": "percussions & impacts",
+      "file": "assets/sfx/micThud.wav",
+      "seconds": 0.32,
+      "bytes": 20524,
+      "peak": 0.9,
+      "rms": 0.4676,
+      "pan": 0.0
+    },
+    {
+      "name": "pad",
+      "variant": 1,
+      "family": "nappes & graves",
+      "file": "assets/sfx/pad.wav",
+      "seconds": 6.0,
+      "bytes": 384044,
+      "peak": 0.9,
+      "rms": 0.2942,
+      "pan": 0.0
+    },
+    {
+      "name": "pad",
+      "variant": 2,
+      "family": "nappes & graves",
+      "file": "assets/sfx/pad-2.wav",
+      "seconds": 6.0,
+      "bytes": 384044,
+      "peak": 0.9,
+      "rms": 0.3303,
+      "pan": 0.0
+    },
+    {
+      "name": "pad",
+      "variant": 3,
+      "family": "nappes & graves",
+      "file": "assets/sfx/pad-3.wav",
+      "seconds": 6.0,
+      "bytes": 384044,
+      "peak": 0.9,
+      "rms": 0.2891,
+      "pan": 0.0
+    },
+    {
+      "name": "pad",
+      "variant": 4,
+      "family": "nappes & graves",
+      "file": "assets/sfx/pad-4.wav",
+      "seconds": 6.0,
+      "bytes": 384044,
+      "peak": 0.9,
+      "rms": 0.2853,
+      "pan": 0.0
+    },
+    {
+      "name": "pad",
+      "variant": 5,
+      "family": "nappes & graves",
+      "file": "assets/sfx/pad-5.wav",
+      "seconds": 6.0,
+      "bytes": 384044,
+      "peak": 0.9,
+      "rms": 0.2714,
+      "pan": 0.0
+    },
+    {
+      "name": "phoneBuzz",
+      "variant": 1,
+      "family": "studio & micro",
+      "file": "assets/sfx/phoneBuzz.wav",
+      "seconds": 0.43,
+      "bytes": 27564,
+      "peak": 0.9,
+      "rms": 0.7049,
+      "pan": 0.0
+    },
+    {
+      "name": "plateWipe",
+      "variant": 1,
+      "family": "transitions & mouvements",
+      "file": "assets/sfx/plateWipe.wav",
+      "seconds": 0.45,
+      "bytes": 28844,
+      "peak": 0.9,
+      "rms": 0.2078,
+      "pan": 0.0
+    },
+    {
+      "name": "pluck",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/pluck.wav",
+      "seconds": 0.9,
+      "bytes": 57644,
+      "peak": 0.9,
+      "rms": 0.1888,
+      "pan": -0.45
+    },
+    {
+      "name": "pluck",
+      "variant": 2,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/pluck-2.wav",
+      "seconds": 0.9,
+      "bytes": 57644,
+      "peak": 0.9,
+      "rms": 0.1878,
+      "pan": -0.45
+    },
+    {
+      "name": "pluck",
+      "variant": 3,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/pluck-3.wav",
+      "seconds": 0.9,
+      "bytes": 57644,
+      "peak": 0.9,
+      "rms": 0.1835,
+      "pan": -0.45
+    },
+    {
+      "name": "pluck",
+      "variant": 4,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/pluck-4.wav",
+      "seconds": 0.9,
+      "bytes": 57644,
+      "peak": 0.9,
+      "rms": 0.1809,
+      "pan": -0.45
+    },
+    {
+      "name": "pluck",
+      "variant": 5,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/pluck-5.wav",
+      "seconds": 0.9,
+      "bytes": 57644,
+      "peak": 0.9,
+      "rms": 0.1787,
+      "pan": -0.45
+    },
+    {
+      "name": "pluck",
+      "variant": 6,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/pluck-6.wav",
+      "seconds": 0.9,
+      "bytes": 57644,
+      "peak": 0.9,
+      "rms": 0.1769,
+      "pan": -0.45
+    },
+    {
+      "name": "rateDing",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/rateDing.wav",
+      "seconds": 1.3,
+      "bytes": 83244,
+      "peak": 0.8968,
+      "rms": 0.234,
+      "pan": 0.0
+    },
+    {
+      "name": "rateTick",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/rateTick.wav",
+      "seconds": 0.08,
+      "bytes": 5164,
+      "peak": 0.9,
+      "rms": 0.4931,
+      "pan": 0.4
+    },
+    {
+      "name": "rateTick",
+      "variant": 2,
+      "family": "interface",
+      "file": "assets/sfx/rateTick-2.wav",
+      "seconds": 0.08,
+      "bytes": 5164,
+      "peak": 0.9,
+      "rms": 0.493,
+      "pan": 0.4
+    },
+    {
+      "name": "rateTick",
+      "variant": 3,
+      "family": "interface",
+      "file": "assets/sfx/rateTick-3.wav",
+      "seconds": 0.08,
+      "bytes": 5164,
+      "peak": 0.9,
+      "rms": 0.493,
+      "pan": 0.4
+    },
+    {
+      "name": "resolve",
+      "variant": 1,
+      "family": "nappes & graves",
+      "file": "assets/sfx/resolve.wav",
+      "seconds": 4.4,
+      "bytes": 281644,
+      "peak": 0.9,
+      "rms": 0.4008,
+      "pan": 0.0
+    },
+    {
+      "name": "riser",
+      "variant": 1,
+      "family": "transitions & mouvements",
+      "file": "assets/sfx/riser.wav",
+      "seconds": 1.5,
+      "bytes": 96044,
+      "peak": 0.9,
+      "rms": 0.2476,
+      "pan": 0.0
+    },
+    {
+      "name": "shimmer",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/shimmer.wav",
+      "seconds": 2.2,
+      "bytes": 140844,
+      "peak": 0.9,
+      "rms": 0.2126,
+      "pan": 0.35
+    },
+    {
+      "name": "sparkle",
+      "variant": 1,
+      "family": "cordes & cloches",
+      "file": "assets/sfx/sparkle.wav",
+      "seconds": 1.1,
+      "bytes": 70444,
+      "peak": 0.9,
+      "rms": 0.3135,
+      "pan": 0.25
+    },
+    {
+      "name": "squeak",
+      "variant": 1,
+      "family": "studio & micro",
+      "file": "assets/sfx/squeak.wav",
+      "seconds": 0.55,
+      "bytes": 35244,
+      "peak": 0.9,
+      "rms": 0.3619,
+      "pan": 0.0
+    },
+    {
+      "name": "stamp",
+      "variant": 1,
+      "family": "percussions & impacts",
+      "file": "assets/sfx/stamp.wav",
+      "seconds": 0.45,
+      "bytes": 28844,
+      "peak": 0.9,
+      "rms": 0.4179,
+      "pan": 0.0
+    },
+    {
+      "name": "sub",
+      "variant": 1,
+      "family": "nappes & graves",
+      "file": "assets/sfx/sub.wav",
+      "seconds": 3.4,
+      "bytes": 217644,
+      "peak": 0.9,
+      "rms": 0.6346,
+      "pan": 0.0
+    },
+    {
+      "name": "sweep",
+      "variant": 1,
+      "family": "transitions & mouvements",
+      "file": "assets/sfx/sweep.wav",
+      "seconds": 1.8,
+      "bytes": 115244,
+      "peak": 0.9,
+      "rms": 0.1737,
+      "pan": 0.0
+    },
+    {
+      "name": "swell",
+      "variant": 1,
+      "family": "nappes & graves",
+      "file": "assets/sfx/swell.wav",
+      "seconds": 2.5,
+      "bytes": 160044,
+      "peak": 0.9,
+      "rms": 0.1513,
+      "pan": 0.0
+    },
+    {
+      "name": "tada",
+      "variant": 1,
+      "family": "studio & micro",
+      "file": "assets/sfx/tada.wav",
+      "seconds": 1.76,
+      "bytes": 112684,
+      "peak": 0.9,
+      "rms": 0.2243,
+      "pan": 0.0
+    },
+    {
+      "name": "tom",
+      "variant": 1,
+      "family": "percussions & impacts",
+      "file": "assets/sfx/tom.wav",
+      "seconds": 0.35,
+      "bytes": 22444,
+      "peak": 0.9,
+      "rms": 0.6292,
+      "pan": 0.0
+    },
+    {
+      "name": "trace",
+      "variant": 1,
+      "family": "interface",
+      "file": "assets/sfx/trace.wav",
+      "seconds": 0.18,
+      "bytes": 11564,
+      "peak": 0.9,
+      "rms": 0.508,
+      "pan": -0.2
+    },
+    {
+      "name": "trace",
+      "variant": 2,
+      "family": "interface",
+      "file": "assets/sfx/trace-2.wav",
+      "seconds": 0.18,
+      "bytes": 11564,
+      "peak": 0.9,
+      "rms": 0.5079,
+      "pan": -0.2
+    },
+    {
+      "name": "trace",
+      "variant": 3,
+      "family": "interface",
+      "file": "assets/sfx/trace-3.wav",
+      "seconds": 0.18,
+      "bytes": 11564,
+      "peak": 0.9,
+      "rms": 0.508,
+      "pan": -0.2
+    },
+    {
+      "name": "trace",
+      "variant": 4,
+      "family": "interface",
+      "file": "assets/sfx/trace-4.wav",
+      "seconds": 0.18,
+      "bytes": 11564,
+      "peak": 0.9,
+      "rms": 0.5083,
+      "pan": -0.2
+    },
+    {
+      "name": "whistle",
+      "variant": 1,
+      "family": "stade & foule",
+      "file": "assets/sfx/whistle.wav",
+      "seconds": 0.55,
+      "bytes": 35244,
+      "peak": 0.9,
+      "rms": 0.3694,
+      "pan": 0.0
+    },
+    {
+      "name": "whoosh",
+      "variant": 1,
+      "family": "transitions & mouvements",
+      "file": "assets/sfx/whoosh.wav",
+      "seconds": 1.15,
+      "bytes": 73644,
+      "peak": 0.9,
+      "rms": 0.164,
+      "pan": 0.0
+    },
+    {
+      "name": "whooshDeep",
+      "variant": 1,
+      "family": "transitions & mouvements",
+      "file": "assets/sfx/whooshDeep.wav",
+      "seconds": 1.6,
+      "bytes": 102444,
+      "peak": 0.9,
+      "rms": 0.4004,
+      "pan": 0.0
+    },
+    {
+      "name": "whooshSoft",
+      "variant": 1,
+      "family": "transitions & mouvements",
+      "file": "assets/sfx/whooshSoft.wav",
+      "seconds": 1.4,
+      "bytes": 89644,
+      "peak": 0.9,
+      "rms": 0.1639,
+      "pan": 0.0
+    }
+  ],
+  "familles": {
+    "nappes & graves": 14,
+    "interface": 26,
+    "cordes & cloches": 13,
+    "stade & foule": 5,
+    "mécanique": 2,
+    "percussions & impacts": 6,
+    "transitions & mouvements": 7,
+    "studio & micro": 3
+  },
+  "plaques": [
+    {
+      "name": "grain-tile",
+      "file": "assets/img/grain-tile.png",
+      "use": "grain monochrome à recouvrir, 192×192",
+      "bytes": 58481,
+      "w": 192,
+      "h": 192,
+      "px": 36864,
+      "meanLuma": 0.4998,
+      "litRatio": 1.0,
+      "opaqueRatio": 1.0
+    },
+    {
+      "name": "dust-tile",
+      "file": "assets/img/dust-tile.png",
+      "use": "poussières et éraflures, 256×256",
+      "bytes": 531,
+      "w": 256,
+      "h": 256,
+      "px": 65536,
+      "meanLuma": 0.0032,
+      "litRatio": 0.0032,
+      "opaqueRatio": 0.0
+    },
+    {
+      "name": "vignette-16x9",
+      "file": "assets/img/vignette-16x9.png",
+      "use": "assombrissement radial 16:9",
+      "bytes": 20172,
+      "w": 640,
+      "h": 360,
+      "px": 230400,
+      "meanLuma": 0.0,
+      "litRatio": 0.0,
+      "opaqueRatio": 0.0661
+    },
+    {
+      "name": "vignette-9x16",
+      "file": "assets/img/vignette-9x16.png",
+      "use": "assombrissement radial 9:16",
+      "bytes": 17689,
+      "w": 360,
+      "h": 640,
+      "px": 230400,
+      "meanLuma": 0.0,
+      "litRatio": 0.0,
+      "opaqueRatio": 0.0661
+    },
+    {
+      "name": "sky-dawn",
+      "file": "assets/img/sky-dawn.png",
+      "use": "ciel d'aube horizontal",
+      "bytes": 54826,
+      "w": 640,
+      "h": 360,
+      "px": 230400,
+      "meanLuma": 0.4585,
+      "litRatio": 1.0,
+      "opaqueRatio": 1.0
+    },
+    {
+      "name": "sky-night",
+      "file": "assets/img/sky-night.png",
+      "use": "ciel de nuit vertical",
+      "bytes": 57776,
+      "w": 360,
+      "h": 640,
+      "px": 230400,
+      "meanLuma": 0.2045,
+      "litRatio": 0.9753,
+      "opaqueRatio": 1.0
+    },
+    {
+      "name": "dots-tile",
+      "file": "assets/img/dots-tile.png",
+      "use": "trame de points des cartes, 64×64",
+      "bytes": 204,
+      "w": 64,
+      "h": 64,
+      "px": 4096,
+      "meanLuma": 0.2031,
+      "litRatio": 0.2031,
+      "opaqueRatio": 0.0781
+    },
+    {
+      "name": "scanlines-tile",
+      "file": "assets/img/scanlines-tile.png",
+      "use": "lignes d'écran, 4×4",
+      "bytes": 73,
+      "w": 4,
+      "h": 4,
+      "px": 16,
+      "meanLuma": 0.0,
+      "litRatio": 0.0,
+      "opaqueRatio": 0.0
+    },
+    {
+      "name": "hatch-tile",
+      "file": "assets/img/hatch-tile.png",
+      "use": "hachurage diagonal, 64×64",
+      "bytes": 712,
+      "w": 64,
+      "h": 64,
+      "px": 4096,
+      "meanLuma": 0.4273,
+      "litRatio": 0.4287,
+      "opaqueRatio": 0.0
+    },
+    {
+      "name": "turf-tile",
+      "file": "assets/img/turf-tile.png",
+      "use": "pelouse : bandes de tonte et grain, 256×256",
+      "bytes": 74872,
+      "w": 256,
+      "h": 256,
+      "px": 65536,
+      "meanLuma": 0.2385,
+      "litRatio": 1.0,
+      "opaqueRatio": 1.0
+    },
+    {
+      "name": "stand-tile",
+      "file": "assets/img/stand-tile.png",
+      "use": "tribune : la foule en points colorés, 256×256",
+      "bytes": 77187,
+      "w": 256,
+      "h": 256,
+      "px": 65536,
+      "meanLuma": 0.0884,
+      "litRatio": 0.6247,
+      "opaqueRatio": 1.0
+    },
+    {
+      "name": "scoreboard",
+      "file": "assets/img/scoreboard.png",
+      "use": "bandeau de score, verre et or, 720×210",
+      "bytes": 1070,
+      "w": 720,
+      "h": 210,
+      "px": 151200,
+      "meanLuma": 0.186,
+      "litRatio": 1.0,
+      "opaqueRatio": 1.0
+    },
+    {
+      "name": "crest-astan",
+      "file": "assets/img/crest-astan.png",
+      "use": "écusson astan",
+      "bytes": 5415,
+      "w": 168,
+      "h": 186,
+      "px": 31248,
+      "meanLuma": 0.2444,
+      "litRatio": 0.6302,
+      "opaqueRatio": 0.6302
+    },
+    {
+      "name": "crest-axium",
+      "file": "assets/img/crest-axium.png",
+      "use": "écusson axium",
+      "bytes": 4532,
+      "w": 168,
+      "h": 186,
+      "px": 31248,
+      "meanLuma": 0.1814,
+      "litRatio": 0.6388,
+      "opaqueRatio": 0.6388
+    },
+    {
+      "name": "crest-nyxar",
+      "file": "assets/img/crest-nyxar.png",
+      "use": "écusson nyxar",
+      "bytes": 5739,
+      "w": 168,
+      "h": 186,
+      "px": 31248,
+      "meanLuma": 0.2315,
+      "litRatio": 0.6302,
+      "opaqueRatio": 0.6302
+    },
+    {
+      "name": "kit-astan",
+      "file": "assets/img/kit-astan.png",
+      "use": "maillot astan",
+      "bytes": 1062,
+      "w": 176,
+      "h": 196,
+      "px": 34496,
+      "meanLuma": 0.1827,
+      "litRatio": 0.4857,
+      "opaqueRatio": 0.4857
+    },
+    {
+      "name": "kit-axium",
+      "file": "assets/img/kit-axium.png",
+      "use": "maillot axium",
+      "bytes": 1032,
+      "w": 176,
+      "h": 196,
+      "px": 34496,
+      "meanLuma": 0.1197,
+      "litRatio": 0.4857,
+      "opaqueRatio": 0.4857
+    },
+    {
+      "name": "kit-nyxar",
+      "file": "assets/img/kit-nyxar.png",
+      "use": "maillot nyxar",
+      "bytes": 1067,
+      "w": 176,
+      "h": 196,
+      "px": 34496,
+      "meanLuma": 0.172,
+      "litRatio": 0.4857,
+      "opaqueRatio": 0.4857
+    },
+    {
+      "name": "flag-JP",
+      "file": "assets/img/flag-JP.png",
+      "use": "drapeau JP — Japon (CDN flagcdn.com)",
+      "bytes": 932,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.8435,
+      "litRatio": 1.0,
+      "cdn": "jp",
+      "url": "https://flagcdn.com/w320/jp.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "d70de87c9b178bf7"
+    },
+    {
+      "name": "flag-TN",
+      "file": "assets/img/flag-TN.png",
+      "use": "drapeau TN — Tunisie (CDN flagcdn.com)",
+      "bytes": 1128,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.273,
+      "litRatio": 1.0,
+      "cdn": "tn",
+      "url": "https://flagcdn.com/w320/tn.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "f3c57d875c5bf33a"
+    },
+    {
+      "name": "flag-NO",
+      "file": "assets/img/flag-NO.png",
+      "use": "drapeau NO — Norvège (CDN flagcdn.com)",
+      "bytes": 323,
+      "w": 320,
+      "h": 233,
+      "px": 74560,
+      "meanLuma": 0.3299,
+      "litRatio": 1.0,
+      "cdn": "no",
+      "url": "https://flagcdn.com/w320/no.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "22a09e44d8121d2a"
+    },
+    {
+      "name": "flag-DK",
+      "file": "assets/img/flag-DK.png",
+      "use": "drapeau DK — Danemark (CDN flagcdn.com)",
+      "bytes": 292,
+      "w": 320,
+      "h": 242,
+      "px": 77440,
+      "meanLuma": 0.407,
+      "litRatio": 1.0,
+      "cdn": "dk",
+      "url": "https://flagcdn.com/w320/dk.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "c2d1f782feb85e9f"
+    },
+    {
+      "name": "flag-DZ",
+      "file": "assets/img/flag-DZ.png",
+      "use": "drapeau DZ — Algérie (CDN flagcdn.com)",
+      "bytes": 989,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.6319,
+      "litRatio": 1.0,
+      "cdn": "dz",
+      "url": "https://flagcdn.com/w320/dz.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "bb712bea6757af04"
+    },
+    {
+      "name": "flag-EG",
+      "file": "assets/img/flag-EG.png",
+      "use": "drapeau EG — Égypte (CDN flagcdn.com)",
+      "bytes": 1198,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.4023,
+      "litRatio": 0.6667,
+      "cdn": "eg",
+      "url": "https://flagcdn.com/w320/eg.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "f722de4a5082c41f"
+    },
+    {
+      "name": "flag-AF",
+      "file": "assets/img/flag-AF.png",
+      "use": "drapeau AF — Afghanistan (CDN flagcdn.com)",
+      "bytes": 9978,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.2807,
+      "litRatio": 0.6931,
+      "cdn": "af",
+      "url": "https://flagcdn.com/w320/af.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "258457226db521a6"
+    },
+    {
+      "name": "flag-NL",
+      "file": "assets/img/flag-NL.png",
+      "use": "drapeau NL — Pays-Bas (CDN flagcdn.com)",
+      "bytes": 153,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.4994,
+      "litRatio": 1.0,
+      "cdn": "nl",
+      "url": "https://flagcdn.com/w320/nl.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "e55319d1fb32c47f"
+    },
+    {
+      "name": "flag-DE",
+      "file": "assets/img/flag-DE.png",
+      "use": "drapeau DE — Allemagne (CDN flagcdn.com)",
+      "bytes": 151,
+      "w": 320,
+      "h": 192,
+      "px": 61440,
+      "meanLuma": 0.3249,
+      "litRatio": 0.6667,
+      "cdn": "de",
+      "url": "https://flagcdn.com/w320/de.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "7fc1961f8730109e"
+    },
+    {
+      "name": "flag-EN",
+      "file": "assets/img/flag-EN.png",
+      "use": "drapeau EN — Angleterre (CDN flagcdn.com)",
+      "bytes": 245,
+      "w": 320,
+      "h": 192,
+      "px": 61440,
+      "meanLuma": 0.7701,
+      "litRatio": 1.0,
+      "cdn": "gb-eng",
+      "url": "https://flagcdn.com/w320/gb-eng.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "e6ceece56792f167"
+    },
+    {
+      "name": "flag-SC",
+      "file": "assets/img/flag-SC.png",
+      "use": "drapeau SC — Écosse (CDN flagcdn.com)",
+      "bytes": 1185,
+      "w": 320,
+      "h": 192,
+      "px": 61440,
+      "meanLuma": 0.598,
+      "litRatio": 1.0,
+      "cdn": "gb-sct",
+      "url": "https://flagcdn.com/w320/gb-sct.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "e2c422733984c5e2"
+    },
+    {
+      "name": "flag-PT",
+      "file": "assets/img/flag-PT.png",
+      "use": "drapeau PT — Portugal (CDN flagcdn.com)",
+      "bytes": 4848,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.2826,
+      "litRatio": 1.0,
+      "cdn": "pt",
+      "url": "https://flagcdn.com/w320/pt.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "4793b497c24e2cb3"
+    },
+    {
+      "name": "flag-ES",
+      "file": "assets/img/flag-ES.png",
+      "use": "drapeau ES — Espagne (CDN flagcdn.com)",
+      "bytes": 3281,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.451,
+      "litRatio": 1.0,
+      "cdn": "es",
+      "url": "https://flagcdn.com/w320/es.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "e0433d505c347dd3"
+    },
+    {
+      "name": "flag-FR",
+      "file": "assets/img/flag-FR.png",
+      "use": "drapeau FR — France (CDN flagcdn.com)",
+      "bytes": 254,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.4535,
+      "litRatio": 1.0,
+      "cdn": "fr",
+      "url": "https://flagcdn.com/w320/fr.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "d1bdc5f08a3d7290"
+    },
+    {
+      "name": "flag-IT",
+      "file": "assets/img/flag-IT.png",
+      "use": "drapeau IT — Italie (CDN flagcdn.com)",
+      "bytes": 253,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.5791,
+      "litRatio": 1.0,
+      "cdn": "it",
+      "url": "https://flagcdn.com/w320/it.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "d50c6434f7f34424"
+    },
+    {
+      "name": "flag-IE",
+      "file": "assets/img/flag-IE.png",
+      "use": "drapeau IE — Irlande (CDN flagcdn.com)",
+      "bytes": 219,
+      "w": 320,
+      "h": 160,
+      "px": 51200,
+      "meanLuma": 0.6975,
+      "litRatio": 1.0,
+      "cdn": "ie",
+      "url": "https://flagcdn.com/w320/ie.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "55b2d7ca353fa719"
+    },
+    {
+      "name": "flag-BE",
+      "file": "assets/img/flag-BE.png",
+      "use": "drapeau BE — Belgique (CDN flagcdn.com)",
+      "bytes": 292,
+      "w": 320,
+      "h": 277,
+      "px": 88640,
+      "meanLuma": 0.3978,
+      "litRatio": 0.6687,
+      "cdn": "be",
+      "url": "https://flagcdn.com/w320/be.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "08f0b3d860476a15"
+    },
+    {
+      "name": "flag-CI",
+      "file": "assets/img/flag-CI.png",
+      "use": "drapeau CI — Côte d'Ivoire (CDN flagcdn.com)",
+      "bytes": 252,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.6775,
+      "litRatio": 1.0,
+      "cdn": "ci",
+      "url": "https://flagcdn.com/w320/ci.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "146c21d73511b358"
+    },
+    {
+      "name": "flag-NG",
+      "file": "assets/img/flag-NG.png",
+      "use": "drapeau NG — Nigéria (CDN flagcdn.com)",
+      "bytes": 157,
+      "w": 320,
+      "h": 160,
+      "px": 51200,
+      "meanLuma": 0.601,
+      "litRatio": 1.0,
+      "cdn": "ng",
+      "url": "https://flagcdn.com/w320/ng.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "1a2bb3e3a4ef452c"
+    },
+    {
+      "name": "flag-PL",
+      "file": "assets/img/flag-PL.png",
+      "use": "drapeau PL — Pologne (CDN flagcdn.com)",
+      "bytes": 119,
+      "w": 320,
+      "h": 200,
+      "px": 64000,
+      "meanLuma": 0.6283,
+      "litRatio": 1.0,
+      "cdn": "pl",
+      "url": "https://flagcdn.com/w320/pl.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "c5703c9d89f1d042"
+    },
+    {
+      "name": "flag-ID",
+      "file": "assets/img/flag-ID.png",
+      "use": "drapeau ID — Indonésie (CDN flagcdn.com)",
+      "bytes": 146,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.6063,
+      "litRatio": 1.0,
+      "cdn": "id",
+      "url": "https://flagcdn.com/w320/id.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "d2ac1a39ad2d7298"
+    },
+    {
+      "name": "flag-AT",
+      "file": "assets/img/flag-AT.png",
+      "use": "drapeau AT — Autriche (CDN flagcdn.com)",
+      "bytes": 118,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.4831,
+      "litRatio": 1.0,
+      "cdn": "at",
+      "url": "https://flagcdn.com/w320/at.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "857597f405c46666"
+    },
+    {
+      "name": "flag-SE",
+      "file": "assets/img/flag-SE.png",
+      "use": "drapeau SE — Suède (CDN flagcdn.com)",
+      "bytes": 138,
+      "w": 320,
+      "h": 200,
+      "px": 64000,
+      "meanLuma": 0.4245,
+      "litRatio": 1.0,
+      "cdn": "se",
+      "url": "https://flagcdn.com/w320/se.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "475c1e628d62b218"
+    },
+    {
+      "name": "flag-FI",
+      "file": "assets/img/flag-FI.png",
+      "use": "drapeau FI — Finlande (CDN flagcdn.com)",
+      "bytes": 240,
+      "w": 320,
+      "h": 196,
+      "px": 62720,
+      "meanLuma": 0.6698,
+      "litRatio": 1.0,
+      "cdn": "fi",
+      "url": "https://flagcdn.com/w320/fi.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "e109f87f56b559b3"
+    },
+    {
+      "name": "flag-CH",
+      "file": "assets/img/flag-CH.png",
+      "use": "drapeau CH — Suisse (CDN flagcdn.com)",
+      "bytes": 154,
+      "w": 320,
+      "h": 320,
+      "px": 102400,
+      "meanLuma": 0.3695,
+      "litRatio": 1.0,
+      "cdn": "ch",
+      "url": "https://flagcdn.com/w320/ch.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "5af6c932b78ce18b"
+    },
+    {
+      "name": "flag-MA",
+      "file": "assets/img/flag-MA.png",
+      "use": "drapeau MA — Maroc (CDN flagcdn.com)",
+      "bytes": 928,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.2832,
+      "litRatio": 1.0,
+      "cdn": "ma",
+      "url": "https://flagcdn.com/w320/ma.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "0a1f00f3766c4828"
+    },
+    {
+      "name": "flag-TR",
+      "file": "assets/img/flag-TR.png",
+      "use": "drapeau TR — Turquie (CDN flagcdn.com)",
+      "bytes": 947,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.2707,
+      "litRatio": 1.0,
+      "cdn": "tr",
+      "url": "https://flagcdn.com/w320/tr.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "e50ad4feb4f7d0f0"
+    },
+    {
+      "name": "flag-AR",
+      "file": "assets/img/flag-AR.png",
+      "use": "drapeau AR — Argentine (CDN flagcdn.com)",
+      "bytes": 1578,
+      "w": 320,
+      "h": 200,
+      "px": 64000,
+      "meanLuma": 0.7516,
+      "litRatio": 1.0,
+      "cdn": "ar",
+      "url": "https://flagcdn.com/w320/ar.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "87eacda2733a09ea"
+    },
+    {
+      "name": "flag-BR",
+      "file": "assets/img/flag-BR.png",
+      "use": "drapeau BR — Brésil (CDN flagcdn.com)",
+      "bytes": 2619,
+      "w": 320,
+      "h": 224,
+      "px": 71680,
+      "meanLuma": 0.4708,
+      "litRatio": 1.0,
+      "cdn": "br",
+      "url": "https://flagcdn.com/w320/br.png",
+      "licence": "Domaine public — drapeaux nationaux, flagcdn.com (aucune restriction)",
+      "sha256": "76f921bcec127a82"
+    },
+    {
+      "name": "flag-IS",
+      "file": "assets/img/flag-IS.png",
+      "use": "drapeau IS — Istan (dessiné ici (nation fictive))",
+      "bytes": 5283,
+      "w": 320,
+      "h": 213,
+      "px": 68160,
+      "meanLuma": 0.27,
+      "litRatio": 1.0,
+      "cdn": null,
+      "url": null,
+      "licence": "Dessin original du studio (nation fictive)",
+      "sha256": "aee248aeb7467f22"
+    },
+    {
+      "name": "icon-cart",
+      "file": "assets/img/icon-cart.svg",
+      "use": "caddie — cart (Lucide · ISC)",
+      "bytes": 454,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "lucide-icons/lucide",
+      "path": "icons/shopping-cart.svg",
+      "url": "https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/shopping-cart.svg",
+      "licence": "ISC (Lucide)",
+      "sha256": "590a049c26da5831"
+    },
+    {
+      "name": "icon-tag",
+      "file": "assets/img/icon-tag.svg",
+      "use": "étiquette de prix — tag (Lucide · ISC)",
+      "bytes": 422,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "lucide-icons/lucide",
+      "path": "icons/tag.svg",
+      "url": "https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/tag.svg",
+      "licence": "ISC (Lucide)",
+      "sha256": "5265ee0384ede648"
+    },
+    {
+      "name": "icon-truck",
+      "file": "assets/img/icon-truck.svg",
+      "use": "camion de livraison — truck (Lucide · ISC)",
+      "bytes": 466,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "lucide-icons/lucide",
+      "path": "icons/truck.svg",
+      "url": "https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/truck.svg",
+      "licence": "ISC (Lucide)",
+      "sha256": "474f33e087ce44b2"
+    },
+    {
+      "name": "icon-package",
+      "file": "assets/img/icon-package.svg",
+      "use": "colis — package (Lucide · ISC)",
+      "bytes": 443,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "lucide-icons/lucide",
+      "path": "icons/package.svg",
+      "url": "https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/package.svg",
+      "licence": "ISC (Lucide)",
+      "sha256": "3db17208c0452947"
+    },
+    {
+      "name": "icon-store",
+      "file": "assets/img/icon-store.svg",
+      "use": "boutique — store (Tabler · MIT)",
+      "bytes": 587,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "tabler/tabler-icons",
+      "path": "icons/outline/building-store.svg",
+      "url": "https://cdn.jsdelivr.net/gh/tabler/tabler-icons@main/icons/outline/building-store.svg",
+      "licence": "MIT (Tabler Icons)",
+      "sha256": "43af1f072125d84c"
+    },
+    {
+      "name": "icon-basket",
+      "file": "assets/img/icon-basket.svg",
+      "use": "panier — basket (Tabler · MIT)",
+      "bytes": 615,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "tabler/tabler-icons",
+      "path": "icons/outline/basket.svg",
+      "url": "https://cdn.jsdelivr.net/gh/tabler/tabler-icons@main/icons/outline/basket.svg",
+      "licence": "MIT (Tabler Icons)",
+      "sha256": "635467d5fd234115"
+    },
+    {
+      "name": "icon-percent",
+      "file": "assets/img/icon-percent.svg",
+      "use": "remise — percent (Lucide · ISC)",
+      "bytes": 326,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "lucide-icons/lucide",
+      "path": "icons/percent.svg",
+      "url": "https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/percent.svg",
+      "licence": "ISC (Lucide)",
+      "sha256": "de5945be06c526e8"
+    },
+    {
+      "name": "icon-coins",
+      "file": "assets/img/icon-coins.svg",
+      "use": "pièces — coins (Lucide · ISC)",
+      "bytes": 358,
+      "w": 24,
+      "h": 24,
+      "px": 576,
+      "repo": "lucide-icons/lucide",
+      "path": "icons/coins.svg",
+      "url": "https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/coins.svg",
+      "licence": "ISC (Lucide)",
+      "sha256": "b470ed04b928b9f3"
+    },
+    {
+      "name": "icon-emoji-cart",
+      "file": "assets/img/icon-emoji-cart.png",
+      "use": "caddie en couleur — emoji-cart (Openmoji · CC BY-SA 4.0)",
+      "bytes": 1524,
+      "w": 72,
+      "h": 72,
+      "px": 5184,
+      "repo": "hfg-gmuend/openmoji",
+      "path": "color/72x72/1F6D2.png",
+      "url": "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@master/color/72x72/1F6D2.png",
+      "licence": "CC BY-SA 4.0 (OpenMoji) — attribution : OpenMoji.org",
+      "sha256": "ea842e0faacd0cf6"
+    },
+    {
+      "name": "icon-emoji-box",
+      "file": "assets/img/icon-emoji-box.png",
+      "use": "colis en couleur — emoji-box (Openmoji · CC BY-SA 4.0)",
+      "bytes": 2336,
+      "w": 72,
+      "h": 72,
+      "px": 5184,
+      "repo": "hfg-gmuend/openmoji",
+      "path": "color/72x72/1F4E6.png",
+      "url": "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@master/color/72x72/1F4E6.png",
+      "licence": "CC BY-SA 4.0 (OpenMoji) — attribution : OpenMoji.org",
+      "sha256": "7b2b224235472834"
+    },
+    {
+      "name": "icon-emoji-truck",
+      "file": "assets/img/icon-emoji-truck.png",
+      "use": "camion en couleur — emoji-truck (Openmoji · CC BY-SA 4.0)",
+      "bytes": 1716,
+      "w": 72,
+      "h": 72,
+      "px": 5184,
+      "repo": "hfg-gmuend/openmoji",
+      "path": "color/72x72/1F69A.png",
+      "url": "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@master/color/72x72/1F69A.png",
+      "licence": "CC BY-SA 4.0 (OpenMoji) — attribution : OpenMoji.org",
+      "sha256": "8c574bd07ea4ded9"
+    },
+    {
+      "name": "icon-emoji-tag",
+      "file": "assets/img/icon-emoji-tag.png",
+      "use": "étiquette en couleur — emoji-tag (Openmoji · CC BY-SA 4.0)",
+      "bytes": 978,
+      "w": 72,
+      "h": 72,
+      "px": 5184,
+      "repo": "hfg-gmuend/openmoji",
+      "path": "color/72x72/1F3F7.png",
+      "url": "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@master/color/72x72/1F3F7.png",
+      "licence": "CC BY-SA 4.0 (OpenMoji) — attribution : OpenMoji.org",
+      "sha256": "2faf380682d44d84"
+    }
+  ],
+  "contact": "assets/img/contact-sheet.png",
+  "recipes": [
+    "air",
+    "benchPop",
+    "benchTick",
+    "blip",
+    "chime",
+    "chip",
+    "choir",
+    "chordUp",
+    "coinLand",
+    "coinTick",
+    "crowd",
+    "crowdGasp",
+    "crowdOhh",
+    "door",
+    "engine",
+    "flagPop",
+    "hush",
+    "ignite",
+    "impact",
+    "impactSoft",
+    "jerseyDrop",
+    "jerseyLand",
+    "kick",
+    "micThud",
+    "pad",
+    "phoneBuzz",
+    "plateWipe",
+    "pluck",
+    "rateDing",
+    "rateTick",
+    "resolve",
+    "riser",
+    "shimmer",
+    "sparkle",
+    "squeak",
+    "stamp",
+    "sub",
+    "sweep",
+    "swell",
+    "tada",
+    "tom",
+    "trace",
+    "whistle",
+    "whoosh",
+    "whooshDeep",
+    "whooshSoft"
+  ],
+  "voiceModels": {
+    "fr_FR-tom-medium": "français · Tom (medium)",
+    "fr_FR-siwis-medium": "français · Siwis (medium)"
+  },
+  "page": "assets/panel.html"
+}

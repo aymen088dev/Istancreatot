@@ -1,0 +1,487 @@
+{
+  "kind": "voice",
+  "id": "astan-city-xi",
+  "film": "/home/daytona/codebase/astan-city-xi.html",
+  "title": "Astan City",
+  "asset": "assets/voice/astan-city-xi.wav",
+  "engine": {
+    "name": "piper",
+    "voice": "fr_FR-tom-medium",
+    "label": "français · Tom (medium)",
+    "sr": 32000,
+    "scale": 1.08,
+    "peak": 0.9,
+    "gap": 0.2,
+    "pad": 0.25
+  },
+  "seconds": 44.0,
+  "filmMs": 43400,
+  "tail": 0.6,
+  "speechMs": 27247,
+  "meanRate": 2.405,
+  "retimed": [],
+  "overflow": [],
+  "lines": [
+    {
+      "i": 0,
+      "t": 600,
+      "d": 2920,
+      "window": 3333,
+      "ms": 2920,
+      "endsAt": 3520,
+      "nextAt": 6300,
+      "budget": 5500,
+      "slack": 2580,
+      "txt": "Bonsoir à tous, Léonard Chose au micro.",
+      "rate": 2.397,
+      "words": [
+        {
+          "w": "Bonsoir",
+          "t0": 0,
+          "t1": 515
+        },
+        {
+          "w": "à",
+          "t0": 515,
+          "t1": 772
+        },
+        {
+          "w": "tous,",
+          "t0": 772,
+          "t1": 1119
+        },
+        {
+          "w": "Léonard",
+          "t0": 1119,
+          "t1": 1634
+        },
+        {
+          "w": "Chose",
+          "t0": 1634,
+          "t1": 2148
+        },
+        {
+          "w": "au",
+          "t0": 2148,
+          "t1": 2405
+        },
+        {
+          "w": "micro.",
+          "t0": 2405,
+          "t1": 2920
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 1,
+      "t": 6300,
+      "d": 3518,
+      "window": 4047,
+      "ms": 3518,
+      "endsAt": 9818,
+      "nextAt": 12400,
+      "budget": 5900,
+      "slack": 2382,
+      "txt": "Astan City dévoile son onze de départ, ce soir.",
+      "rate": 2.558,
+      "words": [
+        {
+          "w": "Astan",
+          "t0": 0,
+          "t1": 458
+        },
+        {
+          "w": "City",
+          "t0": 458,
+          "t1": 917
+        },
+        {
+          "w": "dévoile",
+          "t0": 917,
+          "t1": 1604
+        },
+        {
+          "w": "son",
+          "t0": 1604,
+          "t1": 1833
+        },
+        {
+          "w": "onze",
+          "t0": 1833,
+          "t1": 2292
+        },
+        {
+          "w": "de",
+          "t0": 2292,
+          "t1": 2521
+        },
+        {
+          "w": "départ,",
+          "t0": 2521,
+          "t1": 3060
+        },
+        {
+          "w": "ce",
+          "t0": 3060,
+          "t1": 3289
+        },
+        {
+          "w": "soir.",
+          "t0": 3289,
+          "t1": 3518
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 2,
+      "t": 12400,
+      "d": 1721,
+      "window": 2272,
+      "ms": 1721,
+      "endsAt": 14121,
+      "nextAt": 15800,
+      "budget": 3200,
+      "slack": 1479,
+      "txt": "Et dans les buts, Sako!",
+      "rate": 2.905,
+      "words": [
+        {
+          "w": "Et",
+          "t0": 0,
+          "t1": 248
+        },
+        {
+          "w": "dans",
+          "t0": 248,
+          "t1": 495
+        },
+        {
+          "w": "les",
+          "t0": 495,
+          "t1": 743
+        },
+        {
+          "w": "buts,",
+          "t0": 743,
+          "t1": 1077
+        },
+        {
+          "w": "Sako!",
+          "t0": 1077,
+          "t1": 1721
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 3,
+      "t": 15800,
+      "d": 4994,
+      "window": 5428,
+      "ms": 4994,
+      "endsAt": 20794,
+      "nextAt": 21600,
+      "budget": 5600,
+      "slack": 606,
+      "txt": "La défense à quatre : Fouhez, Rolberg, Elhussin, Comistani.",
+      "rate": 1.802,
+      "words": [
+        {
+          "w": "La",
+          "t0": 0,
+          "t1": 245
+        },
+        {
+          "w": "défense",
+          "t0": 245,
+          "t1": 979
+        },
+        {
+          "w": "à",
+          "t0": 979,
+          "t1": 1224
+        },
+        {
+          "w": "quatre",
+          "t0": 1224,
+          "t1": 1714
+        },
+        {
+          "w": ":",
+          "t0": 1714,
+          "t1": 2044
+        },
+        {
+          "w": "Fouhez,",
+          "t0": 2044,
+          "t1": 2619
+        },
+        {
+          "w": "Rolberg,",
+          "t0": 2619,
+          "t1": 3195
+        },
+        {
+          "w": "Elhussin,",
+          "t0": 3195,
+          "t1": 4015
+        },
+        {
+          "w": "Comistani.",
+          "t0": 4015,
+          "t1": 4994
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 4,
+      "t": 21600,
+      "d": 5927,
+      "window": 6360,
+      "ms": 5927,
+      "endsAt": 27527,
+      "nextAt": 28100,
+      "budget": 6300,
+      "slack": 373,
+      "txt": "Au milieu, Mikkelsen et Belmadi. Devant, Elke, Sholke et Dempsey!",
+      "rate": 1.687,
+      "words": [
+        {
+          "w": "Au",
+          "t0": 0,
+          "t1": 287
+        },
+        {
+          "w": "milieu,",
+          "t0": 287,
+          "t1": 962
+        },
+        {
+          "w": "Mikkelsen",
+          "t0": 962,
+          "t1": 1823
+        },
+        {
+          "w": "et",
+          "t0": 1823,
+          "t1": 2110
+        },
+        {
+          "w": "Belmadi.",
+          "t0": 2110,
+          "t1": 2971
+        },
+        {
+          "w": "Devant,",
+          "t0": 2971,
+          "t1": 3645
+        },
+        {
+          "w": "Elke,",
+          "t0": 3645,
+          "t1": 4320
+        },
+        {
+          "w": "Sholke",
+          "t0": 4320,
+          "t1": 4894
+        },
+        {
+          "w": "et",
+          "t0": 4894,
+          "t1": 5181
+        },
+        {
+          "w": "Dempsey!",
+          "t0": 5181,
+          "t1": 5927
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 5,
+      "t": 28100,
+      "d": 1794,
+      "window": 2166,
+      "ms": 1794,
+      "endsAt": 29894,
+      "nextAt": 31800,
+      "budget": 3500,
+      "slack": 1706,
+      "txt": "Et Keytez en pointe!",
+      "rate": 2.23,
+      "words": [
+        {
+          "w": "Et",
+          "t0": 0,
+          "t1": 272
+        },
+        {
+          "w": "Keytez",
+          "t0": 272,
+          "t1": 815
+        },
+        {
+          "w": "en",
+          "t0": 815,
+          "t1": 1087
+        },
+        {
+          "w": "pointe!",
+          "t0": 1087,
+          "t1": 1794
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 6,
+      "t": 31800,
+      "d": 2788,
+      "window": 3109,
+      "ms": 2788,
+      "endsAt": 34588,
+      "nextAt": 37800,
+      "budget": 5800,
+      "slack": 3012,
+      "txt": "Sur le banc, dix remplaçants prêts à entrer.",
+      "rate": 2.869,
+      "words": [
+        {
+          "w": "Sur",
+          "t0": 0,
+          "t1": 246
+        },
+        {
+          "w": "le",
+          "t0": 246,
+          "t1": 491
+        },
+        {
+          "w": "banc,",
+          "t0": 491,
+          "t1": 823
+        },
+        {
+          "w": "dix",
+          "t0": 823,
+          "t1": 1069
+        },
+        {
+          "w": "remplaçants",
+          "t0": 1069,
+          "t1": 1805
+        },
+        {
+          "w": "prêts",
+          "t0": 1805,
+          "t1": 2051
+        },
+        {
+          "w": "à",
+          "t0": 2051,
+          "t1": 2297
+        },
+        {
+          "w": "entrer.",
+          "t0": 2297,
+          "t1": 2788
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 7,
+      "t": 37800,
+      "d": 3585,
+      "window": 4156,
+      "ms": 3585,
+      "endsAt": 41385,
+      "nextAt": 43400,
+      "budget": 5400,
+      "slack": 1815,
+      "txt": "Astan City, onze de départ : quatre deux trois un.",
+      "rate": 2.789,
+      "words": [
+        {
+          "w": "Astan",
+          "t0": 0,
+          "t1": 457
+        },
+        {
+          "w": "City,",
+          "t0": 457,
+          "t1": 993
+        },
+        {
+          "w": "onze",
+          "t0": 993,
+          "t1": 1450
+        },
+        {
+          "w": "de",
+          "t0": 1450,
+          "t1": 1678
+        },
+        {
+          "w": "départ",
+          "t0": 1678,
+          "t1": 2135
+        },
+        {
+          "w": ":",
+          "t0": 2135,
+          "t1": 2443
+        },
+        {
+          "w": "quatre",
+          "t0": 2443,
+          "t1": 2900
+        },
+        {
+          "w": "deux",
+          "t0": 2900,
+          "t1": 3128
+        },
+        {
+          "w": "trois",
+          "t0": 3128,
+          "t1": 3357
+        },
+        {
+          "w": "un.",
+          "t0": 3357,
+          "t1": 3585
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    }
+  ],
+  "bytes": 2816044,
+  "peak": 0.9,
+  "rms": 0.0681,
+  "clipped": 0,
+  "silentSeconds": 0,
+  "generated": "2026-10-13T08:55:26",
+  "secondsToBuild": 3.7
+}

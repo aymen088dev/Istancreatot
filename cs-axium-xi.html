@@ -1,0 +1,2141 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>CS AXIUM — composition · motion design</title>
+<meta name="description" content="Motion design vertical : la composition 4-1-4-1 du CS AXIUM, onze titulaires notés, le banc, présentée joueur par joueur." />
+<style>
+  :root{
+    --ink:#eef4ee; --gold:#d9a63a; --gold2:#f4d68a; --blue:#2f6bd8; --blue2:#6ea6ff;
+    --green:#2fae62; --amber:#e8a33d; --pitch:#0b2317; --plate:#0e1729;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --vh:100vh;
+    /* Le cadre 9:16 est la seule source d'échelle : 1080 px de large valent 100cqw,
+       1920 px de haut valent 100cqh. L'image et sa typographie gardent donc
+       exactement le même cadrage sur un écran de bureau comme sur un téléphone. */
+    --fw:min(100vw, calc(var(--vh) * .5625));
+    --fh:min(calc(100vw * 1.777778), var(--vh));
+  }
+  @supports (height:100dvh){ :root{ --vh:100dvh } }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#010604;color:var(--ink);overflow:hidden;
+    font-family:"Helvetica Neue",Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+  #stage{position:fixed;inset:0;background:var(--pitch);overflow:hidden}
+  #frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:1}
+  #scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(115% 85% at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%)}
+  .layer{position:absolute;inset:0;pointer-events:none}
+
+  /* ---------- typographie (1 px de la maquette = .0926cqw = .0521cqh) ---------- */
+  .card{position:absolute;will-change:opacity,transform}
+  .kicker{font-family:var(--mono);font-weight:600;font-size:2.407cqw;letter-spacing:.34em;text-transform:uppercase;color:rgba(238,244,238,.62)}
+  .title{font-size:9.63cqw;font-weight:800;letter-spacing:.06em;line-height:1;text-transform:uppercase;
+    background:linear-gradient(180deg,#fff8e4,#d9a63a 58%,#8d6216);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 1.296cqw 3.704cqw rgba(217,166,58,.25))}
+  .head{font-size:5.926cqw;font-weight:800;letter-spacing:-.01em;line-height:1.06;text-shadow:0 1.111cqw 3.704cqw rgba(0,0,0,.55)}
+  .formation{font-family:var(--mono);font-size:13.889cqw;font-weight:600;letter-spacing:.08em;color:#eaf3ea;
+    text-shadow:0 1.296cqw 5.556cqw rgba(0,0,0,.6)}
+  .plate{display:inline-block;font-family:var(--mono);font-size:2.778cqw;letter-spacing:.16em;text-transform:uppercase;
+    color:#d7e5ff;background:rgba(14,23,41,.92);border-left:.556cqw solid var(--gold);padding:1.111cqw 2.037cqw;border-radius:.556cqw}
+  .chip{display:inline-flex;align-items:center;gap:1.111cqw;padding:1.111cqw 2.037cqw;border-radius:999px;
+    font-family:var(--mono);font-size:2.222cqw;letter-spacing:.16em;text-transform:uppercase;color:#e6eefb;
+    background:rgba(9,17,30,.85);border:1px solid rgba(110,166,255,.3)}
+  /* une pastille se mesure à son contenu et se centre : sans cela sa boîte occupe
+     toute la largeur du cadre, le fond se peint d'un bord à l'autre, et le
+     téléphone qui l'agrandit la pousse hors de l'écran */
+  .card.chip{width:fit-content;margin-inline:auto;justify-content:center}
+  .chip i{width:.926cqw;height:.926cqw;border-radius:50%;background:var(--green);box-shadow:0 0 1.111cqw var(--green);display:inline-block}
+  .stat{font-family:var(--mono);font-size:3.148cqw;letter-spacing:.14em;color:#eaf3ea}
+  .stat b{color:var(--gold2)}
+  .credit{font-family:var(--mono);font-size:2.222cqw;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,244,238,.5)}
+  .credit b{color:var(--gold)}
+  .tc{left:0;right:0;top:9.375cqh;text-align:center;transform-origin:center top}
+  .cc{left:0;right:0;top:36.458cqh;text-align:center;transform-origin:center top}
+  .bc{left:0;right:0;bottom:29.167cqh;text-align:center;transform-origin:center bottom}
+  .bl{left:6.481cqw;bottom:29.167cqh;transform-origin:left bottom}
+  .br{right:6.481cqw;bottom:29.167cqh;text-align:right;transform-origin:right bottom}
+  .center{left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:1.481cqw;transform-origin:center top}
+
+  /* ---------- sous-titres ---------- */
+  /* chaque réplique est posée en absolu : les répliques masquées ne se partagent plus la largeur */
+  #subs{position:absolute;left:0;right:0;bottom:7.813cqh;pointer-events:none;z-index:2}
+  .subline{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:88.889cqw;padding:1.296cqw 2.407cqw 1.481cqw;border-radius:1.481cqw;text-align:center;
+    background:rgba(4,10,17,.78);border:1px solid rgba(217,166,58,.22);
+    box-shadow:0 1.667cqw 5.556cqw rgba(0,0,0,.6);backdrop-filter:blur(3px);
+    font-size:3.704cqw;line-height:1.26;font-weight:600;letter-spacing:-.003em;
+    opacity:0;transform:translateY(12px);transition:opacity .22s ease,transform .22s ease}
+  .subline.show{opacity:1;transform:none}
+  .subline .w{color:rgba(238,244,238,.5);transition:color .1s linear}
+  .subline .w.done{color:rgba(238,244,238,.9)}
+  .subline .w.on{color:#f4d68a;text-shadow:0 0 26px rgba(217,166,58,.6)}
+
+  /* ---------- habillage de diffusion (dans le cadre : il fait partie du film) ---------- */
+  #bcast{z-index:1}
+  .bug{position:absolute;left:3.704cqw;top:3.333cqh;display:flex;align-items:stretch;
+    font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;
+    background:linear-gradient(180deg,rgba(9,17,30,.95),rgba(6,12,22,.9));
+    border:1px solid rgba(217,166,58,.45);border-radius:1.111cqw;overflow:hidden;
+    box-shadow:0 1.481cqw 4.444cqw rgba(0,0,0,.55)}
+  .bug>*{display:flex;align-items:center;gap:.926cqw;padding:.926cqw 1.481cqw;font-size:1.852cqw;color:#e7eefb}
+  .bug .live{background:#c8102e;color:#fff;font-weight:700;letter-spacing:.22em;font-size:1.667cqw}
+  .bug .live i{width:.833cqw;height:.833cqw;border-radius:50%;background:#fff;animation:live 1.6s ease-in-out infinite}
+  @keyframes live{0%,100%{opacity:1}50%{opacity:.12}}
+  .bug .tag{font-weight:600;color:#fff}
+  .bug .form,.bug .clk{border-left:1px solid rgba(238,244,238,.16)}
+  .bug .form{color:var(--gold2)}
+  .bug .clk{color:rgba(238,244,238,.72);font-variant-numeric:tabular-nums}
+  .chan{position:absolute;right:3.704cqw;top:3.333cqh;display:flex;align-items:center;gap:1.111cqw;
+    font-family:var(--mono);font-size:1.759cqw;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,244,238,.55)}
+  .chan b{color:var(--gold)}
+  .third{position:absolute;left:3.704cqw;bottom:15.625cqh;display:flex;align-items:center;gap:1.296cqw;
+    padding:1.111cqw 2.037cqw;border-left:.648cqw solid var(--gold);border-radius:.741cqw;
+    background:rgba(6,12,22,.88);font-family:var(--mono);font-size:2.315cqw;letter-spacing:.1em;
+    text-transform:uppercase;color:#eaf3ea;box-shadow:0 1.296cqw 3.704cqw rgba(0,0,0,.5);
+    transition:border-color .25s,box-shadow .25s}
+  .third em{font-style:normal;font-size:1.759cqw;letter-spacing:.2em;color:rgba(238,244,238,.6)}
+  .third .air{width:1.111cqw;height:1.111cqw;border-radius:50%;background:rgba(238,244,238,.3);transition:background .2s,box-shadow .2s}
+  .third.on{border-color:#c8102e;box-shadow:0 1.296cqw 3.704cqw rgba(0,0,0,.5),0 0 2.963cqw rgba(200,16,46,.35)}
+  .third.on .air{background:#ff5a5a;box-shadow:0 0 1.481cqw rgba(255,90,90,.95)}
+  #bugNames{position:absolute;left:3.704cqw;top:9.896cqh;display:flex;flex-wrap:wrap;gap:.741cqw;max-width:62cqw}
+  #bugNames span{font-family:var(--mono);font-size:1.667cqw;letter-spacing:.1em;text-transform:uppercase;color:#d7e5ff;
+    background:rgba(9,17,30,.82);border:1px solid rgba(110,166,255,.3);padding:.648cqw 1.111cqw;border-radius:.556cqw;
+    opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .35s ease}
+  #bugNames span.on{opacity:1;transform:none}
+
+  /* ---------- interface de lecture (posée sur le cadre, en unités du cadre) ---------- */
+  #hud{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:3;pointer-events:none}
+  /* L'image d'abord : trois secondes sans geste pendant la lecture et l'habillage
+     s'efface ; le premier mouvement le ramène. Les boîtes gardent leur place — seule
+     l'opacité change — donc rien ne se déplace et rien ne reste posé sur le film. */
+  #hud{transition:opacity .4s ease}
+  #stage.clean #hud{opacity:0}
+  #stage.clean #mix{pointer-events:none}
+  #prog{position:absolute;left:6.481cqw;right:6.481cqw;top:3.333cqh;display:flex;gap:.648cqw}
+  .pseg{flex:1;height:.365cqh;border-radius:.370cqw;background:rgba(238,244,238,.13);overflow:hidden}
+  .pseg i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6bd8,#f4d68a);box-shadow:0 0 1.296cqw rgba(217,166,58,.45)}
+  #hudScene,#hudTc{position:absolute;bottom:3.333cqh;font-family:var(--mono);font-size:2.037cqw;
+    letter-spacing:.22em;text-transform:uppercase;color:rgba(238,244,238,.45)}
+  #hudScene{left:6.667cqw} #hudTc{right:6.667cqw}
+  #hudScene b{color:var(--gold);font-weight:500}
+  #mix{position:absolute;right:6.481cqw;top:6.771cqh;display:flex;gap:.926cqw;pointer-events:auto}
+  .tog{display:inline-flex;align-items:center;gap:.926cqw;padding:1.019cqw 1.667cqw;border-radius:999px;cursor:pointer;
+    font-family:var(--mono);font-size:1.759cqw;letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(238,244,238,.62);background:rgba(5,14,10,.7);border:1px solid rgba(238,244,238,.16);
+    transition:color .2s,border-color .2s}
+  .tog:hover{color:var(--ink);border-color:rgba(238,244,238,.32)}
+  .tog .dot{width:.833cqw;height:.833cqw;border-radius:50%;background:rgba(238,244,238,.28);transition:background .2s,box-shadow .2s}
+  .tog.on{color:var(--gold2);border-color:rgba(217,166,58,.5)}
+  .tog.on .dot{background:var(--gold);box-shadow:0 0 1.296cqw var(--gold)}
+  .tog.off-audio{opacity:.45}
+
+  /* ---------- écrans d'accueil et de fin (dimensionnés sur la largeur du cadre) ---------- */
+  #veil{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:24px;background:radial-gradient(80% 65% at 50% 42%,rgba(11,35,23,.82),rgba(1,6,4,.96));
+    opacity:0;pointer-events:none;transition:opacity .45s ease}
+  #veil.show{opacity:1;pointer-events:auto}
+  .veilbox{display:flex;flex-direction:column;align-items:center;gap:calc(var(--fw) * .0241);
+    max-width:calc(var(--fw) * .8333);padding:0 calc(var(--fw) * .037)}
+  .veilbrand{font-family:var(--mono);font-size:calc(var(--fw) * .0222);letter-spacing:.42em;text-transform:uppercase;color:rgba(238,244,238,.6)}
+  .veiltitle{font-size:calc(var(--fw) * .0852);font-weight:800;letter-spacing:.08em;line-height:1;
+    background:linear-gradient(180deg,#fff8e4,#d9a63a 58%,#8d6216);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .veilsub{font-size:calc(var(--fw) * .0315);color:rgba(238,244,238,.74);line-height:1.4}
+  .veilsub b{color:var(--gold2)}
+  #go{position:relative;width:calc(var(--fw) * .1593);height:calc(var(--fw) * .1593);border-radius:50%;
+    border:2px solid rgba(217,166,58,.6);
+    background:radial-gradient(60% 60% at 40% 34%,rgba(47,107,216,.4),rgba(9,20,15,.75));
+    cursor:pointer;display:grid;place-items:center;transition:transform .25s,border-color .25s,box-shadow .25s;
+    box-shadow:0 0 0 12px rgba(217,166,58,.07),0 calc(var(--fw) * .0222) calc(var(--fw) * .0556) rgba(0,0,0,.6)}
+  #go:hover{transform:scale(1.06);border-color:var(--gold);box-shadow:0 0 0 16px rgba(217,166,58,.1),0 calc(var(--fw) * .024) calc(var(--fw) * .065) rgba(0,0,0,.65)}
+  #go svg{width:38%;height:38%;margin-left:5%;fill:var(--gold2)}
+  #go::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(217,166,58,.3);animation:pulse 2.6s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.92);opacity:.85}70%{transform:scale(1.22);opacity:0}100%{opacity:0}}
+  .hint{font-family:var(--mono);font-size:calc(var(--fw) * .0194);letter-spacing:.1em;color:rgba(238,244,238,.5);line-height:2}
+  kbd{font-family:var(--mono);font-size:calc(var(--fw) * .0176);padding:3px 10px;border-radius:6px;color:rgba(238,244,238,.82);
+    border:1px solid rgba(238,244,238,.2);background:rgba(238,244,238,.05)}
+  .lede{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  #veilEnd{display:none}
+  #veil.end .veilStart{display:none}
+  #veil.end #veilEnd{display:flex}
+  #veilEnd .veiltitle{font-size:calc(var(--fw) * .0648)}
+  #veilEnd .credit{font-size:calc(var(--fw) * .0222)}
+
+  /* ---------- téléphone : le film garde son cadre, l'habillage passe aux dimensions du pouce ---------- */
+  /* ---------- la passe « allégée » : l'image d'abord, le texte se pose dessus ----------
+     Tout le texte était posé dans des boîtes opaques — pastilles, plaques, cartons
+     de sous-titres, bandeau de diffusion — et ces fonds pleins mangeaient le cadre.
+     Il n'y a plus un seul aplat : la typographie se lit par son ombre portée et par
+     un filet d'accent, et un voile en dégradé au bas du cadre suffit à détacher les
+     sous-titres de n'importe quelle image. Rien n'est supprimé : l'information est
+     la même, elle ne cache simplement plus le film. */
+  #vig{background:radial-gradient(118% 88% at 50% 45%,rgba(0,0,0,0) 46%,rgba(0,0,0,.44) 100%),
+    linear-gradient(to top,rgba(2,5,9,.6) 0%,rgba(2,5,9,.24) 11%,rgba(0,0,0,0) 24%)}
+  .kicker,.stat,.credit,.spec,.sub,.legal,.formation,.chan{text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.9)}
+  .head{font-weight:700;letter-spacing:.004em;text-shadow:0 .556cqw 2.407cqw rgba(0,0,0,.85),0 .185cqw .648cqw rgba(0,0,0,.65)}
+  /* on ne touche pas aux marges intérieures : la boîte garde sa place, seul le
+     fond disparaît — la géométrie du montage reste exactement la même */
+  .plate{background:none;border-radius:0;color:var(--ink);text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .card.chip{background:none;border-color:transparent;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .chip i{box-shadow:none}
+  .subline{max-width:92cqw;padding:0 2cqw;background:none;border:0;border-radius:0;
+    box-shadow:none;backdrop-filter:none;font-weight:700;line-height:1.3;
+    text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 1.296cqw 3.704cqw rgba(0,0,0,.7)}
+  .subline .w.on{color:var(--gold2);text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 0 1.481cqw var(--gold)}
+  .bug{background:rgba(5,10,18,.38);border:0;border-radius:.556cqw;box-shadow:none;
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .bug .live{opacity:.86}
+  .bug .form,.bug .clk{border-left:1px solid rgba(255,255,255,.12)}
+  .third{background:none;border:0;border-left:.37cqw solid var(--gold);border-radius:0;
+    padding:.278cqw 0 .278cqw 1.296cqw;box-shadow:none;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .third.on{box-shadow:none}
+  #bugNames span{background:none;border:0;border-radius:0;padding:.278cqw 0;
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  #bugNames span.on{opacity:.94}
+  #prog{opacity:.85}
+  .pseg{height:.26cqh;background:rgba(255,255,255,.14)}
+  .pseg i{box-shadow:none}
+  #hudScene,#hudTc{font-size:max(2.037cqw,12.5px);color:rgba(255,255,255,.5);
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  #mix{gap:2.2cqw}
+  .tog{font-size:max(1.759cqw,12.5px);background:none;border:0;border-radius:0;padding:1.019cqw 0;
+    color:rgba(255,255,255,.55);text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .tog.on{color:var(--gold2)}
+  .tog .dot{box-shadow:none}
+  .tog.on .dot{background:var(--gold);box-shadow:none}
+
+  @media (max-width:760px){
+    /* la petite typo du film redevient lisible sans sortir du cadre */
+    .card.opt{display:none}
+    .subline{font-size:max(17px,4.4vw);line-height:1.3;max-width:94vw;padding:10px 14px 11px;border-radius:14px}
+    .lede{gap:10px}
+    .lede .chip{font-size:14px;padding:13px 16px;gap:8px}
+    /* l'habillage du film aux dimensions du pouce : le bandeau LIVE reste, le
+       cartouche du commentateur et la liste des noms cèdent la place aux sous-titres */
+    .bug{left:10px;top:10px;border-radius:10px}
+    .bug>*{font-size:11px;padding:6px 8px;gap:6px}
+    .bug .live{font-size:10px;letter-spacing:.18em}
+    .bug .live i{width:6px;height:6px}
+    .chan{right:10px;top:12px;font-size:10px;letter-spacing:.2em}
+    /* le cartouche du commentateur reste, mais compact, remonté au-dessus des
+       sous-titres (eux-mêmes agrandis) ; la liste des noms cède la place */
+    .third{left:10px;bottom:22cqh;font-size:12px;padding:6px 10px;gap:7px;border-left-width:4px;border-radius:6px}
+    .third em{font-size:10px;letter-spacing:.14em}
+    .third .air{width:7px;height:7px}
+    #bugNames{display:none}
+    /* interface aux dimensions du doigt */
+    #hud{width:100vw;height:var(--vh)}
+    #prog{left:12px;right:12px;top:10px;gap:4px}
+    .pseg{height:4px;border-radius:2px}
+    #mix{right:12px;top:24px;gap:6px}
+    .tog{font-size:13px;padding:12px 15px;gap:8px;letter-spacing:.1em}
+    .tog .dot{width:8px;height:8px;box-shadow:none}
+    #hudScene,#hudTc{font-size:11.5px;letter-spacing:.16em;bottom:14px}
+    #hudScene{left:12px} #hudTc{right:12px}
+    /* accueil / fin */
+    .veilbox{gap:16px;max-width:92vw;padding:0 16px}
+    .veilbrand{font-size:11px;letter-spacing:.28em}
+    .veiltitle{font-size:46px;letter-spacing:.06em}
+    #veilEnd .veiltitle{font-size:34px}
+    .veilsub{font-size:16px}
+    #go{width:112px;height:112px;box-shadow:0 0 0 10px rgba(217,166,58,.07),0 18px 44px rgba(0,0,0,.6)}
+    .hint{font-size:12.5px;line-height:1.75}
+    kbd{font-size:11px}
+    #veilEnd .credit{font-size:11px}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- le film vit dans son cadre 9:16 ; l'interface est posée par-dessus -->
+  <div id="frame">
+    <canvas id="scene" width="1080" height="1920"></canvas>
+    <div id="vig"></div>
+    <div class="layer" id="cards"></div>
+    <div class="layer" id="bcast">
+      <div class="bug">
+        <span class="live"><i></i>LIVE</span>
+        <span class="tag">CS Axiom</span>
+        <span class="form">4·1·4·1</span>
+        <span class="clk" id="bugClock">00:00</span>
+      </div>
+      <div class="chan"><b>★</b>Istan Sport</div>
+      <div class="third" id="third"><i class="air"></i><b id="thirdName">Léonard Chose</b><em id="thirdRole">au micro</em></div>
+      <div id="bugNames"></div>
+    </div>
+    <div id="subs"></div>
+  </div>
+  <div id="hud">
+    <div id="prog"></div>
+    <div id="hudScene"></div>
+    <div id="hudTc"></div>
+    <div id="mix">
+      <button class="tog" id="togSound" type="button" aria-pressed="false"><span class="dot"></span>Son</button>
+      <button class="tog" id="togVoice" type="button" aria-pressed="false"><span class="dot"></span>Voix</button>
+    </div>
+  </div>
+
+  <div id="veil" class="show">
+    <div class="veilbox veilStart">
+      <div class="veilbrand">★ Istan Creator ★</div>
+      <div class="veiltitle">CS AXIUM</div>
+      <div class="veilsub">Motion design · <b>Composition</b><br />Formation 4-1-4-1 · onze titulaires et le banc<br />Commentaire : <b id="veilMic">Léonard Chose</b> · habillage <b>Istan Sport</b></div>
+      <button id="go" type="button" aria-label="Lancer le film"><svg viewBox="0 0 100 100"><path d="M32 22 82 50 32 78Z" /></svg></button>
+      <div class="hint">
+        Un seul clic : image, musique, voix et sous-titres &nbsp;·&nbsp; <b>46 s</b><br />
+        <kbd>Espace</kbd> lecture / pause &nbsp;·&nbsp; <kbd>S</kbd> coupe le son &nbsp;·&nbsp; <kbd>V</kbd> coupe la voix &nbsp;·&nbsp; <kbd>R</kbd> recommencer
+      </div>
+    </div>
+    <div class="veilbox" id="veilEnd">
+      <div class="veilbrand">★ Istan Creator ★</div>
+      <div class="veiltitle">CS AXIUM</div>
+      <div class="veilsub">Composition · 4-1-4-1<br />Onze titulaires, neuf remplaçants.<br />Au micro : <b id="veilMic2">Léonard Chose</b></div>
+      <div class="lede">
+        <button id="replay" class="chip" type="button"><i></i>Revoir le onze</button>
+        <button id="closeEnd" class="chip" type="button"><i></i>Voir l'affiche</button>
+      </div>
+      <div class="credit">Composition d'après l'app <b>Istan Creator</b> · effectif du CS AXIUM</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   CS AXIUM — COMPOSITION. Film vertical autonome.
+   La pelouse, les maillots, les drapeaux, les plaques de nom et le
+   blason sont dessinés par code (canvas 2D). Le son est synthétisé
+   (Web Audio), la voix passe par speechSynthesis, les sous-titres
+   défilent mot à mot. Aucune ressource externe, aucune requête réseau.
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const W = 1080, H = 1920, TAU = Math.PI * 2;
+  // Le montage est calé sur le débit réel de la parole : une réplique française
+  // au moteur vocal du navigateur tourne autour de 1,8 à 2 mots par seconde.
+  // C'est ce qui donne 43,4 s — et non 38 s, qui obligeait la voix à courir.
+  const TOTAL = 46200;
+
+  /* ------------------------------------------------ 1. l'effectif */
+  // Positions dans le cadre (x, y en fraction) : 4-1-4-1, but adverse en haut.
+  // L'effectif est celui de la composition CS AXIUM (capture de l'app Istan
+  // Creator) : numéro, note, drapeau et position, joueur par joueur.
+  const XI = [
+    { n: 1,  name: "K. HADDAD",      pos: "GB",  ovr: 78, flag: "MA", x: .50,  y: .845, row: 0, tone: "amber", cap: true },
+    { n: 19, name: "B. LOT ISTANOIS", pos: "DG",  ovr: 79, flag: "IS", x: .175, y: .700, row: 1 },
+    { n: 3,  name: "Y. BENALI",      pos: "DC",  ovr: 78, flag: "DZ", x: .385, y: .725, row: 1 },
+    { n: 87, name: "P. HERNANCIO",   pos: "DC",  ovr: 82, flag: "ES", x: .615, y: .725, row: 1 },
+    { n: 4,  name: "M. SANCHEZ",     pos: "DD",  ovr: 80, flag: "ES", x: .825, y: .700, row: 1 },
+    { n: 7,  name: "N. MANSOURI",    pos: "MDC", ovr: 80, flag: "MA", x: .50,  y: .545, row: 2 },
+    { n: 61, name: "A. LE BOUCHER",  pos: "AG",  ovr: 80, flag: "FR", x: .185, y: .375, row: 3 },
+    { n: 33, name: "A. GELARZA",     pos: "MC",  ovr: 79, flag: "MA", x: .375, y: .385, row: 3 },
+    { n: 8,  name: "A. VON ISTANOIX", pos: "MC", ovr: 81, flag: "IS", x: .625, y: .385, row: 3 },
+    { n: 11, name: "E. CARUSO",      pos: "AD",  ovr: 85, flag: "ES", x: .815, y: .375, row: 3 },
+    { n: 9,  name: "R. SAIDI",       pos: "BU",  ovr: 79, flag: "MA", x: .50,  y: .205, row: 4, tone: "amber" },
+  ];
+  const BENCH = [
+    { n: 12, name: "L. MOR…", ovr: 66 }, { n: 20, name: "S. BOU…", ovr: 73 },
+    { n: 58, name: "S. KHATIE", ovr: 72 }, { n: 32, name: "M. SILVA", ovr: 70 },
+    { n: 23, name: "N. DUB…", ovr: 73 }, { n: 15, name: "J. FERN…", ovr: 74 },
+    { n: 77, name: "J. BEN…", ovr: 74 }, { n: 10, name: "L. LE M…", ovr: 75 },
+    { n: 2,  name: "A. JAYZIR", ovr: 76 },
+  ];
+  // la composition en quatre lignes, avec l'effectif de chacune (1 + 4 + 1 + 4 + 1)
+  const FORM = "4-1-4-1";
+  const ROWS = ["Gardien", "Défense", "Sentinelle", "Milieu", "Avant-centre"];
+  const ROW_SPLIT = ["1", "4", "1", "4", "1"];
+  // Apparition de chaque ligne, puis écart entre deux joueurs d'une même ligne :
+  // les deux sont calés sur l'instant où la voix prononce le nom.
+  const ROW_T = [14800, 18200, 22000, 26000, 33100];
+  const ROW_STEP = [180, 900, 180, 950, 180];
+  const AVERAGE = (XI.reduce((s, p) => s + p.ovr, 0) / XI.length).toFixed(1).replace(".", ",");
+
+  const SCENES = [
+    { from: 0,     to: 6400,  name: "Coup d'envoi",   num: "01", draw: drawKickoff },
+    { from: 6400,  to: 12800, name: "La pelouse",     num: "02", draw: drawPitchScene },
+    { from: 12800, to: 35200, name: "La composition", num: "03", draw: drawEleven },
+    { from: 35200, to: 40800, name: "Le banc",        num: "04", draw: drawBench },
+    { from: 40800, to: TOTAL, name: "CS AXIUM",       num: "05", draw: drawOutro },
+  ];
+
+  // Chaque fenêtre laisse à la voix le temps de dire sa phrase (≈ 1,8 mot/s),
+  // plus une respiration avant la suivante. Le sous-titre et l'image suivent
+  // exactement ce découpage : personne ne court après personne.
+  // Le commentateur. Son nom vit ici : les cartouches de l'habillage, l'écran
+  // d'accueil et le carton de fin le reprennent. Les répliques, elles, sont
+  // écrites en clair (le vérificateur statique les relit hors contexte).
+  const MIC = { name: "Léonard Chose", role: "au micro" };
+  // Les fenêtres (`d`) sont celles de la voix **mesurée** : le studio prononce la
+  // réplique, la chronomètre, et écrit le plan dans `assets/voice/`. `bun run assets`
+  // remesure ; une fenêtre plus courte que la phrase prononcée ferait couper le sous-titre.
+  const LINES = [
+    { t: 600,   d: 3297, txt: "Bonsoir à tous, Léonard Chose au micro." },
+    { t: 6800,  d: 4379, txt: "CS Axiom dévoile sa composition, ce soir." },
+    { t: 13000, d: 2118, txt: "Et dans les buts, Haddad!" },
+    { t: 16400, d: 5079, txt: "La défense : Lot Istanois, Benali, Hernancio, Sanchez." },
+    { t: 22600, d: 3280, txt: "Mansouri en sentinelle, devant la défense." },
+    { t: 26000, d: 6680, txt: "Le Boucher, Gelarza, Von Istanoix, Caruso : ils alimentent l'attaque !" },
+    { t: 32800, d: 2112, txt: "Et Saidi, en pointe!" },
+    { t: 35600, d: 3256, txt: "Sur le banc, neuf remplaçants prêts à entrer." },
+    { t: 40800, d: 4182, txt: "CS Axiom, la composition : quatre un quatre un." },
+  ];
+
+  const CARDS = [
+    { t: [400, 5900],   cls: "tc kicker", html: "Saison en cours", ui: 2 },
+    { t: [900, 5900],   cls: "bc title",  html: "CS AXIUM", css: { bottom: "420px" } },
+    { t: [1600, 5900],  cls: "bc kicker", html: "Composition", css: { bottom: "360px" }, ui: 2, pcss: { bottom: "290px" } },
+
+    { t: [6800, 12600], cls: "tc kicker", html: "Formation", ui: 2 },
+    { t: [6900, 12600], cls: "cc formation", html: FORM, css: { top: "1320px", fontSize: "130px" } },
+    { t: [11300, 12600],cls: "bc chip", html: "<i></i>Onze titulaires", css: { bottom: "380px" }, ui: 2 },
+
+    { t: [13000, 34500], cls: "bl kicker", id: "rowlabel", html: "Gardien", css: { bottom: "700px" }, ui: 2 },
+    { t: [34700, 35100], cls: "bc stat", html: "Moyenne du onze &nbsp;<b>" + AVERAGE + "</b>", css: { bottom: "380px" }, ui: 1.7 },
+
+    { t: [35500, 40600], cls: "tc kicker", html: "Remplaçants", ui: 2 },
+    { t: [39000, 40600], cls: "tc chip", html: "<i></i>9 joueurs sur le banc", css: { top: "230px" }, ui: 2 },
+
+    { t: [41100, 45900], cls: "tc kicker", html: "CS Axiom", ui: 2 },
+    { t: [41600, 45900], cls: "cc title", html: "Composition", css: { top: "640px", fontSize: "86px" } },
+    { t: [42500, 45900], cls: "cc stat",   html: "Formation <b>" + FORM + "</b> &nbsp;·&nbsp; moyenne <b>" + AVERAGE + "</b>", css: { top: "1040px" }, ui: 1.7 },
+    { t: [43400, 45900], cls: "cc credit", html: "★ &nbsp;Istan Creator&nbsp; ★", css: { top: "1590px" }, opt: true },
+    { t: [44100, 45900], cls: "cc credit", html: "Commentaire : <b>" + MIC.name + "</b> · ISTAN SPORT", css: { top: "1650px" }, opt: true },
+    { t: [44800, 45900], cls: "cc credit", html: "Effectif complet dans l'application", css: { top: "1710px", fontSize: "20px" }, opt: true },
+  ];
+
+  /* ------------------------------------------------ 2. outils de dessin */
+  const clamp = (v, a = 0, b = 1) => (v < a ? a : v > b ? b : v);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = (t) => { t = clamp(t); return t * t * (3 - 2 * t); };
+  const eio = (t) => { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  const easeOut = (t) => 1 - Math.pow(1 - clamp(t), 3);
+  const rnd = (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+  const fmt = new Intl.NumberFormat("fr-FR");
+
+  const cv = document.getElementById("scene");
+  const g = cv.getContext("2d");
+  const off = (w = W, h = H) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
+
+  function roundRect(gc, x, y, w, h, r) {
+    gc.beginPath();
+    gc.moveTo(x + r, y);
+    gc.lineTo(x + w - r, y); gc.quadraticCurveTo(x + w, y, x + w, y + r);
+    gc.lineTo(x + w, y + h - r); gc.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    gc.lineTo(x + r, y + h); gc.quadraticCurveTo(x, y + h, x, y + h - r);
+    gc.lineTo(x, y + r); gc.quadraticCurveTo(x, y, x + r, y);
+    gc.closePath();
+  }
+
+  function star(gc, x, y, r, points = 5, inner = .44) {
+    gc.beginPath();
+    for (let i = 0; i < points * 2; i++) {
+      const a = -Math.PI / 2 + (i * Math.PI) / points;
+      const rr = i % 2 ? r * inner : r;
+      const px = x + Math.cos(a) * rr, py = y + Math.sin(a) * rr;
+      i ? gc.lineTo(px, py) : gc.moveTo(px, py);
+    }
+    gc.closePath();
+  }
+
+  /* ------------------------------------------------ 3. drapeaux */
+  // Les drapeaux ne sont plus dessinés : ce sont les vrais, récupérés au CDN par
+  // le studio (`python3 tools/assets/generate.py fetch` — des PNG de domaine
+  // public) et rangés dans `assets/img/flag-<CODE>.png`. Istan, nation fictive,
+  // est dessiné par le studio à la même taille : les films n'ont qu'un seul
+  // chemin de code, et ne savent pas d'où vient le fichier. Rien n'est demandé
+  // au réseau — ce sont les images du dépôt, chargées avec le reste de l'habillage.
+  const FLAG_SRC = "assets/img/flag-";
+  const FLAG_PIX = {};                        // code → image, prête avant le 1er carton
+  const FLAG_CODES = [...new Set(XI.map((p) => p.flag))];
+
+  /** Charge les drapeaux du film ; une image absente ne bloque pas le montage. */
+  function loadFlags() {
+    return Promise.all(FLAG_CODES.map((code) => new Promise((done) => {
+      const im = new Image();
+      im.onload = im.onerror = () => done();
+      im.src = FLAG_SRC + code + ".png";
+      FLAG_PIX[code] = im;
+    })));
+  }
+
+  /** Le drapeau dans un cercle de rayon r : l'image réelle, recadrée — jamais écrasée. */
+  function flag(gc, x, y, r, code, a) {
+    const im = FLAG_PIX[code];
+    gc.save();
+    gc.globalAlpha = a;
+    gc.beginPath(); gc.arc(x, y, r, 0, TAU); gc.clip();
+    if (im && im.complete && im.naturalWidth) {
+      const k = Math.max((r * 2) / im.naturalWidth, (r * 2) / im.naturalHeight);
+      const w = im.naturalWidth * k, h = im.naturalHeight * k;
+      gc.drawImage(im, x - w / 2, y - h / 2, w, h);
+    } else {                                  // fichier absent : une pastille, pas un trou
+      gc.fillStyle = "rgba(10,16,14,.92)"; gc.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+    gc.restore();
+    gc.save();
+    gc.globalAlpha = a * .9;
+    gc.lineWidth = 2; gc.strokeStyle = "rgba(6,12,10,.75)";
+    gc.beginPath(); gc.arc(x, y, r, 0, TAU); gc.stroke();
+    gc.beginPath(); gc.arc(x, y, r - 1.6, 0, TAU); gc.strokeStyle = "rgba(238,244,238,.28)"; gc.lineWidth = 1.4; gc.stroke();
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 4. maillot, note, plaque */
+  function shirtPath(gc, s) {
+    const w = 62 * s, h = 58 * s;
+    gc.beginPath();
+    gc.moveTo(-w + 6 * s, -h + 16 * s);
+    gc.quadraticCurveTo(-w + 4 * s, -h - 2 * s, -w + 22 * s, -h + 2 * s);
+    gc.lineTo(-13 * s, -h + 1 * s);
+    gc.quadraticCurveTo(0, -h + 20 * s, 13 * s, -h + 1 * s);
+    gc.lineTo(w - 22 * s, -h + 2 * s);
+    gc.quadraticCurveTo(w - 4 * s, -h - 2 * s, w - 6 * s, -h + 16 * s);
+    gc.lineTo(w + 22 * s, -h + 42 * s);
+    gc.lineTo(w - 2 * s, -h + 50 * s);
+    gc.lineTo(w - 6 * s, h);
+    gc.lineTo(-w + 6 * s, h);
+    gc.lineTo(-w + 2 * s, -h + 50 * s);
+    gc.lineTo(-w - 22 * s, -h + 42 * s);
+    gc.closePath();
+  }
+
+  function shirt(gc, x, y, s, num, toneCol) {
+    gc.save();
+    gc.translate(x, y);
+    // ombre portée
+    gc.save();
+    gc.globalAlpha = .35; gc.filter = "blur(0px)";
+    gc.fillStyle = "rgba(0,0,0,.55)";
+    shirtPath(gc, s * .98); gc.translate(0, 6 * s); gc.fill();
+    gc.restore();
+
+    shirtPath(gc, s);
+    // le maillot de CS AXIUM : bleu profond qui vire au violet, col et empiècement or
+    const body = gc.createLinearGradient(0, -60 * s, 0, 60 * s);
+    body.addColorStop(0, "#6d5cf5"); body.addColorStop(.42, "#4331d6"); body.addColorStop(1, "#241a8e");
+    gc.fillStyle = body; gc.fill();
+
+    gc.save();
+    shirtPath(gc, s); gc.clip();
+    // empiècement or sur les épaules
+    const yoke = gc.createLinearGradient(0, -60 * s, 0, -6 * s);
+    yoke.addColorStop(0, "#e7bb5b"); yoke.addColorStop(1, "#c8932c");
+    gc.fillStyle = yoke;
+    gc.beginPath();
+    gc.moveTo(-90 * s, -h0(s)); gc.lineTo(90 * s, -h0(s));
+    gc.lineTo(90 * s, -h0(s) + 34 * s);
+    gc.quadraticCurveTo(0, -h0(s) + 52 * s, -90 * s, -h0(s) + 34 * s);
+    gc.closePath(); gc.fill();
+    // liseré et ombrage doux
+    gc.strokeStyle = "rgba(255,255,255,.18)"; gc.lineWidth = 2 * s;
+    gc.beginPath(); gc.moveTo(-90 * s, -h0(s) + 34 * s); gc.quadraticCurveTo(0, -h0(s) + 52 * s, 90 * s, -h0(s) + 34 * s); gc.stroke();
+    const shade = gc.createLinearGradient(-60 * s, 0, 60 * s, 0);
+    shade.addColorStop(0, "rgba(0,0,0,.16)"); shade.addColorStop(.45, "rgba(255,255,255,.06)"); shade.addColorStop(1, "rgba(0,0,0,.2)");
+    gc.fillStyle = shade; gc.fillRect(-90 * s, -70 * s, 180 * s, 160 * s);
+    gc.restore();
+
+    gc.save();
+    shirtPath(gc, s);
+    gc.lineWidth = 3 * s; gc.strokeStyle = "rgba(8,16,28,.5)"; gc.stroke();
+    gc.restore();
+
+    // numéro
+    gc.save();
+    gc.font = "800 " + Math.round(46 * s) + "px ui-monospace, monospace";
+    gc.textAlign = "center"; gc.textBaseline = "middle";
+    gc.fillStyle = "rgba(6,12,22,.45)";
+    gc.fillText(String(num), 0, 4 * s);
+    gc.fillStyle = "#f6f9ff";
+    gc.fillText(String(num), 0, 2 * s);
+    gc.restore();
+    gc.restore();
+  }
+  const h0 = (s) => 62 * s;
+
+  const TONE = { green: "#2fae62", amber: "#e8a33d" };
+
+  function rating(gc, x, y, r, value, tone, a) {
+    gc.save();
+    gc.globalAlpha = a;
+    const col = TONE[tone] || TONE.green;
+    gc.shadowColor = col; gc.shadowBlur = 18;
+    gc.beginPath(); gc.arc(x, y, r, 0, TAU);
+    const rg = gc.createLinearGradient(x - r, y - r, x + r, y + r);
+    rg.addColorStop(0, "rgba(255,255,255,.9)"); rg.addColorStop(.25, col); rg.addColorStop(1, col);
+    gc.fillStyle = rg; gc.fill();
+    gc.shadowBlur = 0;
+    gc.lineWidth = 3; gc.strokeStyle = "rgba(6,14,22,.55)";
+    gc.beginPath(); gc.arc(x, y, r, 0, TAU); gc.stroke();
+    gc.font = "800 " + Math.round(r * 1.05) + "px ui-monospace, monospace";
+    gc.textAlign = "center"; gc.textBaseline = "middle";
+    gc.fillStyle = "#06121c";
+    gc.fillText(String(value), x, y + 1);
+    gc.fillStyle = "#ffffff";
+    gc.fillText(String(value), x, y - 1);
+    gc.restore();
+  }
+
+  function namePlate(gc, x, y, w, h, label, tone, a, wipe) {
+    gc.save();
+    gc.globalAlpha = a;
+    gc.save();
+    gc.beginPath(); gc.rect(x - w / 2, y - h / 2, w * clamp(wipe), h); gc.clip();
+    roundRect(gc, x - w / 2, y - h / 2, w, h, 7);
+    gc.fillStyle = "rgba(12,20,36,.94)"; gc.fill();
+    gc.fillStyle = TONE[tone] || "#2f6bd8";
+    gc.fillRect(x - w / 2, y - h / 2, 6, h);
+    gc.font = "600 " + Math.round(h * .52) + "px ui-monospace, monospace";
+    gc.textAlign = "center"; gc.textBaseline = "middle";
+    gc.fillStyle = "rgba(215,229,255,.96)";
+    gc.fillText(label, x + 3, y + 1);
+    gc.restore();
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 5. la pelouse */
+  const PITCH = { x: 70, y: 120, w: 940, h: 1680 };
+
+  function reveal(gc, p, len, drawPath) {
+    gc.save();
+    gc.setLineDash([len, len]);
+    gc.lineDashOffset = len * (1 - clamp(p));
+    gc.beginPath(); drawPath(); gc.stroke();
+    gc.restore();
+  }
+
+  function pitch(gc, p, t) {
+    const bg = gc.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, "#0a1f14"); bg.addColorStop(.45, "#0e2c1c"); bg.addColorStop(1, "#081810");
+    gc.fillStyle = bg; gc.fillRect(0, 0, W, H);
+    // bandes de tonte
+    for (let i = 0; i < 9; i++) {
+      const x = PITCH.x + i * (PITCH.w / 9);
+      gc.fillStyle = i % 2 ? "rgba(255,255,255,.024)" : "rgba(0,0,0,.055)";
+      gc.fillRect(x, PITCH.y, PITCH.w / 9 + 1, PITCH.h);
+    }
+    // halo des projecteurs
+    gc.save();
+    const light = gc.createRadialGradient(W / 2, 420, 60, W / 2, 420, 1200);
+    light.addColorStop(0, "rgba(214,240,255,.1)"); light.addColorStop(1, "rgba(214,240,255,0)");
+    gc.fillStyle = light; gc.fillRect(0, 0, W, H);
+    gc.restore();
+
+    if (p <= 0) return;
+    gc.strokeStyle = "rgba(228,244,232,.36)";
+    gc.lineWidth = 4;
+    const cx = PITCH.x + PITCH.w / 2, cy = PITCH.y + PITCH.h / 2;
+
+    reveal(gc, p, PITCH.h, () => gc.rect(PITCH.x, PITCH.y, PITCH.w, PITCH.h));            // limites
+    reveal(gc, clamp(p * 1.3), PITCH.w, () => { gc.moveTo(PITCH.x, cy); gc.lineTo(PITCH.x + PITCH.w, cy); });  // médiane
+    reveal(gc, clamp((p - .2) / .5), 2 * Math.PI * 300, () => gc.arc(cx, cy, 300, 0, TAU));                    // rond central
+    // surfaces
+    const boxW = 580, boxH = 360;
+    reveal(gc, clamp((p - .35) / .5), boxH, () => gc.rect(cx - boxW / 2, PITCH.y, boxW, boxH));
+    reveal(gc, clamp((p - .45) / .5), boxH, () => gc.rect(cx - boxW / 2, PITCH.y + PITCH.h - boxH, boxW, boxH));
+    const sixW = 300, sixH = 150;
+    reveal(gc, clamp((p - .6) / .4), sixH, () => gc.rect(cx - sixW / 2, PITCH.y, sixW, sixH));
+    reveal(gc, clamp((p - .65) / .35), sixH, () => gc.rect(cx - sixW / 2, PITCH.y + PITCH.h - sixH, sixW, sixH));
+
+    // points de penalty, buts, coins
+    gc.save();
+    gc.globalAlpha = clamp((p - .55) / .3);
+    gc.fillStyle = "rgba(228,244,232,.4)";
+    gc.beginPath(); gc.arc(cx, cy, 9, 0, TAU); gc.fill();
+    gc.beginPath(); gc.arc(cx, PITCH.y + 250, 8, 0, TAU); gc.fill();
+    gc.beginPath(); gc.arc(cx, PITCH.y + PITCH.h - 250, 8, 0, TAU); gc.fill();
+    gc.strokeStyle = "rgba(228,244,232,.4)"; gc.lineWidth = 6;
+    gc.beginPath(); gc.moveTo(cx - 110, PITCH.y); gc.lineTo(cx - 110, PITCH.y - 26); gc.lineTo(cx + 110, PITCH.y - 26); gc.lineTo(cx + 110, PITCH.y); gc.stroke();
+    gc.beginPath(); gc.moveTo(cx - 110, PITCH.y + PITCH.h); gc.lineTo(cx - 110, PITCH.y + PITCH.h + 26); gc.lineTo(cx + 110, PITCH.y + PITCH.h + 26); gc.lineTo(cx + 110, PITCH.y + PITCH.h); gc.stroke();
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 6. cartes joueurs */
+  const MT = {
+    shirt: 1, badgeDX: -46, badgeDY: 30, badgeR: 25, flagDX: 48, flagDY: 30, flagR: 23,
+    plateW: 210, plateH: 44, plateY: 82,
+  };
+
+  function playerCard(gc, p, prog, ox = 0, oy = 0, scale = 1) {
+    const s = (p.tone === "amber" ? 1.04 : 1) * scale;
+    const x = p.x * W + ox, y = p.y * H + oy;
+    const t0 = p.t0;
+    const drop = clamp((prog - t0) / 620);
+    const land = clamp((prog - t0 - 620) / 420);
+    if (drop <= 0) return;
+    const dy = -560 * (1 - easeOut(drop));
+    const spring = land < 1 ? Math.sin(land * Math.PI) * .07 : 0;
+    const alpha = clamp(drop * 2);
+
+    if (dy > -4) {
+      // anneau d'atterrissage
+      const ring = clamp((prog - t0 - 560) / 700);
+      if (ring < 1) {
+        gc.save();
+        gc.globalAlpha = (1 - ring) * .5;
+        gc.strokeStyle = p.tone === "amber" ? "rgba(232,163,61,.8)" : "rgba(110,166,255,.7)";
+        gc.lineWidth = 4;
+        gc.beginPath(); gc.ellipse(x, y + 104 * s, lerp(30, 150, easeOut(ring)), lerp(10, 42, easeOut(ring)), 0, 0, TAU); gc.stroke();
+        gc.restore();
+      }
+    }
+
+    gc.save();
+    gc.globalAlpha = alpha;
+    gc.translate(x, y + dy);
+    gc.scale(1 + spring, 1 - spring);
+
+    shirt(gc, 0, 0, s, p.n, p.tone);
+
+    const rateProg = easeOut(clamp((prog - t0 - 700) / 520));
+    if (rateProg > 0) rating(gc, MT.badgeDX * s, MT.badgeDY * s, MT.badgeR * s, Math.round(p.ovr * rateProg), p.tone, 1);
+
+    const flagProg = clamp((prog - t0 - 780) / 420);
+    if (flagProg > 0) {
+      gc.save();
+      gc.translate(MT.flagDX * s, MT.flagDY * s);
+      const pop = 1 + Math.sin(flagProg * Math.PI) * .22;
+      gc.scale(pop, pop);
+      flag(gc, 0, 0, MT.flagR * s, p.flag, easeOut(flagProg));
+      gc.restore();
+    }
+
+    const plateProg = clamp((prog - t0 - 900) / 420);
+    if (plateProg > 0) {
+      namePlate(gc, 0, MT.plateY * s, MT.plateW * s, MT.plateH * s, p.name, p.tone, easeOut(plateProg), easeOut(plateProg));
+    }
+
+    // le poste, sous la plaque : on lit une composition, pas seulement des noms
+    const posProg = clamp((prog - t0 - 1060) / 420);
+    if (posProg > 0) {
+      gc.save();
+      gc.globalAlpha = easeOut(posProg) * .95;
+      gc.font = "700 " + Math.round(19 * s) + "px ui-monospace, monospace";
+      gc.textAlign = "center"; gc.textBaseline = "middle";
+      gc.fillStyle = "rgba(232,163,61,.9)";
+      gc.fillText(p.pos, 0, (MT.plateY + 36) * s);
+      gc.restore();
+    }
+
+    // le brassard : la pastille d'or du capitaine, comme sur la composition
+    const capProg = clamp((prog - t0 - 1180) / 420);
+    if (p.cap && capProg > 0) {
+      gc.save();
+      gc.globalAlpha = easeOut(capProg);
+      gc.translate(MT.badgeDX * s, (MT.badgeDY - 58) * s);
+      const pop = 1 + Math.sin(capProg * Math.PI) * .22;
+      gc.scale(pop, pop);
+      const cg = gc.createLinearGradient(-20 * s, -20 * s, 20 * s, 20 * s);
+      cg.addColorStop(0, "#ffe9a8"); cg.addColorStop(1, "#d9a63a");
+      gc.fillStyle = cg;
+      gc.beginPath(); gc.arc(0, 0, 20 * s, 0, TAU); gc.fill();
+      gc.lineWidth = 2.5 * s; gc.strokeStyle = "rgba(6,14,22,.5)";
+      gc.beginPath(); gc.arc(0, 0, 20 * s, 0, TAU); gc.stroke();
+      gc.font = "800 " + Math.round(25 * s) + "px ui-monospace, monospace";
+      gc.textAlign = "center"; gc.textBaseline = "middle";
+      gc.fillStyle = "#3a2606";
+      gc.fillText("C", 0, 1.5 * s);
+      gc.restore();
+    }
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 7. blason et mini-terrain */
+  function crest(gc, x, y, r, p, t) {
+    gc.save();
+    gc.translate(x, y);
+    const draw = easeOut(clamp(p));
+    gc.globalAlpha = clamp(p * 1.4);
+
+    // rayons
+    gc.save();
+    gc.globalAlpha = .5 * clamp(p);
+    for (let i = 0; i < 16; i++) {
+      const a = (i / 16) * TAU + t * .1;
+      gc.save(); gc.rotate(a);
+      const rg = gc.createLinearGradient(0, 0, 0, -r * 4);
+      rg.addColorStop(0, "rgba(240,214,138,.18)"); rg.addColorStop(1, "rgba(240,214,138,0)");
+      gc.fillStyle = rg;
+      gc.beginPath(); gc.moveTo(-r * .06, 0); gc.lineTo(r * .06, 0); gc.lineTo(r * .5, -r * 4); gc.lineTo(-r * .5, -r * 4); gc.closePath(); gc.fill();
+      gc.restore();
+    }
+    gc.restore();
+
+    // anneau
+    gc.save();
+    gc.lineWidth = r * .1;
+    gc.strokeStyle = "#d9a63a";
+    gc.beginPath(); gc.arc(0, 0, r * draw, 0, TAU); gc.stroke();
+    gc.restore();
+
+    gc.save();
+    gc.globalAlpha = clamp((p - .25) / .45);
+    gc.beginPath(); gc.arc(0, 0, r * .95, 0, TAU);
+    const bg = gc.createRadialGradient(0, -r * .3, r * .1, 0, 0, r);
+    bg.addColorStop(0, "#14432b"); bg.addColorStop(1, "#081b12");
+    gc.fillStyle = bg; gc.fill();
+
+    // ballon
+    gc.save();
+    gc.fillStyle = "#f2f6f2";
+    gc.beginPath(); gc.arc(0, r * .06, r * .42, 0, TAU); gc.fill();
+    gc.fillStyle = "#12222c";
+    star(gc, 0, r * .06, r * .19, 5, .48); gc.fill();
+    for (let i = 0; i < 5; i++) {
+      const a = -Math.PI / 2 + (i / 5) * TAU;
+      gc.save(); gc.translate(Math.cos(a) * r * .28, r * .06 + Math.sin(a) * r * .28); gc.rotate(a);
+      gc.beginPath(); gc.moveTo(-r * .1, -r * .04); gc.lineTo(r * .1, -r * .04); gc.lineTo(r * .06, r * .12); gc.lineTo(-r * .06, r * .12); gc.closePath(); gc.fill();
+      gc.restore();
+    }
+    gc.restore();
+
+    // étoile
+    gc.save();
+    const sp = clamp((p - .5) / .5);
+    gc.globalAlpha = easeOut(sp);
+    gc.translate(0, -r * .62);
+    gc.scale(1 + Math.sin(sp * Math.PI) * .3, 1 + Math.sin(sp * Math.PI) * .3);
+    gc.fillStyle = "#f4d68a";
+    gc.shadowColor = "rgba(244,214,138,.9)"; gc.shadowBlur = 22;
+    star(gc, 0, 0, r * .2); gc.fill();
+    gc.restore();
+    gc.restore();
+    gc.restore();
+  }
+
+  function miniMap(gc, p, x, y, w, h) {
+    gc.save();
+    gc.globalAlpha = clamp(p);
+    roundRect(gc, x, y, w, h, 14);
+    gc.fillStyle = "rgba(8,26,17,.9)"; gc.fill();
+    gc.strokeStyle = "rgba(228,244,232,.25)"; gc.lineWidth = 2; gc.stroke();
+    const cy = y + h / 2;
+    gc.strokeStyle = "rgba(228,244,232,.18)";
+    gc.beginPath(); gc.moveTo(x, cy); gc.lineTo(x + w, cy); gc.stroke();
+    gc.beginPath(); gc.arc(x + w / 2, cy, h * .16, 0, TAU); gc.stroke();
+    for (const pl of XI) {
+      const px = x + pl.x * w, py = y + (pl.y - .12) * h * 1.02;
+      gc.save();
+      gc.globalAlpha = clamp(p * 1.2) * (pl.tone === "amber" ? 1 : .9);
+      gc.fillStyle = pl.tone === "amber" ? "#e8a33d" : "#6ea6ff";
+      gc.shadowColor = gc.fillStyle; gc.shadowBlur = 12;
+      gc.beginPath(); gc.arc(px, py, 7, 0, TAU); gc.fill();
+      gc.restore();
+    }
+    gc.restore();
+  }
+
+  /* ------------------------------------------------ 8. scènes */
+  function crowdFlashes(gc, t, density, alpha) {
+    for (let i = 0; i < density; i++) {
+      const seed = i * 3.7;
+      const on = Math.sin(t * (2 + rnd(seed) * 6) + seed * 9) > .93;
+      if (!on) continue;
+      const x = rnd(seed) * W, y = 1180 + rnd(seed + 1.3) * 420;
+      gc.save();
+      gc.globalAlpha = alpha * (.4 + rnd(seed + 2.1) * .6);
+      gc.fillStyle = "#eaf2ff";
+      gc.shadowColor = "#cfe2ff"; gc.shadowBlur = 14;
+      gc.beginPath(); gc.arc(x, y, 2.6, 0, TAU); gc.fill();
+      gc.restore();
+    }
+  }
+
+  function drawKickoff(t, p) {
+    g.fillStyle = "#05100a"; g.fillRect(0, 0, W, H);
+    // herbe qui apparaît par le bas
+    const rise = smooth(clamp((p - .15) / .6));
+    const grd = g.createLinearGradient(0, 1500, 0, H);
+    grd.addColorStop(0, "rgba(11,35,23,0)"); grd.addColorStop(1, "rgba(15,52,33," + (.85 * rise) + ")");
+    g.fillStyle = grd; g.fillRect(0, 1200, W, 720);
+
+    // projecteurs
+    g.save();
+    for (const side of [-1, 1]) {
+      const bx = W / 2 + side * 430;
+      g.fillStyle = "rgba(4,12,8,.9)";
+      g.fillRect(bx - 16, 60, 32, 400);
+      g.fillRect(bx - 90, 40, 180, 46);
+      for (let i = 0; i < 5; i++) {
+        g.fillStyle = "rgba(240,250,255,.9)";
+        g.fillRect(bx - 78 + i * 32, 48, 22, 30);
+      }
+      const cone = g.createLinearGradient(bx, 90, bx, 1500);
+      cone.addColorStop(0, "rgba(226,240,255,.16)");
+      cone.addColorStop(.6, "rgba(226,240,255,.05)");
+      cone.addColorStop(1, "rgba(226,240,255,0)");
+      g.fillStyle = cone;
+      g.beginPath();
+      g.moveTo(bx - 80, 90); g.lineTo(bx + 80, 90);
+      g.lineTo(bx + side * 260, 1500); g.lineTo(bx - side * 40, 1500);
+      g.closePath(); g.fill();
+    }
+    g.restore();
+
+    crowdFlashes(g, t, 220, clamp((p - .05) / .3));
+
+    // poussière
+    g.save();
+    for (let i = 0; i < 24; i++) {
+      const seed = 400 + i;
+      const y = (rnd(seed) * H - t * (10 + rnd(seed) * 24)) % H;
+      g.globalAlpha = .3;
+      g.fillStyle = "rgba(226,240,255,.8)";
+      g.beginPath(); g.arc(rnd(seed + 1) * W, y < 0 ? y + H : y, 1.6 + rnd(seed + 2) * 2, 0, TAU); g.fill();
+    }
+    g.restore(); g.globalAlpha = 1;
+
+    crest(g, W / 2, 780, 190, clamp((t - .35) / 2.2), t);
+    // socle lumineux
+    g.save();
+    g.globalAlpha = clamp((t - 1.4) / 1.2) * .5;
+    const pulse = 1 + Math.sin(t * 2.2) * .05;
+    const base = g.createRadialGradient(W / 2, 1000, 20, W / 2, 1000, 420 * pulse);
+    base.addColorStop(0, "rgba(217,166,58,.35)"); base.addColorStop(1, "rgba(217,166,58,0)");
+    g.fillStyle = base; g.beginPath(); g.ellipse(W / 2, 1010, 420 * pulse, 90 * pulse, 0, 0, TAU); g.fill();
+    g.restore(); g.globalAlpha = 1;
+  }
+
+  function drawPitchScene(t, p) {
+    pitch(g, clamp((p - .05) / .75), t);
+    // sas de lumière qui balaie le terrain
+    g.save();
+    const sweep = lerp(-400, H + 400, eio(p));
+    const sg = g.createLinearGradient(0, sweep - 260, 0, sweep + 260);
+    sg.addColorStop(0, "rgba(255,255,255,0)"); sg.addColorStop(.5, "rgba(236,246,255,.07)"); sg.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = sg; g.fillRect(0, sweep - 280, W, 560);
+    g.restore();
+    crowdFlashes(g, t, 90, clamp((p - .2) / .5) * .6);
+  }
+
+  function connectors(gc, t, prog) {
+    gc.save();
+    gc.strokeStyle = "rgba(220,236,255,.22)";
+    gc.lineWidth = 2.4;
+    gc.setLineDash([9, 15]);
+    gc.lineDashOffset = -t * 26;
+    const cols = [
+      [.5, .845, .5, .205],        // l'axe, du gardien à l'avant-centre
+      [.385, .725, .615, .725],    // la charnière centrale
+      [.375, .385, .625, .385],    // la paire de milieux
+    ];
+    for (const [x0, y0, x1, y1] of cols) {
+      const a = clamp((prog - ROW_T[1]) / 1200);
+      if (a <= 0) continue;
+      gc.globalAlpha = a * .8;
+      gc.beginPath();
+      gc.moveTo(x0 * W, y0 * H);
+      gc.lineTo(x1 * W, y1 * H);
+      gc.stroke();
+    }
+    gc.restore(); gc.globalAlpha = 1;
+  }
+
+  function drawEleven(t, p) {
+    pitch(g, 1, t);
+    connectors(g, t, t * 1000);
+
+    // lignes de rappel, à gauche, quand chaque ligne arrive
+    for (let r = 0; r < ROW_T.length; r++) {
+      const a = clamp((t * 1000 - ROW_T[r] + 400) / 500) * clamp((ROW_T[r + 1] ? (ROW_T[r + 1] - t * 1000) / 900 : 1));
+      if (a <= .02) continue;
+      const y = ROWS_Y(r);
+      g.save();
+      g.globalAlpha = a * .55;
+      g.strokeStyle = "rgba(232,163,61,.7)"; g.lineWidth = 2;
+      g.setLineDash([6, 10]);
+      g.beginPath(); g.moveTo(60, y); g.lineTo(150, y); g.stroke();
+      g.restore();
+    }
+
+    // La caméra de tribune respire : un très léger recadrage pendant que le onze
+    // se révèle. Assez pour que l'image ne soit jamais figée, trop peu pour que
+    // les cartons sortent du terrain.
+    const cam = 1 + .02 * Math.sin(clamp((t * 1000 - 12800) / 22400) * Math.PI);
+    g.save();
+    g.translate(W / 2, H * .52); g.scale(cam, cam); g.translate(-W / 2, -H * .52);
+    for (const pl of XI) playerCard(g, pl, t * 1000);
+    g.restore();
+
+    // vague de lumière derrière l'attaque
+    const sw = clamp((t * 1000 - 25800) / 2200);
+    if (sw > 0 && sw < 1) {
+      g.save();
+      g.globalAlpha = Math.sin(sw * Math.PI) * .16;
+      const rg = g.createRadialGradient(W / 2, 700, 40, W / 2, 700, 620);
+      rg.addColorStop(0, "rgba(244,214,138,.9)"); rg.addColorStop(1, "rgba(244,214,138,0)");
+      g.fillStyle = rg; g.fillRect(0, 80, W, 1240);
+      g.restore();
+    }
+  }
+  const ROWS_Y = (r) => [.845, .712, .545, .382, .205][r] * H;
+
+  function drawBench(t, p) {
+    // caméra qui remonte pour faire de la place au banc
+    const cam = eio(clamp((t - 34.75) / 1.2));
+    g.save();
+    g.translate(0, -cam * 300);
+    g.scale(1 - cam * .06, 1 - cam * .06);
+    g.translate(W * cam * .03, 0);
+    pitch(g, 1, t);
+    connectors(g, t, t * 1000);
+    for (const pl of XI) playerCard(g, pl, 1e9, 0, 0, 1 - cam * .06);
+    g.restore();
+
+    // bandeau du banc
+    const slide = easeOut(clamp((t - 34.85) / .9));
+    g.save();
+    g.translate(0, (1 - slide) * 420);
+    const bg = g.createLinearGradient(0, 1440, 0, H);
+    bg.addColorStop(0, "rgba(5,14,10,0)"); bg.addColorStop(.18, "rgba(5,14,10,.92)"); bg.addColorStop(1, "rgba(3,9,6,.98)");
+    g.fillStyle = bg; g.fillRect(0, 1400, W, 520);
+    g.strokeStyle = "rgba(217,166,58,.35)"; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(70, 1500); g.lineTo(W - 70, 1500); g.stroke();
+    g.restore();
+    g.globalAlpha = 1;
+
+    for (const [i, b] of BENCH.entries()) {
+      const col = i % 5, row = Math.floor(i / 5);
+      const bx = 118 + col * 212, by = 1610 + row * 168;
+      const t0 = 36700 + i * 430;   // un joueur toutes les 430 ms, sur la réplique du banc
+      const a = clamp((t * 1000 - t0) / 380);
+      if (a <= 0) continue;
+      const pop = 1 + Math.sin(a * Math.PI) * .12;
+      g.save();
+      g.globalAlpha = easeOut(a);
+      g.translate(bx, by);
+      g.scale(pop, pop);
+      shirt(g, 0, 0, .62, b.n);
+      rating(g, -32, 22, 17, Math.round(b.ovr * easeOut(a)), "green", 1);
+      roundRect(g, -74, 40, 148, 30, 6);
+      g.fillStyle = "rgba(12,20,36,.94)"; g.fill();
+      g.fillStyle = "#2f6bd8"; g.fillRect(-74, 40, 5, 30);
+      g.font = "600 17px ui-monospace, monospace";
+      g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = "rgba(215,229,255,.95)";
+      g.fillText(b.name, 2, 56);
+      g.restore();
+    }
+  }
+
+  function drawOutro(t, p) {
+    pitch(g, 1, t);
+    g.save();
+    g.globalAlpha = .35;
+    for (const pl of XI) playerCard(g, pl, 1e9, 0, 0, .92);
+    g.restore();
+    g.globalAlpha = 1;
+    // voile sombre pour laisser respirer le carton
+    const veil = g.createLinearGradient(0, 0, 0, H);
+    veil.addColorStop(0, "rgba(3,9,6,.72)"); veil.addColorStop(.42, "rgba(3,9,6,.35)");
+    veil.addColorStop(.62, "rgba(3,9,6,.85)"); veil.addColorStop(1, "rgba(2,6,4,.95)");
+    g.fillStyle = veil; g.fillRect(0, 0, W, H);
+
+    crest(g, W / 2, 330, 118, clamp((t - 40.9) / 0.9), t);
+    miniMap(g, clamp((t - 42.3) / .9), 240, 1150, 600, 560);
+    crowdFlashes(g, t, 120, clamp((t - 41.7) / 1.4) * .7);
+
+    const out = clamp((TOTAL / 1000 - t) / .9);
+    if (out < 1) { g.fillStyle = "rgba(2,6,4," + (1 - out) + ")"; g.fillRect(0, 0, W, H); }
+  }
+
+  /* --- transition entre scènes : flash, balayage, et le bandeau de la chaîne --- */
+  function transition(ms) {
+    const sc = sceneAt(ms);
+    if (sc.i === 0) return;
+    const dt = ms - sc.from;
+    if (dt > 700) return;
+    g.save();
+    const k = dt / 500;
+    if (k <= 1) {
+      g.globalAlpha = (1 - k) * .14;
+      g.fillStyle = "#eef4ee"; g.fillRect(0, 0, W, H);
+      const y = lerp(-400, H + 400, eio(k));
+      g.globalAlpha = (1 - k) * .3;
+      const sg = g.createLinearGradient(0, y - 300, 0, y + 300);
+      sg.addColorStop(0, "rgba(240,214,138,0)"); sg.addColorStop(.5, "rgba(240,214,138,.7)"); sg.addColorStop(1, "rgba(240,214,138,0)");
+      g.fillStyle = sg; g.fillRect(0, y - 320, W, 640);
+    }
+    // le bandeau qui balaie l'image : la signature de la chaîne, à chaque changement de plan
+    const bx = lerp(-W * .45, W * 1.45, eio(dt / 700));
+    const bh = 120, by = H * .5 - bh / 2;
+    g.globalAlpha = Math.sin(clamp(dt / 700) * Math.PI) * .94;
+    g.fillStyle = "rgba(7,13,24,.94)"; g.fillRect(bx - W, by, W * 2, bh);
+    g.fillStyle = "#d9a63a"; g.fillRect(bx - W, by, W * 2, 5); g.fillRect(bx - W, by + bh - 5, W * 2, 5);
+    g.font = "600 36px ui-monospace, monospace";
+    g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "rgba(247,244,236,.94)";
+    g.fillText("ISTAN SPORT", bx, by + bh / 2);
+    g.restore(); g.globalAlpha = 1;
+  }
+
+  const GRAIN = (() => {
+    const c = off(300, 300), gg = c.getContext("2d");
+    const img = gg.createImageData(300, 300);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = 118 + rnd(i) * 130;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 24;
+    }
+    gg.putImageData(img, 0, 0);
+    return c;
+  })();
+
+  function grainFrame(t) {
+    g.save();
+    g.globalAlpha = .045;
+    g.translate(-((t * 70) % 300), -((t * 110) % 300));
+    for (let x = -300; x < W + 300; x += 300) for (let y = -300; y < H + 300; y += 300) g.drawImage(GRAIN, x, y);
+    g.restore();
+  }
+
+  function sceneAt(ms) {
+    for (let i = SCENES.length - 1; i >= 0; i--) if (ms >= SCENES[i].from) return { i, ...SCENES[i] };
+    return { i: 0, ...SCENES[0] };
+  }
+
+  /* ------------------------------------------------ 9. son */
+  const CHORDS = [
+    [73.42, 110.00, 146.83, 185.00],   // D maj7
+    [61.74, 92.50, 123.47, 146.83],    // Bm7
+    [49.00, 98.00, 123.47, 164.81],    // G6
+    [55.00, 82.41, 110.00, 138.59],    // A
+    [73.42, 110.00, 146.83, 220.00],   // D (résolution)
+  ];
+
+  function noiseBuffer(ctx) {
+    if (!ctx.__nb) {
+      const len = Math.floor(ctx.sampleRate * 1.2), b = ctx.createBuffer(1, len, ctx.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      ctx.__nb = b;
+    }
+    return ctx.__nb;
+  }
+
+  const SYN = {
+    tone(ctx, dest, at, freq, dur, type, peak, glide) {
+      const o = ctx.createOscillator(), a = ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, at);
+      if (glide) o.frequency.exponentialRampToValueAtTime(Math.max(18, glide), at + dur);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + Math.min(.2, dur * .2));
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      o.connect(a); a.connect(dest); o.start(at); o.stop(at + dur + .05);
+    },
+    noise(ctx, dest, at, dur, peak, f0, f1, q) {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx);
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = q ?? 1;
+      bp.frequency.setValueAtTime(f0, at);
+      bp.frequency.exponentialRampToValueAtTime(Math.max(40, f1), at + dur * .85);
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + dur * .35);
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      s.connect(bp); bp.connect(a); a.connect(dest); s.start(at); s.stop(at + dur + .05);
+    },
+  };
+
+  const VOICES = {
+    /** Nappe tenue : idx = accord, dur = durée. */
+    pad: (ctx, d, at, idx = 0, dur = 9.5) => {
+      const notes = CHORDS[idx];
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = .7;
+      lp.frequency.setValueAtTime(480, at);
+      lp.frequency.linearRampToValueAtTime(1600, at + dur * .42);
+      lp.frequency.linearRampToValueAtTime(700, at + dur);
+      const vg = ctx.createGain();
+      vg.gain.setValueAtTime(.0001, at);
+      vg.gain.exponentialRampToValueAtTime(.09, at + Math.min(2.4, dur * .32));
+      vg.gain.setValueAtTime(.09, at + dur * .6);
+      vg.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      lp.connect(vg); vg.connect(d);
+      notes.forEach((f, i) => {
+        const o = ctx.createOscillator(), og = ctx.createGain();
+        o.type = i === 0 ? "sine" : "triangle";
+        o.frequency.value = f * (i % 2 ? 1.0018 : .9992);
+        og.gain.value = i === 0 ? .52 : .27;
+        o.connect(og); og.connect(lp); o.start(at); o.stop(at + dur + .1);
+      });
+      const sh = ctx.createOscillator(), sa = ctx.createGain();
+      sh.type = "sine"; sh.frequency.value = notes[notes.length - 1] * 2;
+      sa.gain.setValueAtTime(.0001, at);
+      sa.gain.exponentialRampToValueAtTime(.013, at + dur * .5);
+      sa.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      sh.connect(sa); sa.connect(vg); sh.start(at); sh.stop(at + dur + .1);
+    },
+    /** Rumeur du stade, avec creux et montées prévus. */
+    crowd: (ctx, d, at) => {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx); s.loop = true;
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 520; lp.Q.value = .5;
+      const a = ctx.createGain();
+      // La foule accompagne le film jusqu'à son dernier carton : un lit qui
+      // s'arrête avant la fin s'entend comme un trou, même sous les nappes.
+      const env = [[0, .02], [2, .045], [4.6, .02], [6, .03], [11, .05], [12.4, .085], [15.6, .06], [19.4, .07], [23.6, .09], [26.4, .07], [32.2, .12], [36.4, .05], [38.2, .055], [40.6, .075], [FILM - .2, .02]];
+      a.gain.setValueAtTime(.0001, at);
+      for (const [tt, v] of env) a.gain.linearRampToValueAtTime(v, at + tt);
+      s.connect(lp); lp.connect(a); a.connect(d);
+      s.start(at); s.stop(at + FILM + .2);
+    },
+    /** Souffle très doux, pour que rien ne soit jamais sec. */
+    air: (ctx, d, at) => {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx); s.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 620; bp.Q.value = .6;
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.linearRampToValueAtTime(.014, at + 2.5);
+      a.gain.setValueAtTime(.014, at + FILM - 3.2);
+      a.gain.linearRampToValueAtTime(.0001, at + FILM - .2);
+      s.connect(bp); bp.connect(a); a.connect(d);
+      s.start(at); s.stop(at + FILM + .2);
+    },
+    whistle: (ctx, d, at) => {
+      const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), a = ctx.createGain();
+      car.type = "sine"; car.frequency.value = 2350; mod.type = "sine"; mod.frequency.value = 62;
+      mg.gain.setValueAtTime(240, at);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(.05, at + .03);
+      a.gain.setValueAtTime(.05, at + .34);
+      a.gain.exponentialRampToValueAtTime(.0001, at + .46);
+      mod.connect(mg); mg.connect(car.frequency); car.connect(a); a.connect(d);
+      car.start(at); mod.start(at); car.stop(at + .5); mod.stop(at + .5);
+      SYN.noise(ctx, d, at, .4, .03, 2600, 3200, 2);
+    },
+    tom: (ctx, d, at) => { SYN.tone(ctx, d, at, 130, .6, "sine", .14, 74); SYN.noise(ctx, d, at, .18, .03, 320, 120, .8); },
+    kick: (ctx, d, at) => { SYN.tone(ctx, d, at, 72, .5, "sine", .18, 34); SYN.noise(ctx, d, at, .12, .03, 900, 220, .8); },
+    sub: (ctx, d, at) => SYN.tone(ctx, d, at, 48, 3.2, "sine", .16, 32),
+    riser: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.6, .05, 300, 3400, .8); SYN.tone(ctx, d, at, 160, 1.6, "triangle", .03, 520); },
+    whoosh: (ctx, d, at) => SYN.noise(ctx, d, at, 1.1, .075, 220, 2600, .9),
+    whooshSoft: (ctx, d, at) => SYN.noise(ctx, d, at, 1.4, .045, 280, 1500, 1.3),
+    hush: (ctx, d, at) => SYN.noise(ctx, d, at, .6, .025, 500, 260, 1.1),
+    stamp: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 92, 1.1, "sine", .2, 40);
+      SYN.noise(ctx, d, at, .8, .06, 600, 140, .7);
+      [110, 164.81, 220, 293.66].forEach(f => SYN.tone(ctx, d, at, f, 2.8, "triangle", .024));
+    },
+    choir: (ctx, d, at) => {
+      [146.83, 220, 293.66, 369.99].forEach((f, i) => {
+        SYN.tone(ctx, d, at + i * .04, f, 3.6, "triangle", .026);
+        SYN.tone(ctx, d, at + i * .04, f * 1.005, 3.4, "sine", .018);
+      });
+    },
+    swell: (ctx, d, at) => { SYN.noise(ctx, d, at, 2.2, .04, 400, 2600, .7); SYN.tone(ctx, d, at, 73.42, 2.4, "sine", .07); },
+    jerseyDrop: (ctx, d, at) => SYN.noise(ctx, d, at, .34, .06, 1700, 320, 1.1),
+    jerseyLand: (ctx, d, at) => { SYN.tone(ctx, d, at, 150, .3, "sine", .1, 78); SYN.noise(ctx, d, at, .16, .035, 800, 220, .9); },
+    rateTick: (ctx, d, at) => SYN.tone(ctx, d, at, 1500 + (Math.round(at * 1000) % 5) * 90, .07, "sine", .022),
+    rateDing: (ctx, d, at) => { SYN.tone(ctx, d, at, 1244.51, .5, "sine", .04); SYN.tone(ctx, d, at, 1864.66, .4, "sine", .02); },
+    flagPop: (ctx, d, at) => SYN.tone(ctx, d, at, 880, .22, "triangle", .035, 1180),
+    plateWipe: (ctx, d, at) => { SYN.noise(ctx, d, at, .26, .035, 2200, 900, 1.4); SYN.tone(ctx, d, at, 660, .16, "sine", .026, 880); },
+    benchTick: (ctx, d, at) => SYN.tone(ctx, d, at, 1180 + (Math.round(at * 1000) % 6) * 70, .09, "triangle", .022, 1500),
+    benchPop: (ctx, d, at) => { SYN.tone(ctx, d, at, 740, .3, "triangle", .03); SYN.noise(ctx, d, at, .2, .026, 1800, 700, 1.2); },
+    pluck: (ctx, d, at) => {
+      const f = [587.33, 739.99, 880, 1108.73][Math.round(at * 1000 / 100) % 4];
+      SYN.tone(ctx, d, at, f, .7, "triangle", .026);
+      SYN.tone(ctx, d, at, f * 2, .4, "sine", .01);
+    },
+    blip: (ctx, d, at) => SYN.tone(ctx, d, at, 1320, .12, "sine", .035, 1600),
+    chime: (ctx, d, at) => {
+      const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), a = ctx.createGain();
+      car.type = "sine"; car.frequency.value = 1174.66; mod.type = "sine"; mod.frequency.value = 2900;
+      mg.gain.setValueAtTime(780, at); mg.gain.exponentialRampToValueAtTime(1, at + 1.2);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(.05, at + .02);
+      a.gain.exponentialRampToValueAtTime(.0001, at + 1.5);
+      mod.connect(mg); mg.connect(car.frequency); car.connect(a); a.connect(d);
+      car.start(at); mod.start(at); car.stop(at + 1.6); mod.stop(at + 1.6);
+    },
+    sparkle: (ctx, d, at) => { [1568, 1975, 2637].forEach((f, i) => SYN.tone(ctx, d, at + i * .08, f, .8, "sine", .02)); },
+    /* --- voix d'habillage : le stade et la cabine de commentaire --- */
+    crowdOhh: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.9, .8, 260, 950, 1); SYN.tone(ctx, d, at, 190, 1.7, "triangle", .045); },
+    squeak: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 2200, .55, "sine", .16, 3400);
+      SYN.tone(ctx, d, at, 2240, .5, "sine", .13, 3450);
+      SYN.noise(ctx, d, at, .5, .1, 3000, 4200, 1.4);
+    },
+    tada: (ctx, d, at) => { [523.25, 659.25, 783.99].forEach((f, i) => SYN.tone(ctx, d, at + i * .18, f, i === 2 ? 1.4 : .5, "triangle", .19)); },
+  };
+
+  // [milliseconde, son, …arguments] — trié chronologiquement.
+  // Repartition recalée sur le nouveau montage : chaque grappe tombe sur
+  // l'instant où la voix nomme le joueur, là où la ligne apparaît.
+  const SCORE = [
+    [0, "pad", 0, 9500], [0, "crowd"], [0, "air"],
+    [300, "whistle"], [400, "sub"], [500, "squeak"], [1200, "tom"], [1900, "blip"], [2600, "kick"], [4600, "kick"],
+    [5600, "hush"], [5700, "riser"],
+    [6400, "stamp"], [6400, "whoosh"],
+    [6800, "blip"], [7200, "pad", 1, 6000],
+    [7400, "rateTick"], [7800, "rateTick"], [8200, "rateTick"], [8600, "rateTick"], [9000, "rateTick"],
+    [9200, "tom"], [9700, "riser"],
+    [10600, "stamp"], [10600, "choir"], [10700, "whoosh"],
+    [11800, "swell"], [12300, "whoosh"],
+    [12900, "pad", 2, 8000], [13000, "blip"], [13000, "whoosh"], [13000, "whistle"],
+    [14600, "jerseyDrop"], [14900, "jerseyLand"], [15100, "plateWipe"], [15300, "flagPop"], [15500, "rateDing"],
+    [18000, "jerseyDrop"], [18300, "jerseyLand"], [18400, "plateWipe"],
+    [18900, "jerseyDrop"], [19200, "jerseyLand"], [19300, "plateWipe"],
+    [19800, "jerseyDrop"], [20100, "jerseyLand"], [20200, "plateWipe"],
+    [20700, "jerseyDrop"], [21000, "jerseyLand"], [21100, "plateWipe"],
+    [21300, "flagPop"], [21500, "rateDing"],
+    [21600, "pad", 1, 7000],
+    [21800, "jerseyDrop"], [22100, "jerseyLand"], [22200, "plateWipe"], [22400, "flagPop"], [22600, "rateDing"],
+    [25800, "jerseyDrop"], [26100, "jerseyLand"], [26200, "plateWipe"],
+    [26750, "jerseyDrop"], [27050, "jerseyLand"], [27150, "plateWipe"],
+    [27700, "jerseyDrop"], [28000, "jerseyLand"], [28100, "plateWipe"],
+    [28400, "pad", 3, 7000],
+    [28650, "jerseyDrop"], [28950, "jerseyLand"], [29050, "plateWipe"],
+    [29300, "flagPop"], [29500, "rateDing"], [29700, "crowdOhh"],
+    [32900, "jerseyDrop"], [33200, "jerseyLand"], [33300, "plateWipe"], [33500, "flagPop"], [33700, "rateDing"],
+    [34000, "blip"], [34100, "crowdOhh"], [34300, "tada"], [34700, "choir"],
+    [35600, "blip"], [35700, "pad", 2, 5000], [35800, "whooshSoft"],
+    [36700, "benchPop"], [36880, "benchTick"], [37130, "benchPop"], [37310, "benchTick"],
+    [37560, "benchPop"], [37740, "benchTick"], [37990, "benchPop"], [38170, "benchTick"],
+    [38420, "benchPop"], [38600, "benchTick"], [38850, "benchPop"], [39030, "benchTick"],
+    [39280, "benchPop"], [39460, "benchTick"], [39710, "benchPop"], [39890, "benchTick"],
+    [40140, "benchPop"], [40240, "pluck"], [40320, "benchTick"],
+    [40500, "stamp"], [40600, "whoosh"],
+    [41100, "whooshSoft"], [41300, "stamp"], [41400, "choir"], [41500, "crowdOhh"], [41800, "swell"],
+    [42000, "pad", 4, 5500], [42300, "chime"],
+    [43100, "sparkle"], [44000, "pluck"], [44900, "pluck"], [45800, "sparkle"], [46000, "whistle"],
+  ];
+
+  function scheduleScore(ctx, dest, base) {
+    for (const [ms, name, ...rest] of SCORE) {
+      const fn = VOICES[name];
+      if (!fn) continue;
+      try { fn(ctx, dest, base + ms / 1000, ...rest); }
+      catch (e) { /* un cue raté ne doit jamais casser le film */ }
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     MOTEUR AUDIO — une seule horloge, celle de la bande.
+
+     Avant, deux horloges se partageaient le film : l'image avançait sur les
+     horodatages de requestAnimationFrame, le son sur l'horloge du contexte
+     audio. Elles dérivaient, et chaque image perdue creusait l'écart.
+     Chaque reprise appelait boot(), qui fermait le contexte et replanifiait
+     la partition depuis zéro : la musique coupait puis repartait du début
+     pendant que l'image restait au milieu du film.
+
+     Ici la partition est rendue en mémoire — la bande préparée par le
+     générateur Python si elle est servie, sinon le même score rendu hors
+     ligne — puis jouée par une seule source. Le temps du film EST la
+     position de cette source. Une horloge, jamais deux.
+     --------------------------------------------------------------------- */
+  const ASSET = "assets/audio/cs-axium-xi.wav";   // bande-son préparée par tools/assets
+  const VOICE_ASSET = "assets/voice/cs-axium-xi.wav";   // la voix du studio, même horloge
+  const VOICE_PLAN = "assets/voice/cs-axium-xi.json";    // ce que le studio a mesuré en la prononçant
+  const VOICE_GAIN = .95;                                  // niveau de la voix sous la musique
+  const LEAD = .06;                                 // avance de pose de la source, en secondes
+  const MASTER = .85;                               // gain de la musique
+  const DUCK = .45;                                 // la musique s'efface sous la voix
+  const PEAK = .9;                                  // crête visée par le master
+  const TAIL = 800;                                 // la queue du dernier accord, en ms
+  const FILM = TOTAL / 1000;                        // la durée du film, en secondes
+
+  const Audio = {
+    ctx: null, bus: null, duck: null, master: null,
+    buffer: null, src: null, origin: 0, wall: 0, voiceBuffer: null, vsrc: null,
+    ok: false, ready: false, booting: null, source: "aucune", trim: 1, retry: 0,
+
+    /** Crée le contexte une seule fois, puis prépare la partition en mémoire. */
+    init() {
+      if (this.ready) return Promise.resolve(this.ok);
+      if (this.booting) return this.booting;
+      this.booting = (async () => {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) {
+          this.ctx = new AC({ latencyHint: "playback" });
+          this.bus = this.ctx.createGain();    this.bus.gain.value = 1;
+          this.duck = this.ctx.createGain();   this.duck.gain.value = 1;
+          this.master = this.ctx.createGain(); this.master.gain.value = 0;
+          this.bus.connect(this.duck); this.duck.connect(this.master);
+          this.voiceGain = this.ctx.createGain();   // la voix du studio passe par ici
+          this.voiceGain.gain.value = Voice.on ? VOICE_GAIN : 0;
+          this.voiceGain.connect(this.master);
+          this.master.connect(this.ctx.destination);
+        }
+        this.buffer = await this.load();
+        this.voiceBuffer = await this.loadVoice();   // même préparation, même horloge
+        if (this.buffer) {
+          // même niveau dans les deux cas : la bande du studio arrive déjà à la
+          // crête visée, le rendu local y est ramené ici
+          this.trim = this.trimTo(this.buffer, PEAK);
+          this.bus.gain.value = this.trim;
+        }
+        this.ok = !!this.buffer;
+        // Le plan du studio : durée réelle de chaque réplique et de chaque mot.
+        // Les sous-titres s'y calent, au lieu d'estimer la voix au nombre de mots.
+        await Voice.loadPlan();
+        // les drapeaux récupérés au CDN : prêts avant le premier carton
+        await loadFlags();
+        this.ready = this.ok;
+        return this.ok;
+      })();
+      return this.booting;
+    },
+
+    /** 1) la bande du générateur, 2) sinon le même score rendu ici. */
+    async load() {
+      const baked = await this.baked();
+      if (baked) { this.source = "bande"; return baked; }
+      if (!this.ctx) return null;
+      this.source = "rendu ici";
+      return this.renderScore();
+    },
+
+    /** Ramène la crête de la bande à la cible (un échantillon sur sept suffit). */
+    trimTo(buf, peak) {
+      let top = 0;
+      for (let c = 0; c < buf.numberOfChannels; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < d.length; i += 7) {
+          const a = d[i] < 0 ? -d[i] : d[i];
+          if (a > top) top = a;
+        }
+      }
+      return top > 0 ? peak / top : 1;
+    },
+
+    /** Récupère la bande ; absente ou trop courte → null, sans bruit.
+        En file:// le navigateur refuse fetch : on va droit au rendu local, sans
+        provoquer une erreur dans la console. */
+    async baked() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Rend la partition hors ligne — sert aussi à l'écouter sans haut-parleur. */
+    async renderScore(seconds = (TOTAL + TAIL) / 1000, sr = 32000) {
+      const OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!OC) return null;
+      const oc = new OC(2, Math.ceil(seconds * sr), sr);
+      const out = oc.createGain(); out.gain.value = .9; out.connect(oc.destination);
+      scheduleScore(oc, out, 0);
+      return oc.startRendering();
+    },
+
+    /** La voix du studio : même préparation que la bande, même horloge.
+        Absente en `file://` ou si le studio n'a pas encore parlé : le film
+        retombe alors sur la voix du navigateur, sans changer d'horloge non plus. */
+    async loadVoice() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Pose la voix à l'instant exact où la bande commence : deux sources, une horloge. */
+    startVoice(when, off) {
+      if (!this.voiceBuffer || !this.ctx) return;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.voiceBuffer;
+      s.connect(this.voiceGain);
+      s.start(when, Math.max(0, Math.min(off, this.voiceBuffer.duration - .05)));
+      this.vsrc = s;
+    },
+
+    stopVoiceSource() {
+      if (!this.vsrc) return;
+      try { this.vsrc.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.vsrc.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.vsrc = null;
+    },
+
+    /** La bascule Voix : un fondu court, pour ne pas claquer. */
+    setVoice(on) {
+      if (!this.voiceGain || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      const g = this.voiceGain.gain;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(g.value, t);
+      g.linearRampToValueAtTime(on ? VOICE_GAIN : 0, t + .18);
+    },
+
+    /** Temps du film, en millisecondes : la position de lecture de la bande. */
+    time() {
+      if (this.ok && this.ctx) return clamp((this.ctx.currentTime - this.origin) * 1000, 0, TOTAL);
+      return clamp(this.wall, 0, TOTAL);
+    },
+
+    /** Sans Web Audio l'image avance au temps mural : le film reste utilisable. */
+    advance(dt) { if (!this.ok) this.wall = clamp(this.wall + dt, 0, TOTAL); },
+
+    /** Pose la bande au temps voulu. Le retard de sortie est compensé : l'image
+        montre ce qu'on entend, pas ce que le processeur graphique calcule. */
+    seek(ms) {
+      if (!this.ok || !this.ctx) { this.wall = clamp(ms, 0, TOTAL); return false; }
+      this.stopSource();
+      const off = Math.max(0, Math.min(clamp(ms, 0, TOTAL) / 1000, this.buffer.duration - .05));
+      const when = this.ctx.currentTime + LEAD;
+      const lat = this.ctx.outputLatency || this.ctx.baseLatency || 0;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.buffer;
+      s.connect(this.bus);
+      s.start(when, off);
+      this.src = s;
+      if (Voice.on) this.startVoice(when, off);   // deux sources, un seul instant
+      this.origin = when + lat - off;
+      this.scheduleDucks();
+      return true;
+    },
+
+    stopSource() {
+      if (!this.src) return;
+      try { this.src.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.src.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.src = null;
+      this.stopVoiceSource();
+    },
+
+    /** Reprise : le contexte repart, la bande n'a jamais quitté sa position. */
+    resume() { if (this.ctx && this.ctx.state === "suspended") this.ctx.resume(); },
+
+    /** Pause : le contexte se fige — le son et son horloge s'arrêtent ensemble. */
+    pause() { if (this.ctx && this.ctx.state === "running") this.ctx.suspend(); },
+
+    /** La musique s'efface sous la voix. Les rampes vivent en temps du film :
+        le contexte gelé les gèle aussi, la reprise les reprend au bon endroit. */
+    scheduleDucks() {
+      if (!this.ctx || !this.duck) return;
+      const g = this.duck.gain;
+      const t = this.ctx.currentTime;
+      const cur = g.value;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(cur, t);
+      if (!Voice.on) { g.linearRampToValueAtTime(1, t + .3); return; }
+      for (const L of LINES) {
+        const a = Math.max(t, this.origin + L.t / 1000);
+        const b = this.origin + (L.t + L.d) / 1000;
+        if (b < t) continue;
+        g.setValueAtTime(1, a);
+        g.linearRampToValueAtTime(DUCK, a + .3);
+        g.linearRampToValueAtTime(1, b + .5);
+      }
+    },
+
+    setSound(on) {
+      if (!this.master || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      this.master.gain.cancelScheduledValues(t);
+      this.master.gain.setValueAtTime(this.master.gain.value, t);
+      this.master.gain.linearRampToValueAtTime(on ? MASTER : 0, t + .25);
+    },
+  };
+
+  /* La voix est écoutée : elle annonce au film quand elle commence et quand elle
+     finit vraiment. Le sous-titre ne disparaît donc jamais sous une phrase encore
+     en cours, et un moteur vocal plus lent que prévu ne peut plus prendre l'image
+     de vitesse — c'est le sous-titre qui s'allonge avec la voix. */
+  /* La voix du studio d'abord : une bande prononcée une fois, chronométrée, et
+     posée sur la même horloge que la musique (`assets/voice/`). Si elle n'est pas
+     là — fichier ouvert en `file://`, studio pas encore passé — le film se rabat
+     sur le moteur vocal du navigateur, exactement comme avant. */
+  const Voice = {
+    on: false, voices: [], line: null, token: 0,
+    pick() { this.voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; },
+    /** Y a-t-il une voix, d'une façon ou d'une autre (studio, ou navigateur) ? */
+    available() {
+      if (this.has()) return true;
+      return !!(window.speechSynthesis && this.voices.some(v => /^fr/i.test(v.lang)));
+    },
+    /** La bande vocale du studio est-elle là (avec son plan) ? */
+    has() { return !!(this.plan && Audio.voiceBuffer); },
+    /** D'où vient la voix qu'on entend : du studio, du plan seul, ou du navigateur. */
+    source() { return this.has() ? "studio" : (this.plan ? "plan" : (this.available() ? "navigateur" : "aucune")); },
+    /** Le plan du studio : durée réelle de chaque phrase, et ses mots mesurés. */
+    async loadPlan() {
+      if (typeof fetch !== "function" || !/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_PLAN, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const plan = await r.json();
+        if (!plan || !plan.lines || Math.abs(plan.filmMs - TOTAL) > 500) return null;
+        this.plan = plan;
+        for (const l of plan.lines) if (LINES[l.i]) LINES[l.i].plan = l;
+        return plan;
+      } catch (e) { return null; }
+    },
+    /** La réplique `L` est-elle en train d'être prononcée ? */
+    speaking(L) {
+      // avec la bande du studio, « en train de parler » est une mesure et non un
+      // état du moteur : la fenêtre du plan, plus 150 ms de réverbération
+      if (this.has()) {
+        const at = Audio.time();
+        return !!(this.on && at >= L.plan.t - 60 && at <= L.plan.t + L.plan.d + 150);
+      }
+      return !!(this.on && this.line === L && window.speechSynthesis &&
+        speechSynthesis.speaking && !speechSynthesis.paused);
+    },
+    /** Prononce une réplique ; la mesure est rangée dans L.real. */
+    say(L) {
+      if (this.has()) return false;      // la bande du studio joue déjà la phrase
+      if (!this.on || !window.speechSynthesis) return false;
+      try {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(L.txt.replace(/\s+/g, " "));
+        const fr = this.voices.find(v => /fr[-_]FR/i.test(v.lang)) || this.voices.find(v => /^fr/i.test(v.lang));
+        if (fr) u.voice = fr;
+        // débit un peu posé : c'est ce qui rend la voix lisible sur une musique
+        u.lang = "fr-FR"; u.rate = .92; u.pitch = 1; u.volume = .95;
+        const token = ++this.token;
+        u.onstart = () => {
+          if (token !== this.token) return;
+          const at = Audio.time();
+          // un moteur qui annonce un démarrage très loin de l'instant prévu ne doit
+          // pas déplacer le sous-titre : on garde alors le découpage du film
+          if (Math.abs(at - L.t) > 1500) return;
+          L.real = { t: at, d: 0 }; this.line = L;
+        };
+        u.onend = () => {
+          if (token !== this.token) return;
+          if (L.real) L.real.d = Math.max(L.real.d, Audio.time() - L.real.t);
+          if (this.line === L) this.line = null;
+        };
+        speechSynthesis.speak(u);
+        return true;
+      } catch (e) { return false; }
+    },
+  };
+
+  /* ------------------------------------------------ 10. DOM */
+  // Le téléphone ne change pas le film : il change la taille du texte qui l'habille.
+  const PHONE = window.matchMedia("(max-width: 760px)");
+  // Conversion maquette -> cadre : 1080 px de large valent 100cqw, 1920 px de haut valent 100cqh.
+  const cw = (n) => (n / 10.8).toFixed(3) + "cqw";
+  const ch = (n) => (n / 19.2).toFixed(3) + "cqh";
+  const cardsHost = document.getElementById("cards");
+  const subsHost = document.getElementById("subs");
+  const progEl = document.getElementById("prog");
+  const hudScene = document.getElementById("hudScene");
+  const hudTc = document.getElementById("hudTc");
+  const veil = document.getElementById("veil");
+  const frameEl = document.getElementById("frame");
+  const togSound = document.getElementById("togSound");
+  const togVoice = document.getElementById("togVoice");
+  const bugClock = document.getElementById("bugClock");
+  const thirdEl = document.getElementById("third");
+  const bugNames = document.getElementById("bugNames");
+  const thirdName = document.getElementById("thirdName");
+  const thirdRole = document.getElementById("thirdRole");
+  thirdName.textContent = MIC.name;
+  thirdRole.textContent = MIC.role;
+  for (const id of ["veilMic", "veilMic2"]) document.getElementById(id).textContent = MIC.name;
+  // un cartouche par joueur : il s'allume quand le commentateur le nomme
+  const nameChips = XI.map((p) => {
+    const s = document.createElement("span");
+    s.textContent = p.name;
+    bugNames.appendChild(s);
+    return s;
+  });
+
+  const cardNodes = CARDS.map(c => {
+    const el = document.createElement("div");
+    el.className = "card " + c.cls + (c.opt ? " opt" : "");
+    el.innerHTML = c.html;
+    // les positions de la maquette (px) deviennent des unités du cadre :
+    // la composition ne bouge plus d'un pixel, quelle que soit la taille de l'écran
+    let placed = [];
+    const place = (spec) => {
+      // une clé du placement téléphone sans équivalent dans la maquette (pcss sans la
+      // même clé dans css) n'existe pas sur grand écran : si on ne la retire pas, elle
+      // reste posée après un changement de taille et le carton garde la place du téléphone
+      spec = spec || {};
+      for (const k of placed) if (!(k in spec)) el.style.removeProperty(k.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase()));
+      placed = Object.keys(spec);
+      for (const [k, v] of Object.entries(spec)) {
+        const n = parseFloat(v);
+        if (!/px$/.test(v) || !isFinite(n)) { el.style[k] = v; continue; }
+        if (k === "fontSize" || k === "left" || k === "right" || k === "width" || k === "maxWidth") el.style[k] = cw(n);
+        else el.style[k] = ch(n);
+      }
+    };
+    place(c.css);
+    el.style.opacity = "0";
+    cardsHost.appendChild(el);
+    return { ...c, el, place };
+  });
+
+  /* Sur téléphone, les cartons de petite typo sont agrandis (ui) — mais jamais au-delà
+     de la largeur du cadre : on mesure chaque carton et on le rétrécit si besoin. */
+  function measureFits() {
+    // le téléphone peut replacer un carton (pcss) avant de le mesurer
+    for (const c of cardNodes) c.place(PHONE.matches && c.pcss ? { ...c.css, ...c.pcss } : c.css);
+    const maxW = frameEl.clientWidth * .94;
+    for (const c of cardNodes) {
+      const ui = PHONE.matches ? (c.ui ?? 1) : 1;
+      const prev = c.el.style.transform;
+      c.el.style.transform = "none";
+      const r = document.createRange();
+      r.selectNodeContents(c.el);
+      const w = r.getBoundingClientRect().width;
+      c.el.style.transform = prev;
+      c.fit = w > 4 ? Math.min(1, maxW / (ui * w)) : 1;
+    }
+  }
+
+  const lineNodes = LINES.map((L) => {
+    const el = document.createElement("div");
+    el.className = "subline";
+    const words = L.txt.split(" ");
+    L.words = words.map((w, k) => {
+      const s = document.createElement("span");
+      s.className = "w"; s.textContent = w;
+      el.appendChild(s);
+      if (k < words.length - 1) el.appendChild(document.createTextNode(" "));
+      return s;
+    });
+    subsHost.appendChild(el);
+    return el;
+  });
+
+  SCENES.forEach(() => {
+    const s = document.createElement("div");
+    s.className = "pseg"; s.innerHTML = "<i></i>";
+    progEl.appendChild(s);
+  });
+  const segs = [...progEl.querySelectorAll(".pseg i")];
+  const rowLabel = cardNodes.find(c => c.id === "rowlabel");
+
+  function updateCards(ms) {
+    const ui0 = PHONE.matches ? 1 : 1;
+    for (const c of cardNodes) {
+      const tin = c.t[0], tout = c.t[1];
+      // sur téléphone, les textes du film reprennent une taille lisible : ils s'agrandissent
+      // depuis leur propre ancre (fit les empêche de déborder du cadre)
+      const ui = PHONE.matches ? (c.ui ?? 1) : ui0;
+      let o = 0, y = 0, sc = 1;
+      if (ms > tin - 520 && ms < tout + 460) {
+        const a = smooth(clamp((ms - tin) / 620));
+        const b = ms > tout ? 1 - smooth(clamp((ms - tout) / 420)) : 1;
+        o = a * b;
+        const e = eio(clamp((ms - tin) / 620));
+        y = (1 - e) * 26 * ui;
+        sc = ui * (c.fit ?? 1) * (1 - (1 - e) * .04);
+      }
+      c.el.style.opacity = o.toFixed(3);
+      c.el.style.transform = "translateY(" + ch(y) + ") scale(" + sc.toFixed(4) + ")";
+    }
+    // l'étiquette de ligne suit l'arrivée des joueurs
+    if (rowLabel) {
+      let row = -1;
+      for (let r = ROW_T.length - 1; r >= 0; r--) if (ms >= ROW_T[r] - 300) { row = r; break; }
+      if (row >= 0) rowLabel.el.innerHTML = ROWS[row] + " &nbsp;<b style='color:#e8a33d'>" + ROW_SPLIT[row] + "</b>";
+    }
+  }
+
+  function updateSubs(ms) {
+    LINES.forEach((L, i) => {
+      const el = lineNodes[i];
+      // la fenêtre : celle du studio quand sa bande vocale est là (la durée
+      // réellement prononcée), sinon celle du film, prolongée tant que la voix parle
+      const t0 = L.plan ? L.plan.t : (L.real ? L.real.t : L.t);
+      const d = L.plan ? L.plan.d : L.d;
+      const active = ms >= t0 - 80 && (ms <= t0 + d + 260 || Voice.speaking(L));
+      el.classList.toggle("show", active);
+      if (!active) return;
+      const n = L.words.length;
+      // le mot surligné suit les instants mesurés sur la voix ; à défaut, on
+      // répartit la phrase sur sa fenêtre, faute de mieux
+      let cur = Math.max(0, Math.min(n - 1, Math.floor(((ms - t0) / d) * n)));
+      if (L.plan) {
+        cur = 0;
+        for (let k = 0; k < L.plan.words.length && k < n; k++) if (ms - t0 >= L.plan.words[k].t0) cur = k;
+      }
+      L.words.forEach((w, k) => {
+        w.classList.toggle("on", k === cur);
+        w.classList.toggle("done", k < cur);
+      });
+    });
+  }
+
+  function updateHud(ms) {
+    const sc = sceneAt(ms);
+    hudScene.innerHTML = "<b>" + sc.num + "</b> &nbsp;" + sc.name;
+    const s = Math.floor(ms / 1000);
+    hudTc.textContent = "00:" + String(s).padStart(2, "0") + ":" + String(Math.floor((ms % 1000) / 41.6)).padStart(2, "0");
+    SCENES.forEach((S, i) => segs[i].style.width = (clamp((ms - S.from) / (S.to - S.from)) * 100).toFixed(2) + "%");
+
+    // l'habillage de diffusion : l'horloge de match, le témoin du micro, la compo
+    const mm = Math.floor(ms / 60000), ss = Math.floor((ms % 60000) / 1000);
+    bugClock.textContent = String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+    thirdEl.classList.toggle("on", speakingAt(ms));
+    XI.forEach((p, i) => nameChips[i].classList.toggle("on", ms >= p.t0 + 700));
+  }
+
+  /** Une réplique est-elle en cours (fenêtre prévue, ou voix qui parle encore) ? */
+  function speakingAt(ms) {
+    return LINES.some((L) => {
+      const t0 = L.plan ? L.plan.t : (L.real ? L.real.t : L.t);
+      const d = L.plan ? L.plan.d : L.d;
+      return ms >= t0 - 120 && (ms <= t0 + d + 260 || Voice.speaking(L));
+    });
+  }
+
+  function setToggle(btn, on, offClass) {
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", String(on));
+    if (offClass !== undefined) btn.classList.toggle("off-audio", !!offClass);
+  }
+
+  /* ------------------------------------------------ 11. lecteur */
+  let elapsed = 0, state = "idle", lastTs = 0, stall = 0;
+  const sound = { on: false };
+  const spoken = LINES.map(() => false);
+
+  // les instants d'apparition sont calculés une fois pour toutes
+  (() => {
+    const perRow = {};
+    for (const p of XI) {
+      const i = perRow[p.row] = (perRow[p.row] ?? 0);
+      perRow[p.row]++;
+      p.t0 = ROW_T[p.row] + i * ROW_STEP[p.row];
+    }
+  })();
+
+  function render(ms) {
+    g.clearRect(0, 0, W, H);
+    const sc = sceneAt(ms);
+    sc.draw(ms / 1000, clamp((ms - sc.from) / (sc.to - sc.from)));
+    transition(ms);
+    grainFrame(ms / 1000);
+    updateCards(ms);
+    updateSubs(ms);
+    updateHud(ms);
+  }
+
+  function play() {
+    if (state === "playing") return;
+    if (state === "ended" || elapsed >= TOTAL) { elapsed = 0; spoken.fill(false); }
+    sound.on = true;
+    setToggle(togSound, true);
+    Voice.on = true;
+    setToggle(togVoice, true);
+    if (!Voice.available()) togVoice.classList.add("off-audio");
+    Audio.setVoice(Voice.on);            // la voix du studio se pose avec la bande
+    state = "playing";
+    veil.classList.remove("show");
+    if (Audio.ok) {
+      // la bande est déjà là : on la reprend là où elle a été gelée, ou on la pose au temps
+      // courant si c'est la première lecture (la préparation peut finir après le clic)
+      if (Audio.src) { Audio.resume(); Audio.scheduleDucks(); }
+      else Audio.seek(elapsed);
+    } else if (!Audio.ready) {
+      Audio.init().then((ok) => { if (!ok) setToggle(togSound, false, true); });
+    } else {
+      setToggle(togSound, false, true);   // pas de Web Audio : le film reste utilisable, sans son
+    }
+    // le geste du clic vaut pour le contexte : on le reprend même si la bande se prépare encore
+    Audio.resume();
+    render(elapsed);
+  }
+
+  function pause() {
+    if (state !== "playing") return;
+    state = "paused";
+    Audio.pause();
+    stopVoice();
+  }
+
+  function togglePlay() { state === "playing" ? pause() : play(); }
+
+  /** Coupe la voix sans jeter la mesure : la reprise retrouvera le bon mot. */
+  function stopVoice() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    Voice.line = null;
+  }
+
+  /** Efface tout, mesures comprises : pour recommencer ou se déplacer. */
+  function resetVoice() {
+    stopVoice();
+    Voice.token++;
+    for (const L of LINES) delete L.real;
+  }
+
+  function restart() {
+    resetVoice();
+    elapsed = 0; spoken.fill(false);
+    veil.classList.remove("show", "end");
+    state = "playing";
+    if (Audio.ok) { Audio.seek(0); Audio.resume(); }
+    render(0);
+  }
+
+  function finish() {
+    state = "ended";
+    stopVoice();
+    veil.classList.add("show", "end");
+  }
+
+  function tick(ts) {
+    const dt = lastTs ? Math.min(ts - lastTs, 100) : 0;
+    lastTs = ts;
+    if (state === "playing") {
+      // si la bande vient d'être prête (ou si une source s'est perdue), elle se pose au temps
+      // courant : l'image et le son se raccordent d'eux-mêmes, sans repartir de zéro
+      if (Audio.ok) {
+        if (!Audio.src) Audio.seek(elapsed);
+        // garde-fou : si le contexte audio ne tourne pas (machine sans sortie sonore,
+        // navigateur récalcitrant), le film ne se fige pas — il poursuit sans son
+        if (Audio.time() <= elapsed + .5) stall += dt; else { stall = 0; Audio.retry = 0; }
+        if (stall > 600) {
+          stall = 0;
+          // Le contexte a pu être gelé sans nous : on retente la reprise et on
+          // repose la bande au temps courant avant de renoncer au son — sinon un
+          // simple hoquet laissait le film muet jusqu'au rechargement de la page.
+          if (Audio.retry < 3) {
+            Audio.retry++;
+            Audio.resume();
+            Audio.seek(elapsed);
+          } else {
+            Audio.wall = elapsed;
+            Audio.ok = false;
+            setToggle(togSound, false, true);
+          }
+        }
+      } else {
+        Audio.advance(dt);
+      }
+      const before = elapsed;
+      elapsed = Audio.time();                       // l'horloge du film est celle du son
+      LINES.forEach((L, i) => {
+        if (!spoken[i] && elapsed >= L.t) {
+          spoken[i] = true;
+          if (elapsed - L.t < 700 && Voice.on) Voice.say(L);
+        }
+      });
+      if (elapsed >= TOTAL && before < TOTAL) finish();
+    } else if (!Audio.ok) {
+      Audio.wall = clamp(elapsed, 0, TOTAL);
+    }
+    render(elapsed);
+    requestAnimationFrame(tick);
+  }
+
+  // Plus aucune mise à l'échelle en JavaScript : le cadre 9:16 et ses unités cqw/cqh
+  // s'occupent de tout, y compris au pivotement du téléphone. Il ne reste qu'à
+  // remesurer les cartons agrandis pour qu'aucun ne déborde du cadre.
+  measureFits();
+  window.addEventListener("resize", measureFits);
+  if (PHONE.addEventListener) PHONE.addEventListener("change", measureFits);
+
+  document.getElementById("go").addEventListener("click", play);
+  document.getElementById("replay").addEventListener("click", restart);
+  document.getElementById("closeEnd").addEventListener("click", () => veil.classList.remove("show"));
+  cv.addEventListener("click", () => { if (state !== "idle" && !veil.classList.contains("show")) togglePlay(); });
+
+  togSound.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sound.on = !sound.on;
+    setToggle(togSound, sound.on);
+    if (!Audio.ok && !Audio.ready) Audio.init();
+    if (Audio.ok && Audio.src) Audio.resume();      // couper le son ne met pas le film en pause
+    Audio.setSound(sound.on);
+  });
+  togVoice.addEventListener("click", (e) => {
+    e.stopPropagation();
+    Voice.on = !Voice.on;
+    setToggle(togVoice, Voice.on);
+    if (!Voice.on && window.speechSynthesis) speechSynthesis.cancel();
+    Audio.setVoice(Voice.on);                       // la bande vocale suit la bascule
+    Audio.scheduleDucks();                          // la musique ne s'efface que sous une voix audible
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") { e.preventDefault(); if (state === "idle") play(); else togglePlay(); }
+    else if (e.key === "s" || e.key === "S") togSound.click();
+    else if (e.key === "v" || e.key === "V") togVoice.click();
+    else if (e.key === "r" || e.key === "R") restart();
+  });
+
+  document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
+
+  /* L'image d'abord : la lecture se regarde sans habillage. Trois secondes sans geste et
+     la barre, les bascules et les mentions s'effacent ; le premier mouvement les ramène.
+     En pause l'habillage reste — il n'y a plus rien à cacher. */
+  const stageEl = document.getElementById("stage");
+  let chromeIdle = 0;
+  const showChrome = () => {
+    stageEl.classList.remove("clean");
+    clearTimeout(chromeIdle);
+    if (state === "playing") chromeIdle = setTimeout(() => stageEl.classList.add("clean"), 3000);
+  };
+  // « click » vient après le gestionnaire du bouton : l'horloge du minuteur est donc armée
+  // avec la lecture déjà lancée, que le film démarre au clic, au doigt ou au clavier
+  for (const ev of ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "click", "visibilitychange"])
+    document.addEventListener(ev, showChrome, { passive: true });
+
+  // Un contexte audio peut être gelé par le navigateur (politique de lecture
+  // automatique, onglet revenu au premier plan, sortie sonore rebranchée) : le
+  // premier geste de l'utilisateur le relance, au lieu de laisser le film muet.
+  const rearm = () => { if (state === "playing" && sound.on) Audio.resume(); };
+  document.addEventListener("pointerdown", rearm, true);
+  window.addEventListener("keydown", rearm, true);
+
+  if (window.speechSynthesis) {
+    Voice.pick();
+    speechSynthesis.addEventListener("voiceschanged", () => Voice.pick());
+  }
+
+  /* ------------------------------------------------ 12. surface de vérification */
+  const API = {
+    id: "cs-axium-xi",
+    duration: TOTAL,
+    frame: "9:16",
+    phone: () => PHONE.matches,
+    // l'horloge du film et l'état du moteur audio : de quoi vérifier qu'il n'y en a qu'une
+    clock: () => +elapsed.toFixed(1),
+    audio: () => ({
+      ok: Audio.ok, ready: Audio.ready, source: Audio.source, trim: +(Audio.trim ?? 0).toFixed(3),
+      state: Audio.ctx ? Audio.ctx.state : "aucun",
+      buffer: Audio.buffer ? +Audio.buffer.duration.toFixed(3) : 0,
+      voice: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      voiceGain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      time: +Audio.time().toFixed(1),
+    }),
+    startAt: (ms) => { Audio.seek(ms); Audio.resume(); return Audio.time(); },
+    layout: () => {
+      // audit de mise en page : le cadre, les cartons visibles et les sous-titres
+      const box = (e) => { const r = e.getBoundingClientRect(); return { x: +r.x.toFixed(1), y: +r.y.toFixed(1), w: +r.width.toFixed(1), h: +r.height.toFixed(1), right: +r.right.toFixed(1), bottom: +r.bottom.toFixed(1) }; };
+      const ink = (e) => { const r = document.createRange(); r.selectNodeContents(e); const b = r.getBoundingClientRect(); return { x: +b.x.toFixed(1), y: +b.y.toFixed(1), w: +b.width.toFixed(1), h: +b.height.toFixed(1), right: +b.right.toFixed(1), bottom: +b.bottom.toFixed(1) }; };
+      const visible = (c) => parseFloat(window.getComputedStyle(c.el).opacity) > .2 && c.el.getBoundingClientRect().width > 1;
+      return {
+        frame: box(frameEl),
+        stage: box(document.getElementById("stage")),
+        hud: box(document.getElementById("hud")),
+        go: box(document.getElementById("go")),
+        // les cartons visibles sont mesurés à l'encre (le texte), pas à leur boîte :
+        // un carton centré occupe toute la largeur du cadre même quand son texte est court
+        cards: cardNodes.map((c, i) => ({ c, i })).filter(({ c }) => visible(c))
+          .map(({ c, i }) => ({ i, cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3), text: c.el.textContent.trim().slice(0, 40), ...ink(c.el) })),
+        fits: cardNodes.map(c => ({ cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3) })),
+        subs: [...subsHost.querySelectorAll(".subline.show")].map(ink),
+        togs: [togSound, togVoice].map(box),
+        prog: box(progEl),
+        hudTexts: [hudScene, hudTc].map(box),
+      };
+    },
+    scenes: SCENES.map(s => ({ from: s.from, to: s.to, name: s.name, num: s.num })),
+    lines: LINES.map(l => ({ t: l.t, d: l.d, txt: l.txt, plan: l.plan || null })),
+    // la voix : d'où elle vient, ce que le studio a mesuré, et son niveau réel
+    voice: () => ({
+      source: Voice.source(), on: Voice.on, plan: !!Voice.plan,
+      lines: Voice.plan ? Voice.plan.lines.length : 0,
+      engine: Voice.plan ? Voice.plan.engine.label : null,
+      gain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      buffer: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      speaking: LINES.filter((L) => Voice.speaking(L)).length,
+    }),
+    cues: SCORE.map(c => ({ t: c[0], name: c[1] })),
+    mic: { name: MIC.name, role: MIC.role },
+    // l'habillage de diffusion, tel qu'il est affiché à l'instant mesuré
+    overlay: () => ({
+      clock: bugClock.textContent,
+      onAir: thirdEl.classList.contains("on"),
+      third: thirdName.textContent + " · " + thirdRole.textContent,
+      names: nameChips.filter(c => c.classList.contains("on")).length,
+    }),
+    xi: XI.map(p => ({ n: p.n, name: p.name, ovr: p.ovr, flag: p.flag, pos: p.pos })),
+    bench: BENCH.map(b => ({ n: b.n, name: b.name, ovr: b.ovr })),
+    average: AVERAGE,
+    beats: [
+      { t: 1500,  label: "01·blason" },
+      { t: 5800,  label: "02·avant-transition" },
+      { t: 8800,  label: "03·la pelouse" },
+      { t: 10800, label: "04·4-1-4-1" },
+      { t: 15200, label: "05·gardien" },
+      { t: 19500, label: "06·défense" },
+      { t: 24000, label: "07·sentinelle" },
+      { t: 27600, label: "08·milieu" },
+      { t: 33600, label: "09·avant-centre" },
+      { t: 37000, label: "10·le banc" },
+      { t: 39600, label: "11·banc complet" },
+      { t: 41900, label: "12·carton final" },
+      { t: 44600, label: "13·carte de fin" },
+    ],
+    seek(ms) { resetVoice(); elapsed = clamp(ms, 0, TOTAL); state = "paused"; render(elapsed); },
+    play, pause,
+    audioStats: async (sec) => {
+      const buf = await Audio.renderScore(sec);
+      if (!buf) return null;
+      const n = buf.length, sr = buf.sampleRate;
+      const L = buf.getChannelData(0), R = buf.getChannelData(Math.min(1, buf.numberOfChannels - 1));
+      // même normalisation que celle appliquée à la lecture : la mesure décrit le son
+      // qu'on entend, pas le rendu brut
+      const k = Audio.trimTo(buf, PEAK);
+      let peak = 0, sum = 0, clipped = 0;
+      const perSec = [];
+      for (let s = 0; s < Math.ceil(n / sr); s++) perSec.push({ rms: 0, peak: 0, n: 0 });
+      for (let i = 0; i < n; i++) {
+        const v = ((L[i] + R[i]) / 2) * k, a = Math.abs(v);
+        if (a > peak) peak = a;
+        if (a >= .999) clipped++;
+        sum += v * v;
+        const s = Math.min(perSec.length - 1, Math.floor(i / sr));
+        perSec[s].rms += v * v; perSec[s].n++;
+        if (a > perSec[s].peak) perSec[s].peak = a;
+      }
+      perSec.forEach(s => { s.rms = Math.sqrt(s.rms / Math.max(1, s.n)); });
+      return {
+        seconds: n / sr, peak: +peak.toFixed(4), rms: +Math.sqrt(sum / n).toFixed(4), clipped,
+        silentSeconds: perSec.filter(s => s.rms < .0005).length,
+        perSec: perSec.map(s => ({ rms: +s.rms.toFixed(4), peak: +s.peak.toFixed(4) })),
+      };
+    },
+    /** Les drapeaux réellement chargés : c'est ce que le film affiche en pastille. */
+    flags() {
+      return FLAG_CODES.map((code) => {
+        const im = FLAG_PIX[code];
+        return { code, loaded: !!(im && im.complete && im.naturalWidth),
+                 w: im ? im.naturalWidth : 0, h: im ? im.naturalHeight : 0,
+                 file: FLAG_SRC + code + ".png" };
+      });
+    },
+    frameStats() {
+      const d = g.getImageData(0, 0, W, H).data;
+      let lum = 0, n = 0, lit = 0;
+      const colors = new Set();
+      for (let y = 0; y < H; y += 12) for (let x = 0; x < W; x += 12) {
+        const i = (y * W + x) * 4, v = (d[i] * .2126 + d[i + 1] * .7152 + d[i + 2] * .0722) / 255;
+        lum += v; n++;
+        if (v > .045) lit++;
+        colors.add((d[i] >> 5) * 64 + (d[i + 1] >> 5) * 8 + (d[i + 2] >> 5));
+      }
+      const subs = [...subsHost.querySelectorAll(".subline")].find(e => e.classList.contains("show"));
+      const cards = [...cardsHost.children].filter(e => parseFloat(e.style.opacity || "0") > .12);
+      return {
+        meanLuma: +(lum / n).toFixed(4), litRatio: +(lit / n).toFixed(4), colors: colors.size,
+        activeCards: cards.length,
+        subtitle: subs ? { text: subs.textContent.trim(), words: subs.querySelectorAll(".w").length, onWord: subs.querySelector(".w.on")?.textContent ?? null } : null,
+      };
+    },
+  };
+  window.MOTION = API;
+  window.N3 = API;   // alias : même surface pour les outils
+
+  setToggle(togSound, false);
+  // la bande se prépare pendant que l'écran d'accueil s'affiche :
+  // le clic sur play n'attend ni le réseau ni un rendu
+  Audio.init()                                   // la bande et la voix se préparent
+    .then(() => Voice.loadPlan())                // pendant que l'écran d'accueil s'affiche
+    .then(() => { if (!Voice.available()) togVoice.classList.add("off-audio"); else togVoice.classList.remove("off-audio"); });
+  setToggle(togVoice, false);
+  if (!Voice.available()) togVoice.classList.add("off-audio");
+  render(0);
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

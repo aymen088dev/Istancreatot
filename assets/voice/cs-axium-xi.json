@@ -1,0 +1,520 @@
+{
+  "kind": "voice",
+  "id": "cs-axium-xi",
+  "film": "/home/daytona/codebase/cs-axium-xi.html",
+  "title": "CS AXIUM",
+  "asset": "assets/voice/cs-axium-xi.wav",
+  "engine": {
+    "name": "piper",
+    "voice": "fr_FR-tom-medium",
+    "label": "français · Tom (medium)",
+    "sr": 32000,
+    "scale": 1.08,
+    "peak": 0.9,
+    "gap": 0.2,
+    "pad": 0.25
+  },
+  "seconds": 46.8,
+  "filmMs": 46200,
+  "tail": 0.6,
+  "speechMs": 30705,
+  "meanRate": 2.195,
+  "retimed": [],
+  "overflow": [],
+  "lines": [
+    {
+      "i": 0,
+      "t": 600,
+      "d": 2813,
+      "window": 3297,
+      "ms": 2813,
+      "endsAt": 3413,
+      "nextAt": 6800,
+      "budget": 6000,
+      "slack": 3187,
+      "txt": "Bonsoir à tous, Léonard Chose au micro.",
+      "rate": 2.489,
+      "words": [
+        {
+          "w": "Bonsoir",
+          "t0": 0,
+          "t1": 496
+        },
+        {
+          "w": "à",
+          "t0": 496,
+          "t1": 744
+        },
+        {
+          "w": "tous,",
+          "t0": 744,
+          "t1": 1078
+        },
+        {
+          "w": "Léonard",
+          "t0": 1078,
+          "t1": 1574
+        },
+        {
+          "w": "Chose",
+          "t0": 1574,
+          "t1": 2069
+        },
+        {
+          "w": "au",
+          "t0": 2069,
+          "t1": 2317
+        },
+        {
+          "w": "micro.",
+          "t0": 2317,
+          "t1": 2813
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 1,
+      "t": 6800,
+      "d": 4022,
+      "window": 4379,
+      "ms": 4022,
+      "endsAt": 10822,
+      "nextAt": 13000,
+      "budget": 6000,
+      "slack": 1978,
+      "txt": "CS Axiom dévoile sa composition, ce soir.",
+      "rate": 1.741,
+      "words": [
+        {
+          "w": "CS",
+          "t0": 0,
+          "t1": 301
+        },
+        {
+          "w": "Axiom",
+          "t0": 301,
+          "t1": 904
+        },
+        {
+          "w": "dévoile",
+          "t0": 904,
+          "t1": 1808
+        },
+        {
+          "w": "sa",
+          "t0": 1808,
+          "t1": 2109
+        },
+        {
+          "w": "composition,",
+          "t0": 2109,
+          "t1": 3419
+        },
+        {
+          "w": "ce",
+          "t0": 3419,
+          "t1": 3721
+        },
+        {
+          "w": "soir.",
+          "t0": 3721,
+          "t1": 4022
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 2,
+      "t": 13000,
+      "d": 1821,
+      "window": 2118,
+      "ms": 1821,
+      "endsAt": 14821,
+      "nextAt": 16400,
+      "budget": 3200,
+      "slack": 1379,
+      "txt": "Et dans les buts, Haddad!",
+      "rate": 2.746,
+      "words": [
+        {
+          "w": "Et",
+          "t0": 0,
+          "t1": 262
+        },
+        {
+          "w": "dans",
+          "t0": 262,
+          "t1": 524
+        },
+        {
+          "w": "les",
+          "t0": 524,
+          "t1": 786
+        },
+        {
+          "w": "buts,",
+          "t0": 786,
+          "t1": 1140
+        },
+        {
+          "w": "Haddad!",
+          "t0": 1140,
+          "t1": 1821
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 3,
+      "t": 16400,
+      "d": 4559,
+      "window": 5079,
+      "ms": 4559,
+      "endsAt": 20959,
+      "nextAt": 22600,
+      "budget": 6000,
+      "slack": 1441,
+      "txt": "La défense : Lot Istanois, Benali, Hernancio, Sanchez.",
+      "rate": 1.755,
+      "words": [
+        {
+          "w": "La",
+          "t0": 0,
+          "t1": 248
+        },
+        {
+          "w": "défense",
+          "t0": 248,
+          "t1": 991
+        },
+        {
+          "w": ":",
+          "t0": 991,
+          "t1": 1326
+        },
+        {
+          "w": "Lot",
+          "t0": 1326,
+          "t1": 1573
+        },
+        {
+          "w": "Istanois,",
+          "t0": 1573,
+          "t1": 2403
+        },
+        {
+          "w": "Benali,",
+          "t0": 2403,
+          "t1": 3233
+        },
+        {
+          "w": "Hernancio,",
+          "t0": 3233,
+          "t1": 4063
+        },
+        {
+          "w": "Sanchez.",
+          "t0": 4063,
+          "t1": 4559
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 4,
+      "t": 22600,
+      "d": 2989,
+      "window": 3280,
+      "ms": 2989,
+      "endsAt": 25589,
+      "nextAt": 26000,
+      "budget": 3200,
+      "slack": 211,
+      "txt": "Mansouri en sentinelle, devant la défense.",
+      "rate": 2.007,
+      "words": [
+        {
+          "w": "Mansouri",
+          "t0": 0,
+          "t1": 625
+        },
+        {
+          "w": "en",
+          "t0": 625,
+          "t1": 833
+        },
+        {
+          "w": "sentinelle,",
+          "t0": 833,
+          "t1": 1739
+        },
+        {
+          "w": "devant",
+          "t0": 1739,
+          "t1": 2156
+        },
+        {
+          "w": "la",
+          "t0": 2156,
+          "t1": 2364
+        },
+        {
+          "w": "défense.",
+          "t0": 2364,
+          "t1": 2989
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 5,
+      "t": 26000,
+      "d": 5763,
+      "window": 6680,
+      "ms": 5763,
+      "endsAt": 31763,
+      "nextAt": 32800,
+      "budget": 6600,
+      "slack": 837,
+      "txt": "Le Boucher, Gelarza, Von Istanoix, Caruso : ils alimentent l'attaque !",
+      "rate": 1.909,
+      "words": [
+        {
+          "w": "Le",
+          "t0": 0,
+          "t1": 231
+        },
+        {
+          "w": "Boucher,",
+          "t0": 231,
+          "t1": 772
+        },
+        {
+          "w": "Gelarza,",
+          "t0": 772,
+          "t1": 1544
+        },
+        {
+          "w": "Von",
+          "t0": 1544,
+          "t1": 1775
+        },
+        {
+          "w": "Istanoix,",
+          "t0": 1775,
+          "t1": 2547
+        },
+        {
+          "w": "Caruso",
+          "t0": 2547,
+          "t1": 3239
+        },
+        {
+          "w": ":",
+          "t0": 3239,
+          "t1": 3550
+        },
+        {
+          "w": "ils",
+          "t0": 3550,
+          "t1": 3781
+        },
+        {
+          "w": "alimentent",
+          "t0": 3781,
+          "t1": 4703
+        },
+        {
+          "w": "l'attaque",
+          "t0": 4703,
+          "t1": 5394
+        },
+        {
+          "w": "!",
+          "t0": 5394,
+          "t1": 5763
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 6,
+      "t": 32800,
+      "d": 1955,
+      "window": 2112,
+      "ms": 1955,
+      "endsAt": 34755,
+      "nextAt": 35600,
+      "budget": 2600,
+      "slack": 645,
+      "txt": "Et Saidi, en pointe!",
+      "rate": 2.046,
+      "words": [
+        {
+          "w": "Et",
+          "t0": 0,
+          "t1": 281
+        },
+        {
+          "w": "Saidi,",
+          "t0": 281,
+          "t1": 942
+        },
+        {
+          "w": "en",
+          "t0": 942,
+          "t1": 1224
+        },
+        {
+          "w": "pointe!",
+          "t0": 1224,
+          "t1": 1955
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 7,
+      "t": 35600,
+      "d": 2945,
+      "window": 3256,
+      "ms": 2945,
+      "endsAt": 38545,
+      "nextAt": 40800,
+      "budget": 5000,
+      "slack": 2055,
+      "txt": "Sur le banc, neuf remplaçants prêts à entrer.",
+      "rate": 2.717,
+      "words": [
+        {
+          "w": "Sur",
+          "t0": 0,
+          "t1": 259
+        },
+        {
+          "w": "le",
+          "t0": 259,
+          "t1": 519
+        },
+        {
+          "w": "banc,",
+          "t0": 519,
+          "t1": 869
+        },
+        {
+          "w": "neuf",
+          "t0": 869,
+          "t1": 1129
+        },
+        {
+          "w": "remplaçants",
+          "t0": 1129,
+          "t1": 1907
+        },
+        {
+          "w": "prêts",
+          "t0": 1907,
+          "t1": 2167
+        },
+        {
+          "w": "à",
+          "t0": 2167,
+          "t1": 2426
+        },
+        {
+          "w": "entrer.",
+          "t0": 2426,
+          "t1": 2945
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 8,
+      "t": 40800,
+      "d": 3838,
+      "window": 4182,
+      "ms": 3838,
+      "endsAt": 44638,
+      "nextAt": 46200,
+      "budget": 5200,
+      "slack": 1362,
+      "txt": "CS Axiom, la composition : quatre un quatre un.",
+      "rate": 2.345,
+      "words": [
+        {
+          "w": "CS",
+          "t0": 0,
+          "t1": 244
+        },
+        {
+          "w": "Axiom,",
+          "t0": 244,
+          "t1": 819
+        },
+        {
+          "w": "la",
+          "t0": 819,
+          "t1": 1063
+        },
+        {
+          "w": "composition",
+          "t0": 1063,
+          "t1": 2041
+        },
+        {
+          "w": ":",
+          "t0": 2041,
+          "t1": 2371
+        },
+        {
+          "w": "quatre",
+          "t0": 2371,
+          "t1": 2860
+        },
+        {
+          "w": "un",
+          "t0": 2860,
+          "t1": 3105
+        },
+        {
+          "w": "quatre",
+          "t0": 3105,
+          "t1": 3594
+        },
+        {
+          "w": "un.",
+          "t0": 3594,
+          "t1": 3838
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    }
+  ],
+  "bytes": 2995244,
+  "peak": 0.9,
+  "rms": 0.073,
+  "clipped": 0,
+  "silentSeconds": 0,
+  "generated": "2026-10-13T08:55:26",
+  "secondsToBuild": 4.1
+}

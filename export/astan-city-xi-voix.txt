@@ -1,0 +1,15 @@
+ASTAN CITY — SCRIPT VOCAL
+Film : astan-city-xi.html · 43.4 s · 8 répliques · au micro : Léonard Chose
+Bande-son : assets/audio/astan-city-xi.wav (119 sons)
+Voix à importer : assets/voice/astan-city-xi.wav (voix « français · Tom (medium) »)
+Durées : voix mesurée par le studio, phrase par phrase (plan vocal)
+  début    fin   durée   voix    réplique
+  ------  ------  -----  ------  --------------------------------------------------------
+  00:00.60  00:03.52   2.92     oui  Bonsoir à tous, Léonard Chose au micro.
+  00:06.30  00:09.82   3.52     oui  Astan City dévoile son onze de départ, ce soir.
+  00:12.40  00:14.12   1.72     oui  Et dans les buts, Sako!
+  00:15.80  00:20.79   4.99     oui  La défense à quatre : Fouhez, Rolberg, Elhussin, Comistani.
+  00:21.60  00:27.53   5.93     oui  Au milieu, Mikkelsen et Belmadi. Devant, Elke, Sholke et Dempsey!
+  00:28.10  00:29.89   1.79     oui  Et Keytez en pointe!
+  00:31.80  00:34.59   2.79     oui  Sur le banc, dix remplaçants prêts à entrer.
+  00:37.80  00:41.38   3.58     oui  Astan City, onze de départ : quatre deux trois un.

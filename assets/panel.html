@@ -1,0 +1,1016 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio — le grand panel d'assets</title>
+<style>
+  :root{--ink:#f6f3ea;--gold:#f0b64a;--cyan:#5ad6de;--muted:rgba(246,243,234,.55);
+    --line:rgba(246,243,234,.13);--panel:rgba(255,255,255,.035)}
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);background:radial-gradient(120% 80% at 12% 0%,#1c1708,#04070c 55%) fixed;
+    font-family:"Helvetica Neue",Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:44px 22px 96px}
+  .brand{font:500 12px ui-monospace,monospace;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:14px 0 6px;font-size:clamp(30px,5vw,52px);letter-spacing:-.03em}
+  h1 em{font-style:normal;background:linear-gradient(96deg,var(--gold),var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{margin:54px 0 14px;font-size:20px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:12px}
+  h2 span{font:400 12px ui-monospace,monospace;color:var(--muted);letter-spacing:.16em;text-transform:uppercase}
+  h3{margin:0;font-size:17px}
+  p.lead{margin:0 0 8px;color:var(--muted);font-size:14.5px;line-height:1.7;max-width:88ch}
+  .counts{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 6px}
+  .count{font:400 12px ui-monospace,monospace;border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px;color:var(--muted)}
+  .count b{color:var(--gold)}
+  nav.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:22px 0 6px}
+  nav.tools a{font:400 12px ui-monospace,monospace;color:var(--ink);text-decoration:none;
+    border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:var(--panel)}
+  nav.tools a:hover{border-color:rgba(246,243,234,.34)}
+  input#q{flex:1;min-width:220px;padding:9px 14px;border-radius:999px;border:1px solid var(--line);
+    background:rgba(0,0,0,.35);color:var(--ink);font:400 13px ui-monospace,monospace;outline:none}
+  input#q:focus{border-color:var(--gold)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(288px,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px 16px}
+  .card .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card b{font-weight:650}
+  .chip{font:400 10.5px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+  .dim{color:var(--muted);font:400 11.5px ui-monospace,monospace}
+  audio{display:block;width:100%;height:34px;margin:10px 0 6px;filter:saturate(.85)}
+  .foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  code{font:400 12px ui-monospace,monospace;color:var(--cyan);background:rgba(90,214,222,.08);
+    border-radius:6px;padding:2px 6px}
+  .copy{margin-left:auto;font:400 11px ui-monospace,monospace;color:var(--ink);cursor:pointer;
+    border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 10px}
+  .copy:hover{border-color:var(--gold);color:var(--gold)}
+  .film{display:flex;flex-direction:column;gap:8px;padding:18px 18px 14px}
+  .film header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .film .stats{margin:0;padding-left:16px;color:var(--muted);font:400 12.5px ui-monospace,monospace;line-height:1.9}
+  .film .stats b{color:var(--ink)}
+  .players{display:flex;flex-direction:column;gap:2px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font:400 12px ui-monospace,monospace}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:400;letter-spacing:.1em;text-transform:uppercase;font-size:10.5px}
+  td.txt{font-family:"Helvetica Neue",Inter,system-ui,sans-serif;font-size:12.5px}
+  details summary{cursor:pointer;color:var(--muted);font:400 11.5px ui-monospace,monospace;letter-spacing:.08em;
+    text-transform:uppercase;margin-top:4px}
+  details[open] summary{color:var(--gold)}
+  .plates{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px}
+  details.sheet{margin:8px 0 18px;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:12px 14px}
+  details.sheet summary{cursor:pointer;font:400 12px ui-monospace,monospace;color:var(--muted);letter-spacing:.06em}
+  details.sheet img{display:block;width:100%;margin-top:12px;border-radius:10px;border:1px solid var(--line)}
+  .plate{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+  .plate img{display:block;width:100%;height:104px;object-fit:contain;background:
+    repeating-conic-gradient(rgba(255,255,255,.045) 0% 25%,transparent 0% 50%) 50%/16px 16px}
+  .plate figcaption{padding:8px 10px 10px;display:flex;flex-direction:column;gap:3px}
+  footer.page{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);
+    font:400 12px ui-monospace,monospace;line-height:2}
+  .hidden{display:none}
+</style></head>
+<body><div class="wrap">
+  <div class="brand">Studio des films · banque d'assets</div>
+  <h1>Le grand panel <em>d'assets</em></h1>
+  <p class="lead">Tout ce que le studio sait produire, à écouter et à regarder ici : les sons de la
+     banque (un lecteur par son, la commande de cue prête à copier), les bandes-son des films, leurs
+     bandes vocales avec le débit mesuré réplique par réplique, et les plaques d'images. Rien n'est
+     fabriqué à la volée : chaque fichier listé ici existe dans <code>assets/</code>, et la page se
+     régénère depuis les manifestes du studio.</p>
+  <div class="counts">
+    <span class="count"><b>76</b> sons jouables</span>
+    <span class="count"><b>6</b> films sonorisés</span>
+    <span class="count"><b>6</b> bandes vocales, <b>45</b> répliques mesurées</span>
+    <span class="count"><b>60</b> plaques d'images</span>
+    <span class="count"><b>46</b> recettes au catalogue</span>
+    <span class="count">voix : <b>français · Siwis (medium), français · Tom (medium)</b></span>
+  </div>
+  <nav class="tools">
+    <input id="q" type="search" placeholder="filtrer : whoosh, foule, drapeau, voix…" />
+    <a href="#sons">sons</a><a href="#films">films</a><a href="#images">images</a>
+    <a href="catalog.json">catalog.json</a><a href="../">les films</a>
+  </nav>
+
+  <h2 id="sons">La banque de sons <span>76 fichiers</span></h2>
+  <p class="lead">Chaque recette de <code>studio/voices.py</code> rendue seule, à son niveau de master.
+     Les recettes qui lisent le rang du cue (les cordes, les ticks, les pastilles) ont leurs variantes :
+     de quoi ne pas répéter deux fois le même son dans un montage.</p>
+    <section data-sec data-name="nappes &amp; graves">
+      <h2>nappes &amp; graves <span>14 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="air nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>air</b><span class="chip">9.00 s</span><span class="chip">563 ko</span></div>
+        <audio controls preload="none" src="sfx/air.wav"></audio>
+        <div class="foot"><code>["air"]</code><span class="dim">assets/sfx/air.wav · 563 ko</span>
+          <button class="copy" data-copy='["air", 9000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="choir nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>choir</b><span class="chip">5.00 s</span><span class="chip">313 ko</span></div>
+        <audio controls preload="none" src="sfx/choir.wav"></audio>
+        <div class="foot"><code>["choir"]</code><span class="dim">assets/sfx/choir.wav · 313 ko</span>
+          <button class="copy" data-copy='["choir", 5000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="choir nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>choir</b><span class="chip">5.00 s</span><span class="chip">313 ko</span></div>
+        <audio controls preload="none" src="sfx/choir-2.wav"></audio>
+        <div class="foot"><code>["choir"]</code><span class="dim">assets/sfx/choir-2.wav · 313 ko</span>
+          <button class="copy" data-copy='["choir", 5000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="choir nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>choir</b><span class="chip">5.00 s</span><span class="chip">313 ko</span></div>
+        <audio controls preload="none" src="sfx/choir-3.wav"></audio>
+        <div class="foot"><code>["choir"]</code><span class="dim">assets/sfx/choir-3.wav · 313 ko</span>
+          <button class="copy" data-copy='["choir", 5000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="choir nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>choir</b><span class="chip">5.00 s</span><span class="chip">313 ko</span></div>
+        <audio controls preload="none" src="sfx/choir-4.wav"></audio>
+        <div class="foot"><code>["choir"]</code><span class="dim">assets/sfx/choir-4.wav · 313 ko</span>
+          <button class="copy" data-copy='["choir", 5000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="choir nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>choir</b><span class="chip">5.00 s</span><span class="chip">313 ko</span></div>
+        <audio controls preload="none" src="sfx/choir-5.wav"></audio>
+        <div class="foot"><code>["choir"]</code><span class="dim">assets/sfx/choir-5.wav · 313 ko</span>
+          <button class="copy" data-copy='["choir", 5000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pad nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>pad</b><span class="chip">6.00 s</span><span class="chip">375 ko</span></div>
+        <audio controls preload="none" src="sfx/pad.wav"></audio>
+        <div class="foot"><code>["pad"]</code><span class="dim">assets/sfx/pad.wav · 375 ko</span>
+          <button class="copy" data-copy='["pad", 6000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pad nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>pad</b><span class="chip">6.00 s</span><span class="chip">375 ko</span></div>
+        <audio controls preload="none" src="sfx/pad-2.wav"></audio>
+        <div class="foot"><code>["pad"]</code><span class="dim">assets/sfx/pad-2.wav · 375 ko</span>
+          <button class="copy" data-copy='["pad", 6000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pad nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>pad</b><span class="chip">6.00 s</span><span class="chip">375 ko</span></div>
+        <audio controls preload="none" src="sfx/pad-3.wav"></audio>
+        <div class="foot"><code>["pad"]</code><span class="dim">assets/sfx/pad-3.wav · 375 ko</span>
+          <button class="copy" data-copy='["pad", 6000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pad nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>pad</b><span class="chip">6.00 s</span><span class="chip">375 ko</span></div>
+        <audio controls preload="none" src="sfx/pad-4.wav"></audio>
+        <div class="foot"><code>["pad"]</code><span class="dim">assets/sfx/pad-4.wav · 375 ko</span>
+          <button class="copy" data-copy='["pad", 6000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pad nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>pad</b><span class="chip">6.00 s</span><span class="chip">375 ko</span></div>
+        <audio controls preload="none" src="sfx/pad-5.wav"></audio>
+        <div class="foot"><code>["pad"]</code><span class="dim">assets/sfx/pad-5.wav · 375 ko</span>
+          <button class="copy" data-copy='["pad", 6000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="resolve nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>resolve</b><span class="chip">4.40 s</span><span class="chip">275 ko</span></div>
+        <audio controls preload="none" src="sfx/resolve.wav"></audio>
+        <div class="foot"><code>["resolve"]</code><span class="dim">assets/sfx/resolve.wav · 275 ko</span>
+          <button class="copy" data-copy='["resolve", 4400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="sub nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>sub</b><span class="chip">3.40 s</span><span class="chip">213 ko</span></div>
+        <audio controls preload="none" src="sfx/sub.wav"></audio>
+        <div class="foot"><code>["sub"]</code><span class="dim">assets/sfx/sub.wav · 213 ko</span>
+          <button class="copy" data-copy='["sub", 3400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="swell nappes &amp; graves" data-family="nappes &amp; graves">
+        <div class="top"><b>swell</b><span class="chip">2.50 s</span><span class="chip">156 ko</span></div>
+        <audio controls preload="none" src="sfx/swell.wav"></audio>
+        <div class="foot"><code>["swell"]</code><span class="dim">assets/sfx/swell.wav · 156 ko</span>
+          <button class="copy" data-copy='["swell", 2500]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+    <section data-sec data-name="percussions &amp; impacts">
+      <h2>percussions &amp; impacts <span>6 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="impact percussions &amp; impacts" data-family="percussions &amp; impacts">
+        <div class="top"><b>impact</b><span class="chip">0.90 s</span><span class="chip">56 ko</span></div>
+        <audio controls preload="none" src="sfx/impact.wav"></audio>
+        <div class="foot"><code>["impact"]</code><span class="dim">assets/sfx/impact.wav · 56 ko</span>
+          <button class="copy" data-copy='["impact", 900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="impactSoft percussions &amp; impacts" data-family="percussions &amp; impacts">
+        <div class="top"><b>impactSoft</b><span class="chip">0.50 s</span><span class="chip">31 ko</span></div>
+        <audio controls preload="none" src="sfx/impactSoft.wav"></audio>
+        <div class="foot"><code>["impactSoft"]</code><span class="dim">assets/sfx/impactSoft.wav · 31 ko</span>
+          <button class="copy" data-copy='["impactSoft", 500]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="kick percussions &amp; impacts" data-family="percussions &amp; impacts">
+        <div class="top"><b>kick</b><span class="chip">0.50 s</span><span class="chip">31 ko</span></div>
+        <audio controls preload="none" src="sfx/kick.wav"></audio>
+        <div class="foot"><code>["kick"]</code><span class="dim">assets/sfx/kick.wav · 31 ko</span>
+          <button class="copy" data-copy='["kick", 500]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="micThud percussions &amp; impacts" data-family="percussions &amp; impacts">
+        <div class="top"><b>micThud</b><span class="chip">0.32 s</span><span class="chip">20 ko</span></div>
+        <audio controls preload="none" src="sfx/micThud.wav"></audio>
+        <div class="foot"><code>["micThud"]</code><span class="dim">assets/sfx/micThud.wav · 20 ko</span>
+          <button class="copy" data-copy='["micThud", 320]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="stamp percussions &amp; impacts" data-family="percussions &amp; impacts">
+        <div class="top"><b>stamp</b><span class="chip">0.45 s</span><span class="chip">28 ko</span></div>
+        <audio controls preload="none" src="sfx/stamp.wav"></audio>
+        <div class="foot"><code>["stamp"]</code><span class="dim">assets/sfx/stamp.wav · 28 ko</span>
+          <button class="copy" data-copy='["stamp", 450]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="tom percussions &amp; impacts" data-family="percussions &amp; impacts">
+        <div class="top"><b>tom</b><span class="chip">0.35 s</span><span class="chip">22 ko</span></div>
+        <audio controls preload="none" src="sfx/tom.wav"></audio>
+        <div class="foot"><code>["tom"]</code><span class="dim">assets/sfx/tom.wav · 22 ko</span>
+          <button class="copy" data-copy='["tom", 350]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+    <section data-sec data-name="transitions &amp; mouvements">
+      <h2>transitions &amp; mouvements <span>7 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="jerseyDrop transitions &amp; mouvements" data-family="transitions &amp; mouvements">
+        <div class="top"><b>jerseyDrop</b><span class="chip">0.18 s</span><span class="chip">11 ko</span></div>
+        <audio controls preload="none" src="sfx/jerseyDrop.wav"></audio>
+        <div class="foot"><code>["jerseyDrop"]</code><span class="dim">assets/sfx/jerseyDrop.wav · 11 ko</span>
+          <button class="copy" data-copy='["jerseyDrop", 180]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="plateWipe transitions &amp; mouvements" data-family="transitions &amp; mouvements">
+        <div class="top"><b>plateWipe</b><span class="chip">0.45 s</span><span class="chip">28 ko</span></div>
+        <audio controls preload="none" src="sfx/plateWipe.wav"></audio>
+        <div class="foot"><code>["plateWipe"]</code><span class="dim">assets/sfx/plateWipe.wav · 28 ko</span>
+          <button class="copy" data-copy='["plateWipe", 450]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="riser transitions &amp; mouvements" data-family="transitions &amp; mouvements">
+        <div class="top"><b>riser</b><span class="chip">1.50 s</span><span class="chip">94 ko</span></div>
+        <audio controls preload="none" src="sfx/riser.wav"></audio>
+        <div class="foot"><code>["riser"]</code><span class="dim">assets/sfx/riser.wav · 94 ko</span>
+          <button class="copy" data-copy='["riser", 1500]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="sweep transitions &amp; mouvements" data-family="transitions &amp; mouvements">
+        <div class="top"><b>sweep</b><span class="chip">1.80 s</span><span class="chip">113 ko</span></div>
+        <audio controls preload="none" src="sfx/sweep.wav"></audio>
+        <div class="foot"><code>["sweep"]</code><span class="dim">assets/sfx/sweep.wav · 113 ko</span>
+          <button class="copy" data-copy='["sweep", 1800]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="whoosh transitions &amp; mouvements" data-family="transitions &amp; mouvements">
+        <div class="top"><b>whoosh</b><span class="chip">1.15 s</span><span class="chip">72 ko</span></div>
+        <audio controls preload="none" src="sfx/whoosh.wav"></audio>
+        <div class="foot"><code>["whoosh"]</code><span class="dim">assets/sfx/whoosh.wav · 72 ko</span>
+          <button class="copy" data-copy='["whoosh", 1150]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="whooshDeep transitions &amp; mouvements" data-family="transitions &amp; mouvements">
+        <div class="top"><b>whooshDeep</b><span class="chip">1.60 s</span><span class="chip">100 ko</span></div>
+        <audio controls preload="none" src="sfx/whooshDeep.wav"></audio>
+        <div class="foot"><code>["whooshDeep"]</code><span class="dim">assets/sfx/whooshDeep.wav · 100 ko</span>
+          <button class="copy" data-copy='["whooshDeep", 1600]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="whooshSoft transitions &amp; mouvements" data-family="transitions &amp; mouvements">
+        <div class="top"><b>whooshSoft</b><span class="chip">1.40 s</span><span class="chip">88 ko</span></div>
+        <audio controls preload="none" src="sfx/whooshSoft.wav"></audio>
+        <div class="foot"><code>["whooshSoft"]</code><span class="dim">assets/sfx/whooshSoft.wav · 88 ko</span>
+          <button class="copy" data-copy='["whooshSoft", 1400]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+    <section data-sec data-name="cordes &amp; cloches">
+      <h2>cordes &amp; cloches <span>13 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="chime cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>chime</b><span class="chip">1.50 s</span><span class="chip">94 ko</span></div>
+        <audio controls preload="none" src="sfx/chime.wav"></audio>
+        <div class="foot"><code>["chime"]</code><span class="dim">assets/sfx/chime.wav · 94 ko</span>
+          <button class="copy" data-copy='["chime", 1500]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="chordUp cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>chordUp</b><span class="chip">2.78 s</span><span class="chip">174 ko</span></div>
+        <audio controls preload="none" src="sfx/chordUp.wav"></audio>
+        <div class="foot"><code>["chordUp"]</code><span class="dim">assets/sfx/chordUp.wav · 174 ko</span>
+          <button class="copy" data-copy='["chordUp", 2780]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="coinLand cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>coinLand</b><span class="chip">0.50 s</span><span class="chip">31 ko</span></div>
+        <audio controls preload="none" src="sfx/coinLand.wav"></audio>
+        <div class="foot"><code>["coinLand"]</code><span class="dim">assets/sfx/coinLand.wav · 31 ko</span>
+          <button class="copy" data-copy='["coinLand", 500]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="door cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>door</b><span class="chip">0.34 s</span><span class="chip">21 ko</span></div>
+        <audio controls preload="none" src="sfx/door.wav"></audio>
+        <div class="foot"><code>["door"]</code><span class="dim">assets/sfx/door.wav · 21 ko</span>
+          <button class="copy" data-copy='["door", 340]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pluck cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>pluck</b><span class="chip">0.90 s</span><span class="chip">56 ko</span></div>
+        <audio controls preload="none" src="sfx/pluck.wav"></audio>
+        <div class="foot"><code>["pluck"]</code><span class="dim">assets/sfx/pluck.wav · 56 ko</span>
+          <button class="copy" data-copy='["pluck", 900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pluck cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>pluck</b><span class="chip">0.90 s</span><span class="chip">56 ko</span></div>
+        <audio controls preload="none" src="sfx/pluck-2.wav"></audio>
+        <div class="foot"><code>["pluck"]</code><span class="dim">assets/sfx/pluck-2.wav · 56 ko</span>
+          <button class="copy" data-copy='["pluck", 900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pluck cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>pluck</b><span class="chip">0.90 s</span><span class="chip">56 ko</span></div>
+        <audio controls preload="none" src="sfx/pluck-3.wav"></audio>
+        <div class="foot"><code>["pluck"]</code><span class="dim">assets/sfx/pluck-3.wav · 56 ko</span>
+          <button class="copy" data-copy='["pluck", 900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pluck cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>pluck</b><span class="chip">0.90 s</span><span class="chip">56 ko</span></div>
+        <audio controls preload="none" src="sfx/pluck-4.wav"></audio>
+        <div class="foot"><code>["pluck"]</code><span class="dim">assets/sfx/pluck-4.wav · 56 ko</span>
+          <button class="copy" data-copy='["pluck", 900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pluck cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>pluck</b><span class="chip">0.90 s</span><span class="chip">56 ko</span></div>
+        <audio controls preload="none" src="sfx/pluck-5.wav"></audio>
+        <div class="foot"><code>["pluck"]</code><span class="dim">assets/sfx/pluck-5.wav · 56 ko</span>
+          <button class="copy" data-copy='["pluck", 900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="pluck cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>pluck</b><span class="chip">0.90 s</span><span class="chip">56 ko</span></div>
+        <audio controls preload="none" src="sfx/pluck-6.wav"></audio>
+        <div class="foot"><code>["pluck"]</code><span class="dim">assets/sfx/pluck-6.wav · 56 ko</span>
+          <button class="copy" data-copy='["pluck", 900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="rateDing cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>rateDing</b><span class="chip">1.30 s</span><span class="chip">81 ko</span></div>
+        <audio controls preload="none" src="sfx/rateDing.wav"></audio>
+        <div class="foot"><code>["rateDing"]</code><span class="dim">assets/sfx/rateDing.wav · 81 ko</span>
+          <button class="copy" data-copy='["rateDing", 1300]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="shimmer cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>shimmer</b><span class="chip">2.20 s</span><span class="chip">138 ko</span></div>
+        <audio controls preload="none" src="sfx/shimmer.wav"></audio>
+        <div class="foot"><code>["shimmer"]</code><span class="dim">assets/sfx/shimmer.wav · 138 ko</span>
+          <button class="copy" data-copy='["shimmer", 2200]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="sparkle cordes &amp; cloches" data-family="cordes &amp; cloches">
+        <div class="top"><b>sparkle</b><span class="chip">1.10 s</span><span class="chip">69 ko</span></div>
+        <audio controls preload="none" src="sfx/sparkle.wav"></audio>
+        <div class="foot"><code>["sparkle"]</code><span class="dim">assets/sfx/sparkle.wav · 69 ko</span>
+          <button class="copy" data-copy='["sparkle", 1100]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+    <section data-sec data-name="interface">
+      <h2>interface <span>26 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="benchPop interface" data-family="interface">
+        <div class="top"><b>benchPop</b><span class="chip">0.40 s</span><span class="chip">25 ko</span></div>
+        <audio controls preload="none" src="sfx/benchPop.wav"></audio>
+        <div class="foot"><code>["benchPop"]</code><span class="dim">assets/sfx/benchPop.wav · 25 ko</span>
+          <button class="copy" data-copy='["benchPop", 400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="benchPop interface" data-family="interface">
+        <div class="top"><b>benchPop</b><span class="chip">0.40 s</span><span class="chip">25 ko</span></div>
+        <audio controls preload="none" src="sfx/benchPop-2.wav"></audio>
+        <div class="foot"><code>["benchPop"]</code><span class="dim">assets/sfx/benchPop-2.wav · 25 ko</span>
+          <button class="copy" data-copy='["benchPop", 400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="benchPop interface" data-family="interface">
+        <div class="top"><b>benchPop</b><span class="chip">0.40 s</span><span class="chip">25 ko</span></div>
+        <audio controls preload="none" src="sfx/benchPop-3.wav"></audio>
+        <div class="foot"><code>["benchPop"]</code><span class="dim">assets/sfx/benchPop-3.wav · 25 ko</span>
+          <button class="copy" data-copy='["benchPop", 400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="benchPop interface" data-family="interface">
+        <div class="top"><b>benchPop</b><span class="chip">0.40 s</span><span class="chip">25 ko</span></div>
+        <audio controls preload="none" src="sfx/benchPop-4.wav"></audio>
+        <div class="foot"><code>["benchPop"]</code><span class="dim">assets/sfx/benchPop-4.wav · 25 ko</span>
+          <button class="copy" data-copy='["benchPop", 400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="benchPop interface" data-family="interface">
+        <div class="top"><b>benchPop</b><span class="chip">0.40 s</span><span class="chip">25 ko</span></div>
+        <audio controls preload="none" src="sfx/benchPop-5.wav"></audio>
+        <div class="foot"><code>["benchPop"]</code><span class="dim">assets/sfx/benchPop-5.wav · 25 ko</span>
+          <button class="copy" data-copy='["benchPop", 400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="benchTick interface" data-family="interface">
+        <div class="top"><b>benchTick</b><span class="chip">0.07 s</span><span class="chip">4 ko</span></div>
+        <audio controls preload="none" src="sfx/benchTick.wav"></audio>
+        <div class="foot"><code>["benchTick"]</code><span class="dim">assets/sfx/benchTick.wav · 4 ko</span>
+          <button class="copy" data-copy='["benchTick", 70]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="benchTick interface" data-family="interface">
+        <div class="top"><b>benchTick</b><span class="chip">0.07 s</span><span class="chip">4 ko</span></div>
+        <audio controls preload="none" src="sfx/benchTick-2.wav"></audio>
+        <div class="foot"><code>["benchTick"]</code><span class="dim">assets/sfx/benchTick-2.wav · 4 ko</span>
+          <button class="copy" data-copy='["benchTick", 70]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="benchTick interface" data-family="interface">
+        <div class="top"><b>benchTick</b><span class="chip">0.07 s</span><span class="chip">4 ko</span></div>
+        <audio controls preload="none" src="sfx/benchTick-3.wav"></audio>
+        <div class="foot"><code>["benchTick"]</code><span class="dim">assets/sfx/benchTick-3.wav · 4 ko</span>
+          <button class="copy" data-copy='["benchTick", 70]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="blip interface" data-family="interface">
+        <div class="top"><b>blip</b><span class="chip">0.12 s</span><span class="chip">8 ko</span></div>
+        <audio controls preload="none" src="sfx/blip.wav"></audio>
+        <div class="foot"><code>["blip"]</code><span class="dim">assets/sfx/blip.wav · 8 ko</span>
+          <button class="copy" data-copy='["blip", 120]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="blip interface" data-family="interface">
+        <div class="top"><b>blip</b><span class="chip">0.12 s</span><span class="chip">8 ko</span></div>
+        <audio controls preload="none" src="sfx/blip-2.wav"></audio>
+        <div class="foot"><code>["blip"]</code><span class="dim">assets/sfx/blip-2.wav · 8 ko</span>
+          <button class="copy" data-copy='["blip", 120]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="blip interface" data-family="interface">
+        <div class="top"><b>blip</b><span class="chip">0.12 s</span><span class="chip">8 ko</span></div>
+        <audio controls preload="none" src="sfx/blip-3.wav"></audio>
+        <div class="foot"><code>["blip"]</code><span class="dim">assets/sfx/blip-3.wav · 8 ko</span>
+          <button class="copy" data-copy='["blip", 120]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="chip interface" data-family="interface">
+        <div class="top"><b>chip</b><span class="chip">0.16 s</span><span class="chip">10 ko</span></div>
+        <audio controls preload="none" src="sfx/chip.wav"></audio>
+        <div class="foot"><code>["chip"]</code><span class="dim">assets/sfx/chip.wav · 10 ko</span>
+          <button class="copy" data-copy='["chip", 160]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="coinTick interface" data-family="interface">
+        <div class="top"><b>coinTick</b><span class="chip">0.10 s</span><span class="chip">6 ko</span></div>
+        <audio controls preload="none" src="sfx/coinTick.wav"></audio>
+        <div class="foot"><code>["coinTick"]</code><span class="dim">assets/sfx/coinTick.wav · 6 ko</span>
+          <button class="copy" data-copy='["coinTick", 100]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="coinTick interface" data-family="interface">
+        <div class="top"><b>coinTick</b><span class="chip">0.10 s</span><span class="chip">6 ko</span></div>
+        <audio controls preload="none" src="sfx/coinTick-2.wav"></audio>
+        <div class="foot"><code>["coinTick"]</code><span class="dim">assets/sfx/coinTick-2.wav · 6 ko</span>
+          <button class="copy" data-copy='["coinTick", 100]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="coinTick interface" data-family="interface">
+        <div class="top"><b>coinTick</b><span class="chip">0.10 s</span><span class="chip">6 ko</span></div>
+        <audio controls preload="none" src="sfx/coinTick-3.wav"></audio>
+        <div class="foot"><code>["coinTick"]</code><span class="dim">assets/sfx/coinTick-3.wav · 6 ko</span>
+          <button class="copy" data-copy='["coinTick", 100]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="coinTick interface" data-family="interface">
+        <div class="top"><b>coinTick</b><span class="chip">0.10 s</span><span class="chip">6 ko</span></div>
+        <audio controls preload="none" src="sfx/coinTick-4.wav"></audio>
+        <div class="foot"><code>["coinTick"]</code><span class="dim">assets/sfx/coinTick-4.wav · 6 ko</span>
+          <button class="copy" data-copy='["coinTick", 100]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="coinTick interface" data-family="interface">
+        <div class="top"><b>coinTick</b><span class="chip">0.10 s</span><span class="chip">6 ko</span></div>
+        <audio controls preload="none" src="sfx/coinTick-5.wav"></audio>
+        <div class="foot"><code>["coinTick"]</code><span class="dim">assets/sfx/coinTick-5.wav · 6 ko</span>
+          <button class="copy" data-copy='["coinTick", 100]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="flagPop interface" data-family="interface">
+        <div class="top"><b>flagPop</b><span class="chip">0.12 s</span><span class="chip">8 ko</span></div>
+        <audio controls preload="none" src="sfx/flagPop.wav"></audio>
+        <div class="foot"><code>["flagPop"]</code><span class="dim">assets/sfx/flagPop.wav · 8 ko</span>
+          <button class="copy" data-copy='["flagPop", 120]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="jerseyLand interface" data-family="interface">
+        <div class="top"><b>jerseyLand</b><span class="chip">0.28 s</span><span class="chip">18 ko</span></div>
+        <audio controls preload="none" src="sfx/jerseyLand.wav"></audio>
+        <div class="foot"><code>["jerseyLand"]</code><span class="dim">assets/sfx/jerseyLand.wav · 18 ko</span>
+          <button class="copy" data-copy='["jerseyLand", 280]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="rateTick interface" data-family="interface">
+        <div class="top"><b>rateTick</b><span class="chip">0.08 s</span><span class="chip">5 ko</span></div>
+        <audio controls preload="none" src="sfx/rateTick.wav"></audio>
+        <div class="foot"><code>["rateTick"]</code><span class="dim">assets/sfx/rateTick.wav · 5 ko</span>
+          <button class="copy" data-copy='["rateTick", 80]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="rateTick interface" data-family="interface">
+        <div class="top"><b>rateTick</b><span class="chip">0.08 s</span><span class="chip">5 ko</span></div>
+        <audio controls preload="none" src="sfx/rateTick-2.wav"></audio>
+        <div class="foot"><code>["rateTick"]</code><span class="dim">assets/sfx/rateTick-2.wav · 5 ko</span>
+          <button class="copy" data-copy='["rateTick", 80]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="rateTick interface" data-family="interface">
+        <div class="top"><b>rateTick</b><span class="chip">0.08 s</span><span class="chip">5 ko</span></div>
+        <audio controls preload="none" src="sfx/rateTick-3.wav"></audio>
+        <div class="foot"><code>["rateTick"]</code><span class="dim">assets/sfx/rateTick-3.wav · 5 ko</span>
+          <button class="copy" data-copy='["rateTick", 80]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="trace interface" data-family="interface">
+        <div class="top"><b>trace</b><span class="chip">0.18 s</span><span class="chip">11 ko</span></div>
+        <audio controls preload="none" src="sfx/trace.wav"></audio>
+        <div class="foot"><code>["trace"]</code><span class="dim">assets/sfx/trace.wav · 11 ko</span>
+          <button class="copy" data-copy='["trace", 180]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="trace interface" data-family="interface">
+        <div class="top"><b>trace</b><span class="chip">0.18 s</span><span class="chip">11 ko</span></div>
+        <audio controls preload="none" src="sfx/trace-2.wav"></audio>
+        <div class="foot"><code>["trace"]</code><span class="dim">assets/sfx/trace-2.wav · 11 ko</span>
+          <button class="copy" data-copy='["trace", 180]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="trace interface" data-family="interface">
+        <div class="top"><b>trace</b><span class="chip">0.18 s</span><span class="chip">11 ko</span></div>
+        <audio controls preload="none" src="sfx/trace-3.wav"></audio>
+        <div class="foot"><code>["trace"]</code><span class="dim">assets/sfx/trace-3.wav · 11 ko</span>
+          <button class="copy" data-copy='["trace", 180]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="trace interface" data-family="interface">
+        <div class="top"><b>trace</b><span class="chip">0.18 s</span><span class="chip">11 ko</span></div>
+        <audio controls preload="none" src="sfx/trace-4.wav"></audio>
+        <div class="foot"><code>["trace"]</code><span class="dim">assets/sfx/trace-4.wav · 11 ko</span>
+          <button class="copy" data-copy='["trace", 180]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+    <section data-sec data-name="mécanique">
+      <h2>mécanique <span>2 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="engine mécanique" data-family="mécanique">
+        <div class="top"><b>engine</b><span class="chip">10.40 s</span><span class="chip">650 ko</span></div>
+        <audio controls preload="none" src="sfx/engine.wav"></audio>
+        <div class="foot"><code>["engine"]</code><span class="dim">assets/sfx/engine.wav · 650 ko</span>
+          <button class="copy" data-copy='["engine", 10400]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="ignite mécanique" data-family="mécanique">
+        <div class="top"><b>ignite</b><span class="chip">0.50 s</span><span class="chip">31 ko</span></div>
+        <audio controls preload="none" src="sfx/ignite.wav"></audio>
+        <div class="foot"><code>["ignite"]</code><span class="dim">assets/sfx/ignite.wav · 31 ko</span>
+          <button class="copy" data-copy='["ignite", 500]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+    <section data-sec data-name="stade &amp; foule">
+      <h2>stade &amp; foule <span>5 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="crowd stade &amp; foule" data-family="stade &amp; foule">
+        <div class="top"><b>crowd</b><span class="chip">9.00 s</span><span class="chip">563 ko</span></div>
+        <audio controls preload="none" src="sfx/crowd.wav"></audio>
+        <div class="foot"><code>["crowd"]</code><span class="dim">assets/sfx/crowd.wav · 563 ko</span>
+          <button class="copy" data-copy='["crowd", 9000]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="crowdGasp stade &amp; foule" data-family="stade &amp; foule">
+        <div class="top"><b>crowdGasp</b><span class="chip">1.10 s</span><span class="chip">69 ko</span></div>
+        <audio controls preload="none" src="sfx/crowdGasp.wav"></audio>
+        <div class="foot"><code>["crowdGasp"]</code><span class="dim">assets/sfx/crowdGasp.wav · 69 ko</span>
+          <button class="copy" data-copy='["crowdGasp", 1100]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="crowdOhh stade &amp; foule" data-family="stade &amp; foule">
+        <div class="top"><b>crowdOhh</b><span class="chip">1.90 s</span><span class="chip">119 ko</span></div>
+        <audio controls preload="none" src="sfx/crowdOhh.wav"></audio>
+        <div class="foot"><code>["crowdOhh"]</code><span class="dim">assets/sfx/crowdOhh.wav · 119 ko</span>
+          <button class="copy" data-copy='["crowdOhh", 1900]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="hush stade &amp; foule" data-family="stade &amp; foule">
+        <div class="top"><b>hush</b><span class="chip">1.20 s</span><span class="chip">75 ko</span></div>
+        <audio controls preload="none" src="sfx/hush.wav"></audio>
+        <div class="foot"><code>["hush"]</code><span class="dim">assets/sfx/hush.wav · 75 ko</span>
+          <button class="copy" data-copy='["hush", 1200]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="whistle stade &amp; foule" data-family="stade &amp; foule">
+        <div class="top"><b>whistle</b><span class="chip">0.55 s</span><span class="chip">34 ko</span></div>
+        <audio controls preload="none" src="sfx/whistle.wav"></audio>
+        <div class="foot"><code>["whistle"]</code><span class="dim">assets/sfx/whistle.wav · 34 ko</span>
+          <button class="copy" data-copy='["whistle", 550]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+    <section data-sec data-name="studio &amp; micro">
+      <h2>studio &amp; micro <span>3 sons</span></h2>
+      <div class="grid">
+      <div class="card snd" data-name="phoneBuzz studio &amp; micro" data-family="studio &amp; micro">
+        <div class="top"><b>phoneBuzz</b><span class="chip">0.43 s</span><span class="chip">27 ko</span></div>
+        <audio controls preload="none" src="sfx/phoneBuzz.wav"></audio>
+        <div class="foot"><code>["phoneBuzz"]</code><span class="dim">assets/sfx/phoneBuzz.wav · 27 ko</span>
+          <button class="copy" data-copy='["phoneBuzz", 430]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="squeak studio &amp; micro" data-family="studio &amp; micro">
+        <div class="top"><b>squeak</b><span class="chip">0.55 s</span><span class="chip">34 ko</span></div>
+        <audio controls preload="none" src="sfx/squeak.wav"></audio>
+        <div class="foot"><code>["squeak"]</code><span class="dim">assets/sfx/squeak.wav · 34 ko</span>
+          <button class="copy" data-copy='["squeak", 550]'>cue</button></div>
+      </div>
+      <div class="card snd" data-name="tada studio &amp; micro" data-family="studio &amp; micro">
+        <div class="top"><b>tada</b><span class="chip">1.76 s</span><span class="chip">110 ko</span></div>
+        <audio controls preload="none" src="sfx/tada.wav"></audio>
+        <div class="foot"><code>["tada"]</code><span class="dim">assets/sfx/tada.wav · 110 ko</span>
+          <button class="copy" data-copy='["tada", 1760]'>cue</button></div>
+      </div>
+      </div>
+    </section>
+
+  <h2 id="films">Les films <span>bande + voix</span></h2>
+      <article class="card film" data-name="astan-city-xi Astan City">
+        <header><h3>Astan City</h3><span class="dim">astan-city-xi.html · 43.4 s</span></header>
+        <ul class="stats">
+          <li><b>bande-son</b> 44.2 s · 119 sons · crête 0.90 · RMS 0.160 · 5.7 Mo</li>
+          <li><b>voix</b> 8 répliques · français · Tom (medium) · débit moyen 2.40 mot/s · 2.8 Mo</li>
+        </ul>
+        <div class="players">
+          <audio controls preload="none" src="audio/astan-city-xi.wav" title="bande-son"></audio>
+          <audio controls preload="none" src="voice/astan-city-xi.wav" title="voix"></audio>
+        </div>
+        <details><summary>les répliques mesurées</summary>
+          <table><thead><tr><th>#</th><th>voix</th><th>mot/s</th><th>texte</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>2.92 s</td><td>2.40</td><td class="txt">Bonsoir à tous, Léonard Chose au micro.</td></tr>
+            <tr><td>2</td><td>3.52 s</td><td>2.56</td><td class="txt">Astan City dévoile son onze de départ, ce soir.</td></tr>
+            <tr><td>3</td><td>1.72 s</td><td>2.90</td><td class="txt">Et dans les buts, Sako!</td></tr>
+            <tr><td>4</td><td>4.99 s</td><td>1.80</td><td class="txt">La défense à quatre : Fouhez, Rolberg, Elhussin, Comistani.</td></tr>
+            <tr><td>5</td><td>5.93 s</td><td>1.69</td><td class="txt">Au milieu, Mikkelsen et Belmadi. Devant, Elke, Sholke et Dempsey!</td></tr>
+            <tr><td>6</td><td>1.79 s</td><td>2.23</td><td class="txt">Et Keytez en pointe!</td></tr>
+            <tr><td>7</td><td>2.79 s</td><td>2.87</td><td class="txt">Sur le banc, dix remplaçants prêts à entrer.</td></tr>
+            <tr><td>8</td><td>3.58 s</td><td>2.79</td><td class="txt">Astan City, onze de départ : quatre deux trois un.</td></tr>
+          </tbody></table>
+        </details>
+        <footer><code>bun run dev</code> → <code>astan-city-xi.html</code></footer>
+      </article>
+      <article class="card film" data-name="boby-commentateur Boby">
+        <header><h3>Boby</h3><span class="dim">boby-commentateur.html · 34.0 s</span></header>
+        <ul class="stats">
+          <li><b>bande-son</b> 34.8 s · 71 sons · crête 0.90 · RMS 0.170 · 4.5 Mo</li>
+          <li><b>voix</b> 8 répliques · français · Tom (medium) · débit moyen 2.17 mot/s · 2.2 Mo</li>
+        </ul>
+        <div class="players">
+          <audio controls preload="none" src="audio/boby-commentateur.wav" title="bande-son"></audio>
+          <audio controls preload="none" src="voice/boby-commentateur.wav" title="voix"></audio>
+        </div>
+        <details><summary>les répliques mesurées</summary>
+          <table><thead><tr><th>#</th><th>voix</th><th>mot/s</th><th>texte</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>3.77 s</td><td>1.59</td><td class="txt">Bonsoir, bonsoir. Ici Boby, en direct.</td></tr>
+            <tr><td>2</td><td>3.15 s</td><td>1.90</td><td class="txt">Bienvenue sur, euh, sur notre antenne.</td></tr>
+            <tr><td>3</td><td>2.48 s</td><td>2.82</td><td class="txt">Donc ce soir, on commente... quel match.</td></tr>
+            <tr><td>4</td><td>3.87 s</td><td>1.29</td><td class="txt">Comistani. Enfin, Comistini... non, comestible.</td></tr>
+            <tr><td>5</td><td>3.18 s</td><td>1.26</td><td class="txt">Mikkelsen. Mik... Mike-les-sons, voilà.</td></tr>
+            <tr><td>6</td><td>2.92 s</td><td>2.39</td><td class="txt">Zéro partout, euh non, trois à zéro.</td></tr>
+            <tr><td>7</td><td>3.06 s</td><td>1.96</td><td class="txt">Aïe. J'ai lâché le micro, pardon.</td></tr>
+            <tr><td>8</td><td>1.68 s</td><td>4.17</td><td class="txt">Ce n'est pas moi, c'est le vent.</td></tr>
+          </tbody></table>
+        </details>
+        <footer><code>bun run dev</code> → <code>boby-commentateur.html</code></footer>
+      </article>
+      <article class="card film" data-name="cs-axium-xi CS AXIUM">
+        <header><h3>CS AXIUM</h3><span class="dim">cs-axium-xi.html · 46.2 s</span></header>
+        <ul class="stats">
+          <li><b>bande-son</b> 47.0 s · 118 sons · crête 0.90 · RMS 0.170 · 6.0 Mo</li>
+          <li><b>voix</b> 9 répliques · français · Tom (medium) · débit moyen 2.19 mot/s · 3.0 Mo</li>
+        </ul>
+        <div class="players">
+          <audio controls preload="none" src="audio/cs-axium-xi.wav" title="bande-son"></audio>
+          <audio controls preload="none" src="voice/cs-axium-xi.wav" title="voix"></audio>
+        </div>
+        <details><summary>les répliques mesurées</summary>
+          <table><thead><tr><th>#</th><th>voix</th><th>mot/s</th><th>texte</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>2.81 s</td><td>2.49</td><td class="txt">Bonsoir à tous, Léonard Chose au micro.</td></tr>
+            <tr><td>2</td><td>4.02 s</td><td>1.74</td><td class="txt">CS Axiom dévoile sa composition, ce soir.</td></tr>
+            <tr><td>3</td><td>1.82 s</td><td>2.75</td><td class="txt">Et dans les buts, Haddad!</td></tr>
+            <tr><td>4</td><td>4.56 s</td><td>1.75</td><td class="txt">La défense : Lot Istanois, Benali, Hernancio, Sanchez.</td></tr>
+            <tr><td>5</td><td>2.99 s</td><td>2.01</td><td class="txt">Mansouri en sentinelle, devant la défense.</td></tr>
+            <tr><td>6</td><td>5.76 s</td><td>1.91</td><td class="txt">Le Boucher, Gelarza, Von Istanoix, Caruso : ils alimentent l'attaque !</td></tr>
+            <tr><td>7</td><td>1.96 s</td><td>2.05</td><td class="txt">Et Saidi, en pointe!</td></tr>
+            <tr><td>8</td><td>2.94 s</td><td>2.72</td><td class="txt">Sur le banc, neuf remplaçants prêts à entrer.</td></tr>
+            <tr><td>9</td><td>3.84 s</td><td>2.35</td><td class="txt">CS Axiom, la composition : quatre un quatre un.</td></tr>
+          </tbody></table>
+        </details>
+        <footer><code>bun run dev</code> → <code>cs-axium-xi.html</code></footer>
+      </article>
+      <article class="card film" data-name="herobrine HEROBRINE">
+        <header><h3>HEROBRINE</h3><span class="dim">herobrine.html · 42.0 s</span></header>
+        <ul class="stats">
+          <li><b>bande-son</b> 42.8 s · 126 sons · crête 0.90 · RMS 0.180 · 5.5 Mo</li>
+          <li><b>voix</b> 8 répliques · français · Tom (medium) · débit moyen 2.54 mot/s · 2.7 Mo</li>
+        </ul>
+        <div class="players">
+          <audio controls preload="none" src="audio/herobrine.wav" title="bande-son"></audio>
+          <audio controls preload="none" src="voice/herobrine.wav" title="voix"></audio>
+        </div>
+        <details><summary>les répliques mesurées</summary>
+          <table><thead><tr><th>#</th><th>voix</th><th>mot/s</th><th>texte</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>3.85 s</td><td>1.82</td><td class="txt">Nouveau monde. Survie. Seul, et sans personne.</td></tr>
+            <tr><td>2</td><td>3.29 s</td><td>3.35</td><td class="txt">La nuit tombe, et quelque chose me suit dans le noir.</td></tr>
+            <tr><td>3</td><td>3.33 s</td><td>2.10</td><td class="txt">Mes torches s'éteignent. Mes coffres sont vidés.</td></tr>
+            <tr><td>4</td><td>3.63 s</td><td>2.48</td><td class="txt">Un tunnel droit, creusé dans la pierre, sans porte.</td></tr>
+            <tr><td>5</td><td>3.65 s</td><td>2.47</td><td class="txt">En haut de la colline, une silhouette me regarde.</td></tr>
+            <tr><td>6</td><td>2.99 s</td><td>3.01</td><td class="txt">Deux yeux blancs. Il ne faut jamais le fixer.</td></tr>
+            <tr><td>7</td><td>3.07 s</td><td>2.60</td><td class="txt">Il vient d'entrer dans ma partie. J'ai peur.</td></tr>
+            <tr><td>8</td><td>2.78 s</td><td>2.52</td><td class="txt">Herobrine. Ce monde n'est plus à moi.</td></tr>
+          </tbody></table>
+        </details>
+        <footer><code>bun run dev</code> → <code>herobrine.html</code></footer>
+      </article>
+      <article class="card film" data-name="litel Litel">
+        <header><h3>Litel</h3><span class="dim">litel.html · 40.0 s</span></header>
+        <ul class="stats">
+          <li><b>bande-son</b> 40.8 s · 71 sons · crête 0.90 · RMS 0.168 · 5.2 Mo</li>
+          <li><b>voix</b> 6 répliques · français · Tom (medium) · débit moyen 2.52 mot/s · 2.6 Mo</li>
+        </ul>
+        <div class="players">
+          <audio controls preload="none" src="audio/litel.wav" title="bande-son"></audio>
+          <audio controls preload="none" src="voice/litel.wav" title="voix"></audio>
+        </div>
+        <details><summary>les répliques mesurées</summary>
+          <table><thead><tr><th>#</th><th>voix</th><th>mot/s</th><th>texte</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>3.46 s</td><td>2.60</td><td class="txt">Litel ouvre ses portes : bienvenue dans le magasin.</td></tr>
+            <tr><td>2</td><td>3.40 s</td><td>2.65</td><td class="txt">Des petits prix dans tous les rayons, sans exception.</td></tr>
+            <tr><td>3</td><td>3.47 s</td><td>2.59</td><td class="txt">Cinq istancoins la boîte, et huit pour la deuxième.</td></tr>
+            <tr><td>4</td><td>2.65 s</td><td>3.02</td><td class="txt">Chaque lot est vérifié avant de partir d'ici.</td></tr>
+            <tr><td>5</td><td>3.43 s</td><td>2.04</td><td class="txt">Livraison en vingt-quatre heures, partout dans Istan.</td></tr>
+            <tr><td>6</td><td>3.12 s</td><td>2.24</td><td class="txt">Litel : des petits prix, grande qualité.</td></tr>
+          </tbody></table>
+        </details>
+        <footer><code>bun run dev</code> → <code>litel.html</code></footer>
+      </article>
+      <article class="card film" data-name="nyxar-n3 Nyxar N3">
+        <header><h3>Nyxar N3</h3><span class="dim">nyxar-n3.html · 37.0 s</span></header>
+        <ul class="stats">
+          <li><b>bande-son</b> 37.8 s · 60 sons · crête 0.90 · RMS 0.183 · 4.8 Mo</li>
+          <li><b>voix</b> 6 répliques · français · Tom (medium) · débit moyen 2.15 mot/s · 2.4 Mo</li>
+        </ul>
+        <div class="players">
+          <audio controls preload="none" src="audio/nyxar-n3.wav" title="bande-son"></audio>
+          <audio controls preload="none" src="voice/nyxar-n3.wav" title="voix"></audio>
+        </div>
+        <details><summary>les répliques mesurées</summary>
+          <table><thead><tr><th>#</th><th>voix</th><th>mot/s</th><th>texte</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>3.89 s</td><td>1.80</td><td class="txt">Istanbul s'éveille. Et la Nyxar N3 arrive.</td></tr>
+            <tr><td>2</td><td>4.92 s</td><td>1.83</td><td class="txt">Voici la Nyxar N3, une berline familiale dessinée ici.</td></tr>
+            <tr><td>3</td><td>5.00 s</td><td>2.60</td><td class="txt">Cinq places, un grand coffre, et quatre virgule huit litres aux cent kilomètres.</td></tr>
+            <tr><td>4</td><td>3.67 s</td><td>2.72</td><td class="txt">Douze mille istancoins : c'est le prix de la N3.</td></tr>
+            <tr><td>5</td><td>3.79 s</td><td>2.11</td><td class="txt">Disponible à Istanbul, en Espagne et au Portugal.</td></tr>
+            <tr><td>6</td><td>4.30 s</td><td>1.86</td><td class="txt">Nyxar N3. La famille d'abord, la route ensuite.</td></tr>
+          </tbody></table>
+        </details>
+        <footer><code>bun run dev</code> → <code>nyxar-n3.html</code></footer>
+      </article>
+
+  <h2 id="images">Les plaques d'images <span>60 fichiers</span></h2>
+  <details class="sheet" open><summary>la planche de contact — les 60 plaques d'un coup d'œil</summary>
+    <img loading="lazy" src="img/contact-sheet.png" alt="planche de contact des plaques" />
+  </details>
+  <div class="plates">
+      <figure class="plate" data-name="grain-tile grain monochrome à recouvrir, 192×192">
+        <img loading="lazy" src="img/grain-tile.png" alt="grain-tile" />
+        <figcaption><b>grain-tile</b><span class="dim">grain monochrome à recouvrir, 192×192 · 192×192 · 57 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="dust-tile poussières et éraflures, 256×256">
+        <img loading="lazy" src="img/dust-tile.png" alt="dust-tile" />
+        <figcaption><b>dust-tile</b><span class="dim">poussières et éraflures, 256×256 · 256×256 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="vignette-16x9 assombrissement radial 16:9">
+        <img loading="lazy" src="img/vignette-16x9.png" alt="vignette-16x9" />
+        <figcaption><b>vignette-16x9</b><span class="dim">assombrissement radial 16:9 · 640×360 · 20 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="vignette-9x16 assombrissement radial 9:16">
+        <img loading="lazy" src="img/vignette-9x16.png" alt="vignette-9x16" />
+        <figcaption><b>vignette-9x16</b><span class="dim">assombrissement radial 9:16 · 360×640 · 17 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="sky-dawn ciel d'aube horizontal">
+        <img loading="lazy" src="img/sky-dawn.png" alt="sky-dawn" />
+        <figcaption><b>sky-dawn</b><span class="dim">ciel d'aube horizontal · 640×360 · 54 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="sky-night ciel de nuit vertical">
+        <img loading="lazy" src="img/sky-night.png" alt="sky-night" />
+        <figcaption><b>sky-night</b><span class="dim">ciel de nuit vertical · 360×640 · 56 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="dots-tile trame de points des cartes, 64×64">
+        <img loading="lazy" src="img/dots-tile.png" alt="dots-tile" />
+        <figcaption><b>dots-tile</b><span class="dim">trame de points des cartes, 64×64 · 64×64 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="scanlines-tile lignes d'écran, 4×4">
+        <img loading="lazy" src="img/scanlines-tile.png" alt="scanlines-tile" />
+        <figcaption><b>scanlines-tile</b><span class="dim">lignes d'écran, 4×4 · 4×4 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="hatch-tile hachurage diagonal, 64×64">
+        <img loading="lazy" src="img/hatch-tile.png" alt="hatch-tile" />
+        <figcaption><b>hatch-tile</b><span class="dim">hachurage diagonal, 64×64 · 64×64 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="turf-tile pelouse : bandes de tonte et grain, 256×256">
+        <img loading="lazy" src="img/turf-tile.png" alt="turf-tile" />
+        <figcaption><b>turf-tile</b><span class="dim">pelouse : bandes de tonte et grain, 256×256 · 256×256 · 73 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="stand-tile tribune : la foule en points colorés, 256×256">
+        <img loading="lazy" src="img/stand-tile.png" alt="stand-tile" />
+        <figcaption><b>stand-tile</b><span class="dim">tribune : la foule en points colorés, 256×256 · 256×256 · 75 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="scoreboard bandeau de score, verre et or, 720×210">
+        <img loading="lazy" src="img/scoreboard.png" alt="scoreboard" />
+        <figcaption><b>scoreboard</b><span class="dim">bandeau de score, verre et or, 720×210 · 720×210 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="crest-astan écusson astan">
+        <img loading="lazy" src="img/crest-astan.png" alt="crest-astan" />
+        <figcaption><b>crest-astan</b><span class="dim">écusson astan · 168×186 · 5 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="crest-axium écusson axium">
+        <img loading="lazy" src="img/crest-axium.png" alt="crest-axium" />
+        <figcaption><b>crest-axium</b><span class="dim">écusson axium · 168×186 · 4 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="crest-nyxar écusson nyxar">
+        <img loading="lazy" src="img/crest-nyxar.png" alt="crest-nyxar" />
+        <figcaption><b>crest-nyxar</b><span class="dim">écusson nyxar · 168×186 · 6 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="kit-astan maillot astan">
+        <img loading="lazy" src="img/kit-astan.png" alt="kit-astan" />
+        <figcaption><b>kit-astan</b><span class="dim">maillot astan · 176×196 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="kit-axium maillot axium">
+        <img loading="lazy" src="img/kit-axium.png" alt="kit-axium" />
+        <figcaption><b>kit-axium</b><span class="dim">maillot axium · 176×196 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="kit-nyxar maillot nyxar">
+        <img loading="lazy" src="img/kit-nyxar.png" alt="kit-nyxar" />
+        <figcaption><b>kit-nyxar</b><span class="dim">maillot nyxar · 176×196 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-JP drapeau JP — Japon (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-JP.png" alt="flag-JP" />
+        <figcaption><b>flag-JP</b><span class="dim">drapeau JP — Japon (CDN flagcdn.com) · 320×213 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-TN drapeau TN — Tunisie (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-TN.png" alt="flag-TN" />
+        <figcaption><b>flag-TN</b><span class="dim">drapeau TN — Tunisie (CDN flagcdn.com) · 320×213 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-NO drapeau NO — Norvège (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-NO.png" alt="flag-NO" />
+        <figcaption><b>flag-NO</b><span class="dim">drapeau NO — Norvège (CDN flagcdn.com) · 320×233 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-DK drapeau DK — Danemark (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-DK.png" alt="flag-DK" />
+        <figcaption><b>flag-DK</b><span class="dim">drapeau DK — Danemark (CDN flagcdn.com) · 320×242 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-DZ drapeau DZ — Algérie (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-DZ.png" alt="flag-DZ" />
+        <figcaption><b>flag-DZ</b><span class="dim">drapeau DZ — Algérie (CDN flagcdn.com) · 320×213 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-EG drapeau EG — Égypte (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-EG.png" alt="flag-EG" />
+        <figcaption><b>flag-EG</b><span class="dim">drapeau EG — Égypte (CDN flagcdn.com) · 320×213 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-AF drapeau AF — Afghanistan (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-AF.png" alt="flag-AF" />
+        <figcaption><b>flag-AF</b><span class="dim">drapeau AF — Afghanistan (CDN flagcdn.com) · 320×213 · 10 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-NL drapeau NL — Pays-Bas (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-NL.png" alt="flag-NL" />
+        <figcaption><b>flag-NL</b><span class="dim">drapeau NL — Pays-Bas (CDN flagcdn.com) · 320×213 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-DE drapeau DE — Allemagne (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-DE.png" alt="flag-DE" />
+        <figcaption><b>flag-DE</b><span class="dim">drapeau DE — Allemagne (CDN flagcdn.com) · 320×192 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-EN drapeau EN — Angleterre (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-EN.png" alt="flag-EN" />
+        <figcaption><b>flag-EN</b><span class="dim">drapeau EN — Angleterre (CDN flagcdn.com) · 320×192 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-SC drapeau SC — Écosse (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-SC.png" alt="flag-SC" />
+        <figcaption><b>flag-SC</b><span class="dim">drapeau SC — Écosse (CDN flagcdn.com) · 320×192 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-PT drapeau PT — Portugal (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-PT.png" alt="flag-PT" />
+        <figcaption><b>flag-PT</b><span class="dim">drapeau PT — Portugal (CDN flagcdn.com) · 320×213 · 5 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-ES drapeau ES — Espagne (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-ES.png" alt="flag-ES" />
+        <figcaption><b>flag-ES</b><span class="dim">drapeau ES — Espagne (CDN flagcdn.com) · 320×213 · 3 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-FR drapeau FR — France (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-FR.png" alt="flag-FR" />
+        <figcaption><b>flag-FR</b><span class="dim">drapeau FR — France (CDN flagcdn.com) · 320×213 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-IT drapeau IT — Italie (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-IT.png" alt="flag-IT" />
+        <figcaption><b>flag-IT</b><span class="dim">drapeau IT — Italie (CDN flagcdn.com) · 320×213 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-IE drapeau IE — Irlande (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-IE.png" alt="flag-IE" />
+        <figcaption><b>flag-IE</b><span class="dim">drapeau IE — Irlande (CDN flagcdn.com) · 320×160 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-BE drapeau BE — Belgique (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-BE.png" alt="flag-BE" />
+        <figcaption><b>flag-BE</b><span class="dim">drapeau BE — Belgique (CDN flagcdn.com) · 320×277 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-CI drapeau CI — Côte d'Ivoire (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-CI.png" alt="flag-CI" />
+        <figcaption><b>flag-CI</b><span class="dim">drapeau CI — Côte d'Ivoire (CDN flagcdn.com) · 320×213 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-NG drapeau NG — Nigéria (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-NG.png" alt="flag-NG" />
+        <figcaption><b>flag-NG</b><span class="dim">drapeau NG — Nigéria (CDN flagcdn.com) · 320×160 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-PL drapeau PL — Pologne (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-PL.png" alt="flag-PL" />
+        <figcaption><b>flag-PL</b><span class="dim">drapeau PL — Pologne (CDN flagcdn.com) · 320×200 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-ID drapeau ID — Indonésie (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-ID.png" alt="flag-ID" />
+        <figcaption><b>flag-ID</b><span class="dim">drapeau ID — Indonésie (CDN flagcdn.com) · 320×213 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-AT drapeau AT — Autriche (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-AT.png" alt="flag-AT" />
+        <figcaption><b>flag-AT</b><span class="dim">drapeau AT — Autriche (CDN flagcdn.com) · 320×213 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-SE drapeau SE — Suède (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-SE.png" alt="flag-SE" />
+        <figcaption><b>flag-SE</b><span class="dim">drapeau SE — Suède (CDN flagcdn.com) · 320×200 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-FI drapeau FI — Finlande (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-FI.png" alt="flag-FI" />
+        <figcaption><b>flag-FI</b><span class="dim">drapeau FI — Finlande (CDN flagcdn.com) · 320×196 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-CH drapeau CH — Suisse (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-CH.png" alt="flag-CH" />
+        <figcaption><b>flag-CH</b><span class="dim">drapeau CH — Suisse (CDN flagcdn.com) · 320×320 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-MA drapeau MA — Maroc (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-MA.png" alt="flag-MA" />
+        <figcaption><b>flag-MA</b><span class="dim">drapeau MA — Maroc (CDN flagcdn.com) · 320×213 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-TR drapeau TR — Turquie (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-TR.png" alt="flag-TR" />
+        <figcaption><b>flag-TR</b><span class="dim">drapeau TR — Turquie (CDN flagcdn.com) · 320×213 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-AR drapeau AR — Argentine (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-AR.png" alt="flag-AR" />
+        <figcaption><b>flag-AR</b><span class="dim">drapeau AR — Argentine (CDN flagcdn.com) · 320×200 · 2 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-BR drapeau BR — Brésil (CDN flagcdn.com)">
+        <img loading="lazy" src="img/flag-BR.png" alt="flag-BR" />
+        <figcaption><b>flag-BR</b><span class="dim">drapeau BR — Brésil (CDN flagcdn.com) · 320×224 · 3 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="flag-IS drapeau IS — Istan (dessiné ici (nation fictive))">
+        <img loading="lazy" src="img/flag-IS.png" alt="flag-IS" />
+        <figcaption><b>flag-IS</b><span class="dim">drapeau IS — Istan (dessiné ici (nation fictive)) · 320×213 · 5 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-cart caddie — cart (Lucide · ISC)">
+        <img loading="lazy" src="img/icon-cart.svg" alt="icon-cart" />
+        <figcaption><b>icon-cart</b><span class="dim">caddie — cart (Lucide · ISC) · 24×24 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-tag étiquette de prix — tag (Lucide · ISC)">
+        <img loading="lazy" src="img/icon-tag.svg" alt="icon-tag" />
+        <figcaption><b>icon-tag</b><span class="dim">étiquette de prix — tag (Lucide · ISC) · 24×24 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-truck camion de livraison — truck (Lucide · ISC)">
+        <img loading="lazy" src="img/icon-truck.svg" alt="icon-truck" />
+        <figcaption><b>icon-truck</b><span class="dim">camion de livraison — truck (Lucide · ISC) · 24×24 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-package colis — package (Lucide · ISC)">
+        <img loading="lazy" src="img/icon-package.svg" alt="icon-package" />
+        <figcaption><b>icon-package</b><span class="dim">colis — package (Lucide · ISC) · 24×24 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-store boutique — store (Tabler · MIT)">
+        <img loading="lazy" src="img/icon-store.svg" alt="icon-store" />
+        <figcaption><b>icon-store</b><span class="dim">boutique — store (Tabler · MIT) · 24×24 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-basket panier — basket (Tabler · MIT)">
+        <img loading="lazy" src="img/icon-basket.svg" alt="icon-basket" />
+        <figcaption><b>icon-basket</b><span class="dim">panier — basket (Tabler · MIT) · 24×24 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-percent remise — percent (Lucide · ISC)">
+        <img loading="lazy" src="img/icon-percent.svg" alt="icon-percent" />
+        <figcaption><b>icon-percent</b><span class="dim">remise — percent (Lucide · ISC) · 24×24 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-coins pièces — coins (Lucide · ISC)">
+        <img loading="lazy" src="img/icon-coins.svg" alt="icon-coins" />
+        <figcaption><b>icon-coins</b><span class="dim">pièces — coins (Lucide · ISC) · 24×24 · 0 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-emoji-cart caddie en couleur — emoji-cart (Openmoji · CC BY-SA 4.0)">
+        <img loading="lazy" src="img/icon-emoji-cart.png" alt="icon-emoji-cart" />
+        <figcaption><b>icon-emoji-cart</b><span class="dim">caddie en couleur — emoji-cart (Openmoji · CC BY-SA 4.0) · 72×72 · 1 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-emoji-box colis en couleur — emoji-box (Openmoji · CC BY-SA 4.0)">
+        <img loading="lazy" src="img/icon-emoji-box.png" alt="icon-emoji-box" />
+        <figcaption><b>icon-emoji-box</b><span class="dim">colis en couleur — emoji-box (Openmoji · CC BY-SA 4.0) · 72×72 · 2 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-emoji-truck camion en couleur — emoji-truck (Openmoji · CC BY-SA 4.0)">
+        <img loading="lazy" src="img/icon-emoji-truck.png" alt="icon-emoji-truck" />
+        <figcaption><b>icon-emoji-truck</b><span class="dim">camion en couleur — emoji-truck (Openmoji · CC BY-SA 4.0) · 72×72 · 2 ko</span></figcaption>
+      </figure>
+      <figure class="plate" data-name="icon-emoji-tag étiquette en couleur — emoji-tag (Openmoji · CC BY-SA 4.0)">
+        <img loading="lazy" src="img/icon-emoji-tag.png" alt="icon-emoji-tag" />
+        <figcaption><b>icon-emoji-tag</b><span class="dim">étiquette en couleur — emoji-tag (Openmoji · CC BY-SA 4.0) · 72×72 · 1 ko</span></figcaption>
+      </figure>
+  </div>
+
+  <footer class="page">
+    Régénérer : <code>python3 tools/assets/generate.py all</code> — sons, voix, plaques et cette page.<br />
+    La voix : <code>python3 tools/assets/generate.py voice --voice fr_FR-siwis-medium</code> (moteur piper, modèle téléchargé une fois).<br />
+    Contrôles : <code>bun run verify</code> (statique) · <code>bun run shots</code> (captures, lecture, mesure).<br />
+    Catalogue : <code>assets/catalog.json</code> — 2026-10-13T11:51:42
+  </footer>
+</div>
+<script>
+  var q = document.getElementById('q');
+  function filter(){
+    var v = q.value.trim().toLowerCase();
+    document.querySelectorAll('[data-name]').forEach(function(el){
+      el.classList.toggle('hidden', v && el.dataset.name.toLowerCase().indexOf(v) < 0);
+    });
+    document.querySelectorAll('section[data-sec]').forEach(function(s){
+      var n = s.querySelectorAll('[data-name]:not(.hidden)').length;
+      s.classList.toggle('hidden', v && n === 0);
+    });
+  }
+  q.addEventListener('input', filter);
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = b.dataset.copy;
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject())
+        .then(function(){ b.textContent = 'copié'; setTimeout(function(){ b.textContent = 'cue'; }, 1200); })
+        .catch(function(){ b.textContent = t; });
+    });
+  });
+</script>
+</body></html>

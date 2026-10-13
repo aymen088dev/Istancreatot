@@ -1,0 +1,2262 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Nyxar N3 — La famille d'abord · pub motion</title>
+<meta name="description" content="Publicité motion design 16:9 pour la Nyxar N3, berline familiale à 12 000 istancoins — Istanbul, Espagne, Portugal." />
+<style>
+  :root{
+    --ink:#f7f4ec; --gold:#f0b64a; --gold2:#ffe6a8; --teal:#5ad6de; --deep:#04080e;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --vh:100vh;
+    /* Le cadre 16:9 est la seule source d'échelle du film : tout ce qui est dans
+       #frame ou #hud se mesure en cqw/cqh (1 px de la maquette 1920x1080
+       = .052083cqw en largeur, .092593cqh en hauteur). Ainsi l'image et sa
+       typographie gardent exactement les mêmes proportions sur tout écran. */
+    --fw:min(100vw, calc(var(--vh) * 1.777778));
+    --fh:min(calc(100vw * .5625), var(--vh));
+  }
+  @supports (height:100dvh){ :root{ --vh:100dvh } }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#010307;color:var(--ink);overflow:hidden;
+    font-family:"Helvetica Neue",Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+  #stage{position:fixed;inset:0;background:var(--deep);overflow:hidden}
+
+  /* ---------- 1. le film : un cadre 16:9 ---------- */
+  #frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:1}
+  #scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 100% at 50% 45%,rgba(0,0,0,0) 42%,rgba(0,0,0,.55) 100%)}
+  .layer{position:absolute;inset:0;pointer-events:none}
+
+  /* ---------- 2. typographie du film ---------- */
+  .card{position:absolute;will-change:opacity,transform}
+  .kicker{font-size:1.198cqw;letter-spacing:.34em;text-transform:uppercase;color:rgba(247,244,236,.66)}
+  .head{font-size:3.958cqw;font-weight:800;letter-spacing:-.022em;line-height:1.04;text-shadow:0 14px 50px rgba(0,0,0,.6)}
+  .lock{font-weight:800;letter-spacing:.14em;line-height:1;
+    background:linear-gradient(180deg,#fff4d8,#f0b64a 52%,#a9741d);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 .833cqw 2.292cqw rgba(240,182,74,.22))}
+  .lock .n3{letter-spacing:.06em}
+  .spec{font-family:var(--mono);font-size:1.302cqw;letter-spacing:.16em;text-transform:uppercase;color:rgba(247,244,236,.85)}
+  .sub{font-size:1.615cqw;color:rgba(247,244,236,.7);letter-spacing:.01em}
+  .rule{width:6.875cqw;height:.104cqw;background:linear-gradient(90deg,var(--gold),rgba(240,182,74,0));border-radius:1px}
+  .chip{display:inline-flex;align-items:center;gap:.625cqw;padding:.625cqw 1.042cqw;border-radius:999px;
+    border:1px solid rgba(240,182,74,.34);background:rgba(6,14,24,.7);font-size:1.302cqw;
+    font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(247,244,236,.92)}
+  .chip b{color:var(--gold2);font-weight:600}
+  .chip i{width:.469cqw;height:.469cqw;border-radius:50%;background:var(--gold);box-shadow:0 0 .625cqw var(--gold);display:inline-block}
+  .price{font-size:13.958cqw;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:.94;
+    background:linear-gradient(180deg,#fff6e0,#f0b64a 56%,#a9741d);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 1.042cqw 3.125cqw rgba(240,182,74,.25))}
+  .price .unit{font-size:3.854cqw;letter-spacing:.02em;-webkit-text-fill-color:transparent}
+  .stamp{font-family:var(--mono);font-size:1.25cqw;letter-spacing:.26em;text-transform:uppercase;
+    color:#08131d;background:linear-gradient(135deg,var(--gold2),var(--gold));padding:.625cqw 1.146cqw;border-radius:.417cqw}
+  .legal{font-family:var(--mono);font-size:.99cqw;letter-spacing:.12em;color:rgba(247,244,236,.42)}
+  /* chaque carton s'agrandit depuis son ancre, jamais depuis le centre du cadre */
+  .tl{left:6.25cqw;top:11.111cqh;transform-origin:left top}
+  .tr{right:6.25cqw;top:11.111cqh;text-align:right;transform-origin:right top}
+  .tc{left:0;right:0;top:10.37cqh;text-align:center;transform-origin:center top}
+  .bc{left:0;right:0;bottom:27.778cqh;text-align:center;transform-origin:center bottom}
+  .bl{left:6.25cqw;bottom:27.778cqh;transform-origin:left bottom}
+  .br{right:6.25cqw;bottom:26.852cqh;text-align:right;transform-origin:right bottom}
+  .cc{left:0;right:0;top:27.778cqh;text-align:center;transform-origin:center top}
+  .cc2{left:0;right:0;top:23.148cqh;text-align:center;transform-origin:center top}
+  .center{left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:.833cqw;text-align:center;transform-origin:center top}
+  .stack{display:flex;flex-direction:column;gap:.729cqw}
+
+  /* ---------- 3. sous-titres ---------- */
+  /* chaque réplique est posée en absolu : les répliques masquées ne se partagent plus la largeur */
+  #subs{position:absolute;left:0;right:0;bottom:13.704cqh;pointer-events:none;z-index:2}
+  .subline{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:76.042cqw;padding:.781cqw 1.667cqw .885cqw;border-radius:.938cqw;text-align:center;
+    background:rgba(3,7,13,.74);border:1px solid rgba(240,182,74,.2);
+    box-shadow:0 18px 60px rgba(0,0,0,.55);backdrop-filter:blur(3px);
+    font-size:2.552cqw;line-height:1.24;font-weight:600;letter-spacing:-.004em;
+    opacity:0;transform:translateY(14px);transition:opacity .22s ease,transform .22s ease}
+  .subline.show{opacity:1;transform:none}
+  .subline .w{color:rgba(247,244,236,.5);transition:color .1s linear}
+  .subline .w.done{color:rgba(247,244,236,.9)}
+  .subline .w.on{color:#ffe6a8;text-shadow:0 0 26px rgba(240,182,74,.6)}
+
+  /* ---------- 4. interface de lecture (coordonnées écran) ---------- */
+  #hud{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:3;pointer-events:none}
+  /* L'image d'abord : trois secondes sans geste pendant la lecture et l'habillage
+     s'efface ; le premier mouvement le ramène. Les boîtes gardent leur place — seule
+     l'opacité change — donc rien ne se déplace et rien ne reste posé sur le film. */
+  #hud{transition:opacity .4s ease}
+  #stage.clean #hud{opacity:0}
+  #stage.clean #mix{pointer-events:none}
+  #prog{position:absolute;left:6.25cqw;right:6.25cqw;top:4.074cqh;display:flex;gap:.365cqw}
+  .pseg{flex:1;height:.556cqh;border-radius:.208cqw;background:rgba(247,244,236,.13);overflow:hidden}
+  .pseg i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0b64a,#ffe6a8);box-shadow:0 0 .729cqw rgba(240,182,74,.5)}
+  #hudScene,#hudTc{position:absolute;bottom:4.815cqh;font-family:var(--mono);font-size:1.042cqw;
+    letter-spacing:.22em;text-transform:uppercase;color:rgba(247,244,236,.45)}
+  #hudScene{left:6.354cqw} #hudTc{right:6.354cqw}
+  #hudScene b{color:rgba(240,182,74,.85);font-weight:500}
+  #mix{position:absolute;right:6.25cqw;top:9.63cqh;display:flex;gap:.521cqw;pointer-events:auto}
+  .tog{display:inline-flex;align-items:center;gap:.521cqw;padding:.521cqw .833cqw;border-radius:999px;cursor:pointer;
+    font-family:var(--mono);font-size:.938cqw;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(247,244,236,.62);background:rgba(4,10,18,.66);border:1px solid rgba(247,244,236,.14);
+    transition:color .2s,border-color .2s,background .2s}
+  .tog:hover{color:var(--ink);border-color:rgba(247,244,236,.3)}
+  .tog .dot{width:.469cqw;height:.469cqw;border-radius:50%;background:rgba(247,244,236,.28);transition:background .2s,box-shadow .2s}
+  .tog.on{color:#ffe6a8;border-color:rgba(240,182,74,.5)}
+  .tog.on .dot{background:var(--gold);box-shadow:0 0 .729cqw var(--gold)}
+  .tog.off-audio{opacity:.45}
+
+  /* ---------- 5. affiche mobile (remplace la petite typo du film) ---------- */
+  #poster{display:none;position:absolute;left:16px;right:16px;top:28px;z-index:2;
+    text-align:left;pointer-events:none}
+  #poster .p-brand{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(247,244,236,.5)}
+  #poster .p-title{margin-top:6px;font-size:38px;font-weight:800;letter-spacing:.06em;line-height:1;
+    background:linear-gradient(180deg,#fff4d8,#f0b64a 55%,#a9741d);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  #poster .p-line{margin-top:8px;font-size:15px;color:rgba(247,244,236,.82)}
+  #poster .p-line b{color:var(--gold2)}
+  #poster .p-avail{margin-top:4px;font-size:12px;color:rgba(247,244,236,.5)}
+
+  /* ---------- 6. écrans d'accueil et de fin ---------- */
+  #veil{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:24px;background:radial-gradient(78% 78% at 50% 44%,rgba(7,16,26,.8),rgba(1,3,7,.96));
+    opacity:0;pointer-events:none;transition:opacity .45s ease}
+  #veil.show{opacity:1;pointer-events:auto}
+  .veilbox{display:flex;flex-direction:column;align-items:center;gap:calc(var(--fw) * .0115);max-width:calc(var(--fw) * .6875)}
+  .veilbrand{font-size:calc(var(--fw) * .0177);letter-spacing:.5em;text-transform:uppercase;color:rgba(247,244,236,.62)}
+  .veiltitle{font-size:calc(var(--fw) * .06875);font-weight:800;letter-spacing:.1em;line-height:1;
+    background:linear-gradient(180deg,#fff4d8,#f0b64a 55%,#a9741d);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .veilsub{font-size:calc(var(--fw) * .01875);color:rgba(247,244,236,.72);line-height:1.35}
+  #go{position:relative;width:calc(var(--fw) * .0823);height:calc(var(--fw) * .0823);border-radius:50%;
+    border:2px solid rgba(240,182,74,.6);
+    background:radial-gradient(60% 60% at 40% 34%,rgba(240,182,74,.34),rgba(8,14,22,.7));
+    cursor:pointer;display:grid;place-items:center;transition:transform .25s,border-color .25s,box-shadow .25s;
+    box-shadow:0 0 0 12px rgba(240,182,74,.07),0 24px 60px rgba(0,0,0,.6)}
+  #go:hover{transform:scale(1.06);border-color:var(--gold);box-shadow:0 0 0 16px rgba(240,182,74,.1),0 26px 70px rgba(0,0,0,.65)}
+  #go svg{width:39%;height:39%;margin-left:5%;fill:var(--gold2)}
+  #go::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(240,182,74,.3);animation:pulse 2.6s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.92);opacity:.85}70%{transform:scale(1.22);opacity:0}100%{opacity:0}}
+  .hint{font-family:var(--mono);font-size:calc(var(--fw) * .0104);letter-spacing:.1em;color:rgba(247,244,236,.45);line-height:1.9}
+  kbd{font-family:var(--mono);font-size:calc(var(--fw) * .0094);padding:.156cqw .469cqw;border-radius:6px;color:rgba(247,244,236,.8);
+    border:1px solid rgba(247,244,236,.2);background:rgba(247,244,236,.05)}
+  .lede{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .credit{font-family:var(--mono);font-size:calc(var(--fw) * .0099);letter-spacing:.16em;text-transform:uppercase;color:rgba(247,244,236,.4)}
+  #veilEnd{display:none}
+  #veil.end .veilStart{display:none}
+  #veil.end #veilEnd{display:flex}
+  #veilEnd .veiltitle{font-size:calc(var(--fw) * .05)}
+
+  /* ---------- 7. téléphone : le film garde son cadre, l'habillage change de place ---------- */
+  /* ---------- la passe « allégée » : l'image d'abord, le texte se pose dessus ----------
+     Tout le texte était posé dans des boîtes opaques — pastilles, plaques, cartons de
+     sous-titres — et ces fonds pleins mangeaient le cadre. Il n'y a plus un seul
+     aplat : la typographie se lit par son ombre portée et par un filet d'accent, et
+     un voile en dégradé au bas du cadre suffit à détacher les sous-titres de
+     n'importe quelle image. Rien n'est supprimé : l'information est la même, elle ne
+     cache simplement plus le film. */
+  #vig{background:radial-gradient(122% 100% at 50% 46%,rgba(0,0,0,0) 46%,rgba(0,0,0,.42) 100%),
+    linear-gradient(to top,rgba(2,5,9,.6) 0%,rgba(2,5,9,.24) 11%,rgba(0,0,0,0) 24%)}
+  .kicker,.spec,.sub,.legal,.credit,.stat,.chan{text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.9)}
+  .head{font-weight:700;letter-spacing:.004em;text-shadow:0 .556cqw 2.407cqw rgba(0,0,0,.85),0 .185cqw .648cqw rgba(0,0,0,.65)}
+  /* on ne touche pas aux marges intérieures : la boîte garde sa place, seul le
+     fond disparaît — la géométrie du montage reste exactement la même */
+  .card.chip{background:none;border-color:transparent;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .chip i{box-shadow:none}
+  .subline{max-width:92cqw;padding:0 2cqw;background:none;border:0;border-radius:0;
+    box-shadow:none;backdrop-filter:none;font-weight:700;line-height:1.3;
+    text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 1.296cqw 3.704cqw rgba(0,0,0,.7)}
+  .subline .w.on{color:var(--gold2);text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 0 1.481cqw var(--gold)}
+  .bug{background:rgba(5,10,18,.38);border:0;border-radius:.556cqw;box-shadow:none;
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .bug .live{opacity:.86}
+  .bug .form,.bug .clk{border-left:1px solid rgba(255,255,255,.12)}
+  .third{background:none;border:0;border-left:.37cqw solid var(--gold);border-radius:0;
+    padding:.278cqw 0 .278cqw 1.296cqw;box-shadow:none;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .third.on{box-shadow:none}
+  #prog{opacity:.85}
+  .pseg{height:.26cqh;background:rgba(255,255,255,.14)}
+  .pseg i{box-shadow:none}
+  #hudScene,#hudTc{color:rgba(255,255,255,.5);text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  #mix{gap:1.4cqw}
+  .tog{background:none;border:0;border-radius:0;padding:.521cqw 0;color:rgba(255,255,255,.55);
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .tog.on{color:var(--gold2)}
+  .tog .dot{box-shadow:none}
+  .tog.on .dot{background:var(--gold);box-shadow:none}
+
+  @media (max-width:760px){
+    #poster{display:block}
+    #frame{top:44%}
+    /* l'affiche raconte ce que la petite typo du film ne peut plus dire */
+    .card.minor{display:none}
+    .chip.opt{display:none}
+    /* sous-titres lisibles, juste sous l'image */
+    #subs{top:100%;bottom:auto;margin-top:12px}
+    .subline{font-size:max(17px,4.4vw);line-height:1.3;max-width:94vw;padding:10px 14px 11px;border-radius:14px}
+    .lede{gap:10px}
+    .lede .chip{font-size:14px;padding:13px 16px;gap:8px}
+    /* interface aux dimensions du pouce */
+    #hud{width:100vw;height:var(--vh);transform:translate(-50%,-50%)}
+    #prog{left:12px;right:12px;top:10px;gap:4px}
+    .pseg{height:4px;border-radius:2px}
+    #mix{right:12px;top:auto;bottom:56px;gap:6px}
+    .tog{font-size:13px;padding:12px 15px;gap:8px;letter-spacing:.1em}
+    .tog .dot{width:8px;height:8px;box-shadow:none}
+    #hudScene,#hudTc{font-size:11.5px;letter-spacing:.16em;bottom:16px}
+    #hudScene{left:12px} #hudTc{right:12px}
+    /* accueil / fin */
+    .veilbox{gap:16px;max-width:92vw}
+    .veilbrand{font-size:11px;letter-spacing:.28em}
+    .veiltitle{font-size:56px;letter-spacing:.06em}
+    #veilEnd .veiltitle{font-size:42px}
+    .veilsub{font-size:17px}
+    #go{width:112px;height:112px;box-shadow:0 0 0 10px rgba(240,182,74,.07),0 18px 44px rgba(0,0,0,.6)}
+    .hint{font-size:12.5px;line-height:1.75}
+    kbd{font-size:11px;padding:3px 7px}
+    .credit{font-size:11px}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="frame">
+    <canvas id="scene" width="1920" height="1080"></canvas>
+    <div id="vig"></div>
+    <div class="layer" id="cards"></div>
+    <div id="subs"></div>
+  </div>
+
+  <div id="poster" aria-hidden="true">
+    <div class="p-brand">Nyxar Motor House · Istanbul</div>
+    <div class="p-title">NYXAR N3</div>
+    <div class="p-line">Berline familiale · <b>12 000 istancoins</b></div>
+    <div class="p-avail">Disponible à Istanbul, en Espagne et au Portugal</div>
+  </div>
+
+  <div id="hud">
+    <div id="prog"></div>
+    <div id="hudScene"></div>
+    <div id="hudTc"></div>
+    <div id="mix">
+      <button class="tog" id="togSound" type="button" aria-pressed="false"><span class="dot"></span>Son</button>
+      <button class="tog" id="togVoice" type="button" aria-pressed="false"><span class="dot"></span>Voix</button>
+    </div>
+  </div>
+
+  <div id="veil" class="show">
+    <div class="veilbox veilStart">
+      <div class="veilbrand">Nyxar Motor House · Istanbul</div>
+      <div class="veiltitle">NYXAR N3</div>
+      <div class="veilsub">Berline familiale · <b>12 000 istancoins</b><br />Film 37 s — image, musique, voix et sous-titres en un clic.</div>
+      <button id="go" type="button" aria-label="Lancer le film"><svg viewBox="0 0 100 100"><path d="M32 22 82 50 32 78Z" /></svg></button>
+      <div class="hint">
+        Un seul clic : image, musique, voix et sous-titres &nbsp;·&nbsp; <b>37 s</b><br />
+        <kbd>Espace</kbd> lecture / pause &nbsp;·&nbsp; <kbd>S</kbd> coupe le son &nbsp;·&nbsp; <kbd>V</kbd> coupe la voix &nbsp;·&nbsp; <kbd>R</kbd> recommencer
+      </div>
+    </div>
+    <div class="veilbox" id="veilEnd">
+      <div class="veilbrand">Nyxar Motor House · Istanbul</div>
+      <div class="veiltitle">NYXAR <span class="n3">N3</span></div>
+      <div class="veilsub">Berline familiale · 12 000 istancoins<br />Disponible à Istanbul, en Espagne et au Portugal.</div>
+      <div class="lede">
+        <button id="replay" class="chip" type="button"><i></i>Rejouer le film</button>
+        <button id="closeEnd" class="chip" type="button"><i></i>Voir l'affiche finale</button>
+      </div>
+      <div class="credit">Visuel de démonstration · produit et prix fictifs</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   NYXAR N3 — film publicitaire autonome.
+   Tout est dessiné (canvas 2D), tout le son est synthétisé (Web Audio),
+   la voix passe par speechSynthesis, les sous-titres mot à mot par DOM.
+   Aucune ressource externe : un seul fichier, zéro requête réseau.
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  /* ---------- réglages ---------- */
+  const W = 1920, H = 1080, TAU = Math.PI * 2;
+  const TOTAL = 37000;
+
+  const SCENES = [
+    { from: 0,     to: 6500,  name: "Istanbul, aube",   num: "01", draw: drawIstanbul },
+    { from: 6500,  to: 14500, name: "Révélation",       num: "02", draw: drawStudio },
+    { from: 14500, to: 22500, name: "Vie de famille",   num: "03", draw: drawDrive },
+    { from: 22500, to: 28000, name: "Prix",             num: "04", draw: drawPrice },
+    { from: 28000, to: 33000, name: "Pays",             num: "05", draw: drawMap },
+    { from: 33000, to: TOTAL, name: "Nyxar N3",         num: "06", draw: drawEndcard },
+  ];
+
+  // Les fenêtres (`d`) sont celles de la voix **mesurée** : le studio prononce la
+  // réplique, la chronomètre, et écrit le plan dans `assets/voice/`. `bun run assets`
+  // remesure ; une fenêtre plus courte que la phrase prononcée ferait couper le sous-titre.
+  const LINES = [
+    { t: 700,   d: 4708, txt: "Istanbul s'éveille. Et la Nyxar N3 arrive." },
+    { t: 7000,  d: 5175, txt: "Voici la Nyxar N3, une berline familiale dessinée ici." },
+    { t: 15000, d: 5609, txt: "Cinq places, un grand coffre, et quatre virgule huit litres aux cent kilomètres." },
+    { t: 22800, d: 3814, txt: "Douze mille istancoins : c'est le prix de la N3." },
+    { t: 27900, d: 4243, txt: "Disponible à Istanbul, en Espagne et au Portugal." },
+    { t: 32400, d: 4480, txt: "Nyxar N3. La famille d'abord, la route ensuite." },
+  ];
+
+  /* Les positions et grilles sont données dans la maquette 1920x1080 (px) ;
+     le constructeur de cartons les convertit en unités du cadre (cqw/cqh).
+     ui   = facteur d'agrandissement appliqué sur téléphone (texte du film illisible sinon)
+     minor= carton masqué sur petit écran, où l'affiche #poster prend le relais */
+  const CARDS = [
+    { t: [500, 4600],   cls: "tl kicker", html: "Nyxar Motor House · Bosphore", minor: true },
+    { t: [1200, 6200],  cls: "bl head",  html: "Née à Istanbul.", rise: 30, ui: 1.8 },
+    { t: [1500, 6200],  cls: "bl sub",   html: "Berline familiale · 5 places", css: { bottom: "230px" }, pcss: { bottom: "120px" }, ui: 2.2 },
+
+    // sur téléphone le cadre 16:9 ne fait que 219 px de haut : le titre remonte et la
+    // pastille d'équipement descend, sinon les deux se croisent (mesuré, pas supposé)
+    { t: [8500, 14400], cls: "cc2 lock", html: "NYXAR <span class='n3'>N3</span>", zoom: .06, css: { fontSize: "196px" }, pcss: { top: "120px" }, ui: 1.5 },
+    { t: [10900, 14400],cls: "bc",       html: "<div class='chip'><i></i>Berline familiale <b>7 places en option</b></div>", css: { bottom: "300px" }, pcss: { bottom: "360px" }, ui: 2.6 },
+    { t: [12200, 14400],cls: "tc spec",  html: "5 places &nbsp;·&nbsp; coffre 480 L &nbsp;·&nbsp; 4,8 L/100 km &nbsp;·&nbsp; 6 airbags", minor: true },
+
+    { t: [15200, 22200],cls: "tc head",  html: "Pensée pour la famille.", css: { fontSize: "64px" }, ui: 2 },
+    { t: [15400, 22200],cls: "br stack", html:
+      "<div class='chip'><i></i>5 places</div>" +
+      "<div class='chip'><i></i>Coffre 480 L</div>" +
+      "<div class='chip'><i></i>4,8 L / 100 km</div>" +
+      "<div class='chip opt'><i></i>6 airbags</div>" +
+      "<div class='chip opt'><i></i>Écran 10 pouces</div>", css: { bottom: "290px" }, ui: 1.6 },
+    { t: [21000, 22200],cls: "bl spec",  html: "Sièges enfants i-Size · banquette coulissante", minor: true },
+
+    { t: [22700, 27800],cls: "tc spec",  html: "À partir de", ui: 2.6 },
+    { t: [22800, 27800],cls: "center price", id: "price", html: "0 <span class='unit'>istancoins</span>", css: { top: "268px" } },
+    { t: [24900, 27800],cls: "bc",       html: "<span class='stamp'>Prix de lancement</span>", css: { bottom: "268px" }, minor: true },
+    { t: [25700, 27800],cls: "bl sub",   html: "Un prix. Cinq places. Rien à ajouter.", css: { bottom: "300px" }, minor: true },
+
+    { t: [28400, 32400],cls: "tc head",  html: "Disponible en Espagne et au Portugal.", css: { fontSize: "58px" }, ui: 2 },
+    { t: [29900, 32400],cls: "bc spec",  html: "Madrid · Barcelone · Lisbonne · Porto", ui: 2.6 },
+    { t: [31100, 32400],cls: "br spec",  html: "Livraisons dès le premier trimestre", minor: true },
+
+    { t: [33200, 36900],cls: "cc2 lock", html: "NYXAR <span class='n3'>N3</span>", css: { fontSize: "176px", top: "250px" }, ui: 1.3 },
+    { t: [34000, 36900],cls: "center",   html: "<div class='rule'></div>", css: { top: "470px" }, minor: true },
+    { t: [34200, 36900],cls: "center sub", html: "Berline familiale &nbsp;·&nbsp; 12 000 istancoins", css: { top: "505px", fontSize: "40px" }, pcss: { top: "540px" }, ui: 1.8 },
+    // sur téléphone, le cadre 16:9 est trop court pour tout empiler : ces deux lignes
+    // restent sur grand écran, le sous-titre et l'écran de fin portent l'information
+    { t: [34900, 36900],cls: "center spec",html: "Istanbul &nbsp;·&nbsp; Espagne &nbsp;·&nbsp; Portugal", css: { top: "585px", fontSize: "22px" }, minor: true },
+    { t: [35600, 36900],cls: "center",   html: "<div class='chip'><i></i>Essai sur rendez-vous — Karaköy, Istanbul</div>", css: { top: "652px" }, minor: true },
+    // la mention légale se glisse sous la bande des sous-titres (elle la chevauchait à 210 px)
+    { t: [36100, 36900],cls: "bc legal", html: "Visuel de démonstration · produit, marque et prix fictifs", css: { bottom: "90px" }, minor: true },
+  ];
+
+  /* ---------- petits outils ---------- */
+  const clamp = (v, a = 0, b = 1) => (v < a ? a : v > b ? b : v);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = (t) => { t = clamp(t); return t * t * (3 - 2 * t); };
+  const eio = (t) => { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  const easeOut = (t) => 1 - Math.pow(1 - clamp(t), 3);
+  const rnd = (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+  const mix = (a, b, t) => a + (b - a) * t;
+  const fmt = new Intl.NumberFormat("fr-FR");
+
+  /* ---------- canvas ---------- */
+  const cv = document.getElementById("scene");
+  const g = cv.getContext("2d");
+  const off = (w = W, h = H) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
+
+  /* =====================================================================
+     1. GÉOMÉTRIE DE LA VOITURE (profil de berline, tracé par code)
+     ===================================================================== */
+  function buildPath(cmds, per = 14) {
+    const pts = []; let cur = [cmds[0][1], cmds[0][2]];
+    pts.push({ x: cur[0], y: cur[1] });
+    for (let i = 1; i < cmds.length; i++) {
+      const c = cmds[i];
+      if (c[0] === "L") { pts.push({ x: c[1], y: c[2] }); cur = [c[1], c[2]]; }
+      else if (c[0] === "Q") {
+        for (let s = 1; s <= per; s++) {
+          const u = s / per, iu = 1 - u;
+          pts.push({
+            x: iu * iu * cur[0] + 2 * iu * u * c[1] + u * u * c[3],
+            y: iu * iu * cur[1] + 2 * iu * u * c[2] + u * u * c[4],
+          });
+        }
+        cur = [c[3], c[4]];
+      }
+    }
+    const cum = [0]; let len = 0;
+    for (let i = 1; i < pts.length; i++) { len += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); cum.push(len); }
+    return { pts, cum, len };
+  }
+
+  const CAR = buildPath([
+    ["M", -590, -52], ["L", -606, -108], ["Q", -602, -154, -560, -164], ["L", -470, -170],
+    ["L", -252, -184], ["Q", -196, -254, -122, -294], ["Q", -72, -310, -12, -308],
+    ["L", 122, -302], ["Q", 194, -294, 252, -246], ["L", 432, -226], ["Q", 522, -220, 562, -208],
+    ["L", 594, -152], ["Q", 602, -96, 598, -66], ["L", 560, -38], ["L", -560, -38], ["Z"],
+  ]);
+
+  const WHEELS = [{ x: -332, y: -94 }, { x: 336, y: -94 }];
+  const WHEEL_R = 94;
+  const GLASS_FRONT = [[-244, -190], [-130, -286], [-18, -298], [-30, -194]];
+  const GLASS_REAR = [[-2, -300], [110, -292], [238, -248], [168, -194]];
+
+  function pathTo(gc, pts, close = true) {
+    gc.beginPath(); gc.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) gc.lineTo(pts[i][0], pts[i][1]);
+    if (close) gc.closePath();
+  }
+
+  function carBody(gc) {
+    gc.beginPath(); const p = CAR.pts;
+    gc.moveTo(p[0].x, p[0].y);
+    for (let i = 1; i < p.length; i++) gc.lineTo(p[i].x, p[i].y);
+    gc.closePath();
+  }
+
+  function carTrace(gc, prog) {
+    const target = clamp(prog) * CAR.len, p = CAR.pts;
+    gc.beginPath(); gc.moveTo(p[0].x, p[0].y);
+    for (let i = 1; i < p.length; i++) {
+      if (CAR.cum[i] <= target) gc.lineTo(p[i].x, p[i].y);
+      else {
+        const t = (target - CAR.cum[i - 1]) / Math.max(1e-6, CAR.cum[i] - CAR.cum[i - 1]);
+        gc.lineTo(lerp(p[i - 1].x, p[i].x, t), lerp(p[i - 1].y, p[i].y, t));
+        break;
+      }
+    }
+    gc.stroke();
+  }
+
+  function wheel(gc, cx, cy, r, spin) {
+    // passage de roue (découpe sombre)
+    gc.beginPath(); gc.arc(cx, cy, r + 24, Math.PI, TAU); gc.closePath();
+    gc.fillStyle = "#02050a"; gc.fill();
+    // pneu
+    const tg = gc.createRadialGradient(cx - r * .3, cy - r * .4, r * .18, cx, cy, r);
+    tg.addColorStop(0, "#232a33"); tg.addColorStop(.75, "#0d1218"); tg.addColorStop(1, "#05080c");
+    gc.beginPath(); gc.arc(cx, cy, r, 0, TAU); gc.fillStyle = tg; gc.fill();
+    // jante
+    const rr = r * .6;
+    const rg = gc.createLinearGradient(cx - rr, cy - rr, cx + rr, cy + rr);
+    rg.addColorStop(0, "#eef3f8"); rg.addColorStop(.45, "#93a0ae"); rg.addColorStop(1, "#d7dee6");
+    gc.beginPath(); gc.arc(cx, cy, rr, 0, TAU); gc.fillStyle = rg; gc.fill();
+    gc.save(); gc.translate(cx, cy); gc.rotate(spin);
+    for (let i = 0; i < 5; i++) {
+      gc.rotate(TAU / 5);
+      gc.beginPath(); gc.moveTo(0, 0); gc.lineTo(rr * .94, -rr * .17); gc.lineTo(rr * .94, rr * .17); gc.closePath();
+      gc.fillStyle = "rgba(14,19,25,.88)"; gc.fill();
+    }
+    gc.restore();
+    gc.beginPath(); gc.arc(cx, cy, rr * .2, 0, TAU); gc.fillStyle = "#1b2129"; gc.fill();
+    gc.beginPath(); gc.arc(cx, cy, r, .18, 1.05); gc.lineWidth = 3; gc.strokeStyle = "rgba(255,255,255,.22)"; gc.stroke();
+    gc.lineWidth = 1;
+  }
+
+  function carCabinLight(gc, warm, silhouettes) {
+    if (warm <= .01) return;
+    gc.save();
+    pathTo(gc, GLASS_FRONT); gc.clip();
+    pathTo(gc, GLASS_FRONT);
+    gc.fillStyle = "rgba(255,196,120," + (.30 * warm) + ")"; gc.fill();
+    if (silhouettes) {
+      const seats = [[-196, -212], [-96, -214], [42, -214], [130, -216]];
+      seats.forEach((s, i) => {
+        const a = clamp(warm * 1.4 - i * .12);
+        gc.globalAlpha = a * .95;
+        gc.fillStyle = "rgba(12,9,6,.92)";
+        gc.beginPath(); gc.arc(s[0], s[1] - 34, 17, 0, TAU); gc.fill();          // tête
+        gc.beginPath(); gc.moveTo(s[0] - 21, s[1]); gc.lineTo(s[0] + 21, s[1]);
+        gc.lineTo(s[0] + 15, s[1] - 44); gc.lineTo(s[0] - 15, s[1] - 44); gc.closePath(); gc.fill(); // buste
+      });
+    }
+    gc.restore();
+    gc.save();
+    pathTo(gc, GLASS_REAR); gc.clip();
+    pathTo(gc, GLASS_REAR);
+    gc.fillStyle = "rgba(255,196,120," + (.26 * warm) + ")"; gc.fill();
+    gc.restore();
+    gc.globalAlpha = 1;
+  }
+
+  /**
+   * Dessine la berline.
+   * o = { x, y, s, fill, trace, spin, lights, warm, family, reflector, width }
+   */
+  function car(gc, o) {
+    const s = o.s ?? 1;
+    gc.save();
+    gc.translate(o.x, o.y);
+    gc.scale(s, s);
+
+    // corps
+    gc.save();
+    carBody(gc);
+    const bg = gc.createLinearGradient(0, -320, 0, -30);
+    bg.addColorStop(0, "#39505f"); bg.addColorStop(.3, "#1d2f3f");
+    bg.addColorStop(.62, "#122130"); bg.addColorStop(1, "#08111a");
+    gc.globalAlpha = clamp(o.fill ?? 0); gc.fillStyle = bg; gc.fill();
+    gc.restore();
+    gc.globalAlpha = 1;
+
+    if ((o.trace ?? 0) > 0) {
+      gc.save();
+      gc.lineWidth = 4; gc.lineCap = "round";
+      gc.strokeStyle = "rgba(255,225,160,.95)";
+      gc.shadowColor = "rgba(240,182,74,.85)"; gc.shadowBlur = 26;
+      carTrace(gc, o.trace);
+      gc.restore();
+    }
+
+    const solid = clamp(o.fill ?? 1) > .55;
+    if (solid) {
+      // ombre de bas de caisse
+      gc.save(); carBody(gc); gc.clip();
+      const skirt = gc.createLinearGradient(0, -70, 0, -34);
+      skirt.addColorStop(0, "rgba(0,0,0,0)"); skirt.addColorStop(1, "rgba(0,0,0,.6)");
+      gc.fillStyle = skirt; gc.fillRect(-620, -80, 1240, 50);
+
+      // vitres
+      gc.globalAlpha = 1;
+      pathTo(gc, GLASS_FRONT); gc.fillStyle = "rgba(6,12,20,.92)"; gc.fill();
+      pathTo(gc, GLASS_REAR); gc.fillStyle = "rgba(6,12,20,.92)"; gc.fill();
+      if (o.family) carCabinLight(gc, o.warm ?? 0, true);
+
+      // reflet de ciel sur le pavillon (peinture brillante)
+      gc.save(); carBody(gc); gc.clip();
+      const roofRefl = gc.createLinearGradient(0, -322, 0, -224);
+      roofRefl.addColorStop(0, "rgba(206,234,255,.36)");
+      roofRefl.addColorStop(.55, "rgba(206,234,255,.1)");
+      roofRefl.addColorStop(1, "rgba(206,234,255,0)");
+      gc.fillStyle = roofRefl; gc.fillRect(-640, -340, 1280, 140);
+      gc.restore();
+
+      // liseré chromé + poignées + lignes de portes
+      gc.lineWidth = 2.4; gc.strokeStyle = "rgba(214,232,240,.34)";
+      gc.beginPath(); gc.moveTo(-548, -128); gc.bezierCurveTo(-320, -96, 200, -104, 566, -142); gc.stroke();
+      gc.strokeStyle = "rgba(8,14,20,.75)"; gc.lineWidth = 2;
+      [[-40, -196, -40, -60], [126, -196, 126, -62]].forEach(l => {
+        gc.beginPath(); gc.moveTo(l[0], l[1]); gc.lineTo(l[2], l[3]); gc.stroke();
+      });
+      gc.fillStyle = "rgba(206,222,232,.5)";
+      [-96, 70].forEach(x => { gc.fillRect(x, -182, 42, 7); });
+
+      // badge N3 sur l'aile avant
+      gc.fillStyle = "rgba(240,182,74,.92)";
+      gc.font = "700 26px ui-monospace, monospace"; gc.textAlign = "center";
+      gc.fillText("N3", -430, -196);
+      gc.textAlign = "left";
+
+      // lumière de contour : sculpte la silhouette sur les fonds sombres
+      carBody(gc);
+      gc.lineWidth = 3.2;
+      const rim = gc.createLinearGradient(-620, -320, 620, -30);
+      rim.addColorStop(0, "rgba(226,244,255,.6)");
+      rim.addColorStop(.5, "rgba(170,208,236,.3)");
+      rim.addColorStop(1, "rgba(140,180,212,.42)");
+      gc.strokeStyle = rim; gc.stroke();
+      gc.lineWidth = 1;
+
+      // reflet spéculaire qui balaie la carrosserie
+      if (o.sweep !== undefined && o.sweep > -1) {
+        const sx = lerp(-900, 900, o.sweep);
+        const sw = gc.createLinearGradient(sx - 190, 0, sx + 190, 0);
+        sw.addColorStop(0, "rgba(255,255,255,0)");
+        sw.addColorStop(.5, "rgba(214,238,255,.24)");
+        sw.addColorStop(1, "rgba(255,255,255,0)");
+        gc.fillStyle = sw;
+        gc.save(); gc.translate(sx, 0); gc.transform(1, 0, -.35, 1, 0, 0); gc.fillRect(-1200, -340, 2400, 340); gc.restore();
+      }
+      gc.restore();
+    }
+
+    // roues
+    wheel(gc, WHEELS[0].x, WHEELS[0].y, WHEEL_R, o.spin ?? 0);
+    wheel(gc, WHEELS[1].x, WHEELS[1].y, WHEEL_R, o.spin ?? 0);
+
+    // phares / feux
+    const lp = clamp(o.lights ?? 0);
+    if (lp > .01) {
+      gc.save(); gc.globalAlpha = lp;
+      const hl = gc.createRadialGradient(-596, -120, 4, -596, -120, 96);
+      hl.addColorStop(0, "rgba(255,244,214,.95)"); hl.addColorStop(.35, "rgba(255,214,140,.5)");
+      hl.addColorStop(1, "rgba(255,200,120,0)");
+      gc.fillStyle = hl; gc.beginPath(); gc.arc(-596, -120, 96, 0, TAU); gc.fill();
+      const tl = gc.createRadialGradient(578, -140, 3, 578, -140, 70);
+      tl.addColorStop(0, "rgba(255,120,96,.85)"); tl.addColorStop(1, "rgba(255,90,70,0)");
+      gc.fillStyle = tl; gc.beginPath(); gc.arc(578, -140, 70, 0, TAU); gc.fill();
+      gc.restore();
+    }
+    gc.restore();
+  }
+
+  /* =====================================================================
+     2. DÉCORS PRÉCALCULÉS (déterministes)
+     ===================================================================== */
+  function makeSkyline(seed, base) {
+    const out = [];
+    let x = -160;
+    for (let i = 0; x < W + 160; i++) {
+      const r = rnd(seed + i * 7.13);
+      const kind = r < .16 ? "minaret" : r < .48 ? "dome" : "block";
+      const w = kind === "minaret" ? 16 + rnd(seed + i * 3.1) * 8 : 70 + rnd(seed + i * 5.7) * 130;
+      const h = kind === "minaret" ? 300 + rnd(seed + i * 2.3) * 200
+        : kind === "dome" ? 110 + rnd(seed + i * 4.4) * 80
+        : 90 + rnd(seed + i * 6.1) * 190;
+      const b = { x, w, h, kind, dots: [] };
+      if (kind !== "minaret") {
+        const cols = Math.max(2, Math.floor(w / 34)), rows = Math.max(1, Math.floor(h / 46));
+        for (let c = 0; c < cols; c++) for (let rr = 0; rr < rows; rr++) {
+          if (rnd(seed + i * 11 + c * 3.7 + rr * 1.9) > .62) continue;
+          b.dots.push([(c + .5) * (w / cols), -(rr + .55) * (h / rows) - 6]);
+        }
+      }
+      out.push(b);
+      x += w + 18 + rnd(seed + i * 9.3) * 40;
+    }
+    return { list: out, base };
+  }
+
+  const SKY = {
+    far: makeSkyline(11, 702),
+    mid: makeSkyline(29, 748),
+    near: makeSkyline(47, 806),
+  };
+
+  function makeStars(n, seed) {
+    const a = [];
+    for (let i = 0; i < n; i++) a.push({
+      x: rnd(seed + i * 1.7) * W,
+      y: rnd(seed + i * 2.9) * 620,
+      r: .8 + rnd(seed + i * 3.3) * 2.1,
+      p: rnd(seed + i * 4.1) * TAU,
+      a: .25 + rnd(seed + i * 5.5) * .55,
+      c: rnd(seed + i * 6.7) > .82 ? "#ffe6a8" : "#dcecff",
+    });
+    return a;
+  }
+  const STARS = makeStars(190, 3);
+  const MOTES = Array.from({ length: 90 }, (_, i) => ({
+    x: rnd(70 + i * 1.3) * W, y: rnd(70 + i * 2.1) * H,
+    r: .8 + rnd(70 + i * 3.7) * 2.2, v: 6 + rnd(70 + i * 4.9) * 22, p: rnd(70 + i * 5.3) * TAU,
+  }));
+
+  const CITY_FAR = Array.from({ length: 210 }, (_, i) => ({
+    x: rnd(200 + i * 1.1) * 2400, y: 620 + rnd(200 + i * 2.3) * 90,
+    r: .9 + rnd(200 + i * 3.9) * 1.9, a: .25 + rnd(200 + i * 4.3) * .6,
+    c: rnd(200 + i * 6.1) > .8 ? "#ffd9a0" : "#cfe6ff",
+  }));
+  const CITY_MID = Array.from({ length: 46 }, (_, i) => ({
+    x: rnd(300 + i * 1.7) * 2400, w: 90 + rnd(300 + i * 2.9) * 150,
+    h: 120 + rnd(300 + i * 3.3) * 300, s: .5 + rnd(300 + i * 5.1) * .5,
+  }));
+  const COINS = Array.from({ length: 44 }, (_, i) => ({
+    x: rnd(400 + i * 1.9) * W, y0: -260 - rnd(400 + i * 2.7) * 900,
+    r: 26 + rnd(400 + i * 3.1) * 30, v: 190 + rnd(400 + i * 4.5) * 260,
+    sp: .5 + rnd(400 + i * 5.7) * 1.6, ph: rnd(400 + i * 6.3) * TAU,
+    drift: -70 + rnd(400 + i * 7.9) * 140,
+  }));
+
+  /* --- carte : polygones approximatifs + trame de points --- */
+  const MAP = { lon0: 29, lat0: 41, kx: 38, ky: 50, cx: 1631, cy: 700 };
+  const proj = (lon, lat) => [MAP.cx + (lon - MAP.lon0) * MAP.kx, MAP.cy - (lat - MAP.lat0) * MAP.ky];
+
+  const IBERIA = [[-9.3, 43.0], [-8.4, 43.5], [-6.0, 43.6], [-4.0, 43.4], [-1.8, 43.4], [0.7, 42.8], [3.2, 42.4],
+    [3.2, 41.9], [2.2, 41.4], [1.2, 41.1], [0.2, 38.8], [-0.5, 38.4], [-2.1, 36.8], [-5.6, 36.0], [-6.3, 36.6],
+    [-7.4, 37.2], [-6.9, 37.0], [-8.9, 37.0], [-9.4, 37.1], [-9.0, 38.2], [-9.4, 39.4], [-8.9, 41.4]];
+  const PORTUGAL = [[-9.5, 42.1], [-8.9, 41.9], [-8.7, 41.1], [-8.8, 40.2], [-8.8, 39.4], [-9.1, 38.7], [-8.8, 38.0],
+    [-8.9, 37.0], [-7.4, 37.2], [-6.9, 37.6], [-7.0, 38.2], [-7.3, 39.0], [-6.9, 39.9], [-6.9, 40.4],
+    [-6.5, 41.1], [-6.1, 41.7], [-6.6, 42.1], [-8.2, 42.1]];
+  const FRANCE = [[-1.8, 43.4], [-1.2, 44.6], [-1.1, 45.6], [-2.0, 46.8], [-4.7, 48.0], [-1.5, 48.6], [0.2, 49.5],
+    [1.6, 50.9], [2.5, 51.1], [4.2, 50.0], [6.1, 49.5], [7.6, 48.6], [7.5, 47.6], [7.0, 47.0], [6.0, 46.2],
+    [7.2, 45.0], [7.7, 44.1], [6.9, 43.5], [5.0, 43.3], [3.2, 42.4], [0.7, 42.8]];
+  const ITALY = [[7.5, 44.0], [7.0, 45.5], [8.5, 46.5], [10.5, 46.6], [12.5, 46.4], [13.7, 45.6], [13.0, 45.0],
+    [12.5, 44.3], [13.5, 43.6], [14.9, 42.4], [16.0, 41.9], [18.5, 40.2], [18.4, 39.8], [16.5, 39.9], [15.6, 40.0],
+    [15.0, 38.2], [15.6, 38.0], [16.2, 38.9], [17.2, 40.5], [16.5, 41.9], [15.9, 42.0], [14.0, 42.7], [13.5, 43.5],
+    [12.3, 44.0], [12.0, 45.5], [11.0, 46.0], [9.6, 46.1], [8.6, 46.4]];
+  const BALKANS = [[13.5, 46.5], [19.0, 46.0], [20.5, 44.5], [21.5, 42.5], [24.0, 41.5], [26.5, 41.5], [26.0, 40.5],
+    [23.5, 40.2], [22.5, 39.5], [23.5, 38.5], [22.0, 37.0], [21.0, 38.5], [19.5, 40.0], [19.0, 41.5],
+    [18.5, 42.5], [16.0, 43.5], [14.0, 45.0]];
+  const ANATOLIA = [[26.5, 41.5], [28.0, 42.0], [31.0, 42.0], [36.0, 42.0], [41.0, 41.5], [44.0, 39.5], [44.5, 37.0],
+    [41.0, 36.5], [36.5, 36.0], [32.0, 36.2], [30.0, 36.5], [29.0, 37.5], [27.0, 38.5], [26.5, 40.0]];
+  const MAGHREB = [[-9.8, 35.8], [-5.5, 35.9], [-1.5, 35.2], [3.0, 36.8], [8.0, 37.0], [10.5, 37.0], [11.5, 33.0],
+    [0.0, 31.0], [-9.8, 31.0]];
+
+  function inPoly(pt, poly) {
+    let inside = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const xi = poly[i][0], yi = poly[i][1], xj = poly[j][0], yj = poly[j][1];
+      if (((yi > pt[1]) !== (yj > pt[1])) && (pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi)) inside = !inside;
+    }
+    return inside;
+  }
+
+  function dotLayer() {
+    const c = off(), gg = c.getContext("2d");
+    const base = [FRANCE, ITALY, BALKANS, ANATOLIA, MAGHREB];
+    const step = 12;
+    for (let x = 40; x < W; x += step) {
+      for (let y = 40; y < H; y += step) {
+        const p = [(x - MAP.cx) / MAP.kx + MAP.lon0, MAP.lat0 - (y - MAP.cy) / MAP.ky];
+        let col, r;
+        if (inPoly(p, PORTUGAL)) { col = "rgba(255,216,142,.98)"; r = 2.9; }
+        else if (inPoly(p, IBERIA)) { col = "rgba(120,226,232,.95)"; r = 2.4; }
+        else if (base.some(P => inPoly(p, P))) { col = "rgba(152,184,208,.17)"; r = 1.7; }
+        else continue;
+        const jx = (rnd(x * .37 + y * 1.7) - .5) * 3.2, jy = (rnd(x * 1.3 + y * .71) - .5) * 3.2;
+        gg.fillStyle = col;
+        gg.beginPath(); gg.arc(x + jx, y + jy, r, 0, TAU); gg.fill();
+      }
+    }
+    return c;
+  }
+
+  /** Trace le littoral d'un polygone (coordonnées lon/lat) à l'écran. */
+  function strokePoly(poly, color, alpha, width) {
+    g.save();
+    g.globalAlpha = alpha; g.strokeStyle = color; g.lineWidth = width;
+    const pts = poly.map(p => proj(p[0], p[1]));
+    pathTo(g, pts, false);
+    g.stroke();
+    g.restore();
+  }
+  const MAP_DOTS = dotLayer();
+
+  /* =====================================================================
+     3. SCÈNES
+     ===================================================================== */
+  function vignetteHalo(x, y, r, color, a) {
+    const gr = g.createRadialGradient(x, y, 0, x, y, r);
+    gr.addColorStop(0, color.replace("ALPHA", a.toFixed(3)));
+    gr.addColorStop(1, color.replace("ALPHA", "0"));
+    g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
+  }
+
+  function drawSkyline(layer, alpha, color, t, dawn) {
+    g.save(); g.globalAlpha = alpha;
+    for (const b of layer.list) {
+      const top = layer.base - b.h;
+      g.fillStyle = color;
+      if (b.kind === "minaret") {
+        g.fillRect(b.x, top, b.w, layer.base - top);
+        g.beginPath(); g.moveTo(b.x - 5, top); g.lineTo(b.x + b.w / 2, top - 46); g.lineTo(b.x + b.w + 5, top);
+        g.closePath(); g.fill();
+        g.fillRect(b.x - 7, top + 92, b.w + 14, 7);
+        g.fillRect(b.x - 6, top + 190, b.w + 12, 6);
+      } else if (b.kind === "dome") {
+        g.fillRect(b.x, layer.base - b.h * .55, b.w, b.h * .55);
+        g.beginPath(); g.arc(b.x + b.w / 2, layer.base - b.h * .55, b.w / 2, Math.PI, TAU); g.fill();
+        g.fillRect(b.x + b.w / 2 - 3, layer.base - b.h * .55 - b.w / 2 - 22, 6, 24);
+      } else {
+        g.fillRect(b.x, top, b.w, layer.base - top);
+      }
+      for (const d of b.dots) {
+        const flick = .55 + .45 * Math.sin(t * 2.1 + d[0] * .07 + d[1] * .11);
+        g.globalAlpha = alpha * flick * (1 - dawn * .55);
+        g.fillStyle = "rgba(255,206,140,.95)";
+        g.fillRect(b.x + d[0], layer.base + d[1], 4, 6);
+        g.globalAlpha = alpha;
+      }
+    }
+    g.restore();
+  }
+
+  function waterSurface(t, dawn, lights) {
+    const wy = 806;
+    const wg = g.createLinearGradient(0, wy, 0, H);
+    wg.addColorStop(0, "rgba(8,22,34,.96)"); wg.addColorStop(1, "rgba(2,6,11,1)");
+    g.fillStyle = wg; g.fillRect(0, wy, W, H - wy);
+    for (let i = 0; i < 80; i++) {
+      const k = i / 80;
+      g.globalAlpha = .045 * (1 - k) * (1 + dawn);
+      g.fillStyle = "#ffd9a0";
+      const off = Math.sin(t * .7 + i * .45) * 26 * k;
+      g.fillRect(off, wy + i * 5 + k * k * 90, W, 1.4);
+    }
+    g.globalAlpha = 1;
+    for (const L of lights) {
+      g.globalAlpha = 1;
+      for (let k = 0; k < 22; k++) {
+        const yy = wy + k * 7 + Math.sin(t * .9 + k * .6 + L.x * .02) * 3.4;
+        g.globalAlpha = (.4 - k * .017) * (1 - dawn * .4);
+        g.fillStyle = L.c;
+        g.fillRect(L.x - 2.5 + Math.sin(t + k) * 1.2, yy, 5, 5);
+      }
+    }
+    g.globalAlpha = 1;
+  }
+
+  function ferry(x, y, s, t) {
+    g.save(); g.translate(x, y); g.scale(s, s);
+    g.fillStyle = "#050b12"; g.fillRect(-56, -22, 112, 22);
+    g.beginPath(); g.moveTo(-56, 0); g.lineTo(56, 0); g.lineTo(40, 16); g.lineTo(-46, 16); g.closePath(); g.fill();
+    for (let i = 0; i < 4; i++) {
+      g.fillStyle = i % 2 ? "rgba(255,214,150,.95)" : "rgba(160,230,255,.9)";
+      g.fillRect(-44 + i * 26, -18, 8, 6);
+    }
+    g.fillRect(-2, -46, 4, 26);
+    g.fillStyle = "rgba(255,120,110,.9)"; g.fillRect(-2, -50, 4, 4);
+    g.globalAlpha = .3;
+    g.beginPath(); g.moveTo(-56, 8); g.lineTo(-56 - 90, 22 + Math.sin(t * 2) * 3); g.lineTo(-56, 18); g.closePath();
+    g.fillStyle = "rgba(255,255,255,.5)"; g.fill();
+    g.restore(); g.globalAlpha = 1;
+  }
+
+  function drawIstanbul(t, p) {
+    const dawn = smooth(clamp((p - .15) / .75));
+    const zoom = lerp(1.0, 1.075, eio(p));
+    g.save();
+    g.translate(W / 2, H / 2); g.scale(zoom, zoom); g.translate(-W / 2, -H / 2 + lerp(8, -22, eio(p)));
+
+    const sky = g.createLinearGradient(0, -40, 0, 900);
+    sky.addColorStop(0, "#01040a"); sky.addColorStop(.42, "#061427");
+    sky.addColorStop(.68, "#12314a"); sky.addColorStop(.84, "#3c4a58");
+    g.fillStyle = sky; g.fillRect(-80, -80, W + 160, 1060);
+
+    g.globalAlpha = 1;
+    for (const s of STARS) {
+      g.globalAlpha = (1 - dawn * .92) * s.a * (.62 + .38 * Math.sin(t * 1.6 + s.p));
+      g.fillStyle = s.c; g.fillRect(s.x, s.y, s.r, s.r);
+    }
+    g.globalAlpha = 1;
+
+    vignetteHalo(1620, 186, 300, "rgba(226,240,255,ALPHA)", .16 * (1 - dawn * .6));
+    g.beginPath(); g.arc(1620, 186, 58, 0, TAU);
+    const moon = g.createLinearGradient(1560, 130, 1680, 240);
+    moon.addColorStop(0, "#fdfbf4"); moon.addColorStop(1, "#c9d6e4");
+    g.fillStyle = moon; g.globalAlpha = 1 - dawn * .5; g.fill();
+    g.globalAlpha = 1;
+
+    vignetteHalo(1300, 700, 980, "rgba(242,164,88,ALPHA)", .34 * dawn);
+    vignetteHalo(760, 660, 620, "rgba(255,196,120,ALPHA)", .16 * dawn);
+
+    drawSkyline(SKY.far, .55, "#091826", t, dawn);
+    drawSkyline(SKY.mid, .8, "#050f19", t, dawn);
+
+    const lights = [];
+    for (const b of SKY.mid.list) for (const d of b.dots) if (rnd(b.x + d[0]) > .55) lights.push({ x: b.x + d[0], c: "rgba(255,206,140,.9)" });
+    lights.push({ x: 1620, c: "rgba(226,240,255,.95)" });
+
+    waterSurface(t, dawn, lights);
+    ferry(lerp(-260, 2180, ((t * .022) % 1) + (rnd(7) > .6 ? 0 : 0)), 792, .8, t);
+    ferry(lerp(2200, -240, (t * .015) % 1), 762, .55, t);
+
+    drawSkyline(SKY.near, 1, "#02070d", t, dawn);
+    g.globalAlpha = 1;
+
+    // brume + poussière lumineuse
+    for (let i = 0; i < 4; i++) {
+      const yy = 620 + i * 46;
+      const off = Math.sin(t * .18 + i) * 160;
+      const mg = g.createLinearGradient(0, yy - 40, 0, yy + 60);
+      mg.addColorStop(0, "rgba(214,232,255,0)"); mg.addColorStop(.5, "rgba(214,232,255," + (.045 + dawn * .05) + ")"); mg.addColorStop(1, "rgba(214,232,255,0)");
+      g.fillStyle = mg; g.fillRect(-200 + off, yy - 40, W + 400, 100);
+    }
+    for (const m of MOTES) {
+      const y = (m.y - t * m.v) % H; const yy = y < 0 ? y + H : y;
+      g.globalAlpha = .34;
+      g.fillStyle = "rgba(255,224,178,.9)";
+      g.beginPath(); g.arc((m.x + Math.sin(t * .5 + m.p) * 26 + W) % W, yy, m.r, 0, TAU); g.fill();
+    }
+    g.globalAlpha = 1;
+    g.restore();
+  }
+
+  function studioFloor() {
+    const fy = 762;
+    const fg = g.createLinearGradient(0, fy, 0, H);
+    fg.addColorStop(0, "#0b131c"); fg.addColorStop(.5, "#060b12"); fg.addColorStop(1, "#03060a");
+    g.fillStyle = fg; g.fillRect(0, fy, W, H - fy);
+    g.strokeStyle = "rgba(150,190,220,.12)"; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(0, fy + .5); g.lineTo(W, fy + .5); g.stroke();
+    vignetteHalo(960, 700, 700, "rgba(120,180,220,ALPHA)", .1);
+  }
+
+  function beams(t) {
+    g.save();
+    for (const b of [{ x: 380, a: .1, w: 240 }, { x: 1560, a: .075, w: 220 }]) {
+      g.save(); g.translate(b.x, -60); g.rotate(b.x < 960 ? .3 : -.3);
+      // cinq cônes emboîtés : le bord du faisceau reste doux, jamais coupé au couteau
+      for (let k = 0; k < 5; k++) {
+        const w = b.w * (1 - k * .17), a = b.a * Math.pow(.42, k);
+        const bg = g.createLinearGradient(0, 0, 0, 980);
+        bg.addColorStop(0, "rgba(190,225,255," + a.toFixed(3) + ")");
+        bg.addColorStop(.72, "rgba(190,225,255," + (a * .34).toFixed(3) + ")");
+        bg.addColorStop(1, "rgba(190,225,255,0)");
+        g.fillStyle = bg;
+        g.beginPath(); g.moveTo(-w, 0); g.lineTo(w, 0); g.lineTo(w * 2.4, 980); g.lineTo(-w * 2.4, 980); g.closePath(); g.fill();
+      }
+      g.restore();
+    }
+    g.globalAlpha = .5;
+    for (const m of MOTES.slice(0, 46)) {
+      const y = (m.y + Math.sin(t * .4 + m.p) * 40 + H) % H;
+      g.globalAlpha = .3;
+      g.fillStyle = "rgba(226,240,255,.85)";
+      g.beginPath(); g.arc(m.x, y, m.r * .9, 0, TAU); g.fill();
+    }
+    g.globalAlpha = 1;
+    g.restore();
+  }
+
+  function drawStudio(t, p) {
+    g.fillStyle = "#03060b"; g.fillRect(0, 0, W, H);
+    vignetteHalo(960, 420, 1200, "rgba(24,44,66,ALPHA)", .5);
+    studioFloor();
+    beams(t);
+
+    const trace = clamp((t - 6.85) / 2.6);
+    const fill = smooth(clamp((t - 9.35) / 1.15));
+    const sweep = clamp((t - 10.45) / 2.0);
+    const spin = (t > 11.6 ? (t - 11.6) : 0) * 1.5 + easeOut(clamp((t - 11.2) / 1.4)) * .5;
+    const lights = smooth(clamp((t - 12.15) / .85));
+    const cam = lerp(1.1, 1.0, eio(clamp((t - 6.5) / 4.2)));
+
+    g.save();
+    g.translate(W / 2, 690); g.scale(cam, cam); g.translate(-W / 2, -690);
+
+    // halo de sol
+    vignetteHalo(960, 748, 720, "rgba(255,214,150,ALPHA)", .1 + lights * .16);
+
+    // ombre portée
+    g.save();
+    const sh = g.createRadialGradient(960, 742, 20, 960, 742, 640);
+    sh.addColorStop(0, "rgba(0,0,0," + (fill * .85) + ")"); sh.addColorStop(1, "rgba(0,0,0,0)");
+    g.fillStyle = sh; g.beginPath(); g.ellipse(960, 748, 620, 54, 0, 0, TAU); g.fill();
+    g.restore();
+
+    const lap = lerp(1, .62, clamp((t - 6.5) / 3));
+    car(g, { x: 960 - (1 - easeOut(trace)) * 150, y: 738, s: 1.05, fill: fill * lap, trace: trace * lap, sweep, spin, lights });
+
+    // reflet au sol
+    g.save();
+    g.globalAlpha = fill * .16;
+    g.translate(960, 1476); g.scale(1, -1);
+    car(g, { x: 0, y: 738, s: 1.05, fill: 1, sweep: -1, spin, lights: lights * .5 });
+    g.restore();
+    const fade = g.createLinearGradient(0, 750, 0, 1010);
+    fade.addColorStop(0, "rgba(3,6,11,0)"); fade.addColorStop(1, "rgba(3,6,11,1)");
+    g.fillStyle = fade; g.fillRect(0, 750, W, 260);
+
+    // cône du phare
+    if (lights > .02) {
+      g.save();
+      g.globalCompositeOperation = "lighter";
+      const cone = g.createLinearGradient(-600, 0, -1500, 0);
+      cone.addColorStop(0, "rgba(255,226,170," + (.3 * lights) + ")"); cone.addColorStop(1, "rgba(255,226,170,0)");
+      g.fillStyle = cone;
+      g.translate(960, 738); g.scale(1.05, 1.05);
+      g.beginPath(); g.moveTo(-596, -128); g.lineTo(-1560, -26); g.lineTo(-1560, 8); g.lineTo(-600, -60); g.closePath(); g.fill();
+      g.restore();
+    }
+    g.restore();
+
+    // éclat de fin de révélation
+    const flash = clamp(1 - Math.abs(t - 12.55) / .28);
+    if (flash > 0) { g.fillStyle = "rgba(255,236,200," + (.16 * flash) + ")"; g.fillRect(0, 0, W, H); }
+  }
+
+  function roadAndCity(t) {
+    g.fillStyle = "#02050a"; g.fillRect(0, 0, W, H);
+    vignetteHalo(1000, 520, 1100, "rgba(30,58,86,ALPHA)", .45);
+
+    // lointain
+    g.save();
+    for (const c of CITY_FAR) {
+      const x = ((c.x + t * 26) % 2400) - 240;
+      g.globalAlpha = c.a * .8; g.fillStyle = c.c;
+      g.fillRect(x, c.y, c.r, c.r);
+    }
+    g.restore(); g.globalAlpha = 1;
+
+    // immeubles
+    for (const b of CITY_MID) {
+      const x = ((b.x + t * 62) % 2400) - 240;
+      g.fillStyle = "rgba(4,10,17,.96)";
+      g.fillRect(x, 700 - b.h, b.w, b.h);
+      g.globalAlpha = .55;
+      for (let i = 0; i < 6; i++) {
+        const wx = x + 14 + (i % 3) * 34, wy = 700 - b.h + 24 + Math.floor(i / 3) * 40;
+        if (wx > x + b.w - 20) continue;
+        g.fillStyle = i % 2 ? "rgba(255,206,140,.85)" : "rgba(150,220,255,.75)";
+        g.fillRect(wx, wy, 12, 16);
+      }
+      g.globalAlpha = 1;
+    }
+
+    // sol
+    const rg = g.createLinearGradient(0, 700, 0, H);
+    rg.addColorStop(0, "#080d14"); rg.addColorStop(1, "#03060a");
+    g.fillStyle = rg; g.fillRect(0, 700, W, H - 700);
+    g.strokeStyle = "rgba(150,190,220,.1)"; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(0, 700.5); g.lineTo(W, 700.5); g.stroke();
+
+    // bandes de la route
+    g.save();
+    for (let i = 0; i < 26; i++) {
+      const x = (((i * 150) + t * 430) % 2400) - 240;
+      g.globalAlpha = .5;
+      g.fillStyle = "rgba(255,232,190,.75)";
+      g.fillRect(x + 60, 856, 76, 7);
+    }
+    g.restore(); g.globalAlpha = 1;
+    g.fillStyle = "rgba(255,255,255,.05)"; g.fillRect(0, 852, W, 16);
+
+    // lampadaires qui défilent
+    for (let i = 0; i < 8; i++) {
+      const x = (((i * 300) + t * 430) % 2400) - 240;
+      g.fillStyle = "rgba(3,8,13,.95)"; g.fillRect(x, 300, 9, 560);
+      g.fillRect(x, 300, 96, 9);
+      vignetteHalo(x + 92, 312, 130, "rgba(255,206,140,ALPHA)", .3);
+      g.beginPath(); g.arc(x + 92, 312, 11, 0, TAU); g.fillStyle = "rgba(255,238,206,.95)"; g.fill();
+      g.save(); g.globalAlpha = .18;
+      g.beginPath(); g.moveTo(x + 92, 318); g.lineTo(x + 40, 900); g.lineTo(x + 190, 900); g.closePath();
+      g.fillStyle = "rgba(255,222,170,.55)"; g.fill();
+      g.restore();
+    }
+  }
+
+  function drawDrive(t, p) {
+    roadAndCity(t);
+    const bob = Math.sin(t * 2.2) * 3.2;
+    const press = clamp((t - 14.5) / 1.4);
+    const spin = (t - 14.5) * 3.1;
+    const warm = smooth(clamp((t - 16.6) / 1.6)) * (1 - smooth(clamp((t - 21.4) / 1)) * .6);
+
+    // un lampadaire qui passe = un reflet chaud qui balaie la carrosserie
+    const tri = (x) => { const f = x - Math.floor(x); return f < .5 ? f * 2 : 2 - f * 2; };
+
+    g.save();
+    g.translate(0, bob);
+    const sh = g.createRadialGradient(1010, 830, 20, 1010, 830, 520);
+    sh.addColorStop(0, "rgba(0,0,0,.7)"); sh.addColorStop(1, "rgba(0,0,0,0)");
+    g.fillStyle = sh; g.beginPath(); g.ellipse(1010, 834, 470, 34, 0, 0, TAU); g.fill();
+    car(g, { x: 1010, y: 806, s: .92, fill: 1, trace: 0, sweep: tri(t * .42), spin, lights: 1, family: true, warm });
+    g.restore();
+
+    // lueur de feu arrière qui file
+    g.save(); g.globalAlpha = .2 + .1 * Math.sin(t * 6);
+    const tail = g.createLinearGradient(1500, 0, 1900, 0);
+    tail.addColorStop(0, "rgba(255,90,70,.5)"); tail.addColorStop(1, "rgba(255,90,70,0)");
+    g.fillStyle = tail; g.fillRect(1500, 690, 420, 26);
+    g.restore();
+  }
+
+  function coin(gc, x, y, r, spin, a) {
+    const sq = Math.abs(Math.cos(spin));
+    gc.save(); gc.translate(x, y); gc.globalAlpha = a;
+    gc.beginPath(); gc.ellipse(0, 0, Math.max(2.4, r * sq), r, 0, 0, TAU);
+    const cg = gc.createLinearGradient(-r, -r, r, r);
+    cg.addColorStop(0, "#fff0c8"); cg.addColorStop(.45, "#f0b64a"); cg.addColorStop(1, "#8c5c12");
+    gc.fillStyle = cg; gc.fill();
+    if (sq > .34) {
+      gc.lineWidth = Math.max(1.4, r * .06); gc.strokeStyle = "rgba(90,58,10,.55)";
+      gc.beginPath(); gc.ellipse(0, 0, r * sq * .72, r * .72, 0, 0, TAU); gc.stroke();
+      gc.globalAlpha = a * clamp((sq - .34) / .5);
+      gc.fillStyle = "rgba(96,62,12,.85)";
+      gc.font = "700 " + Math.round(r * .82) + "px ui-monospace, monospace";
+      gc.textAlign = "center"; gc.textBaseline = "middle";
+      gc.fillText("IC", 0, r * .04);
+    }
+    gc.restore();
+  }
+
+  function drawPrice(t, p) {
+    const gl = g.createRadialGradient(960, 520, 40, 960, 520, 1100);
+    gl.addColorStop(0, "rgba(56,44,18,.95)"); gl.addColorStop(.55, "rgba(10,10,14,.95)"); gl.addColorStop(1, "rgba(2,4,7,1)");
+    g.fillStyle = gl; g.fillRect(0, 0, W, H);
+
+    g.save(); g.globalAlpha = .16;
+    for (let i = 0; i < 60; i++) {
+      const x = (i * 137) % W, y = (i * 211) % H;
+      g.fillStyle = "rgba(240,182,74,.7)";
+      g.beginPath(); g.arc(x, y, 2.2, 0, TAU); g.fill();
+    }
+    g.restore();
+
+    // silhouette discrète de la berline
+    g.save(); g.globalAlpha = .12; g.translate(0, 250); g.scale(.94, .94);
+    car(g, { x: 960, y: 738, s: 1, fill: 1, sweep: -1, spin: 0, lights: 0 });
+    g.restore(); g.globalAlpha = 1;
+
+    const enter = smooth(clamp((t - 22.5) / .8));
+    for (const c of COINS) {
+      const life = ((t * c.v + c.y0) % 1700 + 1700) % 1700 - 260;
+      const alpha = (1 - clamp((life - 620) / 520)) * enter * .9;
+      if (alpha <= .01) continue;
+      coin(g, c.x + Math.sin(t * c.sp + c.ph) * 26 + c.drift * clamp((life + 260) / 900), life, c.r, t * c.sp * 3 + c.ph, alpha);
+    }
+
+    const pulse = .5 + .5 * Math.sin(t * 2.4);
+    vignetteHalo(960, 520, 620 + pulse * 60, "rgba(240,182,74,ALPHA)", .1 + pulse * .05);
+
+    // cercles concentriques
+    g.save(); g.strokeStyle = "rgba(240,182,74,.25)"; g.lineWidth = 1.6;
+    for (let i = 0; i < 3; i++) {
+      const r = 330 + i * 120 + pulse * 16;
+      g.globalAlpha = .5 - i * .13;
+      g.beginPath(); g.arc(960, 520, r, 0, TAU); g.stroke();
+    }
+    g.restore(); g.globalAlpha = 1;
+  }
+
+  const SP_CITIES = [{ n: "Madrid", lon: -3.7, lat: 40.4 }, { n: "Barcelone", lon: 2.2, lat: 41.4 },
+    { n: "Lisbonne", lon: -9.1, lat: 38.7 }, { n: "Porto", lon: -8.6, lat: 41.2 }];
+  const ORIGIN = { n: "Istanbul", lon: 29.0, lat: 41.0 };
+
+  function travel(t, a, b, prog) {
+    const [x0, y0] = proj(a.lon, a.lat), [x1, y1] = proj(b.lon, b.lat);
+    const mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 150;
+    const qx = (1 - prog) * (1 - prog) * x0 + 2 * (1 - prog) * prog * mx + prog * prog * x1;
+    const qy = (1 - prog) * (1 - prog) * y0 + 2 * (1 - prog) * prog * my + prog * prog * y1;
+    return [qx, qy];
+  }
+
+  function drawMap(t, p) {
+    g.fillStyle = "#02060c"; g.fillRect(0, 0, W, H);
+    vignetteHalo(1240, 560, 1000, "rgba(22,48,72,ALPHA)", .5);
+
+    g.save(); g.globalAlpha = .18; g.drawImage(MAP_DOTS, 0, 0); g.restore();
+
+    const hi = smooth(clamp((t - 28.6) / 1.6));
+    g.save();
+    g.globalAlpha = hi;
+    g.shadowColor = "rgba(240,182,74,.5)"; g.shadowBlur = 18;
+    g.drawImage(MAP_DOTS, 0, 0);
+    g.restore();
+
+    // littoraux : donne une forme lisible aux deux pays mis en avant
+    strokePoly(IBERIA, "rgba(120,226,232,.85)", hi * .55, 1.8);
+    strokePoly(PORTUGAL, "rgba(255,214,138,.95)", hi * .8, 2.2);
+
+    // graticule
+    g.save(); g.strokeStyle = "rgba(150,190,220,.1)"; g.lineWidth = 1;
+    for (let lon = -10; lon <= 40; lon += 10) {
+      const [x] = proj(lon, 41);
+      if (x < 90 || x > W - 60) continue;
+      g.beginPath(); g.moveTo(x, 150); g.lineTo(x, 1010); g.stroke();
+      g.fillStyle = "rgba(150,190,220,.32)";
+      g.font = "400 17px ui-monospace, monospace"; g.textAlign = "center";
+      g.fillText(lon > 0 ? lon + "°E" : Math.abs(lon) + "°O", x, 1035);
+    }
+    for (let lat = 34; lat <= 52; lat += 4) {
+      const [, y] = proj(29, lat);
+      if (y < 120 || y > 1010) continue;
+      g.beginPath(); g.moveTo(90, y); g.lineTo(W - 60, y); g.stroke();
+      g.fillStyle = "rgba(150,190,220,.32)";
+      g.font = "400 17px ui-monospace, monospace"; g.textAlign = "left";
+      g.fillText(lat + "°N", 96, y + 6);
+    }
+    g.restore();
+
+    // routes Istanbul → péninsule
+    const routeP = clamp((t - 28.6) / 3.1);
+    const targets = SP_CITIES.filter(c => c.n !== "Barcelone" && c.n !== "Porto");
+    targets.forEach((city, i) => {
+      const prog = clamp(routeP * 1.25 - i * .18);
+      if (prog <= 0) return;
+      g.save();
+      g.strokeStyle = i ? "rgba(247,206,120,.75)" : "rgba(120,226,232,.75)";
+      g.lineWidth = 2.6; g.setLineDash([12, 10]); g.lineDashOffset = -t * 40;
+      g.beginPath();
+      const [x0, y0] = proj(ORIGIN.lon, ORIGIN.lat), [x1, y1] = proj(city.lon, city.lat);
+      g.moveTo(x0, y0);
+      g.quadraticCurveTo((x0 + x1) / 2, Math.min(y0, y1) - 150, x1, y1);
+      g.stroke();
+      g.setLineDash([]);
+      const [tx, ty] = travel(t, ORIGIN, city, easeOut(prog));
+      vignetteHalo(tx, ty, 60, "rgba(255,236,190,ALPHA)", .55 * (1 - clamp((prog - .95) / .05)));
+      g.beginPath(); g.arc(tx, ty, 5.5, 0, TAU); g.fillStyle = "#fff3d6"; g.fill();
+      g.restore();
+    });
+    g.globalAlpha = 1;
+
+    // marqueurs villes
+    for (const c of SP_CITIES) {
+      const [x, y] = proj(c.lon, c.lat);
+      const a = smooth(clamp((t - 29.2) / .8));
+      if (a <= .02) continue;
+      g.save(); g.globalAlpha = a;
+      g.beginPath(); g.arc(x, y, 6.5, 0, TAU); g.fillStyle = "#ffe6a8"; g.fill();
+      vignetteHalo(x, y, 70, "rgba(240,182,74,ALPHA)", .3);
+      g.fillStyle = "rgba(247,244,236,.85)";
+      g.font = "500 20px ui-monospace, monospace"; g.textAlign = "center";
+      g.fillText(c.n.toUpperCase(), x, y - 22);
+      g.restore();
+    }
+
+    // Istanbul qui pulse
+    const [ox, oy] = proj(ORIGIN.lon, ORIGIN.lat);
+    const pulse = (t * .9) % 1;
+    g.save();
+    g.strokeStyle = "rgba(120,226,232," + (.5 * (1 - pulse)) + ")"; g.lineWidth = 3;
+    g.beginPath(); g.arc(ox, oy, 14 + pulse * 54, 0, TAU); g.stroke();
+    g.beginPath(); g.arc(ox, oy, 9, 0, TAU); g.fillStyle = "#5ad6de"; g.fill();
+    vignetteHalo(ox, oy, 120, "rgba(120,226,232,ALPHA)", .34);
+    g.fillStyle = "rgba(247,244,236,.95)";
+    g.font = "600 22px ui-monospace, monospace"; g.textAlign = "left";
+    g.fillText("ISTANBUL", ox + 18, oy - 30);
+    g.restore();
+
+    // étiquettes pays
+    const [sx, sy] = proj(-3.6, 39.4), [px, py] = proj(-8.4, 39.9);
+    g.save();
+    g.globalAlpha = smooth(clamp((t - 29.6) / 1));
+    g.fillStyle = "rgba(160,240,245,.95)";
+    g.font = "600 24px ui-monospace, monospace"; g.textAlign = "center";
+    g.fillText("ESPAGNE", sx, sy);
+    g.fillStyle = "rgba(255,214,138,.98)";
+    g.fillText("PORTUGAL", px - 30, py);
+    g.font = "500 19px ui-monospace, monospace";
+    g.fillStyle = "rgba(220,238,255,.6)";
+    g.fillText("FRANCE", proj(2.4, 46.6)[0], proj(2.4, 46.6)[1]);
+    g.fillText("ITALIE", proj(12.6, 43.2)[0], proj(12.6, 43.2)[1]);
+    g.fillText("TURQUIE", proj(34, 39.4)[0], proj(34, 39.4)[1]);
+    g.restore();
+
+    // échelle
+    g.save(); g.globalAlpha = .5;
+    g.strokeStyle = "rgba(220,238,255,.7)"; g.lineWidth = 2;
+    const [bx0] = proj(-10, 38), [bx1] = proj(0, 38);
+    g.beginPath(); g.moveTo(bx0, 1016); g.lineTo(bx1, 1016); g.stroke();
+    g.beginPath(); g.moveTo(bx0, 1008); g.lineTo(bx0, 1024); g.moveTo(bx1, 1008); g.lineTo(bx1, 1024); g.stroke();
+    g.fillStyle = "rgba(220,238,255,.75)"; g.font = "400 17px ui-monospace, monospace"; g.textAlign = "center";
+    g.fillText("≈ 840 km", (bx0 + bx1) / 2, 1000);
+    g.restore();
+  }
+
+  function drawEndcard(t, p) {
+    g.fillStyle = "#03060b"; g.fillRect(0, 0, W, H);
+    vignetteHalo(960, 430, 1000, "rgba(48,40,16,ALPHA)", .8);
+    vignetteHalo(960, 980, 900, "rgba(90,214,222,ALPHA)", .1);
+
+    // rayons
+    g.save();
+    for (let i = 0; i < 12; i++) {
+      const a = -Math.PI / 2 + (i - 5.5) * .13 + Math.sin(t * .3 + i) * .01;
+      g.save(); g.translate(960, 460); g.rotate(a);
+      const rg = g.createLinearGradient(0, 0, 0, -1200);
+      rg.addColorStop(0, "rgba(255,226,170,.07)"); rg.addColorStop(1, "rgba(255,226,170,0)");
+      g.fillStyle = rg;
+      g.beginPath(); g.moveTo(-34, 0); g.lineTo(34, 0); g.lineTo(210, -1200); g.lineTo(-210, -1200); g.closePath(); g.fill();
+      g.restore();
+    }
+    g.restore();
+
+    const enter = easeOut(clamp((t - 33.1) / 1.6));
+    g.save(); g.globalAlpha = .16 + enter * .06; g.translate(0, 210 + (1 - enter) * 40);
+    car(g, { x: 960, y: 738, s: 1.02, fill: 1, sweep: -1, spin: 0, lights: 0 });
+    g.restore(); g.globalAlpha = 1;
+
+    g.save();
+    for (const c of COINS.slice(0, 20)) {
+      const life = ((t * c.v * .5 + c.y0) % 1700 + 1700) % 1700 - 260;
+      const a = (1 - clamp((life - 620) / 520)) * .5 * enter;
+      if (a > .01) coin(g, c.x, life, c.r * .8, t * c.sp * 2 + c.ph, a);
+    }
+    g.restore(); g.globalAlpha = 1;
+
+    const out = clamp((TOTAL / 1000 - t) / .9);
+    if (out < 1) { g.fillStyle = "rgba(2,4,8," + (1 - out) + ")"; g.fillRect(0, 0, W, H); }
+  }
+
+  /* --- transitions entre scènes --- */
+  function transition(ms) {
+    const sc = sceneAt(ms);
+    if (sc.i === 0) return;
+    const dt = ms - sc.from;
+    if (dt > 460) return;
+    const k = dt / 460;
+    g.save();
+    g.globalAlpha = (1 - k) * .16;
+    g.fillStyle = "#fff6e2"; g.fillRect(0, 0, W, H);
+    g.globalAlpha = (1 - k) * .3;
+    const x = lerp(-500, W + 500, eio(k));
+    const sg = g.createLinearGradient(x - 340, 0, x + 340, H);
+    sg.addColorStop(0, "rgba(255,236,200,0)"); sg.addColorStop(.5, "rgba(255,236,200,.75)"); sg.addColorStop(1, "rgba(255,236,200,0)");
+    g.fillStyle = sg;
+    g.save(); g.transform(1, 0, -.3, 1, 0, 0); g.fillRect(x - 400, -200, 800, H + 400); g.restore();
+    g.restore();
+  }
+
+  const GRAIN = (() => {
+    const c = off(320, 180), gg = c.getContext("2d");
+    const img = gg.createImageData(320, 180);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = 120 + rnd(i) * 130;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 26;
+    }
+    gg.putImageData(img, 0, 0);
+    return c;
+  })();
+
+  function grainFrame(t) {
+    g.save();
+    g.globalAlpha = .05;
+    g.translate(-((t * 90) % 320), -((t * 130) % 180));
+    for (let x = -320; x < W + 320; x += 320) for (let y = -180; y < H + 180; y += 180) g.drawImage(GRAIN, x, y);
+    g.restore();
+  }
+
+  function sceneAt(ms) {
+    for (let i = SCENES.length - 1; i >= 0; i--) if (ms >= SCENES[i].from) return { i, ...SCENES[i] };
+    return { i: 0, ...SCENES[0] };
+  }
+
+  /* =====================================================================
+     4. SON : partition synthétisée (Web Audio), jouée ou rendue hors ligne
+     ===================================================================== */
+  const CHORDS = [
+    [87.31, 130.81, 164.81, 220.00],  // F maj7
+    [65.41, 98.00, 146.83, 196.00],   // C
+    [73.42, 110.00, 146.83, 174.61],  // Dm
+    [58.27, 87.31, 116.54, 174.61],   // Bb
+    [87.31, 130.81, 174.61, 220.00],  // F (résolution)
+  ];
+
+  function noiseBuffer(ctx) {
+    if (!ctx.__nb) {
+      const len = Math.floor(ctx.sampleRate * 1.1), b = ctx.createBuffer(1, len, ctx.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      ctx.__nb = b;
+    }
+    return ctx.__nb;
+  }
+
+  const SYN = {
+    tone(ctx, dest, at, freq, dur, type, peak, glide) {
+      const o = ctx.createOscillator(), a = ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, at);
+      if (glide) o.frequency.exponentialRampToValueAtTime(Math.max(18, glide), at + dur);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + Math.min(.18, dur * .2));
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      o.connect(a); a.connect(dest); o.start(at); o.stop(at + dur + .05);
+    },
+    noise(ctx, dest, at, dur, peak, f0, f1, q) {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx);
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = q ?? 1.1;
+      bp.frequency.setValueAtTime(f0, at);
+      bp.frequency.exponentialRampToValueAtTime(Math.max(40, f1), at + dur * .85);
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + dur * .35);
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      s.connect(bp); bp.connect(a); a.connect(dest); s.start(at); s.stop(at + dur + .05);
+    },
+  };
+
+  const VOICES = {
+    /** Nappe tenue : idx = accord joué, dur = durée de l'accord en secondes. */
+    pad: (ctx, d, at, idx = 0, dur = 9.5) => {
+      const notes = CHORDS[idx];
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = .6;
+      lp.frequency.setValueAtTime(520, at);
+      lp.frequency.linearRampToValueAtTime(1450, at + dur * .45);
+      lp.frequency.linearRampToValueAtTime(620, at + dur);
+      const vg = ctx.createGain();
+      vg.gain.setValueAtTime(.0001, at);
+      vg.gain.exponentialRampToValueAtTime(.085, at + Math.min(2.6, dur * .34));
+      vg.gain.setValueAtTime(.085, at + dur * .55);
+      vg.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      lp.connect(vg); vg.connect(d);
+      notes.forEach((f, i) => {
+        const o = ctx.createOscillator(), og = ctx.createGain();
+        o.type = i === 0 ? "sine" : "triangle";
+        o.frequency.value = f * (i % 2 ? 1.0016 : .9988);
+        og.gain.value = i === 0 ? .5 : .26;
+        o.connect(og); og.connect(lp); o.start(at); o.stop(at + dur + .1);
+      });
+      const sh = ctx.createOscillator(), sa = ctx.createGain();
+      sh.type = "sine"; sh.frequency.value = notes[notes.length - 1] * 2;
+      sa.gain.setValueAtTime(.0001, at);
+      sa.gain.exponentialRampToValueAtTime(.012, at + dur * .5);
+      sa.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      sh.connect(sa); sa.connect(vg); sh.start(at); sh.stop(at + dur + .1);
+    },
+    air: (ctx, d, at) => {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx); s.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 480; bp.Q.value = .7;
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.linearRampToValueAtTime(.012, at + 2);
+      a.gain.setValueAtTime(.012, at + 33);
+      a.gain.linearRampToValueAtTime(.0001, at + 37);
+      s.connect(bp); bp.connect(a); a.connect(d);
+      s.start(at); s.stop(at + 37.2);
+    },
+    sub: (ctx, d, at) => SYN.tone(ctx, d, at, 44, 3.4, "sine", .16, 30),
+    kick: (ctx, d, at) => { SYN.tone(ctx, d, at, 68, .5, "sine", .17, 34); SYN.noise(ctx, d, at, .12, .03, 900, 200, .8); },
+    riser: (ctx, d, at) => {
+      SYN.noise(ctx, d, at, 1.5, .05, 320, 3200, .8);
+      SYN.tone(ctx, d, at, 180, 1.5, "triangle", .028, 460);
+    },
+    whoosh: (ctx, d, at) => SYN.noise(ctx, d, at, 1.15, .08, 200, 2400, 1),
+    whooshDeep: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.6, .1, 120, 1400, .9); SYN.tone(ctx, d, at, 90, 1.6, "sine", .1, 40); },
+    whooshSoft: (ctx, d, at) => SYN.noise(ctx, d, at, 1.4, .05, 260, 1600, 1.3),
+    impact: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 74, .9, "sine", .2, 32);
+      SYN.noise(ctx, d, at, .7, .06, 500, 120, .7);
+      [174.61, 261.63, 349.23].forEach(f => SYN.tone(ctx, d, at, f, 2.4, "triangle", .026));
+    },
+    impactSoft: (ctx, d, at) => { SYN.tone(ctx, d, at, 92, .5, "sine", .11, 46); SYN.noise(ctx, d, at, .4, .035, 700, 200, .8); },
+    trace: (ctx, d, at) => SYN.tone(ctx, d, at, 1180 + (at * 900 % 3) * 60, .16, "triangle", .035, 1500),
+    chordUp: (ctx, d, at) => [174.61, 261.63, 349.23, 523.25].forEach((f, i) => SYN.tone(ctx, d, at + i * .06, f, 2.6, "triangle", .028)),
+    sweep: (ctx, d, at) => SYN.noise(ctx, d, at, 1.8, .045, 600, 4200, 1.6),
+    engine: (ctx, d, at) => {
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 220;
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.linearRampToValueAtTime(.035, at + 1.2);
+      a.gain.setValueAtTime(.035, at + 8);
+      a.gain.linearRampToValueAtTime(.0001, at + 10.4);
+      lp.connect(a); a.connect(d);
+      [58, 87, 116.5].forEach((f, i) => {
+        const o = ctx.createOscillator(); o.type = i ? "sawtooth" : "sine"; o.frequency.value = f * (i ? 1.004 : 1);
+        const og = ctx.createGain(); og.gain.value = i ? .35 : .8;
+        o.connect(og); og.connect(lp); o.start(at); o.stop(at + 10.5);
+      });
+    },
+    ignite: (ctx, d, at) => { SYN.tone(ctx, d, at, 840, .5, "sine", .06, 1560); SYN.noise(ctx, d, at, .5, .05, 2600, 900, 1.2); },
+    chip: (ctx, d, at) => { SYN.tone(ctx, d, at, 1560, .16, "sine", .035, 2080); SYN.noise(ctx, d, at, .07, .022, 3200, 1800, 1); },
+    door: (ctx, d, at) => { SYN.tone(ctx, d, at, 118, .34, "sine", .07, 62); SYN.noise(ctx, d, at, .2, .03, 420, 140, .9); },
+    coinTick: (ctx, d, at) => { SYN.tone(ctx, d, at, 1960 + (Math.round(at * 1000) % 5) * 130, .09, "triangle", .028, 2400); },
+    coinLand: (ctx, d, at) => { SYN.tone(ctx, d, at, 1320, .5, "sine", .05); SYN.noise(ctx, d, at, .3, .04, 4200, 1200, 1.4); },
+    chime: (ctx, d, at) => {
+      const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), a = ctx.createGain();
+      car.type = "sine"; car.frequency.value = 1046.5; mod.type = "sine"; mod.frequency.value = 2620;
+      mg.gain.setValueAtTime(700, at); mg.gain.exponentialRampToValueAtTime(1, at + 1.1);
+      a.gain.setValueAtTime(.0001, at); a.gain.exponentialRampToValueAtTime(.055, at + .02);
+      a.gain.exponentialRampToValueAtTime(.0001, at + 1.4);
+      mod.connect(mg); mg.connect(car.frequency); car.connect(a); a.connect(d);
+      car.start(at); mod.start(at); car.stop(at + 1.5); mod.stop(at + 1.5);
+    },
+    pluck: (ctx, d, at) => {
+      const f = [523.25, 587.33, 698.46, 783.99, 880][Math.round(at * 1000 / 100) % 5];
+      SYN.tone(ctx, d, at, f, .8, "triangle", .03);
+      SYN.tone(ctx, d, at, f * 2, .5, "sine", .012);
+    },
+    blip: (ctx, d, at) => SYN.tone(ctx, d, at, 1240, .12, "sine", .04, 1560),
+    sparkle: (ctx, d, at) => { [1568, 2093, 2637].forEach((f, i) => SYN.tone(ctx, d, at + i * .07, f, .7, "sine", .022)); },
+    shimmer: (ctx, d, at) => { [1046, 1318, 1568, 2093].forEach((f, i) => SYN.tone(ctx, d, at + i * .1, f, 1.5, "sine", .018)); },
+    resolve: (ctx, d, at) => { SYN.tone(ctx, d, at, 87.31, 4.4, "sine", .1); SYN.tone(ctx, d, at, 349.23, 4.4, "triangle", .03); },
+  };
+
+  // [milliseconde, son, …arguments] — trié chronologiquement.
+  const SCORE = [
+    [0, "pad", 0, 9500], [0, "air"], [300, "sub"], [2200, "kick"], [4400, "kick"], [4900, "riser"],
+    [6500, "impact"], [6500, "whoosh"],
+    [6850, "trace"], [7150, "trace"], [7450, "trace"], [7750, "trace"],
+    [8050, "trace"], [8350, "trace"], [8650, "trace"], [8950, "trace"],
+    [9000, "pad", 1, 5600], [9200, "chordUp"], [10400, "sweep"], [11800, "engine"], [12300, "ignite"],
+    [14500, "whoosh"], [14600, "impactSoft"], [14600, "pad", 2, 8000],
+    [15300, "chip"], [16500, "chip"], [16700, "door"], [17700, "chip"], [18900, "chip"], [20100, "chip"],
+    [22500, "whooshDeep"], [22600, "pad", 1, 5600],
+    [22750, "coinTick"], [23100, "coinTick"], [23400, "coinTick"], [23650, "coinTick"], [23850, "coinTick"],
+    [24000, "coinTick"], [24150, "coinTick"], [24280, "coinTick"], [24380, "coinTick"], [24460, "coinTick"],
+    [24720, "coinLand"], [24760, "chime"],
+    [28000, "whoosh"], [28200, "pad", 3, 5200], [28300, "shimmer"],
+    [28800, "pluck"], [29400, "pluck"], [30000, "pluck"], [30350, "blip"], [30600, "pluck"],
+    [31200, "pluck"], [31200, "blip"], [31800, "pluck"],
+    [33000, "whooshSoft"], [33200, "pad", 4, 6200], [33300, "resolve"], [34800, "sparkle"], [36100, "sparkle"],
+  ];
+
+  /** Planifie toute la partition. base = décalage (secondes) du temps 0 du film. */
+  function scheduleScore(ctx, dest, base) {
+    for (const [ms, name, ...rest] of SCORE) {
+      const fn = VOICES[name];
+      if (!fn) continue;
+      try { fn(ctx, dest, base + ms / 1000, ...rest); }
+      catch (e) { /* un cue raté ne doit jamais casser le film */ }
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     MOTEUR AUDIO — une seule horloge, celle de la bande.
+
+     Avant, deux horloges se partageaient le film : l'image avançait sur les
+     horodatages de requestAnimationFrame, le son sur l'horloge du contexte
+     audio. Elles dérivaient l'une de l'autre, et chaque image perdue (dt
+     écrêté à 100 ms) creusait l'écart — d'où le son en retard.
+
+     Pire, chaque reprise appelait boot(), qui fermait le contexte et
+     replanifiait la partition depuis zéro : la musique « coupait » puis
+     repartait du début pendant que l'image restait au milieu du film.
+
+     Ici la partition est rendue en mémoire — la bande préparée par le
+     générateur Python si elle est servie, sinon le même score rendu hors
+     ligne par le navigateur — puis jouée par une seule source. Le temps du
+     film EST la position de cette source : une horloge, jamais deux. La pause
+     gèle le contexte, donc le son et son horloge ensemble ; la reprise ne
+     reconstruit rien.
+     --------------------------------------------------------------------- */
+  const ASSET = "assets/audio/nyxar-n3.wav";   // bande-son préparée par tools/assets
+  const VOICE_ASSET = "assets/voice/nyxar-n3.wav";   // la voix du studio, même horloge
+  const VOICE_PLAN = "assets/voice/nyxar-n3.json";    // ce que le studio a mesuré en la prononçant
+  const VOICE_GAIN = .95;                             // niveau de la voix sous la musique
+  const LEAD = .06;                            // avance de pose de la source, en secondes
+  const MASTER = .85;                          // gain de la musique
+  const PEAK = .9;                             // crête visée par le master
+  const TAIL = 800;                            // la queue du dernier accord, en ms
+
+  const Audio = {
+    ctx: null, bus: null, duck: null, master: null,
+    buffer: null, src: null, origin: 0, wall: 0, voiceBuffer: null, vsrc: null,
+    ok: false, ready: false, booting: null, source: "aucune", trim: 1, retry: 0,
+
+    /** Crée le contexte une seule fois, puis prépare la partition en mémoire. */
+    init() {
+      if (this.ready) return Promise.resolve(this.ok);
+      if (this.booting) return this.booting;
+      this.booting = (async () => {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) {
+          this.ctx = new AC({ latencyHint: "playback" });
+          this.bus = this.ctx.createGain();    this.bus.gain.value = 1;
+          this.duck = this.ctx.createGain();   this.duck.gain.value = 1;
+          this.master = this.ctx.createGain(); this.master.gain.value = 0;
+          this.bus.connect(this.duck); this.duck.connect(this.master);
+          this.voiceGain = this.ctx.createGain();   // la voix du studio passe par ici
+          this.voiceGain.gain.value = Voice.on ? VOICE_GAIN : 0;
+          this.voiceGain.connect(this.master);
+          this.master.connect(this.ctx.destination);
+        }
+        this.buffer = await this.load();
+        this.voiceBuffer = await this.loadVoice();   // même préparation, même horloge
+        if (this.buffer) {
+          // même niveau dans les deux cas : la bande du studio arrive déjà à la
+          // crête visée, le rendu local y est ramené ici
+          this.trim = this.trimTo(this.buffer, PEAK);
+          this.bus.gain.value = this.trim;
+        }
+        this.ok = !!this.buffer;
+        // Le plan du studio : durée réelle de chaque réplique et de chaque mot.
+        // Les sous-titres s'y calent, au lieu d'estimer la voix au nombre de mots.
+        await Voice.loadPlan();
+        this.ready = this.ok;
+        return this.ok;
+      })();
+      return this.booting;
+    },
+
+    /** 1) la bande du générateur, 2) sinon le même score rendu ici. */
+    async load() {
+      const baked = await this.baked();
+      if (baked) { this.source = "bande"; return baked; }
+      if (!this.ctx) return null;
+      this.source = "rendu ici";
+      return this.renderScore();
+    },
+
+    /** Ramène la crête de la bande à la cible (un échantillon sur sept suffit). */
+    trimTo(buf, peak) {
+      let top = 0;
+      for (let c = 0; c < buf.numberOfChannels; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < d.length; i += 7) {
+          const a = d[i] < 0 ? -d[i] : d[i];
+          if (a > top) top = a;
+        }
+      }
+      return top > 0 ? peak / top : 1;
+    },
+
+    /** Récupère la bande ; absente ou trop courte → null, sans bruit.
+        En file:// le navigateur refuse fetch : on va droit au rendu local, sans
+        provoquer une erreur dans la console. */
+    async baked() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Rend la partition hors ligne — sert aussi à l'écouter sans haut-parleur. */
+    async renderScore(seconds = (TOTAL + TAIL) / 1000, sr = 32000) {
+      const OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!OC) return null;
+      const oc = new OC(2, Math.ceil(seconds * sr), sr);
+      const out = oc.createGain(); out.gain.value = .9; out.connect(oc.destination);
+      scheduleScore(oc, out, 0);
+      return oc.startRendering();
+    },
+
+    /** La voix du studio : même préparation que la bande, même horloge.
+        Absente en `file://` ou si le studio n'a pas encore parlé : le film
+        retombe alors sur la voix du navigateur, sans changer d'horloge non plus. */
+    async loadVoice() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Pose la voix à l'instant exact où la bande commence : deux sources, une horloge. */
+    startVoice(when, off) {
+      if (!this.voiceBuffer || !this.ctx) return;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.voiceBuffer;
+      s.connect(this.voiceGain);
+      s.start(when, Math.max(0, Math.min(off, this.voiceBuffer.duration - .05)));
+      this.vsrc = s;
+    },
+
+    stopVoiceSource() {
+      if (!this.vsrc) return;
+      try { this.vsrc.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.vsrc.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.vsrc = null;
+    },
+
+    /** La bascule Voix : un fondu court, pour ne pas claquer. */
+    setVoice(on) {
+      if (!this.voiceGain || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      const g = this.voiceGain.gain;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(g.value, t);
+      g.linearRampToValueAtTime(on ? VOICE_GAIN : 0, t + .18);
+    },
+
+    /** Temps du film, en millisecondes : la position de lecture de la bande. */
+    time() {
+      if (this.ok && this.ctx) return clamp((this.ctx.currentTime - this.origin) * 1000, 0, TOTAL);
+      return clamp(this.wall, 0, TOTAL);
+    },
+
+    /** Sans Web Audio l'image avance au temps mural : le film reste utilisable. */
+    advance(dt) { if (!this.ok) this.wall = clamp(this.wall + dt, 0, TOTAL); },
+
+    /** Pose la bande au temps voulu. Le retard de sortie est compensé : l'image
+        montre ce qu'on entend, pas ce que le processeur graphique est en train de calculer. */
+    seek(ms) {
+      if (!this.ok || !this.ctx) { this.wall = clamp(ms, 0, TOTAL); return false; }
+      this.stopSource();
+      const off = Math.max(0, Math.min(clamp(ms, 0, TOTAL) / 1000, this.buffer.duration - .05));
+      const when = this.ctx.currentTime + LEAD;
+      const lat = this.ctx.outputLatency || this.ctx.baseLatency || 0;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.buffer;
+      s.connect(this.bus);
+      s.start(when, off);
+      this.src = s;
+      if (Voice.on) this.startVoice(when, off);   // deux sources, un seul instant
+      this.origin = when + lat - off;
+      this.scheduleDucks();
+      return true;
+    },
+
+    stopSource() {
+      if (!this.src) return;
+      try { this.src.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.src.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.src = null;
+      this.stopVoiceSource();
+    },
+
+    /** Reprise : le contexte repart, la bande n'a jamais quitté sa position. */
+    resume() { if (this.ctx && this.ctx.state === "suspended") this.ctx.resume(); },
+
+    /** Pause : le contexte se fige — le son et son horloge s'arrêtent ensemble. */
+    pause() { if (this.ctx && this.ctx.state === "running") this.ctx.suspend(); },
+
+    /** La musique s'efface sous la voix. Les rampes vivent en temps du film :
+        le contexte gelé les gèle aussi, la reprise les reprend au bon endroit. */
+    scheduleDucks() {
+      if (!this.ctx || !this.duck) return;
+      const g = this.duck.gain;
+      const t = this.ctx.currentTime;
+      const cur = g.value;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(cur, t);
+      if (!Voice.on) { g.linearRampToValueAtTime(1, t + .3); return; }
+      for (const L of LINES) {
+        const a = Math.max(t, this.origin + L.t / 1000);
+        const b = this.origin + (L.t + L.d) / 1000;
+        if (b < t) continue;
+        g.setValueAtTime(1, a);
+        g.linearRampToValueAtTime(.42, a + .3);
+        g.linearRampToValueAtTime(1, b + .5);
+      }
+    },
+
+    setSound(on) {
+      if (!this.master || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      this.master.gain.cancelScheduledValues(t);
+      this.master.gain.setValueAtTime(this.master.gain.value, t);
+      this.master.gain.linearRampToValueAtTime(on ? MASTER : 0, t + .25);
+    },
+  };
+
+  /* ---------- voix ---------- */
+  /* La voix est écoutée : elle annonce au film quand elle commence et quand elle
+     finit vraiment. Le sous-titre ne disparaît donc jamais sous une phrase encore
+     en cours, et un moteur vocal plus lent que prévu tire le texte avec lui au
+     lieu de laisser l'image le distancer. */
+  /* La voix du studio d'abord : une bande prononcée une fois, chronométrée, et
+     posée sur la même horloge que la musique (`assets/voice/`). Si elle n'est pas
+     là — fichier ouvert en `file://`, studio pas encore passé — le film se rabat
+     sur le moteur vocal du navigateur, exactement comme avant. */
+  const Voice = {
+    on: false, voices: [], ready: false, warn: false, line: null, token: 0,
+    pick() {
+      const all = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+      this.voices = all;
+      this.ready = true;
+    },
+    /** Y a-t-il une voix, d'une façon ou d'une autre (studio, ou navigateur) ? */
+    available() {
+      if (this.has()) return true;
+      return !!(window.speechSynthesis && this.voices.some(v => /^fr/i.test(v.lang)));
+    },
+    /** La bande vocale du studio est-elle là (avec son plan) ? */
+    has() { return !!(this.plan && Audio.voiceBuffer); },
+    /** D'où vient la voix qu'on entend : du studio, du plan seul, ou du navigateur. */
+    source() { return this.has() ? "studio" : (this.plan ? "plan" : (this.available() ? "navigateur" : "aucune")); },
+    /** Le plan du studio : durée réelle de chaque phrase, et ses mots mesurés. */
+    async loadPlan() {
+      if (typeof fetch !== "function" || !/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_PLAN, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const plan = await r.json();
+        if (!plan || !plan.lines || Math.abs(plan.filmMs - TOTAL) > 500) return null;
+        this.plan = plan;
+        for (const l of plan.lines) if (LINES[l.i]) LINES[l.i].plan = l;
+        return plan;
+      } catch (e) { return null; }
+    },
+    /** La réplique `L` est-elle en train d'être prononcée ? */
+    speaking(L) {
+      // avec la bande du studio, « en train de parler » est une mesure et non un
+      // état du moteur : la fenêtre du plan, plus 150 ms de réverbération
+      if (this.has()) {
+        const at = Audio.time();
+        return !!(this.on && at >= L.plan.t - 60 && at <= L.plan.t + L.plan.d + 150);
+      }
+      return !!(this.on && this.line === L && window.speechSynthesis &&
+        speechSynthesis.speaking && !speechSynthesis.paused);
+    },
+    /** Prononce une réplique ; la mesure est rangée dans L.real. */
+    say(L) {
+      if (this.has()) return false;      // la bande du studio joue déjà la phrase
+      if (!this.on || !window.speechSynthesis) return false;
+      try {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(L.txt.replace(/\s+/g, " "));
+        const fr = this.voices.find(v => /fr[-_]FR/i.test(v.lang)) || this.voices.find(v => /^fr/i.test(v.lang));
+        if (fr) u.voice = fr;
+        // débit un peu posé : c'est ce qui rend la voix lisible sur une musique
+        u.lang = "fr-FR"; u.rate = .92; u.pitch = .92; u.volume = .95;
+        const token = ++this.token;
+        u.onstart = () => {
+          if (token !== this.token) return;
+          const at = Audio.time();
+          // un moteur qui annonce un démarrage très loin de l'instant prévu ne doit
+          // pas déplacer le sous-titre : on garde alors le découpage du film
+          if (Math.abs(at - L.t) > 1500) return;
+          L.real = { t: at, d: 0 }; this.line = L;
+        };
+        u.onend = () => {
+          if (token !== this.token) return;
+          if (L.real) L.real.d = Math.max(L.real.d, Audio.time() - L.real.t);
+          if (this.line === L) this.line = null;
+        };
+        speechSynthesis.speak(u);
+        return true;
+      } catch (e) { this.warn = true; return false; }
+    },
+  };
+
+  /* =====================================================================
+     5. DOM : cartes, sous-titres, HUD
+     ===================================================================== */
+  const PHONE = window.matchMedia("(max-width: 760px)");
+  const cardsHost = document.getElementById("cards");
+  const subsHost = document.getElementById("subs");
+  const progEl = document.getElementById("prog");
+  const hudScene = document.getElementById("hudScene");
+  const hudTc = document.getElementById("hudTc");
+  const veil = document.getElementById("veil");
+  const frameEl = document.getElementById("frame");
+  const togSound = document.getElementById("togSound");
+  const togVoice = document.getElementById("togVoice");
+
+  // Conversion maquette -> cadre : 1920 px de large valent 100cqw, 1080 px de haut valent 100cqh.
+  const cw = (n) => (n / 19.2).toFixed(3) + "cqw";
+  const ch = (n) => (n / 10.8).toFixed(3) + "cqh";
+
+  const cardNodes = CARDS.map(c => {
+    const el = document.createElement("div");
+    el.className = "card " + c.cls + (c.minor ? " minor" : "");
+    el.innerHTML = c.html;
+    // les positions de la maquette (px) deviennent des unités du cadre :
+    // la composition ne bouge plus d'un pixel, quelle que soit la taille de l'écran
+    let placed = [];
+    const place = (spec) => {
+      // une clé du placement téléphone sans équivalent dans la maquette (pcss sans la
+      // même clé dans css) n'existe pas sur grand écran : si on ne la retire pas, elle
+      // reste posée après un changement de taille et le carton garde la place du téléphone
+      spec = spec || {};
+      for (const k of placed) if (!(k in spec)) el.style.removeProperty(k.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase()));
+      placed = Object.keys(spec);
+      for (const [k, v] of Object.entries(spec)) {
+        const n = parseFloat(v);
+        if (!/px$/.test(v) || !isFinite(n)) { el.style[k] = v; continue; }
+        if (k === "fontSize" || k === "left" || k === "right" || k === "width" || k === "maxWidth") el.style[k] = cw(n);
+        else el.style[k] = ch(n);
+      }
+    };
+    place(c.css);
+    el.style.opacity = "0";
+    cardsHost.appendChild(el);
+    return { ...c, el, place };
+  });
+
+  /* Sur téléphone, les cartons de petite typo sont agrandis (ui) — mais jamais au-delà
+     de la largeur du cadre : on mesure chaque carton et on le rétrécit si besoin. */
+  function measureFits() {
+    // le téléphone peut replacer un carton (pcss) avant de le mesurer
+    for (const c of cardNodes) c.place(PHONE.matches && c.pcss ? { ...c.css, ...c.pcss } : c.css);
+    const maxW = frameEl.clientWidth * .94;
+    for (const c of cardNodes) {
+      const ui = PHONE.matches ? (c.ui ?? 1) : 1;
+      const prev = c.el.style.transform;
+      c.el.style.transform = "none";
+      const r = document.createRange();
+      r.selectNodeContents(c.el);
+      const w = r.getBoundingClientRect().width;
+      c.el.style.transform = prev;
+      c.fit = w > 4 ? Math.min(1, maxW / (ui * w)) : 1;
+    }
+  }
+
+  const lineNodes = LINES.map((L, i) => {
+    const el = document.createElement("div");
+    el.className = "subline";
+    L.words = L.txt.split(" ").map((w, k) => {
+      const s = document.createElement("span");
+      s.className = "w"; s.textContent = w;
+      el.appendChild(s);
+      if (k < L.txt.split(" ").length - 1) el.appendChild(document.createTextNode(" "));
+      return s;
+    });
+    subsHost.appendChild(el);
+    return el;
+  });
+
+  SCENES.forEach(() => {
+    const s = document.createElement("div");
+    s.className = "pseg"; s.innerHTML = "<i></i>";
+    progEl.appendChild(s);
+  });
+  const segs = [...progEl.querySelectorAll(".pseg i")];
+
+  function updateCards(ms) {
+    const phone = PHONE.matches;
+    const priceCard = cardNodes.find(c => c.id === "price");
+    for (const c of cardNodes) {
+      const tin = c.t[0], tout = c.t[1];
+      // sur téléphone, les titres du film reprennent une taille lisible : ils s'agrandissent
+      // depuis leur propre ancre, donc la composition reste celle de la maquette
+      const ui = phone ? (c.ui ?? 1) : 1;
+      let o = 0, y = 0, sc = 1;
+      if (ms > tin - 520 && ms < tout + 460) {
+        const a = smooth(clamp((ms - tin) / 620));
+        const b = ms > tout ? 1 - smooth(clamp((ms - tout) / 420)) : 1;
+        o = a * b;
+        const e = eio(clamp((ms - tin) / 620));
+        y = (1 - e) * (c.rise ?? 26) * ui;
+        sc = ui * (c.fit ?? 1) * (1 - (1 - e) * (c.zoom ?? .035));
+      }
+      c.el.style.opacity = o.toFixed(3);
+      c.el.style.transform = "translateY(" + ch(y) + ") scale(" + sc.toFixed(4) + ")";
+    }
+    if (priceCard) {
+      const v = Math.round(12000 * eio(clamp((ms - 22800) / 1900)));
+      const span = priceCard.el.querySelector(".unit");
+      priceCard.el.firstChild.nodeValue = fmt.format(v) + " ";
+      if (span) span.textContent = "istancoins";
+    }
+  }
+
+  function updateSubs(ms) {
+    LINES.forEach((L, i) => {
+      const el = lineNodes[i];
+      // la fenêtre prévue, prolongée tant que la voix parle encore
+      // la fenêtre : celle du studio quand sa bande vocale est là (la durée
+      // réellement prononcée), sinon celle du film, prolongée tant que la voix parle
+      const t0 = L.plan ? L.plan.t : (L.real ? L.real.t : L.t);
+      const d = L.plan ? L.plan.d : L.d;
+      const active = ms >= t0 - 80 && (ms <= t0 + d + 260 || Voice.speaking(L));
+      el.classList.toggle("show", active);
+      if (!active) return;
+      const n = L.words.length;
+      // le mot surligné suit les instants mesurés sur la voix ; à défaut, on
+      // répartit la phrase sur sa fenêtre, faute de mieux
+      let cur = Math.max(0, Math.min(n - 1, Math.floor(((ms - t0) / d) * n)));
+      if (L.plan) {
+        cur = 0;
+        for (let k = 0; k < L.plan.words.length && k < n; k++) if (ms - t0 >= L.plan.words[k].t0) cur = k;
+      }
+      L.words.forEach((w, k) => {
+        w.classList.toggle("on", k === cur);
+        w.classList.toggle("done", k < cur);
+      });
+    });
+  }
+
+  function updateHud(ms) {
+    const sc = sceneAt(ms);
+    hudScene.innerHTML = "<b>" + sc.num + "</b> &nbsp;" + sc.name;
+    const s = Math.floor(ms / 1000);
+    hudTc.textContent = "00:" + String(s).padStart(2, "0") + ":" + String(Math.floor((ms % 1000) / 41.6)).padStart(2, "0");
+    SCENES.forEach((S, i) => {
+      const p = clamp((ms - S.from) / (S.to - S.from));
+      segs[i].style.width = (p * 100).toFixed(2) + "%";
+    });
+  }
+
+  function setToggle(btn, on, offClass) {
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", String(on));
+    if (offClass !== undefined) btn.classList.toggle("off-audio", !!offClass);
+  }
+
+  /* =====================================================================
+     6. LECTEUR
+     ===================================================================== */
+  let elapsed = 0, state = "idle", lastTs = 0, stall = 0;
+  const sound = { on: false };
+  const spoken = LINES.map(() => false);
+
+  function render(ms) {
+    g.clearRect(0, 0, W, H);
+    const sc = sceneAt(ms);
+    sc.draw(ms / 1000, clamp((ms - sc.from) / (sc.to - sc.from)));
+    transition(ms);
+    grainFrame(ms / 1000);
+    updateCards(ms);
+    updateSubs(ms);
+    updateHud(ms);
+  }
+
+  function resetLines() { spoken.fill(false); }
+
+  function play() {
+    if (state === "playing") return;
+    if (state === "ended" || elapsed >= TOTAL) { elapsed = 0; resetLines(); }
+    // le clic sur play est le geste explicite : il ouvre l'image, la musique et la voix
+    sound.on = true;
+    setToggle(togSound, true);
+    Voice.on = true;
+    setToggle(togVoice, true);
+    if (!Voice.available()) togVoice.classList.add("off-audio");
+    Audio.setVoice(Voice.on);            // la voix du studio se pose avec la bande
+    state = "playing";
+    veil.classList.remove("show");
+    if (Audio.ok) {
+      // la bande est déjà là : on la reprend là où elle a été gelée, ou on la pose
+      // au temps courant si c'est la première lecture (la préparation peut finir après le clic)
+      if (Audio.src) { Audio.resume(); Audio.scheduleDucks(); }
+      else Audio.seek(elapsed);
+    } else if (!Audio.ready) {
+      Audio.init().then((ok) => { if (!ok) setToggle(togSound, false, true); });
+    } else {
+      setToggle(togSound, false, true);   // pas de Web Audio : le film reste utilisable, sans son
+    }
+    // le geste du clic vaut pour le contexte : on le reprend même si la bande se prépare encore
+    Audio.resume();
+    render(elapsed);
+  }
+
+  /** Coupe la voix sans jeter la mesure : la reprise retrouvera le bon mot. */
+  function stopVoice() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    Voice.line = null;
+  }
+
+  /** Efface tout, mesures comprises : pour recommencer ou se déplacer. */
+  function resetVoice() {
+    stopVoice();
+    Voice.token++;
+    for (const L of LINES) delete L.real;
+  }
+
+  function pause() {
+    if (state !== "playing") return;
+    state = "paused";
+    Audio.pause();
+    stopVoice();
+  }
+
+  function togglePlay() { state === "playing" ? pause() : play(); }
+
+  function restart() {
+    resetVoice();
+    elapsed = 0; resetLines();
+    veil.classList.remove("show", "end");
+    state = "playing";
+    if (Audio.ok) { Audio.seek(0); Audio.resume(); }
+    render(0);
+  }
+
+  function finish() {
+    state = "ended";
+    stopVoice();
+    veil.classList.add("show", "end");
+  }
+
+  function tick(ts) {
+    const dt = lastTs ? Math.min(ts - lastTs, 100) : 0;
+    lastTs = ts;
+    if (state === "playing") {
+      // si la bande vient d'être prête (ou si une source s'est perdue), elle se pose au temps
+      // courant : l'image et le son se raccordent d'eux-mêmes, sans repartir de zéro
+      if (Audio.ok) {
+        if (!Audio.src) Audio.seek(elapsed);
+        // garde-fou : si le contexte audio ne tourne pas (machine sans sortie sonore,
+        // navigateur récalcitrant), le film ne se fige pas — il poursuit sans son
+        if (Audio.time() <= elapsed + .5) stall += dt; else { stall = 0; Audio.retry = 0; }
+        if (stall > 600) {
+          stall = 0;
+          // Le contexte a pu être gelé sans nous : on retente la reprise et on
+          // repose la bande au temps courant avant de renoncer au son — sinon un
+          // simple hoquet laissait le film muet jusqu'au rechargement de la page.
+          if (Audio.retry < 3) {
+            Audio.retry++;
+            Audio.resume();
+            Audio.seek(elapsed);
+          } else {
+            Audio.wall = elapsed;
+            Audio.ok = false;
+            setToggle(togSound, false, true);
+          }
+        }
+      } else {
+        Audio.advance(dt);
+      }
+      const before = elapsed;
+      elapsed = Audio.time();                       // l'horloge du film est celle du son
+      LINES.forEach((L, i) => {
+        if (!spoken[i] && elapsed >= L.t) {
+          spoken[i] = true;
+          if (elapsed - L.t < 700 && Voice.on) Voice.say(L);
+        }
+      });
+      if (elapsed >= TOTAL && before < TOTAL) finish();
+    } else if (!Audio.ok) {
+      Audio.wall = clamp(elapsed, 0, TOTAL);
+    }
+    render(elapsed);
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------- contrôles ---------- */
+  // Plus aucune mise à l'échelle en JavaScript : le cadre 16:9 et ses unités cqw/cqh
+  // s'occupent de tout, y compris au pivotement du téléphone. Il ne reste qu'à
+  // remesurer les cartons agrandis pour qu'aucun ne déborde du cadre.
+  measureFits();
+  window.addEventListener("resize", measureFits);
+  if (PHONE.addEventListener) PHONE.addEventListener("change", measureFits);
+  document.getElementById("go").addEventListener("click", play);
+  document.getElementById("replay").addEventListener("click", restart);
+  document.getElementById("closeEnd").addEventListener("click", () => veil.classList.remove("show"));
+  cv.addEventListener("click", () => { if (state !== "idle" && !veil.classList.contains("show")) togglePlay(); });
+
+  togSound.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sound.on = !sound.on;
+    setToggle(togSound, sound.on);
+    if (!Audio.ok && !Audio.ready) Audio.init();
+    if (Audio.ok && Audio.src) Audio.resume();      // couper le son ne met pas le film en pause
+    Audio.setSound(sound.on);
+  });
+  togVoice.addEventListener("click", (e) => {
+    e.stopPropagation();
+    Voice.on = !Voice.on;
+    setToggle(togVoice, Voice.on);
+    if (!Voice.on && window.speechSynthesis) speechSynthesis.cancel();
+    Audio.setVoice(Voice.on);                       // la bande vocale suit la bascule
+    if (Voice.on && !Voice.available()) togVoice.classList.add("off-audio");
+    else togVoice.classList.remove("off-audio");
+    Audio.scheduleDucks();                          // la musique ne s'efface que sous une voix audible
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") { e.preventDefault(); if (state === "idle") play(); else togglePlay(); }
+    else if (e.key === "s" || e.key === "S") togSound.click();
+    else if (e.key === "v" || e.key === "V") togVoice.click();
+    else if (e.key === "r" || e.key === "R") restart();
+  });
+
+  document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
+
+  /* L'image d'abord : la lecture se regarde sans habillage. Trois secondes sans geste et
+     la barre, les bascules et les mentions s'effacent ; le premier mouvement les ramène.
+     En pause l'habillage reste — il n'y a plus rien à cacher. */
+  const stageEl = document.getElementById("stage");
+  let chromeIdle = 0;
+  const showChrome = () => {
+    stageEl.classList.remove("clean");
+    clearTimeout(chromeIdle);
+    if (state === "playing") chromeIdle = setTimeout(() => stageEl.classList.add("clean"), 3000);
+  };
+  // « click » vient après le gestionnaire du bouton : l'horloge du minuteur est donc armée
+  // avec la lecture déjà lancée, que le film démarre au clic, au doigt ou au clavier
+  for (const ev of ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "click", "visibilitychange"])
+    document.addEventListener(ev, showChrome, { passive: true });
+
+  // Un contexte audio peut être gelé par le navigateur (politique de lecture
+  // automatique, onglet revenu au premier plan, sortie sonore rebranchée) : le
+  // premier geste de l'utilisateur le relance, au lieu de laisser le film muet.
+  const rearm = () => { if (state === "playing" && sound.on) Audio.resume(); };
+  document.addEventListener("pointerdown", rearm, true);
+  window.addEventListener("keydown", rearm, true);
+
+  if (window.speechSynthesis) {
+    Voice.pick();
+    speechSynthesis.addEventListener("voiceschanged", () => Voice.pick());
+  }
+
+  /* =====================================================================
+     7. SURFACE DE VÉRIFICATION (utilisée par tools/, sans effet sur le film)
+     ===================================================================== */
+  window.N3 = {
+    duration: TOTAL,
+    frame: "16:9",
+    phone: () => PHONE.matches,
+    // l'horloge du film et l'état du moteur audio : de quoi vérifier qu'il n'y en a qu'une
+    clock: () => +elapsed.toFixed(1),
+    audio: () => ({
+      ok: Audio.ok, ready: Audio.ready, source: Audio.source, trim: +(Audio.trim ?? 0).toFixed(3),
+      state: Audio.ctx ? Audio.ctx.state : "aucun",
+      buffer: Audio.buffer ? +Audio.buffer.duration.toFixed(3) : 0,
+      voice: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      voiceGain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      time: +Audio.time().toFixed(1),
+    }),
+    startAt: (ms) => { Audio.seek(ms); Audio.resume(); return Audio.time(); },
+    layout: () => {
+      // audit de mise en page : le cadre, les cartons visibles et les sous-titres
+      const box = (e) => { const r = e.getBoundingClientRect(); return { x: +r.x.toFixed(1), y: +r.y.toFixed(1), w: +r.width.toFixed(1), h: +r.height.toFixed(1), right: +r.right.toFixed(1), bottom: +r.bottom.toFixed(1) }; };
+      const ink = (e) => { const r = document.createRange(); r.selectNodeContents(e); const b = r.getBoundingClientRect(); return { x: +b.x.toFixed(1), y: +b.y.toFixed(1), w: +b.width.toFixed(1), h: +b.height.toFixed(1), right: +b.right.toFixed(1), bottom: +b.bottom.toFixed(1) }; };
+      const visible = (c) => parseFloat(window.getComputedStyle(c.el).opacity) > .2 && c.el.getBoundingClientRect().width > 1;
+      return {
+        frame: box(frameEl),
+        stage: box(document.getElementById("stage")),
+        hud: box(document.getElementById("hud")),
+        go: box(document.getElementById("go")),
+        // les cartons visibles sont mesurés à l'encre (le texte), pas à leur boîte :
+        // un carton centré occupe toute la largeur du cadre même quand son texte est court
+        cards: cardNodes.map((c, i) => ({ c, i })).filter(({ c }) => visible(c))
+          .map(({ c, i }) => ({ i, cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3), text: c.el.textContent.trim().slice(0, 40), ...ink(c.el) })),
+        fits: cardNodes.map(c => ({ cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3) })),
+        subs: [...subsHost.querySelectorAll(".subline.show")].map(ink),
+        togs: [togSound, togVoice].map(box),
+        prog: box(progEl),
+        hudTexts: [hudScene, hudTc].map(box),
+      };
+    },
+    scenes: SCENES.map(s => ({ from: s.from, to: s.to, name: s.name, num: s.num })),
+    lines: LINES.map(l => ({ t: l.t, d: l.d, txt: l.txt, plan: l.plan || null })),
+    // la voix : d'où elle vient, ce que le studio a mesuré, et son niveau réel
+    voice: () => ({
+      source: Voice.source(), on: Voice.on, plan: !!Voice.plan,
+      lines: Voice.plan ? Voice.plan.lines.length : 0,
+      engine: Voice.plan ? Voice.plan.engine.label : null,
+      gain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      buffer: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      speaking: LINES.filter((L) => Voice.speaking(L)).length,
+    }),
+    cues: SCORE.map(c => ({ t: c[0], name: c[1] })),
+    beats: [
+      { t: 1800, label: "01·Istanbul" },
+      { t: 5600, label: "02·transition" },
+      { t: 9500, label: "03·tracé" },
+      { t: 11500, label: "04·carrosserie" },
+      { t: 12800, label: "05·phares" },
+      { t: 17500, label: "06·conduite" },
+      { t: 20400, label: "07·famille" },
+      { t: 23500, label: "08·prix en cours" },
+      { t: 26200, label: "09·prix posé" },
+      { t: 29500, label: "10·carte" },
+      { t: 31600, label: "11·routes" },
+      { t: 34500, label: "12·fin" },
+      { t: 36500, label: "13·carton final" },
+    ],
+    seek(ms) { resetVoice(); elapsed = clamp(ms, 0, TOTAL); state = "paused"; render(elapsed); },
+    play, pause,
+    audioStats: async (sec) => {
+      const buf = await Audio.renderScore(sec);
+      if (!buf) return null;
+      const n = buf.length, sr = buf.sampleRate;
+      const L = buf.getChannelData(0), R = buf.getChannelData(Math.min(1, buf.numberOfChannels - 1));
+      // même normalisation que celle appliquée à la lecture : la mesure décrit le son
+      // qu'on entend, pas le rendu brut
+      const k = Audio.trimTo(buf, PEAK);
+      let peak = 0, sum = 0, clipped = 0;
+      const perSec = [];
+      for (let s = 0; s < Math.ceil(n / sr); s++) perSec.push({ rms: 0, peak: 0, n: 0 });
+      for (let i = 0; i < n; i++) {
+        const v = ((L[i] + R[i]) / 2) * k, a = Math.abs(v);
+        if (a > peak) peak = a;
+        if (a >= .999) clipped++;
+        sum += v * v;
+        const s = Math.min(perSec.length - 1, Math.floor(i / sr));
+        perSec[s].rms += v * v; perSec[s].n++;
+        if (a > perSec[s].peak) perSec[s].peak = a;
+      }
+      perSec.forEach(s => { s.rms = Math.sqrt(s.rms / Math.max(1, s.n)); });
+      return {
+        seconds: n / sr, peak: +peak.toFixed(4), rms: +Math.sqrt(sum / n).toFixed(4), clipped,
+        silentSeconds: perSec.filter(s => s.rms < .0005).length,
+        perSec: perSec.map(s => ({ rms: +s.rms.toFixed(4), peak: +s.peak.toFixed(4) })),
+      };
+    },
+    frameStats() {
+      const d = g.getImageData(0, 0, W, H).data;
+      let lum = 0, n = 0, lit = 0;
+      const colors = new Set();
+      for (let y = 0; y < H; y += 12) for (let x = 0; x < W; x += 12) {
+        const i = (y * W + x) * 4, v = (d[i] * .2126 + d[i + 1] * .7152 + d[i + 2] * .0722) / 255;
+        lum += v; n++;
+        if (v > .045) lit++;
+        colors.add((d[i] >> 5) * 64 + (d[i + 1] >> 5) * 8 + (d[i + 2] >> 5));
+      }
+      const subs = [...subsHost.querySelectorAll(".subline")].find(e => e.classList.contains("show"));
+      const cards = [...cardsHost.children].filter(e => parseFloat(e.style.opacity || "0") > .12);
+      return {
+        meanLuma: +(lum / n).toFixed(4), litRatio: +(lit / n).toFixed(4), colors: colors.size,
+        activeCards: cards.length,
+        subtitle: subs ? { text: subs.textContent.trim(), words: subs.querySelectorAll(".w").length, onWord: subs.querySelector(".w.on")?.textContent ?? null } : null,
+      };
+    },
+  };
+
+  /* démarrage */
+  setToggle(togSound, false);
+  setToggle(togVoice, false);
+  if (!Voice.available()) togVoice.classList.add("off-audio");
+  render(0);
+  requestAnimationFrame(tick);
+  // la bande se prépare pendant que l'écran d'accueil s'affiche :
+  // le clic sur play n'attend ni le réseau ni un rendu
+  Audio.init()                                   // la bande et la voix se préparent
+    .then(() => Voice.loadPlan())                // pendant que l'écran d'accueil s'affiche
+    .then(() => { if (!Voice.available()) togVoice.classList.add("off-audio"); else togVoice.classList.remove("off-audio"); });
+})();
+</script>
+</body>
+</html>

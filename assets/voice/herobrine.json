@@ -1,0 +1,512 @@
+{
+  "kind": "voice",
+  "id": "herobrine",
+  "film": "/home/daytona/codebase/herobrine.html",
+  "title": "HEROBRINE",
+  "asset": "assets/voice/herobrine.wav",
+  "engine": {
+    "name": "piper",
+    "voice": "fr_FR-tom-medium",
+    "label": "français · Tom (medium)",
+    "sr": 32000,
+    "scale": 1.08,
+    "peak": 0.9,
+    "gap": 0.2,
+    "pad": 0.25
+  },
+  "seconds": 42.6,
+  "filmMs": 42000,
+  "tail": 0.6,
+  "speechMs": 26580,
+  "meanRate": 2.544,
+  "retimed": [],
+  "overflow": [],
+  "lines": [
+    {
+      "i": 0,
+      "t": 700,
+      "d": 3853,
+      "window": 4600,
+      "ms": 3853,
+      "endsAt": 4553,
+      "nextAt": 5900,
+      "budget": 5000,
+      "slack": 1147,
+      "txt": "Nouveau monde. Survie. Seul, et sans personne.",
+      "rate": 1.817,
+      "words": [
+        {
+          "w": "Nouveau",
+          "t0": 0,
+          "t1": 624
+        },
+        {
+          "w": "monde.",
+          "t0": 624,
+          "t1": 1248
+        },
+        {
+          "w": "Survie.",
+          "t0": 1248,
+          "t1": 1872
+        },
+        {
+          "w": "Seul,",
+          "t0": 1872,
+          "t1": 2293
+        },
+        {
+          "w": "et",
+          "t0": 2293,
+          "t1": 2605
+        },
+        {
+          "w": "sans",
+          "t0": 2605,
+          "t1": 2917
+        },
+        {
+          "w": "personne.",
+          "t0": 2917,
+          "t1": 3853
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 1,
+      "t": 5900,
+      "d": 3287,
+      "window": 4600,
+      "ms": 3287,
+      "endsAt": 9187,
+      "nextAt": 11300,
+      "budget": 5200,
+      "slack": 1913,
+      "txt": "La nuit tombe, et quelque chose me suit dans le noir.",
+      "rate": 3.347,
+      "words": [
+        {
+          "w": "La",
+          "t0": 0,
+          "t1": 229
+        },
+        {
+          "w": "nuit",
+          "t0": 229,
+          "t1": 458
+        },
+        {
+          "w": "tombe,",
+          "t0": 458,
+          "t1": 996
+        },
+        {
+          "w": "et",
+          "t0": 996,
+          "t1": 1225
+        },
+        {
+          "w": "quelque",
+          "t0": 1225,
+          "t1": 1684
+        },
+        {
+          "w": "chose",
+          "t0": 1684,
+          "t1": 2142
+        },
+        {
+          "w": "me",
+          "t0": 2142,
+          "t1": 2371
+        },
+        {
+          "w": "suit",
+          "t0": 2371,
+          "t1": 2600
+        },
+        {
+          "w": "dans",
+          "t0": 2600,
+          "t1": 2829
+        },
+        {
+          "w": "le",
+          "t0": 2829,
+          "t1": 3058
+        },
+        {
+          "w": "noir.",
+          "t0": 3058,
+          "t1": 3287
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 2,
+      "t": 11300,
+      "d": 3325,
+      "window": 4600,
+      "ms": 3325,
+      "endsAt": 14625,
+      "nextAt": 16700,
+      "budget": 5200,
+      "slack": 1875,
+      "txt": "Mes torches s'éteignent. Mes coffres sont vidés.",
+      "rate": 2.105,
+      "words": [
+        {
+          "w": "Mes",
+          "t0": 0,
+          "t1": 277
+        },
+        {
+          "w": "torches",
+          "t0": 277,
+          "t1": 831
+        },
+        {
+          "w": "s'éteignent.",
+          "t0": 831,
+          "t1": 1662
+        },
+        {
+          "w": "Mes",
+          "t0": 1662,
+          "t1": 1940
+        },
+        {
+          "w": "coffres",
+          "t0": 1940,
+          "t1": 2494
+        },
+        {
+          "w": "sont",
+          "t0": 2494,
+          "t1": 2771
+        },
+        {
+          "w": "vidés.",
+          "t0": 2771,
+          "t1": 3325
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 3,
+      "t": 16700,
+      "d": 3626,
+      "window": 4600,
+      "ms": 3626,
+      "endsAt": 20326,
+      "nextAt": 22100,
+      "budget": 5200,
+      "slack": 1574,
+      "txt": "Un tunnel droit, creusé dans la pierre, sans porte.",
+      "rate": 2.482,
+      "words": [
+        {
+          "w": "Un",
+          "t0": 0,
+          "t1": 265
+        },
+        {
+          "w": "tunnel",
+          "t0": 265,
+          "t1": 794
+        },
+        {
+          "w": "droit,",
+          "t0": 794,
+          "t1": 1151
+        },
+        {
+          "w": "creusé",
+          "t0": 1151,
+          "t1": 1681
+        },
+        {
+          "w": "dans",
+          "t0": 1681,
+          "t1": 1945
+        },
+        {
+          "w": "la",
+          "t0": 1945,
+          "t1": 2210
+        },
+        {
+          "w": "pierre,",
+          "t0": 2210,
+          "t1": 2832
+        },
+        {
+          "w": "sans",
+          "t0": 2832,
+          "t1": 3097
+        },
+        {
+          "w": "porte.",
+          "t0": 3097,
+          "t1": 3626
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 4,
+      "t": 22100,
+      "d": 3649,
+      "window": 4600,
+      "ms": 3649,
+      "endsAt": 25749,
+      "nextAt": 27500,
+      "budget": 5200,
+      "slack": 1551,
+      "txt": "En haut de la colline, une silhouette me regarde.",
+      "rate": 2.466,
+      "words": [
+        {
+          "w": "En",
+          "t0": 0,
+          "t1": 223
+        },
+        {
+          "w": "haut",
+          "t0": 223,
+          "t1": 446
+        },
+        {
+          "w": "de",
+          "t0": 446,
+          "t1": 670
+        },
+        {
+          "w": "la",
+          "t0": 670,
+          "t1": 893
+        },
+        {
+          "w": "colline,",
+          "t0": 893,
+          "t1": 1640
+        },
+        {
+          "w": "une",
+          "t0": 1640,
+          "t1": 2087
+        },
+        {
+          "w": "silhouette",
+          "t0": 2087,
+          "t1": 2756
+        },
+        {
+          "w": "me",
+          "t0": 2756,
+          "t1": 2979
+        },
+        {
+          "w": "regarde.",
+          "t0": 2979,
+          "t1": 3649
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 5,
+      "t": 27500,
+      "d": 2988,
+      "window": 4600,
+      "ms": 2988,
+      "endsAt": 30488,
+      "nextAt": 32900,
+      "budget": 5200,
+      "slack": 2212,
+      "txt": "Deux yeux blancs. Il ne faut jamais le fixer.",
+      "rate": 3.012,
+      "words": [
+        {
+          "w": "Deux",
+          "t0": 0,
+          "t1": 272
+        },
+        {
+          "w": "yeux",
+          "t0": 272,
+          "t1": 543
+        },
+        {
+          "w": "blancs.",
+          "t0": 543,
+          "t1": 815
+        },
+        {
+          "w": "Il",
+          "t0": 815,
+          "t1": 1087
+        },
+        {
+          "w": "ne",
+          "t0": 1087,
+          "t1": 1358
+        },
+        {
+          "w": "faut",
+          "t0": 1358,
+          "t1": 1630
+        },
+        {
+          "w": "jamais",
+          "t0": 1630,
+          "t1": 2173
+        },
+        {
+          "w": "le",
+          "t0": 2173,
+          "t1": 2445
+        },
+        {
+          "w": "fixer.",
+          "t0": 2445,
+          "t1": 2988
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 6,
+      "t": 32900,
+      "d": 3072,
+      "window": 3400,
+      "ms": 3072,
+      "endsAt": 35972,
+      "nextAt": 37200,
+      "budget": 4100,
+      "slack": 1028,
+      "txt": "Il vient d'entrer dans ma partie. J'ai peur.",
+      "rate": 2.604,
+      "words": [
+        {
+          "w": "Il",
+          "t0": 0,
+          "t1": 307
+        },
+        {
+          "w": "vient",
+          "t0": 307,
+          "t1": 614
+        },
+        {
+          "w": "d'entrer",
+          "t0": 614,
+          "t1": 1229
+        },
+        {
+          "w": "dans",
+          "t0": 1229,
+          "t1": 1536
+        },
+        {
+          "w": "ma",
+          "t0": 1536,
+          "t1": 1843
+        },
+        {
+          "w": "partie.",
+          "t0": 1843,
+          "t1": 2458
+        },
+        {
+          "w": "J'ai",
+          "t0": 2458,
+          "t1": 2765
+        },
+        {
+          "w": "peur.",
+          "t0": 2765,
+          "t1": 3072
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 7,
+      "t": 37200,
+      "d": 2780,
+      "window": 3200,
+      "ms": 2780,
+      "endsAt": 39980,
+      "nextAt": 42000,
+      "budget": 4600,
+      "slack": 1820,
+      "txt": "Herobrine. Ce monde n'est plus à moi.",
+      "rate": 2.518,
+      "words": [
+        {
+          "w": "Herobrine.",
+          "t0": 0,
+          "t1": 1011
+        },
+        {
+          "w": "Ce",
+          "t0": 1011,
+          "t1": 1264
+        },
+        {
+          "w": "monde",
+          "t0": 1264,
+          "t1": 1769
+        },
+        {
+          "w": "n'est",
+          "t0": 1769,
+          "t1": 2022
+        },
+        {
+          "w": "plus",
+          "t0": 2022,
+          "t1": 2275
+        },
+        {
+          "w": "à",
+          "t0": 2275,
+          "t1": 2527
+        },
+        {
+          "w": "moi.",
+          "t0": 2527,
+          "t1": 2780
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    }
+  ],
+  "bytes": 2726444,
+  "peak": 0.9,
+  "rms": 0.075,
+  "clipped": 0,
+  "silentSeconds": 0,
+  "generated": "2026-10-13T11:51:33",
+  "secondsToBuild": 3.8
+}

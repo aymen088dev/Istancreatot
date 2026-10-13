@@ -1,0 +1,11 @@
+# Le studio : sons, voix et images des films
+#   python3 -m pip install -r tools/assets/requirements.txt
+numpy>=1.24      # signaux, raster, WAV
+scipy>=1.10      # filtres Butterworth (souffles, whooshes, nappes)
+pillow>=9.0      # écriture des PNG (repli maison si absent)
+
+# La voix parlée (generate.py voice). Facultatif pour le reste : le studio
+# fabrique les bandes-son et les plaques sans lui. Le modèle de voix (63 Mo)
+# n'est pas dans le dépôt : il se télécharge au premier usage dans
+# tools/assets/models/ (voir studio/speech.py).
+piper-tts>=1.8   # moteur vocal neuronal, sur le processeur, hors ligne

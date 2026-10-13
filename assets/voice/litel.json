@@ -1,0 +1,386 @@
+{
+  "kind": "voice",
+  "id": "litel",
+  "film": "/home/daytona/codebase/litel.html",
+  "title": "Litel",
+  "asset": "assets/voice/litel.wav",
+  "engine": {
+    "name": "piper",
+    "voice": "fr_FR-tom-medium",
+    "label": "français · Tom (medium)",
+    "sr": 32000,
+    "scale": 1.08,
+    "peak": 0.9,
+    "gap": 0.2,
+    "pad": 0.25
+  },
+  "seconds": 40.6,
+  "filmMs": 40000,
+  "tail": 0.6,
+  "speechMs": 19533,
+  "meanRate": 2.524,
+  "retimed": [],
+  "overflow": [],
+  "lines": [
+    {
+      "i": 0,
+      "t": 900,
+      "d": 3458,
+      "window": 5400,
+      "ms": 3458,
+      "endsAt": 4358,
+      "nextAt": 7200,
+      "budget": 6100,
+      "slack": 2642,
+      "txt": "Litel ouvre ses portes : bienvenue dans le magasin.",
+      "rate": 2.603,
+      "words": [
+        {
+          "w": "Litel",
+          "t0": 0,
+          "t1": 423
+        },
+        {
+          "w": "ouvre",
+          "t0": 423,
+          "t1": 846
+        },
+        {
+          "w": "ses",
+          "t0": 846,
+          "t1": 1057
+        },
+        {
+          "w": "portes",
+          "t0": 1057,
+          "t1": 1480
+        },
+        {
+          "w": ":",
+          "t0": 1480,
+          "t1": 1766
+        },
+        {
+          "w": "bienvenue",
+          "t0": 1766,
+          "t1": 2401
+        },
+        {
+          "w": "dans",
+          "t0": 2401,
+          "t1": 2612
+        },
+        {
+          "w": "le",
+          "t0": 2612,
+          "t1": 2824
+        },
+        {
+          "w": "magasin.",
+          "t0": 2824,
+          "t1": 3458
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 1,
+      "t": 7200,
+      "d": 3399,
+      "window": 6200,
+      "ms": 3399,
+      "endsAt": 10599,
+      "nextAt": 14300,
+      "budget": 6900,
+      "slack": 3501,
+      "txt": "Des petits prix dans tous les rayons, sans exception.",
+      "rate": 2.648,
+      "words": [
+        {
+          "w": "Des",
+          "t0": 0,
+          "t1": 275
+        },
+        {
+          "w": "petits",
+          "t0": 275,
+          "t1": 826
+        },
+        {
+          "w": "prix",
+          "t0": 826,
+          "t1": 1101
+        },
+        {
+          "w": "dans",
+          "t0": 1101,
+          "t1": 1376
+        },
+        {
+          "w": "tous",
+          "t0": 1376,
+          "t1": 1651
+        },
+        {
+          "w": "les",
+          "t0": 1651,
+          "t1": 1927
+        },
+        {
+          "w": "rayons,",
+          "t0": 1927,
+          "t1": 2298
+        },
+        {
+          "w": "sans",
+          "t0": 2298,
+          "t1": 2573
+        },
+        {
+          "w": "exception.",
+          "t0": 2573,
+          "t1": 3399
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 2,
+      "t": 14300,
+      "d": 3474,
+      "window": 6500,
+      "ms": 3474,
+      "endsAt": 17774,
+      "nextAt": 21800,
+      "budget": 7300,
+      "slack": 3826,
+      "txt": "Cinq istancoins la boîte, et huit pour la deuxième.",
+      "rate": 2.59,
+      "words": [
+        {
+          "w": "Cinq",
+          "t0": 0,
+          "t1": 242
+        },
+        {
+          "w": "istancoins",
+          "t0": 242,
+          "t1": 968
+        },
+        {
+          "w": "la",
+          "t0": 968,
+          "t1": 1210
+        },
+        {
+          "w": "boîte,",
+          "t0": 1210,
+          "t1": 1779
+        },
+        {
+          "w": "et",
+          "t0": 1779,
+          "t1": 2021
+        },
+        {
+          "w": "huit",
+          "t0": 2021,
+          "t1": 2264
+        },
+        {
+          "w": "pour",
+          "t0": 2264,
+          "t1": 2506
+        },
+        {
+          "w": "la",
+          "t0": 2506,
+          "t1": 2748
+        },
+        {
+          "w": "deuxième.",
+          "t0": 2748,
+          "t1": 3474
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 3,
+      "t": 21800,
+      "d": 2645,
+      "window": 5900,
+      "ms": 2645,
+      "endsAt": 24445,
+      "nextAt": 28700,
+      "budget": 6700,
+      "slack": 4055,
+      "txt": "Chaque lot est vérifié avant de partir d'ici.",
+      "rate": 3.024,
+      "words": [
+        {
+          "w": "Chaque",
+          "t0": 0,
+          "t1": 378
+        },
+        {
+          "w": "lot",
+          "t0": 378,
+          "t1": 567
+        },
+        {
+          "w": "est",
+          "t0": 567,
+          "t1": 756
+        },
+        {
+          "w": "vérifié",
+          "t0": 756,
+          "t1": 1323
+        },
+        {
+          "w": "avant",
+          "t0": 1323,
+          "t1": 1700
+        },
+        {
+          "w": "de",
+          "t0": 1700,
+          "t1": 1889
+        },
+        {
+          "w": "partir",
+          "t0": 1889,
+          "t1": 2267
+        },
+        {
+          "w": "d'ici.",
+          "t0": 2267,
+          "t1": 2645
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 4,
+      "t": 28700,
+      "d": 3434,
+      "window": 5300,
+      "ms": 3434,
+      "endsAt": 32134,
+      "nextAt": 34700,
+      "budget": 5800,
+      "slack": 2366,
+      "txt": "Livraison en vingt-quatre heures, partout dans Istan.",
+      "rate": 2.038,
+      "words": [
+        {
+          "w": "Livraison",
+          "t0": 0,
+          "t1": 718
+        },
+        {
+          "w": "en",
+          "t0": 718,
+          "t1": 957
+        },
+        {
+          "w": "vingt-quatre",
+          "t0": 957,
+          "t1": 1675
+        },
+        {
+          "w": "heures,",
+          "t0": 1675,
+          "t1": 2237
+        },
+        {
+          "w": "partout",
+          "t0": 2237,
+          "t1": 2716
+        },
+        {
+          "w": "dans",
+          "t0": 2716,
+          "t1": 2955
+        },
+        {
+          "w": "Istan.",
+          "t0": 2955,
+          "t1": 3434
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 5,
+      "t": 34700,
+      "d": 3123,
+      "window": 4600,
+      "ms": 3123,
+      "endsAt": 37823,
+      "nextAt": 40000,
+      "budget": 5100,
+      "slack": 1977,
+      "txt": "Litel : des petits prix, grande qualité.",
+      "rate": 2.241,
+      "words": [
+        {
+          "w": "Litel",
+          "t0": 0,
+          "t1": 492
+        },
+        {
+          "w": ":",
+          "t0": 492,
+          "t1": 824
+        },
+        {
+          "w": "des",
+          "t0": 824,
+          "t1": 1070
+        },
+        {
+          "w": "petits",
+          "t0": 1070,
+          "t1": 1561
+        },
+        {
+          "w": "prix,",
+          "t0": 1561,
+          "t1": 1893
+        },
+        {
+          "w": "grande",
+          "t0": 1893,
+          "t1": 2385
+        },
+        {
+          "w": "qualité.",
+          "t0": 2385,
+          "t1": 3123
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    }
+  ],
+  "bytes": 2598444,
+  "peak": 0.9,
+  "rms": 0.0579,
+  "clipped": 0,
+  "silentSeconds": 0,
+  "generated": "2026-10-13T11:28:37",
+  "secondsToBuild": 3.2
+}

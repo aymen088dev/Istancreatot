@@ -1,0 +1,15 @@
+BOBY — SCRIPT VOCAL
+Film : boby-commentateur.html · 34 s · 8 répliques
+Bande-son : assets/audio/boby-commentateur.wav (71 sons)
+Voix à importer : assets/voice/boby-commentateur.wav (voix « français · Tom (medium) »)
+Durées : voix mesurée par le studio, phrase par phrase (plan vocal)
+  début    fin   durée   voix    réplique
+  ------  ------  -----  ------  --------------------------------------------------------
+  00:00.60  00:04.37   3.77     oui  Bonsoir, bonsoir. Ici Boby, en direct.
+  00:05.20  00:08.35   3.15     oui  Bienvenue sur, euh, sur notre antenne.
+  00:10.30  00:12.78   2.48     oui  Donc ce soir, on commente... quel match.
+  00:14.80  00:18.67   3.87     oui  Comistani. Enfin, Comistini... non, comestible.
+  00:19.00  00:22.18   3.18     oui  Mikkelsen. Mik... Mike-les-sons, voilà.
+  00:23.20  00:26.13   2.92     oui  Zéro partout, euh non, trois à zéro.
+  00:27.40  00:30.46   3.06     oui  Aïe. J'ai lâché le micro, pardon.
+  00:30.80  00:32.48   1.68     oui  Ce n'est pas moi, c'est le vent.

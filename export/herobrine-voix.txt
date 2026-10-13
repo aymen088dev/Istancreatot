@@ -1,0 +1,15 @@
+HEROBRINE — SCRIPT VOCAL
+Film : herobrine.html · 42 s · 8 répliques · au micro : Narrateur
+Bande-son : assets/audio/herobrine.wav (126 sons)
+Voix à importer : assets/voice/herobrine.wav (voix « français · Tom (medium) »)
+Durées : voix mesurée par le studio, phrase par phrase (plan vocal)
+  début    fin   durée   voix    réplique
+  ------  ------  -----  ------  --------------------------------------------------------
+  00:00.70  00:04.55   3.85     oui  Nouveau monde. Survie. Seul, et sans personne.
+  00:05.90  00:09.19   3.29     oui  La nuit tombe, et quelque chose me suit dans le noir.
+  00:11.30  00:14.63   3.33     oui  Mes torches s'éteignent. Mes coffres sont vidés.
+  00:16.70  00:20.33   3.63     oui  Un tunnel droit, creusé dans la pierre, sans porte.
+  00:22.10  00:25.75   3.65     oui  En haut de la colline, une silhouette me regarde.
+  00:27.50  00:30.49   2.99     oui  Deux yeux blancs. Il ne faut jamais le fixer.
+  00:32.90  00:35.97   3.07     oui  Il vient d'entrer dans ma partie. J'ai peur.
+  00:37.20  00:39.98   2.78     oui  Herobrine. Ce monde n'est plus à moi.

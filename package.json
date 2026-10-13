@@ -1,0 +1,26 @@
+{
+  "name": "nyxar-n3-pub",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Films motion design autonomes (canvas + voix + sous-titres) dont la bande-son et la voix sont fabriquées hors ligne par un studio Python, avec leur banque d'assets et leurs outils de vérification.",
+  "scripts": {
+    "dev": "bun run server.mjs",
+    "start": "bun run server.mjs",
+    "verify": "bun tools/verify.mjs",
+    "shots": "bun tools/shoot.mjs",
+    "shots:panel": "bun tools/shoot.mjs --panel",
+    "export": "bun tools/export.mjs",
+    "look": "bun tools/shoot.mjs --ascii",
+    "assets:setup": "python3 -m pip install -r tools/assets/requirements.txt",
+    "assets": "python3 tools/assets/generate.py all",
+    "assets:check": "python3 tools/assets/generate.py check",
+    "assets:list": "python3 tools/assets/generate.py list",
+    "assets:voice": "python3 tools/assets/generate.py voice",
+    "assets:sfx": "python3 tools/assets/generate.py sfx",
+    "assets:panel": "python3 tools/assets/generate.py panel"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.0"
+  }
+}

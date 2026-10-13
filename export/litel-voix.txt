@@ -1,0 +1,13 @@
+LITEL — SCRIPT VOCAL
+Film : litel.html · 40 s · 6 répliques
+Bande-son : assets/audio/litel.wav (71 sons)
+Voix à importer : assets/voice/litel.wav (voix « français · Tom (medium) »)
+Durées : voix mesurée par le studio, phrase par phrase (plan vocal)
+  début    fin   durée   voix    réplique
+  ------  ------  -----  ------  --------------------------------------------------------
+  00:00.90  00:04.36   3.46     oui  Litel ouvre ses portes : bienvenue dans le magasin.
+  00:07.20  00:10.60   3.40     oui  Des petits prix dans tous les rayons, sans exception.
+  00:14.30  00:17.77   3.47     oui  Cinq istancoins la boîte, et huit pour la deuxième.
+  00:21.80  00:24.45   2.65     oui  Chaque lot est vérifié avant de partir d'ici.
+  00:28.70  00:32.13   3.43     oui  Livraison en vingt-quatre heures, partout dans Istan.
+  00:34.70  00:37.82   3.12     oui  Litel : des petits prix, grande qualité.

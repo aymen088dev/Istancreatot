@@ -1,0 +1,16 @@
+CS AXIUM — SCRIPT VOCAL
+Film : cs-axium-xi.html · 46.2 s · 9 répliques · au micro : Léonard Chose
+Bande-son : assets/audio/cs-axium-xi.wav (118 sons)
+Voix à importer : assets/voice/cs-axium-xi.wav (voix « français · Tom (medium) »)
+Durées : voix mesurée par le studio, phrase par phrase (plan vocal)
+  début    fin   durée   voix    réplique
+  ------  ------  -----  ------  --------------------------------------------------------
+  00:00.60  00:03.41   2.81     oui  Bonsoir à tous, Léonard Chose au micro.
+  00:06.80  00:10.82   4.02     oui  CS Axiom dévoile sa composition, ce soir.
+  00:13.00  00:14.82   1.82     oui  Et dans les buts, Haddad!
+  00:16.40  00:20.96   4.56     oui  La défense : Lot Istanois, Benali, Hernancio, Sanchez.
+  00:22.60  00:25.59   2.99     oui  Mansouri en sentinelle, devant la défense.
+  00:26.00  00:31.76   5.76     oui  Le Boucher, Gelarza, Von Istanoix, Caruso : ils alimentent l'attaque !
+  00:32.80  00:34.75   1.96     oui  Et Saidi, en pointe!
+  00:35.60  00:38.55   2.94     oui  Sur le banc, neuf remplaçants prêts à entrer.
+  00:40.80  00:44.64   3.84     oui  CS Axiom, la composition : quatre un quatre un.

@@ -1,0 +1,2038 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>HEROBRINE — survie · motion design</title>
+<meta name="description" content="Motion design vertical : Minecraft à la première personne, en survie, la nuit. Un monde en blocs, un tunnel sans porte, deux yeux blancs sur la colline." />
+<style>
+  :root{
+    --ink:#e8f0e6; --gold:#8bd450; --gold2:#c8f08a; --blue:#2f6bd8; --blue2:#6ea6ff;
+    --green:#5fbf5f; --amber:#e8a33d; --red:#c8102e; --night:#04070a; --plate:#0b1410;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --vh:100vh;
+    /* Le cadre 9:16 est la seule source d'échelle : 1080 px de large valent 100cqw,
+       1920 px de haut valent 100cqh. L'image et sa typographie gardent donc
+       exactement le même cadrage sur un écran de bureau comme sur un téléphone. */
+    --fw:min(100vw, calc(var(--vh) * .5625));
+    --fh:min(calc(100vw * 1.777778), var(--vh));
+  }
+  @supports (height:100dvh){ :root{ --vh:100dvh } }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#010403;color:var(--ink);overflow:hidden;
+    font-family:"Helvetica Neue",Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+  #stage{position:fixed;inset:0;background:var(--night);overflow:hidden}
+  #frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:1}
+  #scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(105% 78% at 50% 44%,rgba(0,0,0,0) 32%,rgba(0,0,0,.72) 100%)}
+  .layer{position:absolute;inset:0;pointer-events:none}
+
+  /* ---------- typographie (1 px de la maquette = .0926cqw = .0521cqh) ---------- */
+  .card{position:absolute;will-change:opacity,transform}
+  .kicker{font-family:var(--mono);font-weight:600;font-size:2.407cqw;letter-spacing:.34em;text-transform:uppercase;color:rgba(232,240,230,.62)}
+  .title{font-size:9.63cqw;font-weight:800;letter-spacing:.08em;line-height:1;text-transform:uppercase;
+    background:linear-gradient(180deg,#ffffff,#dfe6df 52%,#6f7a6f);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 1.296cqw 3.704cqw rgba(200,16,46,.35))}
+  .head{font-size:5.926cqw;font-weight:800;letter-spacing:-.01em;line-height:1.08;text-shadow:0 1.111cqw 3.704cqw rgba(0,0,0,.7)}
+  .plate{display:inline-block;font-family:var(--mono);font-size:2.778cqw;letter-spacing:.16em;text-transform:uppercase;
+    color:#dfeadb;background:rgba(11,20,16,.92);border-left:.556cqw solid var(--gold);padding:1.111cqw 2.037cqw;border-radius:.556cqw}
+  .chip{display:inline-flex;align-items:center;gap:1.111cqw;padding:1.111cqw 2.037cqw;border-radius:999px;
+    font-family:var(--mono);font-size:max(2.222cqw,10px);letter-spacing:.16em;text-transform:uppercase;color:#e6eefb;
+    background:rgba(6,14,10,.85);border:1px solid rgba(139,212,80,.3)}
+  /* une pastille se mesure à son contenu et se centre : sans cela sa boîte occupe
+     toute la largeur du cadre, le fond se peint d'un bord à l'autre, et le
+     téléphone qui l'agrandit la pousse hors de l'écran */
+  .card.chip{width:fit-content;margin-inline:auto;justify-content:center}
+  .chip i{width:.926cqw;height:.926cqw;border-radius:50%;background:var(--gold);box-shadow:0 0 1.111cqw var(--gold);display:inline-block}
+  .chip.red{border-color:rgba(200,16,46,.5);color:#ffd9d9}
+  .chip.red i{background:var(--red);box-shadow:0 0 1.111cqw var(--red)}
+  .stat{font-family:var(--mono);font-size:3.148cqw;letter-spacing:.14em;color:#eaf3ea}
+  .stat b{color:var(--gold2)}
+  .stat.red b{color:#ff8f8f}
+  .credit{font-family:var(--mono);font-size:max(2.222cqw,10px);letter-spacing:.3em;text-transform:uppercase;color:rgba(232,240,230,.5)}
+  .credit b{color:var(--gold)}
+  .tc{left:0;right:0;top:9.375cqh;text-align:center;transform-origin:center top}
+  .cc{left:0;right:0;top:36.458cqh;text-align:center;transform-origin:center top}
+  .bc{left:0;right:0;bottom:29.167cqh;text-align:center;transform-origin:center bottom}
+  .bl{left:6.481cqw;bottom:29.167cqh;transform-origin:left bottom}
+  .br{right:6.481cqw;bottom:29.167cqh;text-align:right;transform-origin:right bottom}
+  .center{left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:1.481cqw;transform-origin:center top}
+
+  /* ---------- sous-titres ---------- */
+  /* chaque réplique est posée en absolu : les répliques masquées ne se partagent plus la largeur */
+  #subs{position:absolute;left:0;right:0;bottom:7.813cqh;pointer-events:none;z-index:2}
+  .subline{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:88.889cqw;padding:1.296cqw 2.407cqw 1.481cqw;border-radius:1.481cqw;text-align:center;
+    background:rgba(3,7,5,.8);border:1px solid rgba(200,16,46,.28);
+    box-shadow:0 1.667cqw 5.556cqw rgba(0,0,0,.7);backdrop-filter:blur(3px);
+    font-size:3.704cqw;line-height:1.26;font-weight:600;letter-spacing:-.003em;
+    opacity:0;transform:translateY(12px);transition:opacity .22s ease,transform .22s ease}
+  .subline.show{opacity:1;transform:none}
+  .subline .w{color:rgba(232,240,230,.5);transition:color .1s linear}
+  .subline .w.done{color:rgba(232,240,230,.9)}
+  .subline .w.on{color:#ffd9d9;text-shadow:0 0 26px rgba(200,16,46,.65)}
+
+  /* ---------- habillage : le journal du monde, dans le cadre ---------- */
+  #bcast{z-index:1}
+  .bug{position:absolute;left:3.704cqw;top:3.333cqh;display:flex;align-items:stretch;
+    font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;
+    background:linear-gradient(180deg,rgba(9,17,12,.95),rgba(4,9,7,.9));
+    border:1px solid rgba(139,212,80,.35);border-radius:1.111cqw;overflow:hidden;
+    box-shadow:0 1.481cqw 4.444cqw rgba(0,0,0,.65)}
+  .bug>*{display:flex;align-items:center;gap:.926cqw;padding:.926cqw 1.481cqw;font-size:max(1.852cqw,11px);color:#e7eefb}
+  .bug .live{background:#1d5a1d;color:#fff;font-weight:700;letter-spacing:.22em;font-size:1.667cqw}
+  .bug .live i{width:.833cqw;height:.833cqw;border-radius:50%;background:#c8f08a;animation:live 1.6s ease-in-out infinite}
+  @keyframes live{0%,100%{opacity:1}50%{opacity:.12}}
+  .bug .tag{font-weight:600;color:#fff}
+  .bug .form,.bug .clk{border-left:1px solid rgba(232,240,230,.16)}
+  .bug .form{color:var(--gold2)}
+  .bug .clk{color:rgba(232,240,230,.72);font-variant-numeric:tabular-nums}
+  .chan{position:absolute;right:3.704cqw;top:3.333cqh;display:flex;align-items:center;gap:1.111cqw;
+    font-family:var(--mono);font-size:1.759cqw;letter-spacing:.3em;text-transform:uppercase;color:rgba(232,240,230,.55)}
+  .chan b{color:var(--gold)}
+  .third{position:absolute;left:3.704cqw;bottom:15.625cqh;display:flex;align-items:center;gap:1.296cqw;
+    padding:1.111cqw 2.037cqw;border-left:.648cqw solid var(--gold);border-radius:.741cqw;
+    background:rgba(4,9,7,.88);font-family:var(--mono);font-size:2.315cqw;letter-spacing:.1em;
+    text-transform:uppercase;color:#eaf3ea;box-shadow:0 1.296cqw 3.704cqw rgba(0,0,0,.55);
+    transition:border-color .25s,box-shadow .25s}
+  .third em{font-style:normal;font-size:1.759cqw;letter-spacing:.2em;color:rgba(232,240,230,.6)}
+  .third .air{width:1.111cqw;height:1.111cqw;border-radius:50%;background:rgba(232,240,230,.3);transition:background .2s,box-shadow .2s}
+  .third.on{border-color:var(--red);box-shadow:0 1.296cqw 3.704cqw rgba(0,0,0,.55),0 0 2.963cqw rgba(200,16,46,.35)}
+  .third.on .air{background:#ff5a5a;box-shadow:0 0 1.481cqw rgba(255,90,90,.95)}
+  /* le journal du monde : un mur de messages, comme une console de jeu */
+  #bugNames{position:absolute;left:3.704cqw;top:13.5cqh;display:flex;flex-direction:column;gap:.556cqw;max-width:66cqw}
+  #bugNames span{font-family:var(--mono);font-size:max(1.574cqw,10.5px);letter-spacing:.04em;color:#dfe8ff;
+    background:rgba(6,10,16,.82);border-left:.278cqw solid rgba(110,166,255,.5);padding:.556cqw 1.111cqw;border-radius:.278cqw;
+    opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .35s ease}
+  #bugNames span.on{opacity:1;transform:none}
+
+  /* ---------- interface de lecture (posée sur le cadre, en unités du cadre) ---------- */
+  #hud{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:var(--fw);height:var(--fh);container-type:size;z-index:3;pointer-events:none}
+  /* L'image d'abord : trois secondes sans geste pendant la lecture et l'habillage
+     s'efface ; le premier mouvement le ramène. Les boîtes gardent leur place — seule
+     l'opacité change — donc rien ne se déplace et rien ne reste posé sur le film. */
+  #hud{transition:opacity .4s ease}
+  #stage.clean #hud{opacity:0}
+  #stage.clean #mix{pointer-events:none}
+  #prog{position:absolute;left:6.481cqw;right:6.481cqw;top:3.333cqh;display:flex;gap:.648cqw}
+  .pseg{flex:1;height:.365cqh;border-radius:.370cqw;background:rgba(232,240,230,.13);overflow:hidden}
+  .pseg i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5fbf5f,#c8102e);box-shadow:0 0 1.296cqw rgba(139,212,80,.45)}
+  /* le plancher de 12 px : sur une fenêtre étroite, 2,037cqw tombe sous la taille
+     lisible — l'habillage de lecture se mesure en pixels au-dessous d'un certain cadre */
+  #hudScene,#hudTc{position:absolute;bottom:3.333cqh;font-family:var(--mono);font-size:max(2.037cqw,12.5px);
+    letter-spacing:.22em;text-transform:uppercase;color:rgba(232,240,230,.45)}
+  #hudScene{left:6.667cqw} #hudTc{right:6.667cqw}
+  #hudScene b{color:var(--gold);font-weight:500}
+  #mix{position:absolute;right:6.481cqw;top:6.771cqh;display:flex;gap:.926cqw;pointer-events:auto}
+  .tog{display:inline-flex;align-items:center;gap:.926cqw;padding:1.019cqw 1.667cqw;border-radius:999px;cursor:pointer;
+    font-family:var(--mono);font-size:max(1.759cqw,12.5px);letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(232,240,230,.62);background:rgba(5,14,10,.7);border:1px solid rgba(232,240,230,.16);
+    transition:color .2s,border-color .2s}
+  .tog:hover{color:var(--ink);border-color:rgba(232,240,230,.32)}
+  .tog .dot{width:.833cqw;height:.833cqw;border-radius:50%;background:rgba(232,240,230,.28);transition:background .2s,box-shadow .2s}
+  .tog.on{color:var(--gold2);border-color:rgba(139,212,80,.5)}
+  .tog.on .dot{background:var(--gold);box-shadow:0 0 1.296cqw var(--gold)}
+  .tog.off-audio{opacity:.45}
+
+  /* ---------- écrans d'accueil et de fin (dimensionnés sur la largeur du cadre) ---------- */
+  #veil{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:24px;background:radial-gradient(80% 65% at 50% 42%,rgba(8,20,12,.85),rgba(1,3,4,.97));
+    opacity:0;pointer-events:none;transition:opacity .45s ease}
+  #veil.show{opacity:1;pointer-events:auto}
+  .veilbox{display:flex;flex-direction:column;align-items:center;gap:calc(var(--fw) * .0241);
+    max-width:calc(var(--fw) * .8333);padding:0 calc(var(--fw) * .037)}
+  .veilbrand{font-family:var(--mono);font-size:calc(var(--fw) * .0222);letter-spacing:.42em;text-transform:uppercase;color:rgba(232,240,230,.6)}
+  .veiltitle{font-size:calc(var(--fw) * .0852);font-weight:800;letter-spacing:.06em;line-height:1;
+    background:linear-gradient(180deg,#ffffff,#dfe6df 52%,#6f7a6f);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 calc(var(--fw) * .0222) rgba(200,16,46,.4))}
+  .veilsub{font-size:calc(var(--fw) * .0315);color:rgba(232,240,230,.74);line-height:1.4}
+  .veilsub b{color:var(--gold2)}
+  #go{position:relative;width:calc(var(--fw) * .1593);height:calc(var(--fw) * .1593);border-radius:50%;
+    border:2px solid rgba(139,212,80,.6);
+    background:radial-gradient(60% 60% at 40% 34%,rgba(95,191,95,.35),rgba(4,10,7,.8));
+    cursor:pointer;display:grid;place-items:center;transition:transform .25s,border-color .25s,box-shadow .25s;
+    box-shadow:0 0 0 12px rgba(139,212,80,.07),0 calc(var(--fw) * .0222) calc(var(--fw) * .0556) rgba(0,0,0,.65)}
+  #go:hover{transform:scale(1.06);border-color:var(--gold);box-shadow:0 0 0 16px rgba(139,212,80,.1),0 calc(var(--fw) * .024) calc(var(--fw) * .065) rgba(0,0,0,.7)}
+  #go svg{width:38%;height:38%;margin-left:5%;fill:var(--gold2)}
+  #go::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(139,212,80,.3);animation:pulse 2.6s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.92);opacity:.85}70%{transform:scale(1.22);opacity:0}100%{opacity:0}}
+  .hint{font-family:var(--mono);font-size:calc(var(--fw) * .0194);letter-spacing:.1em;color:rgba(232,240,230,.5);line-height:2}
+  kbd{font-family:var(--mono);font-size:calc(var(--fw) * .0176);padding:3px 10px;border-radius:6px;color:rgba(232,240,230,.82);
+    border:1px solid rgba(232,240,230,.2);background:rgba(232,240,230,.05)}
+  .lede{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  #veilEnd{display:none}
+  #veil.end .veilStart{display:none}
+  #veil.end #veilEnd{display:flex}
+  #veilEnd .veiltitle{font-size:calc(var(--fw) * .0648)}
+  #veilEnd .credit{font-size:calc(var(--fw) * .0222)}
+
+  /* ---------- téléphone : le film garde son cadre, l'habillage passe aux dimensions du pouce ---------- */
+  /* ---------- la passe « allégée » : l'image d'abord, le texte se pose dessus ----------
+     Tout le texte était posé dans des boîtes opaques — pastilles, plaques, cartons
+     de sous-titres, bandeau du monde — et ces fonds pleins mangeaient le cadre. Il
+     n'y a plus un seul aplat : la typographie se lit par son ombre portée et par un
+     filet d'accent, et un voile en dégradé au bas du cadre suffit à détacher les
+     sous-titres de n'importe quelle image. Rien n'est supprimé : l'information est
+     la même, elle ne cache simplement plus le film. */
+  #vig{background:radial-gradient(118% 88% at 50% 45%,rgba(0,0,0,0) 46%,rgba(0,0,0,.44) 100%),
+    linear-gradient(to top,rgba(2,5,9,.6) 0%,rgba(2,5,9,.24) 11%,rgba(0,0,0,0) 24%)}
+  .kicker,.stat,.credit,.spec,.sub,.legal,.formation,.chan{text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.9)}
+  .head{font-weight:700;letter-spacing:.004em;text-shadow:0 .556cqw 2.407cqw rgba(0,0,0,.85),0 .185cqw .648cqw rgba(0,0,0,.65)}
+  /* on ne touche pas aux marges intérieures : la boîte garde sa place, seul le
+     fond disparaît — la géométrie du montage reste exactement la même */
+  .plate{background:none;border-radius:0;color:var(--ink);text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .card.chip{background:none;border-color:transparent;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .chip i{box-shadow:none}
+  .subline{max-width:92cqw;padding:0 2cqw;background:none;border:0;border-radius:0;
+    box-shadow:none;backdrop-filter:none;font-weight:700;line-height:1.3;
+    text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 1.296cqw 3.704cqw rgba(0,0,0,.7)}
+  .subline .w.on{color:var(--gold2);text-shadow:0 .37cqw 1.111cqw rgba(0,0,0,.95),0 0 1.481cqw var(--gold)}
+  .bug{background:rgba(5,10,18,.38);border:0;border-radius:.556cqw;box-shadow:none;
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .bug .live{opacity:.86}
+  .bug .form,.bug .clk{border-left:1px solid rgba(255,255,255,.12)}
+  .third{background:none;border:0;border-left:.37cqw solid var(--gold);border-radius:0;
+    padding:.278cqw 0 .278cqw 1.296cqw;box-shadow:none;text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .third.on{box-shadow:none}
+  #bugNames span{background:none;border:0;border-radius:0;padding:.278cqw 0;
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  #bugNames span.on{opacity:.94}
+  #prog{opacity:.85}
+  .pseg{height:.26cqh;background:rgba(255,255,255,.14)}
+  .pseg i{box-shadow:none}
+  #hudScene,#hudTc{font-size:max(2.037cqw,12.5px);color:rgba(255,255,255,.5);
+    text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  #mix{gap:2.2cqw}
+  .tog{font-size:max(1.759cqw,12.5px);background:none;border:0;border-radius:0;padding:1.019cqw 0;
+    color:rgba(255,255,255,.55);text-shadow:0 .37cqw .926cqw rgba(0,0,0,.9)}
+  .tog.on{color:var(--gold2)}
+  .tog .dot{box-shadow:none}
+  .tog.on .dot{background:var(--gold);box-shadow:none}
+
+  @media (max-width:760px){
+    /* la petite typo du film redevient lisible sans sortir du cadre */
+    .card.opt{display:none}
+    .subline{font-size:max(17px,4.4vw);line-height:1.3;max-width:94vw;padding:10px 14px 11px;border-radius:14px}
+    .lede{gap:10px}
+    .lede .chip{font-size:14px;padding:13px 16px;gap:8px}
+    /* l'habillage du film aux dimensions du pouce */
+    .bug{left:10px;top:10px;border-radius:10px}
+    .bug>*{font-size:11px;padding:6px 8px;gap:6px}
+    .bug .live{font-size:10px;letter-spacing:.18em}
+    .bug .live i{width:6px;height:6px}
+    .chan{right:10px;top:12px;font-size:10px;letter-spacing:.2em}
+    /* le cartouche du narrateur reste, compact, remonté au-dessus des sous-titres */
+    .third{left:10px;bottom:22cqh;font-size:12px;padding:6px 10px;gap:7px;border-left-width:4px;border-radius:6px}
+    .third em{font-size:10px;letter-spacing:.14em}
+    .third .air{width:7px;height:7px}
+    /* le journal du monde reste, resserré sous le bandeau */
+    #bugNames{left:10px;top:auto;bottom:26cqh;gap:4px;max-width:80vw}
+    #bugNames span{font-size:11px;padding:4px 8px}
+    /* interface aux dimensions du doigt */
+    #hud{width:100vw;height:var(--vh)}
+    #prog{left:12px;right:12px;top:10px;gap:4px}
+    .pseg{height:4px;border-radius:2px}
+    #mix{right:12px;top:24px;gap:6px}
+    .tog{font-size:13px;padding:12px 15px;gap:8px;letter-spacing:.1em}
+    .tog .dot{width:8px;height:8px;box-shadow:none}
+    #hudScene,#hudTc{font-size:11.5px;letter-spacing:.16em;bottom:14px}
+    #hudScene{left:12px} #hudTc{right:12px}
+    /* accueil / fin */
+    .veilbox{gap:16px;max-width:92vw;padding:0 16px}
+    .veilbrand{font-size:11px;letter-spacing:.28em}
+    .veiltitle{font-size:46px;letter-spacing:.06em}
+    #veilEnd .veiltitle{font-size:34px}
+    .veilsub{font-size:16px}
+    #go{width:112px;height:112px;box-shadow:0 0 0 10px rgba(139,212,80,.07),0 18px 44px rgba(0,0,0,.65)}
+    .hint{font-size:12.5px;line-height:1.75}
+    kbd{font-size:11px}
+    #veilEnd .credit{font-size:11px}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- le film vit dans son cadre 9:16 ; l'interface est posée par-dessus -->
+  <div id="frame">
+    <canvas id="scene" width="1080" height="1920"></canvas>
+    <div id="vig"></div>
+    <div class="layer" id="cards"></div>
+    <div class="layer" id="bcast">
+      <div class="bug">
+        <span class="live"><i></i>SURVIE</span>
+        <span class="tag">Monde 1</span>
+        <span class="form" id="bugForm">Jour 1</span>
+        <span class="clk" id="bugClock">00:00</span>
+      </div>
+      <div class="chan"><b>◆</b>Monde en blocs</div>
+      <div class="third" id="third"><i class="air"></i><b id="thirdName">Narrateur</b><em id="thirdRole">journal</em></div>
+      <div id="bugNames"></div>
+    </div>
+    <div id="subs"></div>
+  </div>
+  <div id="hud">
+    <div id="prog"></div>
+    <div id="hudScene"></div>
+    <div id="hudTc"></div>
+    <div id="mix">
+      <button class="tog" id="togSound" type="button" aria-pressed="false"><span class="dot"></span>Son</button>
+      <button class="tog" id="togVoice" type="button" aria-pressed="false"><span class="dot"></span>Voix</button>
+    </div>
+  </div>
+
+  <div id="veil" class="show">
+    <div class="veilbox veilStart">
+      <div class="veilbrand">◆ monde en blocs ◆</div>
+      <div class="veiltitle">HEROBRINE</div>
+      <div class="veilsub">Minecraft vu de vos yeux · <b>survie</b><br />Un monde en blocs, la nuit, et quelqu'un qui n'a pas de compte<br />Narration : <b id="veilMic">Narrateur</b></div>
+      <button id="go" type="button" aria-label="Lancer le film"><svg viewBox="0 0 100 100"><path d="M32 22 82 50 32 78Z" /></svg></button>
+      <div class="hint">
+        Un seul clic : image, musique, voix et sous-titres &nbsp;·&nbsp; <b>42 s</b><br />
+        <kbd>Espace</kbd> lecture / pause &nbsp;·&nbsp; <kbd>S</kbd> coupe le son &nbsp;·&nbsp; <kbd>V</kbd> coupe la voix &nbsp;·&nbsp; <kbd>R</kbd> recommencer
+      </div>
+    </div>
+    <div class="veilbox" id="veilEnd">
+      <div class="veilbrand">◆ monde en blocs ◆</div>
+      <div class="veiltitle">HEROBRINE</div>
+      <div class="veilsub">Jour 1. Survie. Seul.<br />Le tunnel va toujours tout droit, et je n'ai rien creusé.</div>
+      <div class="lede">
+        <button id="replay" class="chip" type="button"><i></i>Rejouer la nuit</button>
+        <button id="closeEnd" class="chip" type="button"><i></i>Voir l'affiche</button>
+      </div>
+      <div class="credit">Hommage · monde en blocs non officiel</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   HEROBRINE — film vertical autonome (9:16, TikTok).
+   Minecraft vu de ses propres yeux : le monde en blocs, la barre
+   d'objets, la main qui tient la torche et le réticule sont dessinés par
+   code (canvas 2D). Le son est synthétisé (Web Audio), la voix passe par
+   speechSynthesis, les sous-titres défilent mot à mot. Aucune ressource
+   externe, aucune requête réseau : le film ne lit que ses propres
+   fichiers (sa bande-son, sa bande vocale et le plan de cette voix).
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const W = 1080, H = 1920, TAU = Math.PI * 2;
+  const TOTAL = 42000;
+  const FILM = TOTAL / 1000;                 // durée en secondes, pour la partition
+
+  /* ------------------------------------------------ 1. le monde */
+  // Un monde en blocs, vu à la première personne. Tout est cubique : le sol,
+  // les arbres, les nuages et la silhouette. Les scènes ne changent que la
+  // caméra, l'heure et ce qu'il y a devant — c'est le même moteur qui les
+  // dessine, donc elles se ressemblent comme des captures du même jeu.
+  const SCENES = [
+    { from: 0,     to: 7000,  name: "Jour 1",        num: "01", draw: drawDay },
+    { from: 7000,  to: 14000, name: "La nuit",       num: "02", draw: drawNight },
+    { from: 14000, to: 21000, name: "Ses signes",    num: "03", draw: drawTunnel },
+    { from: 21000, to: 28000, name: "Il est là",     num: "04", draw: drawFigure },
+    { from: 28000, to: 35000, name: "La fuite",      num: "05", draw: drawRun },
+    { from: 35000, to: TOTAL, name: "Herobrine",     num: "06", draw: drawTitle },
+  ];
+
+  // La console du monde : ce que les autres joueurs écrivent, quand ils
+  // écrivent encore. Chaque ligne apparaît à son instant (t0) et reste.
+  const CHAT = [
+    { t0: 2600,  who: "<Steve>",  txt: "quelqu'un joue ici ?" },
+    { t0: 6600,  who: "<Alex>",   txt: "j'ai fini ma maison, venez voir" },
+    { t0: 12600, who: "<Alex>",   txt: "mes torches ont disparu" },
+    { t0: 16600, who: "<Steve>",  txt: "il y a un tunnel sous ma base" },
+    { t0: 24600, who: "<Alex>",   txt: "je vois quelqu'un sur la colline" },
+    { t0: 30600, who: "<Steve>",  txt: "regardez pas ses yeux" },
+    { t0: 35600, who: "console",  txt: "a quitté la partie" },
+    { t0: 39200, who: "console",  txt: "a rejoint la partie" },
+  ];
+
+  const MIC = { name: "Narrateur", role: "journal" };
+  // Les fenêtres (`d`) sont celles de la voix **mesurée** : le studio prononce la
+  // réplique, la chronomètre, et écrit le plan dans `assets/voice/`. `bun run assets`
+  // remesure ; une fenêtre plus courte que la phrase prononcée ferait couper le sous-titre.
+  const LINES = [
+    { t: 700,   d: 4600, txt: "Nouveau monde. Survie. Seul, et sans personne." },
+    { t: 5900,  d: 4600, txt: "La nuit tombe, et quelque chose me suit dans le noir." },
+    { t: 11300, d: 4600, txt: "Mes torches s'éteignent. Mes coffres sont vidés." },
+    { t: 16700, d: 4600, txt: "Un tunnel droit, creusé dans la pierre, sans porte." },
+    { t: 22100, d: 4600, txt: "En haut de la colline, une silhouette me regarde." },
+    { t: 27500, d: 4600, txt: "Deux yeux blancs. Il ne faut jamais le fixer." },
+    { t: 32900, d: 3400, txt: "Il vient d'entrer dans ma partie. J'ai peur." },
+    { t: 37200, d: 3200, txt: "Herobrine. Ce monde n'est plus à moi." },
+  ];
+
+  /* Les positions et grilles sont données dans la maquette 1080x1920 (px) ;
+     le constructeur de cartons les convertit en unités du cadre (cqw/cqh).
+     ui   = facteur d'agrandissement appliqué sur téléphone (texte du film illisible sinon)
+     opt  = carton masqué sur petit écran, où la place manque */
+  const CARDS = [
+    { t: [300, 6600],   cls: "tc kicker", html: "Jour 1 · survie · monde aléatoire", ui: 2 },
+    { t: [900, 6600],   cls: "cc title",  html: "Jour 1", css: { top: "620px", fontSize: "150px" } },
+    { t: [3600, 6600],  cls: "bc stat",   html: "Vie <b>20/20</b> &nbsp;·&nbsp; faim <b>20/20</b>", css: { bottom: "420px" }, ui: 1.7 },
+
+    { t: [7200, 13600], cls: "tc kicker", html: "La nuit tombe", ui: 2 },
+    { t: [7600, 13600], cls: "cc head",   html: "Il fait noir.", css: { top: "700px", fontSize: "88px" }, ui: 1.6 },
+    { t: [10400, 13600],cls: "bc chip",   html: "<i></i>Torche allumée", css: { bottom: "420px" }, ui: 2 },
+
+    { t: [14200, 20600],cls: "tc kicker", html: "Ses signes", ui: 2 },
+    { t: [14600, 20600],cls: "cc head",   html: "Un tunnel droit,<br />sans porte.", css: { top: "600px", fontSize: "82px" }, ui: 1.6 },
+    { t: [16800, 20600],cls: "bl kicker", id: "torches", html: "Torches · 12", css: { bottom: "620px" }, ui: 2 },
+    { t: [18400, 20600],cls: "br chip red", html: "<i></i>Aucune trace", css: { bottom: "470px" }, ui: 2 },
+
+    { t: [21200, 27600],cls: "tc kicker", html: "Il est là", ui: 2 },
+    { t: [21600, 27600],cls: "cc head",   html: "Ne le regarde pas.", css: { top: "590px", fontSize: "84px" }, ui: 1.6 },
+    { t: [26200, 27600],cls: "bc stat red", html: "Il a bougé.", css: { bottom: "430px" }, ui: 1.8 },
+
+    { t: [28200, 34600],cls: "tc kicker", html: "Cours", ui: 2 },
+    { t: [28600, 34600],cls: "cc head",   html: "Il est derrière toi.", css: { top: "620px", fontSize: "86px" }, ui: 1.6 },
+    { t: [31800, 34600],cls: "bc chip red", html: "<i></i>Il se rapproche", css: { bottom: "430px" }, ui: 2 },
+
+    { t: [35300, 41700],cls: "tc kicker", html: "Il est entré dans la partie", ui: 2 },
+    { t: [35800, 41700],cls: "cc title",  html: "HEROBRINE", css: { top: "600px", fontSize: "128px" } },
+    { t: [37800, 41700],cls: "cc head",   html: "Ce monde n'est plus à moi.", css: { top: "1180px", fontSize: "58px" }, ui: 1.5 },
+    { t: [39000, 41700],cls: "cc credit", html: "Aucun compte ne s'appelle Herobrine.", css: { top: "1420px", fontSize: "26px" }, opt: true },
+    { t: [39800, 41700],cls: "cc credit", html: "Hommage · monde en blocs non officiel", css: { top: "1500px", fontSize: "28px" }, opt: true },
+  ];
+
+  /* ------------------------------------------------ 2. outils de dessin */
+  const clamp = (v, a = 0, b = 1) => (v < a ? a : v > b ? b : v);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = (t) => { t = clamp(t); return t * t * (3 - 2 * t); };
+  const eio = (t) => { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  const easeOut = (t) => 1 - Math.pow(1 - clamp(t), 3);
+  const rnd = (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+
+  const cv = document.getElementById("scene");
+  const g = cv.getContext("2d");
+  const off = (w = W, h = H) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
+
+  /* ------------------------------------------------ 3. le moteur de blocs */
+  // Une caméra à la première personne, des cubes alignés sur les axes, et un
+  // rendu « peintre » : on projette les huit coins de chaque cube, on ne garde
+  // que les faces tournées vers l'œil, et on les trie du plus loin au plus
+  // près. C'est ainsi qu'un monde de blocs se dessine sans maillage, sans
+  // moteur 3D et sans un seul fichier d'image.
+  const cam = { x: 0, y: 1.62, z: 8, yaw: 0, pitch: -.08, fov: .95 };
+  let faces = [], lights = [], eyes = [];
+  const FOG = { col: [10, 12, 18], from: 9, span: 30 };
+
+  /** Projette un point du monde sur l'image (pinhole : yaw puis pitch). */
+  function project(x, y, z) {
+    const dx = x - cam.x, dy = y - cam.y, dz = z - cam.z;
+    const cy = Math.cos(-cam.yaw), sy = Math.sin(-cam.yaw);
+    const rx = dx * cy - dz * sy;
+    let rz = dx * sy + dz * cy;
+    const cp = Math.cos(-cam.pitch), sp = Math.sin(-cam.pitch);
+    const ry = dy * cp - rz * sp;
+    rz = dy * sp + rz * cp;
+    if (rz < .16) return null;                     // derrière l'œil : pas de dessin
+    const f = H * cam.fov;
+    return { x: W * .5 + rx * f / rz, y: H * .5 - ry * f / rz, z: rz };
+  }
+
+  // Les six faces d'un cube, avec leur ombrage (le dessus est le plus clair,
+  // le dessous le plus sombre : c'est ce qui fait lire un cube).
+  const FACES = [
+    { n: [0, 0, 1],  c: [[0,0,1],[1,0,1],[1,1,1],[0,1,1]], k: 1.00, s: 1 },
+    { n: [0, 0,-1],  c: [[1,0,0],[0,0,0],[0,1,0],[1,1,0]], k: .78,  s: 1 },
+    { n: [1, 0, 0],  c: [[1,0,1],[1,0,0],[1,1,0],[1,1,1]], k: .66,  s: 1 },
+    { n: [-1, 0, 0], c: [[0,0,0],[0,0,1],[0,1,1],[0,1,0]], k: .84,  s: 1 },
+    { n: [0, 1, 0],  c: [[0,1,1],[1,1,1],[1,1,0],[0,1,0]], k: 1.18, u: 1 },
+    { n: [0,-1, 0],  c: [[0,0,0],[1,0,0],[1,0,1],[0,0,1]], k: .48,  u: 1 },
+  ];
+
+  const rgb = (c, a = 1) => "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")";
+  const dim = (c, k) => c.map((v) => Math.round(v * k));
+  /** Teinte finale d'une face : ombrage du cube, puis brouillard de distance. */
+  const tint = (col, k, depth) => rgb(shade(col, k, depth), 1);
+  function shade(col, k, depth) {
+    const f = clamp((depth - FOG.from) / FOG.span);
+    return [0, 1, 2].map((i) => Math.round(lerp(col[i] * k, FOG.col[i], f)));
+  }
+
+  /**
+   * Empile un cube du monde.
+   *   col = couleur des flancs ; o.top / o.side / o.bottom changent une face ;
+   *   o.flat = pas d'ombrage (les nuages) ; o.tex = petits pixels de matière ;
+   *   o.edge = trait de contour (les blocs vus de près).
+   */
+  function box(x, y, z, w, h, d, col, o = {}) {
+    const P = [];
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) for (let k = 0; k < 2; k++)
+      P.push(project(x + i * w, y + j * h, z + k * d));
+    for (const F of FACES) {
+      const nx = x + (F.n[0] > 0 ? w : 0), ny = y + (F.n[1] > 0 ? h : 0), nz = z + (F.n[2] > 0 ? d : 0);
+      if (F.n[0] * (cam.x - nx) + F.n[1] * (cam.y - ny) + F.n[2] * (cam.z - nz) <= 0) continue;  // face de dos
+      const q = F.c.map(([a, b, c]) => P[(a << 2) | (b << 1) | c]);
+      if (q.some((p) => !p)) continue;
+      const base = o.flat ? col : (F.u && o.top) || (F.u && o.bottom) || (F.s && o.side) || col;
+      const depth = (q[0].z + q[1].z + q[2].z + q[3].z) / 4;
+      faces.push({
+        q, depth, fill: tint(base, o.flat ? 1 : F.k, depth),
+        edge: o.edge, tex: o.tex, alpha: o.alpha ?? 1,
+      });
+    }
+  }
+
+  function path(q) {
+    g.beginPath();
+    g.moveTo(q[0].x, q[0].y);
+    for (let i = 1; i < q.length; i++) g.lineTo(q[i].x, q[i].y);
+    g.closePath();
+  }
+
+  /** Des pixels de matière dans une face (l'herbe, la pierre, les feuilles). */
+  function speckle(q, col, n, seed, size = 9, alpha = .45) {
+    g.save(); path(q); g.clip();
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    for (const p of q) { if (p.x < x0) x0 = p.x; if (p.x > x1) x1 = p.x; if (p.y < y0) y0 = p.y; if (p.y > y1) y1 = p.y; }
+    g.fillStyle = col; g.globalAlpha = alpha;
+    for (let i = 0; i < n; i++) {
+      const s = size * (.5 + rnd(seed + i * 1.3));
+      g.fillRect(x0 + rnd(seed + i * 1.7) * (x1 - x0), y0 + rnd(seed + i * 2.9) * (y1 - y0), s, s);
+    }
+    g.restore();
+  }
+
+  /** Peint les faces du monde, du plus loin au plus près. */
+  function flush() {
+    faces.sort((a, b) => b.depth - a.depth);
+    for (const f of faces) {
+      path(f.q);
+      g.globalAlpha = f.alpha;
+      g.fillStyle = f.fill; g.fill();
+      if (f.tex) speckle(f.q, f.tex.col, f.tex.n, f.tex.seed, f.tex.size, f.tex.alpha);
+      if (f.edge) { g.strokeStyle = f.edge.col; g.lineWidth = f.edge.w; g.stroke(); }
+      g.globalAlpha = 1;
+    }
+    faces = [];
+  }
+
+  /** Les halos : torches, yeux, explosions — toujours par-dessus la pierre. */
+  function flushLights() {
+    for (const L of lights) {
+      const p = project(L.x, L.y, L.z);
+      if (!p) continue;
+      const r = Math.max(2, L.r * (H * cam.fov) / p.z / 260);
+      const gr = g.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+      gr.addColorStop(0, rgb(L.col, L.a));
+      gr.addColorStop(.45, rgb(L.col, L.a * .35));
+      gr.addColorStop(1, rgb(L.col, 0));
+      g.fillStyle = gr;
+      g.fillRect(p.x - r, p.y - r, r * 2, r * 2);
+    }
+    lights = [];
+    // puis les yeux eux-mêmes : deux pixels blancs, la seule chose nette du bonhomme
+    for (const e of eyes) {
+      const f = (H * cam.fov) / Math.max(.4, (project(e.x, e.y, e.z) || { z: 9 }).z);
+      const ew = Math.max(2, .05 * f * e.s), eh = Math.max(3, .075 * f * e.s);
+      for (const dx of [-.15, .15]) {
+        const p = project(e.x + dx * e.s, e.y, e.z);
+        if (!p) continue;
+        g.fillStyle = "rgba(255,255,255," + e.a + ")";
+        g.fillRect(p.x - ew, p.y - eh, ew * 2, eh * 2);
+      }
+    }
+    eyes = [];
+  }
+
+  /* ------------------------------------------------ 4. le monde en blocs */
+  const PAL = {
+    grass: [104, 168, 70], dirt: [126, 92, 58], stone: [130, 130, 130], cobble: [108, 108, 108],
+    sand: [219, 207, 163], log: [102, 76, 46], leaf: [56, 116, 44], plank: [162, 130, 78],
+    night: [14, 18, 26], skin: [196, 150, 108],
+  };
+
+  function sky(top, mid, low) {
+    const gr = g.createLinearGradient(0, 0, 0, H);
+    gr.addColorStop(0, rgb(top)); gr.addColorStop(.5, rgb(mid)); gr.addColorStop(1, rgb(low));
+    g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  }
+
+  /** Le soleil (et la lune) : dans ce monde, c'est un carré. */
+  function planet(x, y, size, col, glow) {
+    const gr = g.createRadialGradient(x, y, 0, x, y, size * 3.4);
+    gr.addColorStop(0, rgb(col, glow)); gr.addColorStop(1, rgb(col, 0));
+    g.fillStyle = gr; g.fillRect(x - size * 3.4, y - size * 3.4, size * 6.8, size * 6.8);
+    g.fillStyle = rgb(col, .97);
+    g.fillRect(x - size / 2, y - size / 2, size, size);
+  }
+
+  function stars(t, alpha, n = 96) {
+    if (alpha <= .01) return;
+    for (let i = 0; i < n; i++) {
+      const tw = .4 + .6 * Math.abs(Math.sin(t * .9 + i * 1.7));
+      g.fillStyle = "rgba(255,255,255," + (alpha * tw).toFixed(3) + ")";
+      g.fillRect(rnd(i * 3.1) * W, rnd(i * 7.7) * H * .62, 2 + Math.round(rnd(i * 5.3) * 2), 2 + Math.round(rnd(i * 2.1) * 2));
+    }
+  }
+
+  /** Le sol : une grande dalle d'herbe, la terre sur les flancs. */
+  function ground(top, side, size = 68) {
+    box(-size / 2, -1, -size / 2, size, 1, size, side, {
+      top, tex: { col: rgb(dim(top, .72)), n: 120, seed: 5, size: 13, alpha: .3 },
+    });
+  }
+
+  function tree(x, z, s = 1, k = 1) {
+    const log = dim(PAL.log, k), leaf = dim(PAL.leaf, k);
+    box(x - .3 * s, 0, z - .3 * s, .6 * s, 4.1 * s, .6 * s, log, { top: dim(PAL.plank, k) });
+    box(x - 1.6 * s, 3.1 * s, z - 1.6 * s, 3.2 * s, 1.7 * s, 3.2 * s, leaf, {
+      top: dim(leaf, 1.22), tex: { col: rgb(dim(leaf, .7)), n: 26, seed: x * 3 + z, size: 11, alpha: .5 },
+    });
+    box(x - 1.05 * s, 4.7 * s, z - 1.05 * s, 2.1 * s, 1.2 * s, 2.1 * s, leaf, { top: dim(leaf, 1.28) });
+  }
+
+  /** La silhouette : six cubes sombres, et deux yeux qui n'appartiennent à personne. */
+  function herobrine(x, y, z, s, o = {}) {
+    const col = o.col || [16, 20, 19];
+    const e = o.eye ?? 1;
+    box(x - .35 * s, y + 2.85 * s, z - .22 * s, .70 * s, .72 * s, .44 * s, col, { flat: true });
+    box(x - .30 * s, y + 1.45 * s, z - .18 * s, .60 * s, 1.42 * s, .36 * s, col, { flat: true });
+    box(x - .82 * s, y + 1.45 * s, z - .18 * s, .22 * s, 1.42 * s, .36 * s, col, { flat: true });
+    box(x + .60 * s, y + 1.45 * s, z - .18 * s, .22 * s, 1.42 * s, .36 * s, col, { flat: true });
+    box(x - .30 * s, y, z - .18 * s, .26 * s, 1.45 * s, .36 * s, col, { flat: true });
+    box(x + .04 * s, y, z - .18 * s, .26 * s, 1.45 * s, .36 * s, col, { flat: true });
+    for (const dx of [-.15, .15]) lights.push({ x: x + dx * s, y: y + 3.2 * s, z: z - .3 * s, r: 44 * s, col: [255, 255, 255], a: .55 * e });
+    eyes.push({ x, y: y + 3.2 * s, z: z - .25 * s, s, a: e });
+  }
+
+  /* ------------------------------------------------ 5. l'écran du joueur */
+  // Ce que le jeu pose par-dessus le monde : le réticule, la barre d'objets,
+  // la vie et la faim, et la main qui tient la torche. C'est ce qui fait dire
+  // « c'est un jeu vidéo, vu de mes yeux » plutôt que « c'est un décor ».
+  function crosshair(t) {
+    const x = W * .5, y = H * .5 + Math.sin(t * 1.3) * .7;
+    g.save(); g.globalAlpha = .85;
+    g.strokeStyle = "rgba(255,255,255,.9)"; g.lineWidth = 3.4;
+    g.beginPath();
+    g.moveTo(x - 17, y); g.lineTo(x - 5, y); g.moveTo(x + 5, y); g.lineTo(x + 17, y);
+    g.moveTo(x, y - 17); g.lineTo(x, y - 5); g.moveTo(x, y + 5); g.lineTo(x, y + 17);
+    g.stroke(); g.restore();
+  }
+
+  function itemTorch(x, y, s) {
+    const fl = 1 + rnd(Math.floor(performance.now() / 90)) * .35;
+    g.fillStyle = "#7a5630"; g.fillRect(x - 7 * s, y - 8 * s, 14 * s, 30 * s);
+    g.fillStyle = "#ffe9a0"; g.fillRect(x - 8 * s, y - 26 * s, 16 * s, 20 * s);
+    g.fillStyle = "#fff8d8"; g.fillRect(x - 5 * s, y - 31 * s * fl, 10 * s, 12 * s);
+  }
+  function itemPick(x, y, s) {
+    g.strokeStyle = "#b9c2cc"; g.lineWidth = 7 * s; g.lineCap = "round";
+    g.beginPath(); g.moveTo(x - 16 * s, y + 20 * s); g.lineTo(x + 14 * s, y - 16 * s); g.stroke();
+    g.beginPath(); g.moveTo(x - 26 * s, y - 4 * s); g.quadraticCurveTo(x + 4 * s, y - 30 * s, x + 26 * s, y - 6 * s); g.stroke();
+    g.fillStyle = "#6b4a2a";
+    g.save(); g.translate(x - 14 * s, y + 18 * s); g.rotate(.8); g.fillRect(-8 * s, -6 * s, 16 * s, 14 * s); g.restore();
+  }
+  function itemBlocks(x, y, s) {
+    const w = 15 * s;
+    for (const [dx, dy, c] of [[-w, -w, PAL.grass], [0, -w, PAL.stone], [-w, 0, PAL.dirt], [0, 0, PAL.log]]) {
+      g.fillStyle = rgb(dim(c, .55)); g.fillRect(x + dx, y + dy + w * .25, w, w * .75);
+      g.fillStyle = rgb(c); g.fillRect(x + dx, y + dy, w, w * .3);
+    }
+  }
+
+  function hotbar(sel = 0, alpha = 1, torchLeft = 12) {
+    const n = 9, s = 96, gap = 9;
+    const total = n * s + (n - 1) * gap;
+    const x0 = (W - total) / 2, y0 = H - 232;
+    g.save(); g.globalAlpha = alpha;
+    for (let i = 0; i < n; i++) {
+      const x = x0 + i * (s + gap);
+      g.fillStyle = "rgba(8,10,14,.68)"; g.fillRect(x, y0, s, s);
+      g.strokeStyle = i === sel ? "rgba(255,255,255,.92)" : "rgba(255,255,255,.26)";
+      g.lineWidth = i === sel ? 6 : 3;
+      g.strokeRect(x, y0, s, s);
+    }
+    const c0 = x0 + sel * (s + gap) + s / 2;
+    g.save(); g.translate(c0, y0 + s / 2);
+    if (sel === 0) itemTorch(0, 0, 1.15); else if (sel === 1) itemPick(0, 0, 1.15); else itemBlocks(-16, -16, 1.1);
+    g.restore();
+    if (torchLeft > 0) {
+      g.font = "700 30px " + getComputedStyle(document.body).fontFamily;
+      g.textAlign = "left"; g.textBaseline = "top";
+      g.fillStyle = "rgba(0,0,0,.6)"; g.fillText(String(torchLeft), c0 + 40, y0 + s + 2);
+      g.fillStyle = "rgba(255,240,210,.95)"; g.fillText(String(torchLeft), c0 + 38, y0 + s);
+    }
+    g.restore();
+  }
+
+  /** La vie et la faim : vingt demi-cœurs et vingt demi-poulets. */
+  function hudStats(hp = 20, food = 20) {
+    const s = 30, gap = 5, y = H - 274;
+    const total = 10 * s + 9 * gap;
+    const x0 = W * .5 - total / 2;
+    g.save();
+    for (let i = 0; i < 10; i++) {
+      const x = x0 + i * (s + gap);
+      g.fillStyle = i * 2 + 2 <= hp ? "#d8342c" : "rgba(20,8,8,.85)";
+      g.fillRect(x, y, s, s * .9);
+      g.fillStyle = "rgba(0,0,0,.35)";
+      g.fillRect(x, y + s * .55, s, s * .3);
+      g.fillStyle = "rgba(255,255,255,.35)";
+      g.fillRect(x + s * .18, y + s * .16, s * .22, s * .2);
+    }
+    for (let i = 0; i < 10; i++) {
+      const x = x0 + i * (s + gap) + 6;
+      const on = i * 2 + 2 <= food;
+      g.fillStyle = on ? "#b07a3a" : "rgba(16,10,6,.85)";
+      g.fillRect(x, y, s * .8, s * .5);
+      g.fillRect(x + s * .62, y + s * .1, s * .3, s * .34);
+      g.fillStyle = on ? "#e0e0d0" : "rgba(120,120,110,.4)";
+      g.fillRect(x + s * .9, y + s * .12, s * .12, s * .3);
+    }
+    g.restore();
+  }
+
+  /** La main, en bas à droite : un bras en blocs, et ce qu'il tient. */
+  function hand(item, t, swing = 0) {
+    const wob = Math.sin(t * 4.4);
+    g.save();
+    g.translate(W * .74 + wob * 8 * swing, H * .90 + Math.abs(wob) * 12 * swing);
+    g.rotate(-.26 + wob * .05 * swing);
+    const skin = "#d8a878", skinD = "#b3865a";
+    g.fillStyle = "#3f6fa8"; g.fillRect(-84, -468, 176, 150);          // la manche
+    g.fillStyle = "#2f5480"; g.fillRect(-84, -468, 176, 30);
+    g.fillStyle = skin;  g.fillRect(-72, -336, 152, 380);               // l'avant-bras
+    g.fillStyle = skinD; g.fillRect(-72, -336, 46, 380);
+    g.fillStyle = "#e8c39a"; g.fillRect(-72, -336, 152, 22);
+    g.fillStyle = "rgba(0,0,0,.22)"; g.fillRect(-72, -336, 152, 10);
+    if (item === "torch") {
+      const fl = 1 + rnd(Math.floor(t * 22)) * .5;
+      g.fillStyle = "#6b4a2a"; g.fillRect(-20, -596, 40, 268);
+      const gr = g.createRadialGradient(0, -620, 0, 0, -620, 230 * fl);
+      gr.addColorStop(0, "rgba(255,236,170,.95)"); gr.addColorStop(.38, "rgba(255,156,44,.5)"); gr.addColorStop(1, "rgba(255,120,20,0)");
+      g.fillStyle = gr; g.fillRect(-260, -880, 520, 520);
+      g.fillStyle = "#ffe9a0"; g.fillRect(-30, -640, 60, 62);
+      g.fillStyle = "#fff8d8"; g.fillRect(-16, -656, 32, 40);
+    }
+    g.restore();
+  }
+
+  /* ------------------------------------------------ 6. les effets d'image */
+  const SCRATCH = { c: null };
+  function snap() {
+    if (!SCRATCH.c) SCRATCH.c = off(W, H);
+    const c = SCRATCH.c.getContext("2d");
+    c.clearRect(0, 0, W, H); c.drawImage(cv, 0, 0);
+    return SCRATCH.c;
+  }
+
+  /** La trame : des lignes, comme un vieil écran. */
+  function scanlines(alpha = .05) {
+    g.save(); g.fillStyle = "rgba(0,0,0," + alpha + ")";
+    for (let y = 0; y < H; y += 5) g.fillRect(0, y, W, 2);
+    g.restore();
+  }
+
+  const GRAIN = (() => {
+    const c = off(360, 640), gg = c.getContext("2d");
+    const img = gg.createImageData(360, 640);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = 90 + rnd(i * 1.7) * 165;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 34;
+    }
+    gg.putImageData(img, 0, 0);
+    return c;
+  })();
+
+  function grain(t, alpha = .05) {
+    g.save(); g.globalAlpha = alpha;
+    g.translate(-((t * 210) % 360), -((t * 300) % 640));
+    for (let x = -360; x < W + 360; x += 360) for (let y = -640; y < H + 640; y += 640) g.drawImage(GRAIN, x, y);
+    g.restore();
+  }
+
+  /** Le brouillard de l'horizon : il mange le bord du monde. */
+  function haze(col, a) {
+    const gr = g.createLinearGradient(0, H * .16, 0, H * .82);
+    gr.addColorStop(0, rgb(col, a)); gr.addColorStop(.5, rgb(col, a * .45)); gr.addColorStop(1, rgb(col, 0));
+    g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  }
+
+  /** L'image se déchire : bandes décalées, franges rouges. */
+  function glitch(t, amt) {
+    if (amt <= .01) return;
+    const s = snap();
+    const k = Math.floor(t * 11);
+    const bands = Math.round(3 + amt * 9);
+    for (let i = 0; i < bands; i++) {
+      const y = rnd(i * 9.3 + k) * H;
+      const h = 12 + rnd(i * 3.7 + k * 1.3) * 90;
+      const dx = (rnd(i * 7.1 + k * 2.1) - .5) * 260 * amt;
+      g.drawImage(s, 0, y, W, h, dx, y, W, h);
+    }
+    g.save();
+    g.globalCompositeOperation = "lighter";
+    g.fillStyle = "rgba(200,16,46," + (.16 * amt).toFixed(3) + ")";
+    g.fillRect(0, 0, W, H);
+    g.fillStyle = "rgba(80,120,255," + (.1 * amt).toFixed(3) + ")";
+    g.fillRect(0, 0, W, H);
+    g.restore();
+  }
+
+  function rain(t, alpha = .45, n = 240) {
+    g.save(); g.strokeStyle = "rgba(196,216,232," + alpha + ")"; g.lineWidth = 2.2;
+    for (let i = 0; i < n; i++) {
+      const x = ((rnd(i * 3.7) * 2400 + t * 300) % (W + 320)) - 160;
+      const y = ((rnd(i * 5.1) * 2400 + t * 2000) % (H + 320)) - 160;
+      g.beginPath(); g.moveTo(x, y); g.lineTo(x + 10, y + 52); g.stroke();
+    }
+    g.restore();
+  }
+
+  /* ------------------------------------------------ 7. les six scènes */
+  /* 01 · le premier jour : un monde neuf, l'herbe, les arbres, le soleil. */
+  function drawDay(t, p) {
+    cam.yaw = -.42 + smooth(clamp(t / 13)) * .62;
+    cam.pitch = -.11 + Math.sin(t * .5) * .022;
+    cam.y = 1.62 + Math.sin(t * 2.1) * .04;
+    cam.x = 0; cam.z = 8;
+    FOG.col = [150, 196, 220]; FOG.from = 14; FOG.span = 44;
+    sky([26, 62, 128], [104, 168, 226], [186, 216, 230]);
+    planet(W * .76, H * .17, 132, [255, 246, 206], .85);
+    // les nuages : des cubes blancs, très haut, qui dérivent
+    for (let i = 0; i < 3; i++) {
+      const cz = -34 + i * 16 - (t * 1.2) % 16;
+      box(-24 + i * 18, 26, cz, 18, 2.4, 12, [246, 250, 255], { flat: true, alpha: .92 });
+    }
+    ground(PAL.grass, PAL.dirt);
+    tree(3.2, -2.5, 1, 1); tree(-5.4, -6.2, 1.15, 1); tree(7.5, -12.5, 1.3, 1);
+    tree(-9.5, -18, 1, 1); tree(1.5, -22, 1.2, 1);
+    for (let i = 0; i < 9; i++) {
+      const fx = -6 + rnd(i * 2.3) * 12, fz = 1 - rnd(i * 5.7) * 8;
+      box(fx, 0, fz, .18, .8, .18, dim(PAL.leaf, .9), { top: [232, 226, 120] });
+    }
+    for (let i = 0; i < 4; i++) box(-14 + i * 9, 0, -9 - rnd(i * 3.1) * 6, 1, 1, 1, PAL.stone, { top: dim(PAL.stone, 1.1), tex: { col: "rgba(0,0,0,.35)", n: 10, seed: i * 7, size: 8, alpha: .4 } });
+    flush(); flushLights();
+    haze(FOG.col, .5); grain(t, .05); scanlines(.035);
+    hotbar(0, 1, 12); hudStats(20, 20); crosshair(t); hand(t > 2.9 ? "torch" : null, t, 0);
+  }
+
+  /* 02 · la nuit : il fait noir, la torche est la seule lumière, et des yeux
+     s'ouvrent dans les arbres. */
+  function drawNight(t, p) {
+    const dark = smooth(clamp((t - 7.4) / 2.6));
+    cam.yaw = .28 - Math.sin(t * .21) * .22;
+    cam.pitch = -.02 + Math.sin(t * .33) * .05;
+    cam.y = 1.62 + Math.sin(t * 1.7) * .03;
+    cam.x = 0; cam.z = 6;
+    FOG.col = [10, 13, 22]; FOG.from = 8; FOG.span = 30;
+    sky(dim([40, 66, 120], 1 - dark * .86), dim([92, 130, 186], 1 - dark * .9), dim([150, 176, 190], 1 - dark * .94));
+    stars(t, dark);
+    planet(W * .26, H * .14, 104, [226, 234, 255], .5 * dark);
+    for (let i = 0; i < 2; i++) box(-20 + i * 22, 27, -30 - (t * .9) % 14, 16, 2, 11, [96, 104, 122], { flat: true, alpha: .8 });
+    const k = lerp(1, .34, dark);
+    ground(dim(PAL.grass, k), dim(PAL.dirt, k));
+    tree(3.4, -3, 1, k); tree(-5.2, -7, 1.2, k); tree(8, -14, 1.4, k); tree(-10, -20, 1, k);
+    for (let i = 0; i < 5; i++) {
+      const ez = -6 - i * 4.2, ex = i % 2 ? -3.4 - i * .5 : 3.2 + i * .4;
+      const blink = Math.sin(t * 2.1 + i * 2.2) > .35 ? 1 : .12;
+      lights.push({ x: ex, y: 1.05, z: ez, r: 40, col: [220, 40, 30], a: .4 * dark * blink });
+      box(ex - .06, 1.0, ez, .12, .12, .06, [255, 60, 40], { flat: true, alpha: blink });
+      box(ex + .16, 1.0, ez, .12, .12, .06, [255, 60, 40], { flat: true, alpha: blink });
+    }
+    flush(); flushLights();
+    haze(FOG.col, .55); grain(t, .07); scanlines(.05);
+    hotbar(0, 1, 12); hudStats(20, 20); crosshair(t); hand("torch", t, 0);
+  }
+
+  /* 03 · ses signes : un tunnel droit, sans porte, et les torches qui
+     s'éteignent l'une après l'autre. */
+  function drawTunnel(t, p) {
+    cam.yaw = Math.sin(t * .5) * .05;
+    cam.pitch = -.03 + Math.sin(t * .42) * .03;
+    cam.y = 1.62 + Math.sin(t * 1.9) * .035;
+    cam.x = 0; cam.z = 4;
+    FOG.col = [6, 7, 10]; FOG.from = 3.5; FOG.span = 24;
+    sky([2, 3, 5], [5, 6, 9], [8, 9, 12]);
+    box(-2.5, -1, -46, 6, 1, 56, dim(PAL.stone, .9), { top: dim(PAL.cobble, .95), tex: { col: "rgba(0,0,0,.35)", n: 60, seed: 11, size: 12, alpha: .35 } });
+    box(-2.5, 3, -46, 6, 1, 56, dim(PAL.stone, .7), { bottom: dim(PAL.stone, .45) });
+    box(-4.5, 0, -46, 2, 3, 56, PAL.stone, { side: dim(PAL.stone, .8), tex: { col: "rgba(0,0,0,.3)", n: 40, seed: 23, size: 14, alpha: .3 } });
+    box(2.5, 0, -46, 2, 3, 56, PAL.stone, { side: dim(PAL.stone, .74), tex: { col: "rgba(0,0,0,.3)", n: 40, seed: 31, size: 14, alpha: .3 } });
+    let left = 12;
+    for (let i = 0; i < 12; i++) {
+      const z = -2.5 - i * 2.7;
+      const on = t < 14.6 + i * .42;
+      if (!on) left--;
+      box(-2.62, 1.85, z, .2, .6, .2, dim(PAL.log, .9));
+      if (on) {
+        lights.push({ x: -2.5, y: 2.6, z, r: 300, col: [255, 186, 92], a: .42 });
+        box(-2.72, 2.45, z - .06, .4, .4, .4, [255, 226, 150], { flat: true });
+      }
+    }
+    // au fond, son mur de torches : la signature, et elle ne s'éteint pas
+    const wall = smooth(clamp((t - 18.6) / .8));
+    if (wall > .02) {
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+        const wx = -3 + c * 3, wy = .6 + r * .9;
+        box(wx - .1, wy, -44.6, .2, .5, .14, dim(PAL.log, .8), { alpha: wall });
+        box(wx - .18, wy + .55, -44.7, .36, .34, .3, [255, 232, 168], { flat: true, alpha: wall });
+        lights.push({ x: wx, y: wy + .7, z: -44.5, r: 220, col: [255, 190, 110], a: .3 * wall });
+      }
+    }
+    flush(); flushLights();
+    haze(FOG.col, .6);
+    grain(t, .06); scanlines(t > 18.6 ? .09 : .05);
+    if (t > 18.4) glitch(t, clamp((t - 18.4) / 1.2) * .5);
+    hotbar(0, 1, Math.max(0, left)); hudStats(20, 20); crosshair(t); hand("torch", t, 0);
+  }
+
+  /* 04 · il est là : une silhouette sur la colline, et deux yeux blancs.
+     Il disparaît dès qu'on le regarde — et revient plus près. */
+  function drawFigure(t, p) {
+    const scare = clamp((t - 26.2) / .5) * (1 - clamp((t - 27.4) / .6));
+    const shakeX = Math.sin(t * 71) * 26 * scare, shakeY = Math.sin(t * 63) * 20 * scare;
+    cam.yaw = Math.sin(t * .36) * .34;
+    cam.pitch = -.05 + Math.sin(t * .5) * .05;
+    cam.y = 1.62 + Math.sin(t * 2.3) * .03;
+    cam.x = 0; cam.z = 12;
+    FOG.col = [10, 12, 20]; FOG.from = 8; FOG.span = 28;
+    g.save(); g.translate(shakeX, shakeY);
+    sky([8, 14, 34], [14, 22, 46], [22, 30, 50]);
+    stars(t, .7); planet(W * .72, H * .16, 96, [226, 234, 255], .42);
+    ground(dim(PAL.grass, .3), dim(PAL.dirt, .3));
+    // la colline : des cubes empilés, de plus en plus haut vers le fond
+    for (let i = 0; i < 7; i++) for (let j = 0; j < 3; j++) {
+      const hgt = (i + 1) * .9;
+      box(-9 + i * 3.2, -1, -26 - j * 3.2, 3.2, Math.max(1, hgt - j * 1.1), 3.2, dim(PAL.dirt, .34), { top: dim(PAL.grass, .3) });
+    }
+    tree(-9, -8, 1.1, .26); tree(9, -10, 1.2, .26); tree(-13, -18, 1, .24);
+    // il est là, sauf pendant les deux instants où on le fixe
+    const gaze = (t > 22.1 && t < 23.2) || (t > 24.8 && t < 25.7);
+    const alpha = gaze ? 0 : 1;
+    const s = lerp(1.5, 5.2, clamp((t - 21) / 6.4));
+    const hz = lerp(-24, -9.4, clamp((t - 21) / 6.4));
+    if (scare > .5) {
+      herobrine(0, .2, -2.4, 16, { eye: 1, col: [8, 10, 10] });
+      lights.push({ x: 0, y: 6, z: -3, r: 2600, col: [255, 255, 255], a: .16 });
+    } else if (alpha) {
+      herobrine(-.4, .35, hz, s, { eye: 1 });
+    }
+    flush(); flushLights();
+    g.restore();
+    haze(FOG.col, .58); grain(t, .07); scanlines(.05);
+    glitch(t, .12 + scare * .8);
+    hotbar(0, 1, 12); hudStats(20, 20); crosshair(t); hand("torch", t, 0);
+  }
+
+  /* 05 · la fuite : on court, la nuit, sous la pluie — il suit derrière. */
+  function drawRun(t, p) {
+    const speed = 9;
+    const look = Math.sin(t * 1.15) > .55 ? 3.14 : 0;      // on regarde par-dessus son épaule
+    cam.yaw = look + Math.sin(t * 1.4) * .05;
+    cam.pitch = -.02 + Math.sin(t * 3.1) * .035;
+    cam.y = 1.62 + Math.abs(Math.sin(t * 3.1)) * .1;
+    cam.x = 0; cam.z = 6;
+    FOG.col = [12, 15, 22]; FOG.from = 5; FOG.span = 22;
+    sky([9, 13, 30], [16, 22, 42], [26, 32, 48]);
+    stars(t, .5);
+    ground(dim(PAL.grass, .3), dim(PAL.dirt, .3));
+    for (let i = 0; i < 9; i++) {
+      const z0 = -((i * 11 + t * speed) % 96);
+      const side = i % 2 ? 1 : -1;
+      tree(side * (4.6 + rnd(i * 3.3) * 1.6), z0, .9 + rnd(i * 1.7) * .3, .26);
+    }
+    if (look > 0 && Math.sin(t * 1.15) > .8) {
+      herobrine(.6, .3, -46 + ((t * speed) % 40), lerp(4, 7.5, clamp((t - 30) / 4.5)), { eye: .75 });
+    }
+    flush(); flushLights();
+    rain(t, .5); haze(FOG.col, .42); grain(t, .08); scanlines(.05);
+    glitch(t, .1);
+    hotbar(0, 1, 12); hudStats(lerp(20, 9, clamp((t - 28) / 7)), 20); crosshair(t); hand("torch", t, 1);
+  }
+
+  /* 06 · la carte de fin : plus de monde, deux yeux, et un chargement qui
+     n'en finit pas. */
+  function drawTitle(t, p) {
+    const bg = g.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, "#050a0d"); bg.addColorStop(.55, "#0a1512"); bg.addColorStop(1, "#0d1c12");
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    stars(t * .3, .5, 130);
+    // la lueur de l'horizon : le monde existe encore, quelque part
+    const hg = g.createRadialGradient(W * .5, H * .8, 0, W * .5, H * .8, W * 1.15);
+    hg.addColorStop(0, "rgba(96,196,116,.32)"); hg.addColorStop(1, "rgba(96,196,116,0)");
+    g.fillStyle = hg; g.fillRect(0, 0, W, H);
+    // la silhouette du monde, en bas, comme un souvenir
+    for (let i = 0; i < 12; i++) {
+      const x = i * W / 11 - 40, h = 90 + rnd(i * 4.1) * 220;
+      g.fillStyle = "rgba(36,64,42,.95)"; g.fillRect(x, H * .80 - h, W / 11 + 1, h + 220);
+      g.fillStyle = "rgba(62,110,60,.95)"; g.fillRect(x, H * .80 - h, W / 11 + 1, 14);
+    }
+    // deux yeux blancs, et ils clignent
+    const blink = Math.sin(t * 1.1) > .93 ? 0 : 1;
+    for (const dx of [-1, 1]) {
+      const ex = W * .5 + dx * 128, ey = H * .30;
+      const gr = g.createRadialGradient(ex, ey, 0, ex, ey, 260);
+      gr.addColorStop(0, "rgba(255,255,255,.5)"); gr.addColorStop(1, "rgba(255,255,255,0)");
+      g.fillStyle = gr; g.fillRect(ex - 260, ey - 260, 520, 520);
+      g.fillStyle = "rgba(255,255,255,.96)";
+      g.fillRect(ex - 30, ey - 34 * blink, 60, 68 * blink);
+      g.fillStyle = "rgba(20,26,22,.9)";
+      g.fillRect(ex - 30, ey - 34 * blink + 12 * blink, 60, 16 * blink);
+    }
+    // un chargement qui tourne, et des points qui n'arrivent jamais
+    const barW = W * .58, bx = (W - barW) / 2, by = H * .74;
+    g.fillStyle = "rgba(255,255,255,.14)"; g.fillRect(bx, by, barW, 22);
+    const fill = (.62 + Math.sin(t * .9) * .06) * barW;
+    g.fillStyle = "#5fbf5f"; g.fillRect(bx, by, fill, 22);
+    g.fillStyle = "rgba(255,255,255,.85)";
+    g.font = "500 34px " + getComputedStyle(document.body).fontFamily;
+    g.textAlign = "center"; g.textBaseline = "top";
+    const dots = "•".repeat(1 + Math.floor(t * 2) % 3);
+    g.fillText("Génération du monde " + dots, W * .5, by + 44);
+    grain(t, .03); scanlines(.06); glitch(t, .06 + .1 * (Math.sin(t * 2.7) > .9 ? 1 : 0));
+    crosshair(t * .7);
+  }
+
+  /* ------------------------------------------------ 8. le son */
+  // Les mêmes recettes que le studio (`tools/assets/studio/voices.py`), jouées en
+  // direct par Web Audio. La bande du studio prend le pas quand elle est servie ;
+  // ce bloc est le rendu de secours — celui qui joue quand on ouvre la page par
+  // double-clic, sans serveur et sans fichiers.
+  const CHORDS = [
+    [65.41, 98.00, 130.81, 196.00],    // C mineur : le monde en veille
+    [55.00, 82.41, 110.00, 164.81],    // A
+    [49.00, 73.42, 98.00, 146.83],     // G (le tunnel)
+    [43.65, 65.41, 87.31, 130.81],     // F (plus bas, plus sombre)
+    [36.71, 55.00, 73.42, 110.00],     // D grave (le générique)
+  ];
+
+  const ASSET = "assets/audio/herobrine.wav";            // la bande préparée par le studio
+  const VOICE_ASSET = "assets/voice/herobrine.wav";     // sa voix, prononcée une fois
+  const VOICE_PLAN = "assets/voice/herobrine.json";     // le plan mesuré de cette voix
+  const VOICE_GAIN = .95;
+  const LEAD = .06;
+  const MASTER = .85;
+  const DUCK = .45;
+  const PEAK = .9;
+  const TAIL = 800;
+
+  function noiseBuffer(ctx) {
+    if (!ctx.__nb) {
+      const len = Math.floor(ctx.sampleRate * 1.2), b = ctx.createBuffer(1, len, ctx.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      ctx.__nb = b;
+    }
+    return ctx.__nb;
+  }
+
+  const SYN = {
+    tone(ctx, dest, at, freq, dur, type, peak, glide) {
+      const o = ctx.createOscillator(), a = ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, at);
+      if (glide) o.frequency.exponentialRampToValueAtTime(Math.max(16, glide), at + dur);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + Math.min(.25, dur * .2));
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      o.connect(a); a.connect(dest); o.start(at); o.stop(at + dur + .05);
+    },
+    noise(ctx, dest, at, dur, peak, f0, f1, q, kind) {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx);
+      const bp = ctx.createBiquadFilter(); bp.type = kind || "bandpass"; bp.Q.value = q ?? 1;
+      bp.frequency.setValueAtTime(f0, at);
+      bp.frequency.exponentialRampToValueAtTime(Math.max(30, f1), at + dur * .85);
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), at + dur * .35);
+      a.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      s.connect(bp); bp.connect(a); a.connect(dest); s.start(at); s.stop(at + dur + .05);
+    },
+  };
+
+  const VOICES = {
+    /* --- le lit du monde : il ne s'arrête jamais avant le dernier carton --- */
+    air: (ctx, d, at) => {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx); s.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 480; bp.Q.value = .6;
+      const a = ctx.createGain();
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.linearRampToValueAtTime(.032, at + 2.4);
+      a.gain.setValueAtTime(.032, at + 39.4);
+      a.gain.linearRampToValueAtTime(.0001, at + 42.2);
+      s.connect(bp); bp.connect(a); a.connect(d);
+      s.start(at); s.stop(at + 42.2);
+    },
+    crowd: (ctx, d, at) => {
+      const s = ctx.createBufferSource(); s.buffer = noiseBuffer(ctx); s.loop = true;
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 420; lp.Q.value = .5;
+      const a = ctx.createGain();
+      const env = [[0, .02], [6, .035], [12, .026], [18, .04], [24, .03], [30, .048], [36, .034], [40.4, .05], [41.8, .022]];
+      a.gain.setValueAtTime(.0001, at);
+      for (const [tt, v] of env) a.gain.linearRampToValueAtTime(v, at + tt);
+      s.connect(lp); lp.connect(a); a.connect(d);
+      s.start(at); s.stop(at + 42.2);
+    },
+    /* --- nappes & graves --- */
+    pad: (ctx, d, at, idx = 0, dur = 8) => {
+      const notes = CHORDS[idx % CHORDS.length];
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = .7;
+      lp.frequency.setValueAtTime(300, at);
+      lp.frequency.linearRampToValueAtTime(1100, at + dur * .45);
+      lp.frequency.linearRampToValueAtTime(420, at + dur);
+      const vg = ctx.createGain();
+      vg.gain.setValueAtTime(.0001, at);
+      vg.gain.exponentialRampToValueAtTime(.1, at + Math.min(2.6, dur * .32));
+      vg.gain.setValueAtTime(.1, at + dur * .6);
+      vg.gain.exponentialRampToValueAtTime(.0001, at + dur);
+      lp.connect(vg); vg.connect(d);
+      notes.forEach((f, i) => {
+        const o = ctx.createOscillator(), og = ctx.createGain();
+        o.type = i === 0 ? "sine" : "triangle";
+        o.frequency.value = f * (i % 2 ? 1.0022 : .9988);
+        og.gain.value = i === 0 ? .5 : .26;
+        o.connect(og); og.connect(lp); o.start(at); o.stop(at + dur + .1);
+      });
+    },
+    choir: (ctx, d, at, idx = 0, dur = 5) => {
+      const notes = CHORDS[idx % CHORDS.length].map((f) => f * 2);
+      notes.forEach((f, i) => {
+        SYN.tone(ctx, d, at + i * .05, f, dur, "triangle", .05);
+        SYN.tone(ctx, d, at + i * .05, f * 1.004, dur * .94, "sine", .034);
+      });
+    },
+    sub: (ctx, d, at) => SYN.tone(ctx, d, at, 46, 3.2, "sine", .2, 28),
+    engine: (ctx, d, at) => {
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 210; lp.Q.value = 1.6;
+      lp.connect(d);
+      [[58, "sine", .42], [87, "sawtooth", .17], [116.5, "sawtooth", .12]].forEach(([f, w, g], i) => {
+        const o = ctx.createOscillator(), a = ctx.createGain();
+        o.type = w; o.frequency.value = f * (i ? 1.003 : 1);
+        a.gain.setValueAtTime(.0001, at);
+        a.gain.linearRampToValueAtTime(g, at + 1.4);
+        a.gain.setValueAtTime(g, at + 8.6);
+        a.gain.linearRampToValueAtTime(.0001, at + 10.4);
+        o.connect(a); a.connect(lp); o.start(at); o.stop(at + 10.5);
+      });
+    },
+    resolve: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 43.65, 5.2, "sine", .22);
+      SYN.tone(ctx, d, at, 87.31, 4.6, "triangle", .1);
+      SYN.tone(ctx, d, at + .3, 174.61, 4.2, "triangle", .06);
+    },
+    /* --- percussions & impacts : les pas, les coups, l'orage --- */
+    kick: (ctx, d, at) => { SYN.tone(ctx, d, at, 68, .5, "sine", .2, 32); SYN.noise(ctx, d, at, .14, .05, 800, 180, .8, "lowpass"); },
+    impact: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 62, 1.0, "sine", .24, 26);
+      SYN.noise(ctx, d, at, .7, .07, 420, 90, .9, "lowpass");
+      [87.31, 130.81, 196].forEach((f) => SYN.tone(ctx, d, at, f, .9, "triangle", .04));
+    },
+    impactSoft: (ctx, d, at) => { SYN.tone(ctx, d, at, 88, .45, "sine", .13, 44); SYN.noise(ctx, d, at, .3, .045, 620, 190, 1, "lowpass"); },
+    stamp: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 58, 1.4, "sine", .28, 24);
+      SYN.noise(ctx, d, at, 1.0, .08, 500, 110, .7, "lowpass");
+      [73.42, 110, 146.83].forEach((f) => SYN.tone(ctx, d, at, f, 1.6, "triangle", .035));
+    },
+    tom: (ctx, d, at) => { SYN.tone(ctx, d, at, 126, .6, "sine", .15, 66); SYN.noise(ctx, d, at, .18, .035, 300, 110, .8); },
+    micThud: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 120, .34, "sine", .3, 42);
+      SYN.noise(ctx, d, at, .24, .16, 1200, 260, .9, "lowpass");
+      SYN.tone(ctx, d, at + .16, 78, .18, "sine", .12, 36);
+    },
+    /* --- transitions & mouvements --- */
+    riser: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.6, .055, 260, 3200, .8); SYN.tone(ctx, d, at, 140, 1.6, "triangle", .035, 520); },
+    whoosh: (ctx, d, at) => SYN.noise(ctx, d, at, 1.1, .085, 200, 2400, .9),
+    whooshDeep: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.6, .07, 110, 1300, 1.1); SYN.tone(ctx, d, at, 84, 1.6, "sine", .18, 36); },
+    whooshSoft: (ctx, d, at) => SYN.noise(ctx, d, at, 1.4, .05, 240, 1500, 1.3),
+    sweep: (ctx, d, at) => SYN.noise(ctx, d, at, 1.6, .05, 500, 3800, 1.4),
+    plateWipe: (ctx, d, at) => { SYN.noise(ctx, d, at, .28, .05, 2000, 800, 1.4); SYN.tone(ctx, d, at, 620, .18, "sine", .03, 900); },
+    jerseyDrop: (ctx, d, at) => SYN.noise(ctx, d, at, .2, .07, 2400, 900, 1.1, "highpass"),
+    jerseyLand: (ctx, d, at) => { SYN.tone(ctx, d, at, 132, .3, "sine", .11, 70); SYN.noise(ctx, d, at, .16, .045, 700, 200, .9, "lowpass"); },
+    /* --- cordes & cloches : la musique du monde --- */
+    pluck: (ctx, d, at) => {
+      const f = [392, 466.16, 523.25, 622.25][Math.round(at * 1000 / 100) % 4];
+      SYN.tone(ctx, d, at, f, .9, "triangle", .05);
+      SYN.tone(ctx, d, at, f * 2, .5, "sine", .02);
+    },
+    chime: (ctx, d, at) => {
+      const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), a = ctx.createGain();
+      car.type = "sine"; car.frequency.value = 1165;
+      mod.type = "sine"; mod.frequency.value = 2330;
+      mg.gain.setValueAtTime(700, at); mg.gain.exponentialRampToValueAtTime(.6, at + 1.1);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(.07, at + .02);
+      a.gain.exponentialRampToValueAtTime(.0001, at + 1.5);
+      mod.connect(mg); mg.connect(car.frequency); car.connect(a); a.connect(d);
+      car.start(at); mod.start(at); car.stop(at + 1.6); mod.stop(at + 1.6);
+    },
+    shimmer: (ctx, d, at) => { [1046, 1318, 1568].forEach((f, i) => SYN.tone(ctx, d, at + i * .1, f, 1.4, "sine", .022)); },
+    sparkle: (ctx, d, at) => { [1568, 2093, 2637].forEach((f, i) => SYN.tone(ctx, d, at + i * .08, f, .7, "sine", .026)); },
+    door: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 130, .9, "triangle", .09, 62);
+      SYN.noise(ctx, d, at, .7, .05, 900, 220, 2.2);
+    },
+    /* --- interface : le jeu parle --- */
+    blip: (ctx, d, at) => SYN.tone(ctx, d, at, 1240, .13, "sine", .06, 1580),
+    chip: (ctx, d, at) => { SYN.noise(ctx, d, at, .07, .03, 3200, 1800, 1, "highpass"); SYN.tone(ctx, d, at, 1560, .16, "sine", .05, 2080); },
+    trace: (ctx, d, at) => SYN.tone(ctx, d, at, 1120 + (Math.round(at * 1000) % 4) * 80, .18, "triangle", .04, 1700),
+    coinTick: (ctx, d, at) => SYN.tone(ctx, d, at, 1960 + (Math.round(at * 1000) % 5) * 120, .1, "triangle", .05, 2300),
+    coinLand: (ctx, d, at) => { SYN.tone(ctx, d, at, 1320, .5, "sine", .07); SYN.noise(ctx, d, at, .3, .04, 4200, 1200, 1.4, "highpass"); },
+    rateTick: (ctx, d, at) => SYN.tone(ctx, d, at, 1400 + (Math.round(at * 1000) % 3) * 70, .08, "triangle", .045),
+    flagPop: (ctx, d, at) => { SYN.noise(ctx, d, at, .12, .05, 2500, 900, 1, "highpass"); SYN.tone(ctx, d, at, 900, .12, "sine", .045, 1400); },
+    benchTick: (ctx, d, at) => SYN.tone(ctx, d, at, 1180 + (Math.round(at * 1000) % 6) * 60, .09, "triangle", .04, 1500),
+    ignite: (ctx, d, at) => {
+      SYN.noise(ctx, d, at, .5, .1, 2600, 900, 1.2, "highpass");
+      SYN.tone(ctx, d, at, 820, .5, "sine", .08, 1560);
+    },
+    /* --- le monde : vent, bêtes, stupeur --- */
+    crowdOhh: (ctx, d, at) => { SYN.noise(ctx, d, at, 1.9, .07, 240, 900, 1); SYN.tone(ctx, d, at, 180, 1.7, "triangle", .05); },
+    crowdGasp: (ctx, d, at) => SYN.noise(ctx, d, at, 1.1, .09, 480, 1200, 1.2),
+    hush: (ctx, d, at) => SYN.noise(ctx, d, at, 1.2, .045, 1500, 320, 1.4),
+    whistle: (ctx, d, at) => {
+      const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), a = ctx.createGain();
+      car.type = "sine"; car.frequency.value = 2200;
+      mod.type = "sine"; mod.frequency.value = 55;
+      mg.gain.setValueAtTime(180, at);
+      a.gain.setValueAtTime(.0001, at);
+      a.gain.exponentialRampToValueAtTime(.035, at + .04);
+      a.gain.setValueAtTime(.035, at + .32);
+      a.gain.exponentialRampToValueAtTime(.0001, at + .5);
+      mod.connect(mg); mg.connect(car.frequency); car.connect(a); a.connect(d);
+      car.start(at); mod.start(at); car.stop(at + .55); mod.stop(at + .55);
+      SYN.noise(ctx, d, at, .4, .025, 2600, 3200, 2, "highpass");
+    },
+    squeak: (ctx, d, at) => {
+      SYN.tone(ctx, d, at, 2200, .55, "sine", .1, 3400);
+      SYN.tone(ctx, d, at, 2240, .5, "sine", .08, 3450);
+      SYN.noise(ctx, d, at, .5, .06, 3000, 4200, 1.4, "highpass");
+    },
+    tada: (ctx, d, at) => { [392, 493.88, 587.33].forEach((f, i) => SYN.tone(ctx, d, at + i * .2, f, i === 2 ? 1.6 : .5, "triangle", .07)); },
+    phoneBuzz: (ctx, d, at) => {
+      for (let k = 0; k < 4; k++) SYN.tone(ctx, d, at + k * .12, 116, .07, "square", .055);
+    },
+  };
+
+  // [milliseconde, son, …arguments] — trié chronologiquement. Les recettes sont
+  // exactement celles du studio : un nom inconnu serait muet dans la bande.
+  const SCORE = [
+    // 01 · le premier jour
+    [0, "air"], [0, "crowd"], [0, "pad", 0, 7500],
+    [260, "door"], [700, "blip"], [1100, "jerseyDrop"],
+    [1600, "coinTick"], [2050, "coinTick"], [2400, "coinLand"], [2750, "flagPop"],
+    [3100, "ignite"], [3400, "sweep"], [3900, "pluck"],
+    [4300, "rateTick"], [4600, "rateTick"], [4900, "jerseyLand"], [5100, "shimmer"],
+    [5400, "blip"], [5650, "chip"], [5900, "jerseyLand"], [6300, "pluck"], [6600, "whooshSoft"],
+    // 02 · la nuit tombe
+    [7200, "hush"], [7350, "sub"], [7600, "phoneBuzz"], [7900, "jerseyLand"],
+    [8300, "whooshSoft"], [8500, "tom"], [8750, "rateTick"], [9100, "trace"],
+    [9600, "crowdOhh"], [10100, "riser"], [10500, "ignite"],
+    [10800, "sparkle"], [11100, "squeak"], [11500, "kick"],
+    [11900, "whooshDeep"], [12300, "chip"], [12600, "chip"], [12900, "benchTick"],
+    [13200, "whistle"], [13600, "hush"],
+    // 03 · ses signes
+    [14050, "sub"], [14200, "whooshDeep"], [14500, "jerseyLand"],
+    [14900, "jerseyLand"], [15300, "rateTick"], [15700, "impactSoft"],
+    [16100, "trace"], [16500, "door"], [16900, "blip"], [17300, "hush"],
+    [17600, "phoneBuzz"], [17900, "squeak"], [18300, "impactSoft"], [18600, "chime"],
+    [19000, "choir", 1, 4200], [19400, "plateWipe"], [19800, "riser"], [20400, "whoosh"],
+    // 04 · il est là
+    [21100, "sub"], [21200, "pad", 1, 7500], [21600, "hush"], [21900, "whistle"],
+    [22400, "coinTick"], [22800, "tom"], [23200, "crowdGasp"], [23600, "pluck"],
+    [24100, "riser"], [24500, "whooshDeep"], [24900, "choir", 2, 3600],
+    [25400, "stamp"], [25700, "sparkle"], [26000, "hush"], [26300, "riser"],
+    [26600, "micThud"], [26600, "impact"], [26900, "sweep"], [27200, "tada"], [27600, "whooshSoft"],
+    // 05 · la course
+    [28100, "engine"], [28400, "kick"], [28700, "jerseyLand"], [29100, "jerseyLand"],
+    [29400, "rateTick"], [29500, "jerseyLand"], [29900, "jerseyLand"], [30300, "jerseyLand"],
+    [30400, "crowdOhh"], [30700, "jerseyLand"], [31100, "jerseyLand"], [31300, "riser"],
+    [31500, "jerseyLand"], [31900, "jerseyLand"], [32100, "whistle"], [32300, "jerseyLand"],
+    [32500, "whoosh"], [32700, "jerseyLand"], [33100, "jerseyLand"], [33200, "crowdGasp"],
+    [33500, "jerseyLand"], [33800, "phoneBuzz"], [33900, "jerseyLand"], [34200, "riser"],
+    [34500, "whooshDeep"], [34800, "sweep"],
+    // 06 · le générique
+    [35100, "whoosh"], [35400, "resolve"], [35700, "choir", 3, 6000],
+    [36000, "pad", 2, 6500], [36300, "chip"], [36600, "chip"], [36900, "chip"],
+    [37200, "blip"], [37500, "sparkle"], [37900, "pad", 4, 4500],
+    [38200, "chime"], [38600, "shimmer"], [39000, "coinLand"],
+    [39300, "rateTick"], [39700, "rateTick"], [40100, "rateTick"],
+    [40600, "chime"], [41000, "sparkle"], [41400, "whistle"], [41800, "jerseyDrop"],
+  ];
+
+  function scheduleScore(ctx, dest, base) {
+    for (const [ms, name, ...rest] of SCORE) {
+      const fn = VOICES[name];
+      if (!fn) continue;
+      try { fn(ctx, dest, base + ms / 1000, ...rest); }
+      catch (e) { /* un cue raté ne doit jamais casser le film */ }
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     LE MOTEUR AUDIO — une seule horloge, celle de la bande.
+
+     La partition est rendue en mémoire — la bande du studio si elle est
+     servie, sinon le même score rendu hors ligne — puis jouée par une seule
+     source. Le temps du film EST la position de cette source : rien ne peut
+     dériver, et la pause gèle le contexte, donc l'image et le son ensemble.
+     --------------------------------------------------------------------- */
+  const Audio = {
+    ctx: null, bus: null, duck: null, master: null, voiceGain: null,
+    buffer: null, src: null, origin: 0, wall: 0, voiceBuffer: null, vsrc: null,
+    ok: false, ready: false, booting: null, source: "aucune", trim: 1, retry: 0,
+
+    /** Crée le contexte une seule fois, puis prépare la partition en mémoire. */
+    init() {
+      if (this.ready) return Promise.resolve(this.ok);
+      if (this.booting) return this.booting;
+      this.booting = (async () => {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) {
+          this.ctx = new AC({ latencyHint: "playback" });
+          this.bus = this.ctx.createGain();    this.bus.gain.value = 1;
+          this.duck = this.ctx.createGain();   this.duck.gain.value = 1;
+          this.master = this.ctx.createGain(); this.master.gain.value = 0;
+          this.bus.connect(this.duck); this.duck.connect(this.master);
+          this.voiceGain = this.ctx.createGain();
+          this.voiceGain.gain.value = Voice.on ? VOICE_GAIN : 0;
+          this.voiceGain.connect(this.master);
+          this.master.connect(this.ctx.destination);
+        }
+        this.buffer = await this.load();
+        this.voiceBuffer = await this.loadVoice();
+        if (this.buffer) {
+          this.trim = this.trimTo(this.buffer, PEAK);
+          this.bus.gain.value = this.trim;
+        }
+        this.ok = !!this.buffer;
+        await Voice.loadPlan();
+        this.ready = this.ok;
+        return this.ok;
+      })();
+      return this.booting;
+    },
+
+    /** 1) la bande du studio, 2) sinon le même score rendu ici. */
+    async load() {
+      const baked = await this.baked();
+      if (baked) { this.source = "bande"; return baked; }
+      if (!this.ctx) return null;
+      this.source = "rendu ici";
+      return this.renderScore();
+    },
+
+    /** Ramène la crête de la bande à la cible (un échantillon sur sept suffit). */
+    trimTo(buf, peak) {
+      let top = 0;
+      for (let c = 0; c < buf.numberOfChannels; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < d.length; i += 7) {
+          const a = d[i] < 0 ? -d[i] : d[i];
+          if (a > top) top = a;
+        }
+      }
+      return top > 0 ? peak / top : 1;
+    },
+
+    /** Récupère la bande ; absente ou trop courte → null, sans bruit.
+        En file:// le navigateur refuse fetch : on va droit au rendu local. */
+    async baked() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Rend la partition hors ligne — sert aussi à la mesurer sans haut-parleur. */
+    async renderScore(seconds = (TOTAL + TAIL) / 1000, sr = 32000) {
+      const OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!OC) return null;
+      const oc = new OC(2, Math.ceil(seconds * sr), sr);
+      const out = oc.createGain(); out.gain.value = .9; out.connect(oc.destination);
+      scheduleScore(oc, out, 0);
+      return oc.startRendering();
+    },
+
+    /** La voix du studio : même préparation que la bande, même horloge. */
+    async loadVoice() {
+      if (!this.ctx || typeof fetch !== "function") return null;
+      if (!/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_ASSET, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+        return buf && buf.duration >= TOTAL / 1000 - .4 ? buf : null;
+      } catch (e) { return null; }
+    },
+
+    /** Pose la voix à l'instant exact où la bande commence : deux sources, une horloge. */
+    startVoice(when, off) {
+      if (!this.voiceBuffer || !this.ctx) return;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.voiceBuffer;
+      s.connect(this.voiceGain);
+      s.start(when, Math.max(0, Math.min(off, this.voiceBuffer.duration - .05)));
+      this.vsrc = s;
+    },
+
+    stopVoiceSource() {
+      if (!this.vsrc) return;
+      try { this.vsrc.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.vsrc.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.vsrc = null;
+    },
+
+    /** La bascule Voix : un fondu court, pour ne pas claquer. */
+    setVoice(on) {
+      if (!this.voiceGain || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      const g = this.voiceGain.gain;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(g.value, t);
+      g.linearRampToValueAtTime(on ? VOICE_GAIN : 0, t + .18);
+    },
+
+    setSound(on) {
+      if (!this.master || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      this.master.gain.cancelScheduledValues(t);
+      this.master.gain.setValueAtTime(this.master.gain.value, t);
+      this.master.gain.linearRampToValueAtTime(on ? MASTER : 0, t + .25);
+    },
+
+    /** Temps du film, en millisecondes : la position de lecture de la bande. */
+    time() {
+      if (this.ok && this.ctx) return clamp((this.ctx.currentTime - this.origin) * 1000, 0, TOTAL);
+      return clamp(this.wall, 0, TOTAL);
+    },
+
+    /** Sans Web Audio l'image avance au temps mural : le film reste utilisable. */
+    advance(dt) { if (!this.ok) this.wall = clamp(this.wall + dt, 0, TOTAL); },
+
+    /** Pose la bande au temps voulu. Le retard de sortie est compensé : l'image
+        montre ce qu'on entend, pas ce que le processeur graphique calcule. */
+    seek(ms) {
+      if (!this.ok || !this.ctx) { this.wall = clamp(ms, 0, TOTAL); return false; }
+      this.stopSource();
+      const off = Math.max(0, Math.min(clamp(ms, 0, TOTAL) / 1000, this.buffer.duration - .05));
+      const when = this.ctx.currentTime + LEAD;
+      const lat = this.ctx.outputLatency || this.ctx.baseLatency || 0;
+      const s = this.ctx.createBufferSource();
+      s.buffer = this.buffer;
+      s.connect(this.bus);
+      s.start(when, off);
+      this.src = s;
+      if (Voice.on) this.startVoice(when, off);
+      this.origin = when + lat - off;
+      this.scheduleDucks();
+      return true;
+    },
+
+    stopSource() {
+      if (!this.src) return;
+      try { this.src.stop(); } catch (e) { /* déjà arrêtée */ }
+      try { this.src.disconnect(); } catch (e) { /* déjà détachée */ }
+      this.src = null;
+      this.stopVoiceSource();
+    },
+
+    /** Reprise : le contexte repart, la bande n'a jamais quitté sa position. */
+    resume() { if (this.ctx && this.ctx.state === "suspended") this.ctx.resume(); },
+
+    /** Pause : le contexte se fige — le son et son horloge s'arrêtent ensemble. */
+    pause() { if (this.ctx && this.ctx.state === "running") this.ctx.suspend(); },
+
+    /** La musique s'efface sous la voix. Les rampes vivent en temps du film :
+        le contexte gelé les gèle aussi, la reprise les reprend au bon endroit. */
+    scheduleDucks() {
+      if (!this.ctx || !this.duck) return;
+      const g = this.duck.gain;
+      const t = this.ctx.currentTime;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(g.value, t);
+      if (!Voice.on) { g.linearRampToValueAtTime(1, t + .3); return; }
+      for (const L of LINES) {
+        const a = Math.max(t, this.origin + (L.plan ? L.plan.t : L.t) / 1000);
+        const b = this.origin + ((L.plan ? L.plan.t + L.plan.d : L.t + L.d)) / 1000;
+        if (b < t) continue;
+        g.setValueAtTime(1, a);
+        g.linearRampToValueAtTime(DUCK, a + .3);
+        g.linearRampToValueAtTime(1, b + .5);
+      }
+    },
+  };
+
+  /* La voix du studio d'abord : une bande prononcée une fois, chronométrée, et
+     posée sur la même horloge que la musique (`assets/voice/`). Si elle n'est pas
+     là — page ouverte en `file://`, studio pas encore passé — le film se rabat sur
+     le moteur vocal du navigateur, sans changer d'horloge. */
+  const Voice = {
+    on: false, voices: [], line: null, token: 0,
+    pick() { this.voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; },
+    available() {
+      if (this.has()) return true;
+      return !!(window.speechSynthesis && this.voices.some(v => /^fr/i.test(v.lang)));
+    },
+    has() { return !!(this.plan && Audio.voiceBuffer); },
+    source() { return this.has() ? "studio" : (this.plan ? "plan" : (this.available() ? "navigateur" : "aucune")); },
+    async loadPlan() {
+      if (typeof fetch !== "function" || !/^https?:$/.test(location.protocol)) return null;
+      try {
+        const r = await fetch(VOICE_PLAN, { cache: "force-cache" });
+        if (!r.ok) return null;
+        const plan = await r.json();
+        if (!plan || !plan.lines || Math.abs(plan.filmMs - TOTAL) > 500) return null;
+        this.plan = plan;
+        for (const l of plan.lines) if (LINES[l.i]) LINES[l.i].plan = l;
+        return plan;
+      } catch (e) { return null; }
+    },
+    speaking(L) {
+      if (this.has()) {
+        const at = Audio.time();
+        const w = L.plan || L;
+        return !!(this.on && at >= w.t - 60 && at <= w.t + w.d + 150);
+      }
+      return !!(this.on && this.line === L && window.speechSynthesis &&
+        speechSynthesis.speaking && !speechSynthesis.paused);
+    },
+    say(L) {
+      if (this.has()) return false;      // la bande du studio joue déjà la phrase
+      if (!this.on || !window.speechSynthesis) return false;
+      try {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(L.txt.replace(/\s+/g, " "));
+        const fr = this.voices.find(v => /fr[-_]FR/i.test(v.lang)) || this.voices.find(v => /^fr/i.test(v.lang));
+        if (fr) u.voice = fr;
+        u.lang = "fr-FR"; u.rate = .92; u.pitch = 1; u.volume = .95;
+        const token = ++this.token;
+        u.onstart = () => {
+          if (token !== this.token) return;
+          const at = Audio.time();
+          if (Math.abs(at - L.t) > 1500) return;
+          L.real = { t: at, d: 0 }; this.line = L;
+        };
+        u.onend = () => {
+          if (token !== this.token) return;
+          if (L.real) L.real.d = Math.max(L.real.d, Audio.time() - L.real.t);
+          if (this.line === L) this.line = null;
+        };
+        speechSynthesis.speak(u);
+        return true;
+      } catch (e) { return false; }
+    },
+  };
+
+  /* ------------------------------------------------ 9. DOM du film */
+  const PHONE = window.matchMedia("(max-width: 760px)");
+  // Conversion maquette -> cadre : 1080 px de large valent 100cqw, 1920 px de haut valent 100cqh.
+  const cw = (n) => (n / 10.8).toFixed(3) + "cqw";
+  const ch = (n) => (n / 19.2).toFixed(3) + "cqh";
+  const cardsHost = document.getElementById("cards");
+  const subsHost = document.getElementById("subs");
+  const progEl = document.getElementById("prog");
+  const hudScene = document.getElementById("hudScene");
+  const hudTc = document.getElementById("hudTc");
+  const veil = document.getElementById("veil");
+  const frameEl = document.getElementById("frame");
+  const togSound = document.getElementById("togSound");
+  const togVoice = document.getElementById("togVoice");
+  const bugForm = document.getElementById("bugForm");
+  const bugClock = document.getElementById("bugClock");
+  const thirdEl = document.getElementById("third");
+  const bugNames = document.getElementById("bugNames");
+  const thirdName = document.getElementById("thirdName");
+  const thirdRole = document.getElementById("thirdRole");
+  thirdName.textContent = MIC.name;
+  thirdRole.textContent = MIC.role;
+  document.getElementById("veilMic").textContent = MIC.name;
+
+  // le journal du monde : chaque message s'allume à son instant et y reste
+  const chatChips = CHAT.map((c) => {
+    const s = document.createElement("span");
+    s.textContent = c.who + " " + c.txt;
+    bugNames.appendChild(s);
+    return s;
+  });
+
+  const cardNodes = CARDS.map(c => {
+    const el = document.createElement("div");
+    el.className = "card " + c.cls + (c.opt ? " opt" : "");
+    el.innerHTML = c.html;
+    // les positions de la maquette (px) deviennent des unités du cadre :
+    // la composition ne bouge plus d'un pixel, quelle que soit la taille de l'écran
+    let placed = [];
+    const place = (spec) => {
+      // une clé du placement téléphone sans équivalent dans la maquette (pcss sans la
+      // même clé dans css) n'existe pas sur grand écran : si on ne la retire pas, elle
+      // reste posée après un changement de taille et le carton garde la place du téléphone
+      spec = spec || {};
+      for (const k of placed) if (!(k in spec)) el.style.removeProperty(k.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase()));
+      placed = Object.keys(spec);
+      for (const [k, v] of Object.entries(spec)) {
+        const n = parseFloat(v);
+        if (!/px$/.test(v) || !isFinite(n)) { el.style[k] = v; continue; }
+        if (k === "fontSize" || k === "left" || k === "right" || k === "width" || k === "maxWidth") el.style[k] = cw(n);
+        else el.style[k] = ch(n);
+      }
+    };
+    place(c.css);
+    el.style.opacity = "0";
+    cardsHost.appendChild(el);
+    return { ...c, el, place };
+  });
+
+  /* Sur téléphone, les cartons de petite typo sont agrandis (ui) — mais jamais au-delà
+     de la largeur du cadre : on mesure chaque carton et on le rétrécit si besoin. */
+  function measureFits() {
+    for (const c of cardNodes) c.place(PHONE.matches && c.pcss ? { ...c.css, ...c.pcss } : c.css);
+    const maxW = frameEl.clientWidth * .94;
+    for (const c of cardNodes) {
+      const ui = PHONE.matches ? (c.ui ?? 1) : 1;
+      const prev = c.el.style.transform;
+      c.el.style.transform = "none";
+      const r = document.createRange();
+      r.selectNodeContents(c.el);
+      const w = r.getBoundingClientRect().width;
+      c.el.style.transform = prev;
+      c.fit = w > 4 ? Math.min(1, maxW / (ui * w)) : 1;
+    }
+  }
+
+  const lineNodes = LINES.map((L) => {
+    const el = document.createElement("div");
+    el.className = "subline";
+    const words = L.txt.split(" ");
+    L.words = words.map((w, k) => {
+      const s = document.createElement("span");
+      s.className = "w"; s.textContent = w;
+      el.appendChild(s);
+      if (k < words.length - 1) el.appendChild(document.createTextNode(" "));
+      return s;
+    });
+    subsHost.appendChild(el);
+    return el;
+  });
+
+  SCENES.forEach(() => {
+    const s = document.createElement("div");
+    s.className = "pseg"; s.innerHTML = "<i></i>";
+    progEl.appendChild(s);
+  });
+  const segs = [...progEl.querySelectorAll(".pseg i")];
+  const torchLabel = cardNodes.find(c => c.id === "torches");
+
+  /** Combien de torches brûlent encore (le film et le carton lisent la même règle). */
+  function torchesLit(ms) {
+    let n = 0;
+    for (let i = 0; i < 12; i++) if (ms / 1000 < 14.6 + i * .42) n++;
+    return n;
+  }
+
+  function updateCards(ms) {
+    for (const c of cardNodes) {
+      const tin = c.t[0], tout = c.t[1];
+      // sur téléphone, les textes du film reprennent une taille lisible : ils s'agrandissent
+      // depuis leur propre ancre (fit les empêche de déborder du cadre)
+      const ui = PHONE.matches ? (c.ui ?? 1) : 1;
+      let o = 0, y = 0, sc = 1;
+      if (ms > tin - 520 && ms < tout + 460) {
+        const a = smooth(clamp((ms - tin) / 620));
+        const b = ms > tout ? 1 - smooth(clamp((ms - tout) / 420)) : 1;
+        o = a * b;
+        const e = eio(clamp((ms - tin) / 620));
+        y = (1 - e) * 26 * ui;
+        sc = ui * (c.fit ?? 1) * (1 - (1 - e) * .04);
+      }
+      c.el.style.opacity = o.toFixed(3);
+      c.el.style.transform = "translateY(" + ch(y) + ") scale(" + sc.toFixed(4) + ")";
+    }
+    if (torchLabel) torchLabel.el.innerHTML = "Torches · " + torchesLit(ms);
+  }
+
+  function updateSubs(ms) {
+    LINES.forEach((L, i) => {
+      const el = lineNodes[i];
+      // la fenêtre : celle du studio quand sa bande vocale est là (la durée
+      // réellement prononcée), sinon celle du film
+      const t0 = L.plan ? L.plan.t : (L.real ? L.real.t : L.t);
+      const d = L.plan ? L.plan.d : L.d;
+      const active = ms >= t0 - 80 && (ms <= t0 + d + 260 || Voice.speaking(L));
+      el.classList.toggle("show", active);
+      if (!active) return;
+      const n = L.words.length;
+      let cur = Math.max(0, Math.min(n - 1, Math.floor(((ms - t0) / d) * n)));
+      if (L.plan) {
+        cur = 0;
+        for (let k = 0; k < L.plan.words.length && k < n; k++) if (ms - t0 >= L.plan.words[k].t0) cur = k;
+      }
+      L.words.forEach((w, k) => {
+        w.classList.toggle("on", k === cur);
+        w.classList.toggle("done", k < cur);
+      });
+    });
+  }
+
+  function updateHud(ms) {
+    const sc = sceneAt(ms);
+    hudScene.innerHTML = "<b>" + sc.num + "</b> &nbsp;" + sc.name;
+    const s = Math.floor(ms / 1000);
+    hudTc.textContent = "00:" + String(s).padStart(2, "0") + ":" + String(Math.floor((ms % 1000) / 41.6)).padStart(2, "0");
+    SCENES.forEach((S, i) => segs[i].style.width = (clamp((ms - S.from) / (S.to - S.from)) * 100).toFixed(2) + "%");
+    const mm = Math.floor(ms / 60000), ss = Math.floor((ms % 60000) / 1000);
+    bugClock.textContent = String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+    bugForm.textContent = sc.name;
+    thirdEl.classList.toggle("on", speakingAt(ms));
+    CHAT.forEach((c, i) => chatChips[i].classList.toggle("on", ms >= c.t0 + 700));
+  }
+
+  /** Une réplique est-elle en cours (fenêtre prévue, ou voix qui parle encore) ? */
+  function speakingAt(ms) {
+    return LINES.some((L) => {
+      const t0 = L.plan ? L.plan.t : (L.real ? L.real.t : L.t);
+      const d = L.plan ? L.plan.d : L.d;
+      return ms >= t0 - 120 && (ms <= t0 + d + 260 || Voice.speaking(L));
+    });
+  }
+
+  function setToggle(btn, on, offClass) {
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", String(on));
+    if (offClass !== undefined) btn.classList.toggle("off-audio", !!offClass);
+  }
+
+  function sceneAt(ms) {
+    for (let i = SCENES.length - 1; i >= 0; i--) if (ms >= SCENES[i].from) return { i, ...SCENES[i] };
+    return { i: 0, ...SCENES[0] };
+  }
+
+  /** Le passage d'un plan au suivant : un volet de blocs qui tombe. */
+  function transition(ms) {
+    const sc = sceneAt(ms);
+    if (sc.i === 0) return;
+    const dt = ms - sc.from;
+    if (dt > 640) return;
+    g.save();
+    const rows = 9, h = H / rows;
+    for (let i = 0; i < rows; i++) {
+      const off = clamp((dt / 640) * 1.7 - i * .07);
+      if (off <= 0) continue;
+      g.globalAlpha = (1 - clamp((ms - sc.from) / 640)) * (1 - off) * .92;
+      g.fillStyle = i % 2 ? "#0b140e" : "#060c08";
+      g.fillRect(0, i * h, W, h * (1 - off));
+    }
+    g.globalAlpha = (1 - clamp((ms - sc.from) / 640)) * .22;
+    g.fillStyle = "#8bd450"; g.fillRect(0, 0, W, H);
+    g.restore(); g.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------ 10. lecteur */
+  let elapsed = 0, state = "idle", lastTs = 0, stall = 0;
+  const sound = { on: false };
+  const spoken = LINES.map(() => false);
+
+  function render(ms) {
+    g.clearRect(0, 0, W, H);
+    const sc = sceneAt(ms);
+    sc.draw(ms / 1000, clamp((ms - sc.from) / (sc.to - sc.from)));
+    transition(ms);
+    updateCards(ms);
+    updateSubs(ms);
+    updateHud(ms);
+  }
+
+  function play() {
+    if (state === "playing") return;
+    if (state === "ended" || elapsed >= TOTAL) { elapsed = 0; spoken.fill(false); }
+    sound.on = true;
+    setToggle(togSound, true);
+    Voice.on = true;
+    setToggle(togVoice, true);
+    if (!Voice.available()) togVoice.classList.add("off-audio");
+    Audio.setVoice(Voice.on);            // la voix du studio se pose avec la bande
+    state = "playing";
+    veil.classList.remove("show");
+    if (Audio.ok) {
+      if (Audio.src) { Audio.resume(); Audio.scheduleDucks(); }
+      else Audio.seek(elapsed);
+    } else if (!Audio.ready) {
+      Audio.init().then((ok) => { if (!ok) setToggle(togSound, false, true); });
+    } else {
+      setToggle(togSound, false, true);   // pas de Web Audio : le film reste utilisable, sans son
+    }
+    Audio.resume();
+    render(elapsed);
+  }
+
+  function pause() {
+    if (state !== "playing") return;
+    state = "paused";
+    Audio.pause();
+    stopVoice();
+  }
+
+  function togglePlay() { state === "playing" ? pause() : play(); }
+
+  /** Coupe la voix sans jeter la mesure : la reprise retrouvera le bon mot. */
+  function stopVoice() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    Voice.line = null;
+  }
+
+  /** Efface tout, mesures comprises : pour recommencer ou se déplacer. */
+  function resetVoice() {
+    stopVoice();
+    Voice.token++;
+    for (const L of LINES) delete L.real;
+  }
+
+  function restart() {
+    resetVoice();
+    elapsed = 0; spoken.fill(false);
+    veil.classList.remove("show", "end");
+    state = "playing";
+    if (Audio.ok) { Audio.seek(0); Audio.resume(); }
+    render(0);
+  }
+
+  function finish() {
+    state = "ended";
+    stopVoice();
+    veil.classList.add("show", "end");
+  }
+
+  function tick(ts) {
+    const dt = lastTs ? Math.min(ts - lastTs, 100) : 0;
+    lastTs = ts;
+    if (state === "playing") {
+      // si la bande vient d'être prête (ou si une source s'est perdue), elle se pose au temps
+      // courant : l'image et le son se raccordent d'eux-mêmes, sans repartir de zéro
+      if (Audio.ok) {
+        if (!Audio.src) Audio.seek(elapsed);
+        // garde-fou : si le contexte audio ne tourne pas, le film ne se fige pas
+        if (Audio.time() <= elapsed + .5) stall += dt; else { stall = 0; Audio.retry = 0; }
+        if (stall > 600) {
+          stall = 0;
+          if (Audio.retry < 3) {
+            Audio.retry++;
+            Audio.resume();
+            Audio.seek(elapsed);
+          } else {
+            Audio.wall = elapsed;
+            Audio.ok = false;
+            setToggle(togSound, false, true);
+          }
+        }
+      } else {
+        Audio.advance(dt);
+      }
+      const before = elapsed;
+      elapsed = Audio.time();                       // l'horloge du film est celle du son
+      LINES.forEach((L, i) => {
+        if (!spoken[i] && elapsed >= L.t) {
+          spoken[i] = true;
+          if (elapsed - L.t < 700 && Voice.on) Voice.say(L);
+        }
+      });
+      if (elapsed >= TOTAL && before < TOTAL) finish();
+    } else if (!Audio.ok) {
+      Audio.wall = clamp(elapsed, 0, TOTAL);
+    }
+    render(elapsed);
+    requestAnimationFrame(tick);
+  }
+
+  // Le cadre 9:16 et ses unités cqw/cqh s'occupent de tout, y compris au pivotement
+  // du téléphone. Il ne reste qu'à remesurer les cartons agrandis.
+  measureFits();
+  window.addEventListener("resize", measureFits);
+  if (PHONE.addEventListener) PHONE.addEventListener("change", measureFits);
+
+  document.getElementById("go").addEventListener("click", play);
+  document.getElementById("replay").addEventListener("click", restart);
+  document.getElementById("closeEnd").addEventListener("click", () => veil.classList.remove("show"));
+  cv.addEventListener("click", () => { if (state !== "idle" && !veil.classList.contains("show")) togglePlay(); });
+
+  togSound.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sound.on = !sound.on;
+    setToggle(togSound, sound.on);
+    if (!Audio.ok && !Audio.ready) Audio.init();
+    if (Audio.ok && Audio.src) Audio.resume();      // couper le son ne met pas le film en pause
+    Audio.setSound(sound.on);
+  });
+  togVoice.addEventListener("click", (e) => {
+    e.stopPropagation();
+    Voice.on = !Voice.on;
+    setToggle(togVoice, Voice.on);
+    if (!Voice.on && window.speechSynthesis) speechSynthesis.cancel();
+    Audio.setVoice(Voice.on);                       // la bande vocale suit la bascule
+    Audio.scheduleDucks();                          // la musique ne s'efface que sous une voix audible
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") { e.preventDefault(); if (state === "idle") play(); else togglePlay(); }
+    else if (e.key === "s" || e.key === "S") togSound.click();
+    else if (e.key === "v" || e.key === "V") togVoice.click();
+    else if (e.key === "r" || e.key === "R") restart();
+  });
+
+  document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
+
+  /* L'image d'abord : la lecture se regarde sans habillage. Trois secondes sans geste et
+     la barre, les bascules et les mentions s'effacent ; le premier mouvement les ramène.
+     En pause l'habillage reste — il n'y a plus rien à cacher. */
+  const stageEl = document.getElementById("stage");
+  let chromeIdle = 0;
+  const showChrome = () => {
+    stageEl.classList.remove("clean");
+    clearTimeout(chromeIdle);
+    if (state === "playing") chromeIdle = setTimeout(() => stageEl.classList.add("clean"), 3000);
+  };
+  // « click » vient après le gestionnaire du bouton : l'horloge du minuteur est donc armée
+  // avec la lecture déjà lancée, que le film démarre au clic, au doigt ou au clavier
+  for (const ev of ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "click", "visibilitychange"])
+    document.addEventListener(ev, showChrome, { passive: true });
+
+  // Un contexte audio peut être gelé par le navigateur : le premier geste de
+  // l'utilisateur le relance, au lieu de laisser le film muet.
+  const rearm = () => { if (state === "playing" && sound.on) Audio.resume(); };
+  document.addEventListener("pointerdown", rearm, true);
+  window.addEventListener("keydown", rearm, true);
+
+  if (window.speechSynthesis) {
+    Voice.pick();
+    speechSynthesis.addEventListener("voiceschanged", () => Voice.pick());
+  }
+
+  /* ------------------------------------------------ 11. surface de vérification */
+  const API = {
+    id: "herobrine",
+    duration: TOTAL,
+    frame: "9:16",
+    phone: () => PHONE.matches,
+    clock: () => +elapsed.toFixed(1),
+    audio: () => ({
+      ok: Audio.ok, ready: Audio.ready, source: Audio.source, trim: +(Audio.trim ?? 0).toFixed(3),
+      state: Audio.ctx ? Audio.ctx.state : "aucun",
+      buffer: Audio.buffer ? +Audio.buffer.duration.toFixed(3) : 0,
+      voice: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      voiceGain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      time: +Audio.time().toFixed(1),
+    }),
+    startAt: (ms) => { Audio.seek(ms); Audio.resume(); return Audio.time(); },
+    layout: () => {
+      // audit de mise en page : le cadre, les cartons visibles et les sous-titres
+      const box = (e) => { const r = e.getBoundingClientRect(); return { x: +r.x.toFixed(1), y: +r.y.toFixed(1), w: +r.width.toFixed(1), h: +r.height.toFixed(1), right: +r.right.toFixed(1), bottom: +r.bottom.toFixed(1) }; };
+      const ink = (e) => { const r = document.createRange(); r.selectNodeContents(e); const b = r.getBoundingClientRect(); return { x: +b.x.toFixed(1), y: +b.y.toFixed(1), w: +b.width.toFixed(1), h: +b.height.toFixed(1), right: +b.right.toFixed(1), bottom: +b.bottom.toFixed(1) }; };
+      const visible = (c) => parseFloat(window.getComputedStyle(c.el).opacity) > .2 && c.el.getBoundingClientRect().width > 1;
+      return {
+        frame: box(frameEl),
+        stage: box(document.getElementById("stage")),
+        hud: box(document.getElementById("hud")),
+        go: box(document.getElementById("go")),
+        // les cartons visibles sont mesurés à l'encre (le texte), pas à leur boîte :
+        // un carton centré occupe toute la largeur du cadre même quand son texte est court
+        cards: cardNodes.map((c, i) => ({ c, i })).filter(({ c }) => visible(c))
+          .map(({ c, i }) => ({ i, cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3), text: c.el.textContent.trim().slice(0, 40), ...ink(c.el) })),
+        fits: cardNodes.map(c => ({ cls: c.cls, ui: c.ui ?? 1, fit: +(c.fit ?? 1).toFixed(3) })),
+        subs: [...subsHost.querySelectorAll(".subline.show")].map(ink),
+        togs: [togSound, togVoice].map(box),
+        prog: box(progEl),
+        hudTexts: [hudScene, hudTc].map(box),
+      };
+    },
+    scenes: SCENES.map(s => ({ from: s.from, to: s.to, name: s.name, num: s.num })),
+    lines: LINES.map(l => ({ t: l.t, d: l.d, txt: l.txt, plan: l.plan || null })),
+    voice: () => ({
+      source: Voice.source(), on: Voice.on, plan: !!Voice.plan,
+      lines: Voice.plan ? Voice.plan.lines.length : 0,
+      engine: Voice.plan ? Voice.plan.engine.label : null,
+      gain: Audio.voiceGain ? +Audio.voiceGain.gain.value.toFixed(3) : 0,
+      buffer: Audio.voiceBuffer ? +Audio.voiceBuffer.duration.toFixed(3) : 0,
+      speaking: LINES.filter((L) => Voice.speaking(L)).length,
+    }),
+    cues: SCORE.map(c => ({ t: c[0], name: c[1] })),
+    mic: { name: MIC.name, role: MIC.role },
+    chat: () => ({ total: CHAT.length, shown: chatChips.filter(c => c.classList.contains("on")).length }),
+    torches: () => torchesLit(elapsed),
+    beats: [
+      { t: 1200,  label: "01·jour 1" },
+      { t: 4200,  label: "02·le monde" },
+      { t: 8600,  label: "03·la nuit" },
+      { t: 11800, label: "04·la torche" },
+      { t: 15800, label: "05·le tunnel" },
+      { t: 19400, label: "06·son mur" },
+      { t: 22400, label: "07·la colline" },
+      { t: 25400, label: "08·les yeux" },
+      { t: 26600, label: "09·le bond" },
+      { t: 30200, label: "10·la fuite" },
+      { t: 33000, label: "11·la pluie" },
+      { t: 36600, label: "12·plus de monde" },
+      { t: 40200, label: "13·la carte de fin" },
+    ],
+    seek(ms) { resetVoice(); elapsed = clamp(ms, 0, TOTAL); state = "paused"; render(elapsed); },
+    play, pause,
+    audioStats: async (sec) => {
+      const buf = await Audio.renderScore(sec);
+      if (!buf) return null;
+      const n = buf.length, sr = buf.sampleRate;
+      const L = buf.getChannelData(0), R = buf.getChannelData(Math.min(1, buf.numberOfChannels - 1));
+      // même normalisation que celle appliquée à la lecture : la mesure décrit le son
+      // qu'on entend, pas le rendu brut
+      const k = Audio.trimTo(buf, PEAK);
+      let peak = 0, sum = 0, clipped = 0;
+      const perSec = [];
+      for (let s = 0; s < Math.ceil(n / sr); s++) perSec.push({ rms: 0, peak: 0, n: 0 });
+      for (let i = 0; i < n; i++) {
+        const v = ((L[i] + R[i]) / 2) * k, a = Math.abs(v);
+        if (a > peak) peak = a;
+        if (a >= .999) clipped++;
+        sum += v * v;
+        const s = Math.min(perSec.length - 1, Math.floor(i / sr));
+        perSec[s].rms += v * v; perSec[s].n++;
+        if (a > perSec[s].peak) perSec[s].peak = a;
+      }
+      perSec.forEach(s => { s.rms = Math.sqrt(s.rms / Math.max(1, s.n)); });
+      return {
+        seconds: n / sr, peak: +peak.toFixed(4), rms: +Math.sqrt(sum / n).toFixed(4), clipped,
+        silentSeconds: perSec.filter(s => s.rms < .0005).length,
+        perSec: perSec.map(s => ({ rms: +s.rms.toFixed(4), peak: +s.peak.toFixed(4) })),
+      };
+    },
+    frameStats() {
+      const d = g.getImageData(0, 0, W, H).data;
+      let lum = 0, n = 0, lit = 0;
+      const colors = new Set();
+      for (let y = 0; y < H; y += 12) for (let x = 0; x < W; x += 12) {
+        const i = (y * W + x) * 4, v = (d[i] * .2126 + d[i + 1] * .7152 + d[i + 2] * .0722) / 255;
+        lum += v; n++;
+        if (v > .045) lit++;
+        colors.add((d[i] >> 5) * 64 + (d[i + 1] >> 5) * 8 + (d[i + 2] >> 5));
+      }
+      const subs = [...subsHost.querySelectorAll(".subline")].find(e => e.classList.contains("show"));
+      const cards = [...cardsHost.children].filter(e => parseFloat(e.style.opacity || "0") > .12);
+      return {
+        meanLuma: +(lum / n).toFixed(4), litRatio: +(lit / n).toFixed(4), colors: colors.size,
+        activeCards: cards.length,
+        subtitle: subs ? { text: subs.textContent.trim(), words: subs.querySelectorAll(".w").length, onWord: subs.querySelector(".w.on")?.textContent ?? null } : null,
+      };
+    },
+  };
+  window.MOTION = API;
+  window.N3 = API;   // alias : même surface pour les outils
+
+  setToggle(togSound, false);
+  // la bande se prépare pendant que l'écran d'accueil s'affiche :
+  // le clic sur play n'attend ni le réseau ni un rendu
+  Audio.init()
+    .then(() => { if (!Voice.available()) togVoice.classList.add("off-audio"); else togVoice.classList.remove("off-audio"); });
+  setToggle(togVoice, false);
+  if (!Voice.available()) togVoice.classList.add("off-audio");
+  render(0);
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

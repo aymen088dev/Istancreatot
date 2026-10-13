@@ -1,0 +1,419 @@
+{
+  "kind": "voice",
+  "id": "boby-commentateur",
+  "film": "/home/daytona/codebase/boby-commentateur.html",
+  "title": "Boby",
+  "asset": "assets/voice/boby-commentateur.wav",
+  "engine": {
+    "name": "piper",
+    "voice": "fr_FR-tom-medium",
+    "label": "français · Tom (medium)",
+    "sr": 32000,
+    "scale": 1.08,
+    "peak": 0.9,
+    "gap": 0.2,
+    "pad": 0.25
+  },
+  "seconds": 34.6,
+  "filmMs": 34000,
+  "tail": 0.6,
+  "speechMs": 24124,
+  "meanRate": 2.173,
+  "retimed": [
+    3
+  ],
+  "overflow": [],
+  "lines": [
+    {
+      "i": 0,
+      "t": 600,
+      "d": 3767,
+      "window": 4168,
+      "ms": 3767,
+      "endsAt": 4367,
+      "nextAt": 5200,
+      "budget": 4400,
+      "slack": 633,
+      "txt": "Bonsoir, bonsoir. Ici Boby, en direct.",
+      "rate": 1.593,
+      "words": [
+        {
+          "w": "Bonsoir,",
+          "t0": 0,
+          "t1": 757
+        },
+        {
+          "w": "bonsoir.",
+          "t0": 757,
+          "t1": 1401
+        },
+        {
+          "w": "Ici",
+          "t0": 1401,
+          "t1": 2044
+        },
+        {
+          "w": "Boby,",
+          "t0": 2044,
+          "t1": 2801
+        },
+        {
+          "w": "en",
+          "t0": 2801,
+          "t1": 3123
+        },
+        {
+          "w": "direct.",
+          "t0": 3123,
+          "t1": 3767
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 1,
+      "t": 5200,
+      "d": 3152,
+      "window": 3489,
+      "ms": 3152,
+      "endsAt": 8352,
+      "nextAt": 10300,
+      "budget": 4900,
+      "slack": 1748,
+      "txt": "Bienvenue sur, euh, sur notre antenne.",
+      "rate": 1.904,
+      "words": [
+        {
+          "w": "Bienvenue",
+          "t0": 0,
+          "t1": 808
+        },
+        {
+          "w": "sur,",
+          "t0": 808,
+          "t1": 1172
+        },
+        {
+          "w": "euh,",
+          "t0": 1172,
+          "t1": 1536
+        },
+        {
+          "w": "sur",
+          "t0": 1536,
+          "t1": 1805
+        },
+        {
+          "w": "notre",
+          "t0": 1805,
+          "t1": 2344
+        },
+        {
+          "w": "antenne.",
+          "t0": 2344,
+          "t1": 3152
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 2,
+      "t": 10300,
+      "d": 2483,
+      "window": 2924,
+      "ms": 2483,
+      "endsAt": 12783,
+      "nextAt": 14800,
+      "budget": 4300,
+      "slack": 1817,
+      "txt": "Donc ce soir, on commente... quel match.",
+      "rate": 2.819,
+      "words": [
+        {
+          "w": "Donc",
+          "t0": 0,
+          "t1": 266
+        },
+        {
+          "w": "ce",
+          "t0": 266,
+          "t1": 531
+        },
+        {
+          "w": "soir,",
+          "t0": 531,
+          "t1": 890
+        },
+        {
+          "w": "on",
+          "t0": 890,
+          "t1": 1155
+        },
+        {
+          "w": "commente...",
+          "t0": 1155,
+          "t1": 1952
+        },
+        {
+          "w": "quel",
+          "t0": 1952,
+          "t1": 2217
+        },
+        {
+          "w": "match.",
+          "t0": 2217,
+          "t1": 2483
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 3,
+      "t": 14800,
+      "d": 3871,
+      "window": 4080,
+      "ms": 3871,
+      "endsAt": 18671,
+      "nextAt": 19000,
+      "budget": 4000,
+      "slack": 129,
+      "txt": "Comistani. Enfin, Comistini... non, comestible.",
+      "rate": 1.292,
+      "words": [
+        {
+          "w": "Comistani.",
+          "t0": 0,
+          "t1": 986
+        },
+        {
+          "w": "Enfin,",
+          "t0": 986,
+          "t1": 1566
+        },
+        {
+          "w": "Comistini...",
+          "t0": 1566,
+          "t1": 2552
+        },
+        {
+          "w": "non,",
+          "t0": 2552,
+          "t1": 2885
+        },
+        {
+          "w": "comestible.",
+          "t0": 2885,
+          "t1": 3871
+        }
+      ],
+      "scale": 1.025,
+      "retimed": true,
+      "overflow": false
+    },
+    {
+      "i": 4,
+      "t": 19000,
+      "d": 3183,
+      "window": 3443,
+      "ms": 3183,
+      "endsAt": 22183,
+      "nextAt": 23200,
+      "budget": 4000,
+      "slack": 817,
+      "txt": "Mikkelsen. Mik... Mike-les-sons, voilà.",
+      "rate": 1.257,
+      "words": [
+        {
+          "w": "Mikkelsen.",
+          "t0": 0,
+          "t1": 923
+        },
+        {
+          "w": "Mik...",
+          "t0": 923,
+          "t1": 1230
+        },
+        {
+          "w": "Mike-les-sons,",
+          "t0": 1230,
+          "t1": 2568
+        },
+        {
+          "w": "voilà.",
+          "t0": 2568,
+          "t1": 3183
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 5,
+      "t": 23200,
+      "d": 2925,
+      "window": 3397,
+      "ms": 2925,
+      "endsAt": 26125,
+      "nextAt": 27400,
+      "budget": 4000,
+      "slack": 1075,
+      "txt": "Zéro partout, euh non, trois à zéro.",
+      "rate": 2.393,
+      "words": [
+        {
+          "w": "Zéro",
+          "t0": 0,
+          "t1": 547
+        },
+        {
+          "w": "partout,",
+          "t0": 547,
+          "t1": 1189
+        },
+        {
+          "w": "euh",
+          "t0": 1189,
+          "t1": 1462
+        },
+        {
+          "w": "non,",
+          "t0": 1462,
+          "t1": 1832
+        },
+        {
+          "w": "trois",
+          "t0": 1832,
+          "t1": 2105
+        },
+        {
+          "w": "à",
+          "t0": 2105,
+          "t1": 2378
+        },
+        {
+          "w": "zéro.",
+          "t0": 2378,
+          "t1": 2925
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 6,
+      "t": 27400,
+      "d": 3063,
+      "window": 3280,
+      "ms": 3063,
+      "endsAt": 30463,
+      "nextAt": 30800,
+      "budget": 3200,
+      "slack": 137,
+      "txt": "Aïe. J'ai lâché le micro, pardon.",
+      "rate": 1.959,
+      "words": [
+        {
+          "w": "Aïe.",
+          "t0": 0,
+          "t1": 328
+        },
+        {
+          "w": "J'ai",
+          "t0": 328,
+          "t1": 655
+        },
+        {
+          "w": "lâché",
+          "t0": 655,
+          "t1": 1310
+        },
+        {
+          "w": "le",
+          "t0": 1310,
+          "t1": 1638
+        },
+        {
+          "w": "micro,",
+          "t0": 1638,
+          "t1": 2408
+        },
+        {
+          "w": "pardon.",
+          "t0": 2408,
+          "t1": 3063
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    },
+    {
+      "i": 7,
+      "t": 30800,
+      "d": 1680,
+      "window": 2232,
+      "ms": 1680,
+      "endsAt": 32480,
+      "nextAt": 34000,
+      "budget": 3000,
+      "slack": 1320,
+      "txt": "Ce n'est pas moi, c'est le vent.",
+      "rate": 4.166,
+      "words": [
+        {
+          "w": "Ce",
+          "t0": 0,
+          "t1": 229
+        },
+        {
+          "w": "n'est",
+          "t0": 229,
+          "t1": 457
+        },
+        {
+          "w": "pas",
+          "t0": 457,
+          "t1": 686
+        },
+        {
+          "w": "moi,",
+          "t0": 686,
+          "t1": 994
+        },
+        {
+          "w": "c'est",
+          "t0": 994,
+          "t1": 1223
+        },
+        {
+          "w": "le",
+          "t0": 1223,
+          "t1": 1451
+        },
+        {
+          "w": "vent.",
+          "t0": 1451,
+          "t1": 1680
+        }
+      ],
+      "scale": 1.08,
+      "retimed": false,
+      "overflow": false
+    }
+  ],
+  "bytes": 2214444,
+  "peak": 0.9,
+  "rms": 0.076,
+  "clipped": 0,
+  "silentSeconds": 0,
+  "generated": "2026-10-13T08:55:26",
+  "secondsToBuild": 3.7
+}
